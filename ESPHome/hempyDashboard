@@ -1,0 +1,91 @@
+views:
+  - title: Hempy
+    path: hempy
+    cards:
+      - type: vertical-stack
+        title: Hempy bucket 1
+        cards:
+          - graph: line
+            type: sensor
+            entity: sensor.hempy_bucket1_weight
+            detail: 2
+            hours_to_show: 168
+            name: Weight
+          - type: entities
+            entities:
+              - entity: sensor.hempy_bucket1_state
+              - entity: sensor.hempy_bucket1_weight
+                name: Weight
+              - entity: sensor.hempy_bucket1_next_watering_weight
+                name: Next watering
+              - type: divider
+              - type: button
+                name: Start/stop watering
+                icon: mdi:watering-can-outline
+                tap_action:
+                  action: call-service
+                  service: esphome.hempy_bucket1_toggle_watering
+                  service_data: {}
+              - entity: switch.hempy_bucket1_watering_logic
+              - type: section
+                label: Watering
+              - entity: number.hempy_bucket1_start_watering_weight
+                name: Start watering
+              - entity: number.hempy_bucket1_watering_increments
+                name: Watering increments
+              - entity: number.hempy_bucket1_max_watering_weight
+                name: Max weight
+              - entity: number.hempy_bucket1_max_watering_time
+                name: Watering timeout
+              - entity: number.hempy_bucket1_drain_wait_time
+                name: Drain wait
+              - entity: number.hempy_bucket1_drain_target_weight
+                name: Drain target
+              - entity: number.hempy_bucket1_evaporation_target_weight
+              - type: section
+                label: About
+              - entity: sensor.hempy_internal_temp
+                name: Internal temp
+              - type: weblink
+                name: Gbox420 - Hempy bucket
+                url: https://sites.google.com
+      - type: vertical-stack
+        title: Hempy bucket 2
+        cards:
+          - graph: line
+            type: sensor
+            entity: sensor.hempy_bucket2_weight
+            detail: 2
+            hours_to_show: 168
+            name: Weight
+          - type: entities
+            entities:
+              - entity: sensor.hempy_bucket2_state
+              - entity: sensor.hempy_bucket2_weight
+                name: Weight
+              - entity: sensor.hempy_bucket2_next_watering_weight
+                name: Next watering
+              - type: divider
+              - type: button
+                name: Start/stop watering
+                icon: mdi:watering-can-outline
+                tap_action:
+                  action: call-service
+                  service: esphome.hempy_bucket2_toggle_watering
+                  service_data: {}
+              - entity: switch.hempy_bucket2_watering_logic
+              - type: section
+                label: Watering
+              - entity: number.hempy_bucket2_start_watering_weight
+                name: Start watering
+              - entity: number.hempy_bucket2_watering_increments
+                name: Watering increments
+              - entity: number.hempy_bucket2_max_watering_weight
+                name: Max weight
+              - entity: number.hempy_bucket2_max_watering_time
+                name: Watering timeout
+              - entity: number.hempy_bucket2_drain_wait_time
+                name: Drain wait
+              - entity: number.hempy_bucket2_drain_target_weight
+                name: Drain target
+              - entity: number.hempy_bucket2_evaporation_target_weight              

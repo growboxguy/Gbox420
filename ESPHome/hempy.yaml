@@ -6,7 +6,7 @@ esphome:
     priority: 10
     then:
       - rtttl.play:
-          rtttl: 'start:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p'
+          rtttl: "start:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p"
 
 rp2040:
   board: rpipicow
@@ -32,29 +32,37 @@ external_components:
 text_sensor:
   - platform: debug
     device:
-      name: "Device Info"
+      name: "Device info"
     reset_reason:
-      name: "Reset Reason"      
+      name: "Reset reason"
   - platform: template
     id: bucket1_state_sensor
-    name: "State"
+    name: "Bucket1 State"
+    icon: "mdi:state-machine"
+  - platform: template
+    id: bucket2_state_sensor
+    name: "Bucket2 State"
     icon: "mdi:state-machine"
 
 # Enable Home Assistant API
 api:
   encryption:
     key: !secret hempy_encryption_key
-  services:   
-    - service: toggle_watering  # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
+  services:
+    - service: bucket1_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
       then:
-       - lambda: |-
-            id(hempy1).toggle_watering();
+        - lambda: |-
+            id(bucket1).toggle_watering();
+    - service: bucket2_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
+      then:
+        - lambda: |-
+            id(bucket2).toggle_watering();
     #- service: set_start_watering_weight
     #  variables:
     #    value: float
     #  then:
     #    - lambda: |-
-    #        id(hempy1).set_start_watering_weight(value);
+    #        id(bucket1).set_start_watering_weight(value);
 
 # Enable Over The Air updates
 ota:
@@ -66,48 +74,71 @@ wifi:
   ssid: !secret hempy_wifi_ssid
   password: !secret hempy_wifi_password
 
-# Enable fallback hotspot in case WiFi connection fails
+  # Enable fallback hotspot in case WiFi connection fails
   ap:
     ssid: "Hempy Fallback Hotspot"
-    password: !secret hempy_wifi_password  
+    password: !secret hempy_wifi_password
 
 output:
   - platform: gpio # Pico W built-in LED
     pin: 32
     id: led
-  - platform: rp2040_pwm     # Buzzer. For ESP chips use platform: esp8266_pwm
+  - platform: rp2040_pwm # Buzzer. For ESP chips use platform: esp8266_pwm
     pin: 2
     id: buzzer
-  - platform: gpio  # Relay to power water pump for Bucket 1
-    pin: 10  # Relay's IN pin
+  - platform: gpio # Relay to power water pump for Bucket 1
+    pin: 10 # Relay's IN pin
     id: bucket1_relay
-    inverted: true   # Negative logic (false turns it on)
+    inverted: true # Negative logic (false turns it on)
+  - platform: gpio # Relay to power water pump for Bucket 1
+    pin: 11 # Relay's IN pin
+    id: bucket2_relay
+    inverted: true # Negative logic (false turns it on)
 
 switch:
-  - platform: output    # Reference to the relay controlling the water pump
+  #Bucket1
+  - platform: output # Reference to the relay controlling the water pump
     id: bucket1_waterpump
-    name: "Pump 1"
+    name: "Bucket1 Pump"
     output: bucket1_relay
-  - platform: template  # Enable/Disable watering logic
-    name: "Watering logic"
-    id: hempy_watering_logic
+  - platform: template # Enable/Disable watering logic
+    name: "Bucket1 Watering logic"
+    id: bucket1_watering_logic
     icon: "mdi:water-check"
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
     lambda: |-
-      return id(hempy1).is_watering_active();
+      return id(bucket1).is_watering_active();
     turn_off_action:
-       - lambda: |-
-            id(hempy1).toggle_watering_logic(false);
+      - lambda: |-
+          id(bucket1).toggle_watering_logic(false);
     turn_on_action:
-       - lambda: |-
-            id(hempy1).toggle_watering_logic(true);    
-   
+      - lambda: |-
+          id(bucket1).toggle_watering_logic(true);
+  #Bucket2
+  - platform: output # Reference to the relay controlling the water pump
+    id: bucket2_waterpump
+    name: "Bucket2 Pump"
+    output: bucket2_relay
+  - platform: template # Enable/Disable watering logic
+    name: "Bucket2 Watering logic"
+    id: bucket2_watering_logic
+    icon: "mdi:water-check"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    lambda: |-
+      return id(bucket2).is_watering_active();
+    turn_off_action:
+      - lambda: |-
+          id(bucket2).toggle_watering_logic(false);
+    turn_on_action:
+      - lambda: |-
+          id(bucket2).toggle_watering_logic(true);
 
-rtttl:  #Ring Tone Text Transfer Language
+rtttl: #Ring Tone Text Transfer Language
   output: buzzer
   on_finished_playback:
-    - logger.log: 'Song ended!'
+    - logger.log: "Song ended!"
 
 interval:
   - interval: 2000ms # Heart beat - Blink built-in LED every 2sec
@@ -120,31 +151,60 @@ sensor:
   #Debug
   - platform: debug
     loop_time:
-      name: "Loop Time"    
-  #HX711 - Bucket 1 weight sensor
+      name: "Loop Time"
+  #Bucket 1
+  - platform: template
+    id: bucket1_next_watering_weight
+    name: "Bucket1 Next watering weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:water-alert"
   - platform: hx711
     id: bucket1_weight_sensor
-    name: "Weight"
+    name: "Bucket1 Weight"
     unit_of_measurement: "kg"
     icon: "mdi:weight-kilogram"
     dout_pin: 7
     clk_pin: 6
     gain: 128
     update_interval: 1s
-    accuracy_decimals: 2   
+    accuracy_decimals: 2
     filters:
       - calibrate_linear:
-          - -117400 -> 0  #Raw reading when the weight sensor has no weigth on it
-          - -498723 -> 3  #Raw reading of an object with a known wight  
+          - -117400 -> 0 #Raw reading when the weight sensor has no weigth on it
+          - -498723 -> 3 #Raw reading of an object with a known wight
       - median:
-          window_size: 5  # Take the median of the last 5 readings
-          send_every: 1   # Send every 1 reading
-          send_first_at: 1   
-   #Internal temperature sensor
+          window_size: 5 # Take the median of the last 5 readings
+          send_every: 1 # Send every 1 reading
+          send_first_at: 1
+  #Bucket 2
+  - platform: template
+    id: bucket2_next_watering_weight
+    name: "Bucket2 Next watering weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:water-alert"
+  - platform: hx711
+    id: bucket2_weight_sensor
+    name: "Bucket2 Weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:weight-kilogram"
+    dout_pin: 9
+    clk_pin: 8
+    gain: 128
+    update_interval: 1s
+    accuracy_decimals: 2
+    filters:
+      - calibrate_linear:
+          - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
+          - -294500 -> 3 #Raw reading of an object with a known wight
+      - median:
+          window_size: 5 # Take the median of the last 5 readings
+          send_every: 1 # Send every 1 reading
+          send_first_at: 1
+  #Internal temperature sensor
   - platform: internal_temperature
     name: "Internal temp"
     unit_of_measurement: "°C"
-    icon: "mdi:temperature-celsius"
+    icon: "mdi:thermometer"
     device_class: "temperature"
     state_class: "measurement"
     accuracy_decimals: 1
@@ -157,94 +217,190 @@ sensor:
       #   window_size: 10 #calculate median based on the last 10 readings
 
 number:
+  #Bucket1
   - platform: template
-    name: "Start watering weight" # When the bucket weight drops below this -> Start the watering process
-    id: bucket1_start_watering_weight
+    id: bucket1_start_watering_weight # When the bucket weight drops below this -> Start the watering process
+    name: "Bucket1 Start watering weight"
     unit_of_measurement: "kg"
     icon: "mdi:weight-kilogram"
     min_value: 0
     max_value: 25
     step: 0.1
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 13.0   # Set default value if no value is stored
+    restore_value: true # Restore the value from flash storage
+    initial_value: 13.0 # Set default value if no value is stored
   - platform: template
-    name: "Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
-    id: bucket1_watering_increments
+    id: bucket1_watering_increments # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    name: "Bucket1 Watering increments"
     unit_of_measurement: "kg"
     icon: "mdi:water-plus"
     min_value: 0
     max_value: 1
     step: 0.1
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 0.2   # (0.2 liter) Set default value if no value is stored    
+    restore_value: true # Restore the value from flash storage
+    initial_value: 0.2 # (0.2 liter) Set default value if no value is stored
   - platform: template
-    name: "Max watering weight" # Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
-    id: bucket1_max_watering_weight
+    id: bucket1_max_watering_weight # Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
+    name: "Bucket1 Max watering weight"
     unit_of_measurement: "kg"
     icon: "mdi:beaker-alert"
     min_value: 0
     max_value: 25
     step: 0.1
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 16   # Set default value if no value is stored
+    restore_value: true # Restore the value from flash storage
+    initial_value: 16 # Set default value if no value is stored
   - platform: template
-    name: "Max watering time" # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
-    id: bucket1_max_watering_time
+    id: bucket1_max_watering_time # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+    name: "Bucket1 Max watering time"
     unit_of_measurement: "sec"
     icon: "mdi:timer-alert-outline"
     min_value: 0
     max_value: 120
     step: 1
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 60   # Set default value if no value is stored 
+    restore_value: true # Restore the value from flash storage
+    initial_value: 60 # Set default value if no value is stored
   - platform: template
-    name: "Drain wait time"  # How long to wait between watering cycles for the water to drain in to the waste reservoir
-    id: bucket1_drain_wait_time
+    id: bucket1_drain_wait_time # How long to wait between watering cycles for the water to drain in to the waste reservoir
+    name: "Bucket1 Drain wait time"
     unit_of_measurement: "sec"
     icon: "mdi:timer-pause"
     min_value: 0
     max_value: 600
     step: 5
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 60  # Set default value if no value is stored  
+    restore_value: true # Restore the value from flash storage
+    initial_value: 60 # Set default value if no value is stored
   - platform: template
-    name: "Drain target weight"  # How much water should drain before considering the watering done (drain to waste)
-    id: bucket1_drain_target_weight
+    id: bucket1_drain_target_weight # How much water should drain before considering the watering done (drain to waste)
+    name: "Bucket1 Drain target weight"
     unit_of_measurement: "kg"
     icon: "mdi:water-minus"
     min_value: 0
     max_value: 1
     step: 0.1
     optimistic: true
-    restore_value: true  # Restore the value from flash storage
-    initial_value: 0.1  # Set default value if no value is stored
+    restore_value: true # Restore the value from flash storage
+    initial_value: 0.1 # Set default value if no value is stored
   - platform: template
-    name: "Evaporation target weight" # How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight.
-    id: bucket1_evaporation_target_weight
+    id: bucket1_evaporation_target_weight # How much weight should the bucket lose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight.
+    name: "Bucket1 Evaporation target weight"
     unit_of_measurement: "kg"
     icon: "mdi:waves-arrow-up"
     min_value: 0
     max_value: 5
     step: 0.1
     optimistic: true
-    restore_value: false  # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
-    initial_value: 0.4   # Set default value if no value is stored
+    restore_value: false # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
+    initial_value: 0.4 # Set default value if no value is stored
+  # Bucket2
+  - platform: template
+    id: bucket2_start_watering_weight # When the bucket weight drops below this -> Start the watering process
+    name: "Bucket2 Start watering weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:weight-kilogram"
+    min_value: 0
+    max_value: 25
+    step: 0.1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 13.0 # Set default value if no value is stored
+  - platform: template
+    id: bucket2_watering_increments
+    name: "Bucket2 Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    unit_of_measurement: "kg"
+    icon: "mdi:water-plus"
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 0.2 # (0.2 liter) Set default value if no value is stored
+  - platform: template
+    id: bucket2_max_watering_weight # Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
+    name: "Bucket2 Max watering weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:beaker-alert"
+    min_value: 0
+    max_value: 25
+    step: 0.1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 16 # Set default value if no value is stored
+  - platform: template
+    id: bucket2_max_watering_time # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+    name: "Bucket2 Max watering time"
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-alert-outline"
+    min_value: 0
+    max_value: 120
+    step: 1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 60 # Set default value if no value is stored
+  - platform: template
+    id: bucket2_drain_wait_time # How long to wait between watering cycles for the water to drain in to the waste reservoir
+    name: "Bucket2 Drain wait time"
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-pause"
+    min_value: 0
+    max_value: 600
+    step: 5
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 60 # Set default value if no value is stored
+  - platform: template
+    id: bucket2_drain_target_weight # How much water should drain before considering the watering done (drain to waste)
+    name: "Bucket2 Drain target weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:water-minus"
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 0.1 # Set default value if no value is stored
+  - platform: template
+    id: bucket2_evaporation_target_weight # How much weight should the bucket lose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight.
+    name: "Bucket2 Evaporation target weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:waves-arrow-up"
+    min_value: 0
+    max_value: 5
+    step: 0.1
+    optimistic: true
+    restore_value: false # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
+    initial_value: 0.4 # Set default value if no value is stored
 
 hempy:
-  id: hempy1
-  state_sensor: bucket1_state_sensor
-  weight_sensor: bucket1_weight_sensor  # Reference the weight sensor by its ID
-  start_watering_weight: bucket1_start_watering_weight
-  watering_increments: bucket1_watering_increments
-  max_watering_weight: bucket1_max_watering_weight
-  max_watering_time: bucket1_max_watering_time
-  drain_wait_time: bucket1_drain_wait_time
-  drain_target_weight: bucket1_drain_target_weight
-  evaporation_target_weight: bucket1_evaporation_target_weight
-  waterpump: bucket1_waterpump
-  update_interval: 1s
+  buckets:
+    - id: bucket1
+      name: Bucket1
+      state_sensor: bucket1_state_sensor
+      weight_sensor: bucket1_weight_sensor
+      start_watering_weight: bucket1_start_watering_weight
+      watering_increments: bucket1_watering_increments
+      max_watering_weight: bucket1_max_watering_weight
+      max_watering_time: bucket1_max_watering_time
+      drain_wait_time: bucket1_drain_wait_time
+      drain_target_weight: bucket1_drain_target_weight
+      evaporation_target_weight: bucket1_evaporation_target_weight
+      next_watering_weight: bucket1_next_watering_weight
+      waterpump: bucket1_waterpump
+      update_interval: 1s
+    - id: bucket2
+      name: Bucket2
+      state_sensor: bucket2_state_sensor
+      weight_sensor: bucket2_weight_sensor
+      start_watering_weight: bucket2_start_watering_weight
+      watering_increments: bucket2_watering_increments
+      max_watering_weight: bucket2_max_watering_weight
+      max_watering_time: bucket2_max_watering_time
+      drain_wait_time: bucket2_drain_wait_time
+      drain_target_weight: bucket2_drain_target_weight
+      evaporation_target_weight: bucket2_evaporation_target_weight
+      next_watering_weight: bucket2_next_watering_weight
+      waterpump: bucket2_waterpump
+      update_interval: 1s

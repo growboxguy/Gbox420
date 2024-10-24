@@ -6,6 +6,7 @@ namespace esphome
   {
     void HempyBucket::setup()
     {
+      NextWateringWeight->publish_state(StartWateringWeight->state);  //Before the first watering the wet weight is unknown and DryWeight cannot be calculated
       ESP_LOGI("hempy", "Hempy initialized");
     }
 
@@ -17,8 +18,8 @@ namespace esphome
       if (LogScheduler++ == 5) // Only report every 5sec  (update is called every second)
       {
         LogScheduler = 0;
-        ESP_LOGI("hempy", "State: %s, Weight: %.2fkg (StartWatering: %.1f, Increment: %.1f, Max: %.1f), DrainTarget:%.1fkg (%.0fsec), EvaporationTarget:%.1fkg, DryWeight:%.1fkg",
-                 to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight);
+        ESP_LOGI("hempy", "%s - State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
+                 Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state); 
       }
     }
 
@@ -94,6 +95,10 @@ namespace esphome
           if (WeightSensor->state <= (BucketStateWeight - DrainTargetWeight->state)) // Check if enough water was drained into the waste reservoir
           {
             DryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight
+            if (DryWeight >= StartWateringWeight->state)
+              NextWateringWeight->publish_state(DryWeight);
+            else
+              NextWateringWeight->publish_state(StartWateringWeight->state);
             update_state(HempyStates::IDLE, true);
           }
           else
