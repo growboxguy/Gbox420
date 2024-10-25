@@ -3,19 +3,17 @@ views:
     path: hempy
     cards:
       - type: vertical-stack
-        title: Hempy bucket 1
         cards:
           - graph: line
             type: sensor
             entity: sensor.hempy_bucket1_weight
             detail: 2
             hours_to_show: 168
-            name: Weight
+            name: Bucket 1 Weight
           - type: entities
             entities:
               - entity: sensor.hempy_bucket1_state
-              - entity: sensor.hempy_bucket1_weight
-                name: Weight
+                name: State
               - entity: sensor.hempy_bucket1_next_watering_weight
                 name: Next watering
               - type: divider
@@ -27,6 +25,7 @@ views:
                   service: esphome.hempy_bucket1_toggle_watering
                   service_data: {}
               - entity: switch.hempy_bucket1_watering_logic
+                name: Watering logic
               - type: custom:fold-entity-row
                 head:
                   type: section
@@ -45,20 +44,19 @@ views:
                   - entity: number.hempy_bucket1_drain_target_weight
                     name: Drain target
                   - entity: number.hempy_bucket1_evaporation_target_weight
+                    name: Evaporation target
       - type: vertical-stack
-        title: Hempy bucket 2
         cards:
           - graph: line
             type: sensor
             entity: sensor.hempy_bucket2_weight
             detail: 2
             hours_to_show: 168
-            name: Weight
+            name: Bucket 2 Weight
           - type: entities
             entities:
               - entity: sensor.hempy_bucket2_state
-              - entity: sensor.hempy_bucket2_weight
-                name: Weight
+                name: State
               - entity: sensor.hempy_bucket2_next_watering_weight
                 name: Next watering
               - type: divider
@@ -70,6 +68,7 @@ views:
                   service: esphome.hempy_bucket2_toggle_watering
                   service_data: {}
               - entity: switch.hempy_bucket2_watering_logic
+                name: Watering logic
               - type: custom:fold-entity-row
                 head:
                   type: section
@@ -88,6 +87,7 @@ views:
                   - entity: number.hempy_bucket2_drain_target_weight
                     name: Drain target
                   - entity: number.hempy_bucket2_evaporation_target_weight
+                    name: Evaporation target
       - type: entities
         entities:
           - entity: sensor.hempy_internal_temp
