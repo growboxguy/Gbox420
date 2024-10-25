@@ -32,6 +32,7 @@ namespace esphome
       bool is_watering_active();
       void toggle_watering_logic(int8_t RequestedState = -1); // Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
       void toggle_watering();                                 // Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is in progress
+      void update_next_watering_weight(float weight); //Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
       HempyStates State{HempyStates::IDLE};                   // Stores the current state of the hempy bucket
 
     private:

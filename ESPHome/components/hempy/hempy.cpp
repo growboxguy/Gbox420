@@ -6,8 +6,8 @@ namespace esphome
   {
     void HempyBucket::setup()
     {
-      NextWateringWeight->publish_state(StartWateringWeight->state);  //Before the first watering the wet weight is unknown and DryWeight cannot be calculated
-      ESP_LOGI("hempy", "Hempy initialized");
+      NextWateringWeight->publish_state(StartWateringWeight->state); // Before the first watering the wet weight is unknown and DryWeight cannot be calculated
+      ESP_LOGI("hempy", "Hempy %s initialized", Name);
     }
 
     void HempyBucket::update()
@@ -19,7 +19,7 @@ namespace esphome
       {
         LogScheduler = 0;
         ESP_LOGI("hempy", "%s - State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
-                 Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state); 
+                 Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state);
       }
     }
 
@@ -159,6 +159,13 @@ namespace esphome
         update_state(HempyStates::WATERING, true);
       else
         update_state(HempyStates::IDLE); // If watering is in progress: stop it (second click stops watering)
+    }
+
+    void HempyBucket::update_next_watering_weight(float weight) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
+    {
+      DryWeight = 0; // Reset dry weight calculated from a previous watering -> The new Start Water Weight will trigger the next watering
+      NextWateringWeight->publish_state(weight);
+      ESP_LOGI("hempy", "Next watering weight: %.2f", weight);
     }
 
   } // namespace hempy

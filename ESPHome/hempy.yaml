@@ -208,13 +208,13 @@ sensor:
     device_class: "temperature"
     state_class: "measurement"
     accuracy_decimals: 1
-    update_interval: 5s
-    filters:
-      - sliding_window_moving_average:
-          window_size: 15
-          send_every: 15
-      # - median:
-      #   window_size: 10 #calculate median based on the last 10 readings
+    update_interval: 60s
+    #filters:
+    #  - sliding_window_moving_average:
+    #      window_size: 15
+    #      send_every: 15
+    #   - median:
+    #     window_size: 10 #calculate median based on the last 10 readings
 
 number:
   #Bucket1
@@ -229,6 +229,9 @@ number:
     optimistic: true
     restore_value: true # Restore the value from flash storage
     initial_value: 13.0 # Set default value if no value is stored
+    on_value:
+      - lambda: |-
+          id(bucket1).update_next_watering_weight(id(bucket1_start_watering_weight).state);
   - platform: template
     id: bucket1_watering_increments # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     name: "Bucket1 Watering increments"
@@ -307,6 +310,9 @@ number:
     optimistic: true
     restore_value: true # Restore the value from flash storage
     initial_value: 13.0 # Set default value if no value is stored
+    on_value:
+      - lambda: |-
+          id(bucket2).update_next_watering_weight(id(bucket2_start_watering_weight).state);
   - platform: template
     id: bucket2_watering_increments
     name: "Bucket2 Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
