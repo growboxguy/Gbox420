@@ -12,7 +12,8 @@ rp2040:
   board: rpipicow
 
 logger:
-  level: DEBUG
+  level: DEBUG # For calibrating the weight sensors: Shows raw weight sensor readings
+  #level: INFO # After calibrating the weight sensors
 
 debug:
   update_interval: 60s
