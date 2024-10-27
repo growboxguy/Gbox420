@@ -19,7 +19,7 @@ debug:
   update_interval: 60s
 
 external_components:
-  #- source:
+ #- source:
   #    type: local
   #    path: components
   - source:
@@ -82,18 +82,18 @@ wifi:
 
 output:
   - platform: gpio # Pico W built-in LED
-    pin: 32
     id: led
+    pin: 32
   - platform: rp2040_pwm # Buzzer. For ESP chips use platform: esp8266_pwm
-    pin: 2
     id: buzzer
+    pin: 2
   - platform: gpio # Relay to power water pump for Bucket 1
-    pin: 10 # Relay's IN pin
     id: bucket1_relay
+    pin: 10 # Relay's IN pin
     inverted: true # Negative logic (false turns it on)
   - platform: gpio # Relay to power water pump for Bucket 1
-    pin: 11 # Relay's IN pin
     id: bucket2_relay
+    pin: 11 # Relay's IN pin
     inverted: true # Negative logic (false turns it on)
 
 switch:
@@ -102,6 +102,12 @@ switch:
     id: bucket1_waterpump
     name: "Bucket1 Pump"
     output: bucket1_relay
+    on_turn_on:
+      - rtttl.play: 
+          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6" # Play sound when turning on
+    on_turn_off:
+      - rtttl.play: 
+          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket1 Watering logic"
     id: bucket1_watering_logic
@@ -110,17 +116,27 @@ switch:
     restore_mode: RESTORE_DEFAULT_ON
     lambda: |-
       return id(bucket1).is_watering_active();
-    turn_off_action:
-      - lambda: |-
-          id(bucket1).toggle_watering_logic(false);
     turn_on_action:
+      - rtttl.play: 
+          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6"
       - lambda: |-
           id(bucket1).toggle_watering_logic(true);
+    turn_off_action:
+      - rtttl.play: 
+          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6"
+      - lambda: |-
+          id(bucket1).toggle_watering_logic(false);
   #Bucket2
   - platform: output # Reference to the relay controlling the water pump
     id: bucket2_waterpump
     name: "Bucket2 Pump"
     output: bucket2_relay
+    on_turn_on:
+      - rtttl.play: 
+          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6" # Play sound when turning on
+    on_turn_off:
+      - rtttl.play: 
+          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket2 Watering logic"
     id: bucket2_watering_logic
@@ -129,12 +145,16 @@ switch:
     restore_mode: RESTORE_DEFAULT_ON
     lambda: |-
       return id(bucket2).is_watering_active();
-    turn_off_action:
-      - lambda: |-
-          id(bucket2).toggle_watering_logic(false);
     turn_on_action:
+      - rtttl.play: 
+          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6"
       - lambda: |-
           id(bucket2).toggle_watering_logic(true);
+    turn_off_action:
+      - rtttl.play: 
+          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6"
+      - lambda: |-
+          id(bucket2).toggle_watering_logic(false);
 
 rtttl: #Ring Tone Text Transfer Language
   output: buzzer
