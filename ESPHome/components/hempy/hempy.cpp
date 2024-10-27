@@ -7,19 +7,18 @@ namespace esphome
     void HempyBucket::setup()
     {
       NextWateringWeight->publish_state(StartWateringWeight->state); // Before the first watering the wet weight is unknown and DryWeight cannot be calculated
-      ESP_LOGI("hempy", "Hempy %s initialized", Name);
+      ESP_LOGI("Hempy", "%s initialized", Name);
     }
 
     void HempyBucket::update()
     {
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      static uint8_t LogScheduler = 0;
       if (LogScheduler++ == 5) // Only report every 5sec  (update is called every second)
       {
         LogScheduler = 0;
-        ESP_LOGI("hempy", "%s - State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
-                 Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state);
+        ESP_LOGI("Hempy","%s State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
+                  Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state);
       }
     }
 
@@ -35,7 +34,7 @@ namespace esphome
       if (State != NewState)
       {
         StateTimer = CurrentTime; // Start measuring the time spent in the new State
-        ESP_LOGI("hempy", "State: %s -> %s", to_text_state(State), to_text_state(NewState));
+        ESP_LOGI("Hempy", "%s State: %s -> %s", Name.c_str(), to_text_state(State), to_text_state(NewState));
       }
 
       switch (NewState)
@@ -76,7 +75,7 @@ namespace esphome
         }
         else if ((CurrentTime - PumpOnTimer) > MaxWateringTime->state * 1000) // Disable watering in case MaxWateringTime is reached: Consider the pump broken
         {
-          ESP_LOGW("hempy", "Timeout, pump DISABLED");
+          ESP_LOGW("Hempy", "%s Timeout, pump DISABLED", Name.c_str());
           update_state(HempyStates::DISABLED, true);
           BlockOverWritingState = true;
         }
@@ -144,12 +143,12 @@ namespace esphome
       if ((RequestedState == -1 && State == HempyStates::DISABLED) || RequestedState)
       {
         update_state(HempyStates::IDLE, true);
-        ESP_LOGW("hempy", "Watering logic enabled");
+        ESP_LOGW("Hempy", "%s Watering logic enabled", Name.c_str());
       }
       else
       {
         update_state(HempyStates::DISABLED, true);
-        ESP_LOGW("hempy", "Watering logic disabled");
+        ESP_LOGW("Hempy", "%s Watering logic disabled", Name.c_str());
       }
     }
 
@@ -165,7 +164,7 @@ namespace esphome
     {
       DryWeight = 0; // Reset dry weight calculated from a previous watering -> The new Start Water Weight will trigger the next watering
       NextWateringWeight->publish_state(weight);
-      ESP_LOGI("hempy", "Next watering weight: %.2f", weight);
+      ESP_LOGI("Hempy", "%s Next watering weight: %.2f", Name.c_str(), weight);
     }
 
   } // namespace hempy

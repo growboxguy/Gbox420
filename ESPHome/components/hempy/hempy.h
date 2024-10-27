@@ -54,6 +54,7 @@ namespace esphome
       float DryWeight = 0;                     // Stores the next watering weight (Calculated after watering using EvaporationTargetWeight)
       float BucketStateWeight = 0;             // Used to store the weight of the bucket when entering a new state
       bool UpdateInProgress = false;           // True while the state of the hempy bucket is updating (update_state running)
+      uint8_t LogScheduler = 0;                // Used to reduce the amount of log output
     };
 
   } // namespace hempy
