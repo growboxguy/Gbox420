@@ -104,10 +104,10 @@ switch:
     output: bucket1_relay
     on_turn_on:
       - rtttl.play: 
-          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6" # Play sound when turning on
+          rtttl: "on:d=16,o=6,b=120:e,p,g" # Play sound when turning on
     on_turn_off:
       - rtttl.play: 
-          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6" # Play sound when turning off
+          rtttl: "off:d=16,o=6,b=120:g,p,e" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket1 Watering logic"
     id: bucket1_watering_logic
@@ -118,12 +118,12 @@ switch:
       return id(bucket1).is_watering_active();
     turn_on_action:
       - rtttl.play: 
-          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6"
+          rtttl: "on:d=16,o=6,b=120:e,p,g"
       - lambda: |-
           id(bucket1).toggle_watering_logic(true);
     turn_off_action:
       - rtttl.play: 
-          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6"
+          rtttl: "off:d=16,o=6,b=120:g,p,e"
       - lambda: |-
           id(bucket1).toggle_watering_logic(false);
   #Bucket2
@@ -133,10 +133,10 @@ switch:
     output: bucket2_relay
     on_turn_on:
       - rtttl.play: 
-          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6" # Play sound when turning on
+          rtttl: "on:d=16,o=6,b=120:e,p,g" # Play sound when turning on
     on_turn_off:
       - rtttl.play: 
-          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6" # Play sound when turning off
+          rtttl: "off:d=16,o=6,b=120:g,p,e" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket2 Watering logic"
     id: bucket2_watering_logic
@@ -147,12 +147,12 @@ switch:
       return id(bucket2).is_watering_active();
     turn_on_action:
       - rtttl.play: 
-          rtttl: "on:d=4,o=5,b=100:16e6,32p,16g6"
+          rtttl: "on:d=16,o=6,b=120:e,p,g"
       - lambda: |-
           id(bucket2).toggle_watering_logic(true);
     turn_off_action:
       - rtttl.play: 
-          rtttl: "off:d=4,o=5,b=100:16g6,32p,16e6"
+          rtttl: "off:d=16,o=6,b=120:g,p,e"
       - lambda: |-
           id(bucket2).toggle_watering_logic(false);
 
