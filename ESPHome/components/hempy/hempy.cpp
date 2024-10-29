@@ -6,6 +6,7 @@ namespace esphome
   {
     void HempyBucket::setup()
     {
+      update_interval(DefaultUpdateInterval);                        // Sync the HempyBucket and WeightSensor's update interval
       NextWateringWeight->publish_state(StartWateringWeight->state); // Before the first watering the wet weight is unknown and DryWeight cannot be calculated
       ESP_LOGI("hempy", "%s ready", Name.c_str());
     }

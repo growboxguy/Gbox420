@@ -158,8 +158,6 @@ switch:
 
 rtttl: #Ring Tone Text Transfer Language
   output: buzzer
-  on_finished_playback:
-    - logger.log: "Song ended!"
 
 interval:
   - interval: 2000ms # Heart beat - Blink built-in LED every 2sec
@@ -188,7 +186,7 @@ sensor:
     dout_pin: 7
     clk_pin: 6
     gain: 128
-    update_interval: 1s #This gets overwritten by the Hempy bucket's dynamic update interval after the first state change to WATERING or DISABLED
+    update_interval: 1s #Overwritten by the Hempy bucket's dynamic update_interval
     accuracy_decimals: 2
     filters:
       - calibrate_linear:
@@ -213,7 +211,7 @@ sensor:
     dout_pin: 9
     clk_pin: 8
     gain: 128
-    update_interval: 1s #This gets overwritten by the Hempy bucket's dynamic update interval after the first state change to WATERING or DISABLED
+    update_interval: 1s #Overwritten by the Hempy bucket's dynamic update_interval
     accuracy_decimals: 2
     filters:
       - calibrate_linear:
