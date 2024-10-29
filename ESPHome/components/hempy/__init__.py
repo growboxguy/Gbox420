@@ -10,7 +10,7 @@ HempyBucket = hempy_ns.class_('HempyBucket', cg.PollingComponent)
 # Schema for a single HempyBucket instance
 HEMPY_BUCKET_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(HempyBucket),
-    cv.Required('name'): cv.string,  # Add name field
+    cv.Required('name'): cv.string,
     cv.Required('state_sensor'): cv.use_id(text_sensor.TextSensor),
     cv.Required('weight_sensor'): cv.use_id(sensor.Sensor),
     cv.Required('start_watering_weight'): cv.use_id(number.Number),
@@ -22,7 +22,7 @@ HEMPY_BUCKET_SCHEMA = cv.Schema({
     cv.Required('evaporation_target_weight'): cv.use_id(number.Number),
     cv.Required('next_watering_weight'): cv.use_id(sensor.Sensor),
     cv.Required('waterpump'): cv.use_id(switch.Switch),
-    cv.Optional('update_interval', default="1s"): cv.update_interval
+    cv.Optional('update_interval', default="30s"): cv.update_interval,
 })
 
 # Configuration schema for the list of HempyBuckets
@@ -32,7 +32,7 @@ CONFIG_SCHEMA = cv.Schema({
 
 # Code generation for handling multiple HempyBucket instances
 async def to_code(config):
-    for bucket_conf in config['buckets']:        
+    for bucket_conf in config['buckets']:
         name = bucket_conf['name']
         state_sensor = await cg.get_variable(bucket_conf['state_sensor'])
         weight_sensor = await cg.get_variable(bucket_conf['weight_sensor'])
@@ -45,5 +45,8 @@ async def to_code(config):
         evaporation_target_weight = await cg.get_variable(bucket_conf['evaporation_target_weight'])
         next_watering_weight = await cg.get_variable(bucket_conf['next_watering_weight'])
         waterpump = await cg.get_variable(bucket_conf['waterpump'])
-        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, max_watering_time, drain_wait_time, drain_target_weight, evaporation_target_weight, next_watering_weight, waterpump)
+        update_interval = bucket_conf['update_interval']
+
+        # Create the HempyBucket instance with all required parameters
+        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, max_watering_time, drain_wait_time, drain_target_weight, evaporation_target_weight, next_watering_weight, waterpump, cg.uint32(update_interval))
         await cg.register_component(var, bucket_conf)

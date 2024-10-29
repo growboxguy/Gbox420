@@ -178,6 +178,7 @@ sensor:
     id: bucket1_next_watering_weight
     name: "Bucket1 Next watering weight"
     unit_of_measurement: "kg"
+    accuracy_decimals: 1
     icon: "mdi:water-alert"
   - platform: hx711
     id: bucket1_weight_sensor
@@ -202,6 +203,7 @@ sensor:
     id: bucket2_next_watering_weight
     name: "Bucket2 Next watering weight"
     unit_of_measurement: "kg"
+    accuracy_decimals: 1
     icon: "mdi:water-alert"
   - platform: hx711
     id: bucket2_weight_sensor
@@ -416,7 +418,7 @@ hempy:
       evaporation_target_weight: bucket1_evaporation_target_weight
       next_watering_weight: bucket1_next_watering_weight
       waterpump: bucket1_waterpump
-      update_interval: 1s
+      update_interval: 20s
     - id: bucket2
       name: Bucket2
       state_sensor: bucket2_state_sensor
@@ -430,4 +432,4 @@ hempy:
       evaporation_target_weight: bucket2_evaporation_target_weight
       next_watering_weight: bucket2_next_watering_weight
       waterpump: bucket2_waterpump
-      update_interval: 1s
+      update_interval: 20s   #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.

@@ -7,19 +7,22 @@ namespace esphome
     void HempyBucket::setup()
     {
       NextWateringWeight->publish_state(StartWateringWeight->state); // Before the first watering the wet weight is unknown and DryWeight cannot be calculated
-      ESP_LOGI("hempy", "%s initialized", Name);
+      ESP_LOGI("hempy", "%s ready", Name.c_str());
     }
 
     void HempyBucket::update()
     {
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      if (LogScheduler++ == 5) // Only report every 5sec  (update is called every second)
-      {
-        LogScheduler = 0;
-        ESP_LOGI("hempy","%s State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
-                  Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state);
-      }
+      ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg",
+               Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state);
+    }
+
+    void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
+    {
+      this->set_update_interval(miliseconds);
+      this->stop_poller();
+      this->start_poller();
     }
 
     void HempyBucket::update_state(HempyStates NewState, bool Force)
@@ -42,10 +45,14 @@ namespace esphome
       case HempyStates::DISABLED:
         if (WaterPump->state)
           WaterPump->turn_off();
+        if (State != NewState)                    // When the state just changed
+          update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
         break;
       case HempyStates::IDLE:
         if (WaterPump->state)
           WaterPump->turn_off();
+        if (State != NewState)                    // When the state just changed
+          update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
         if ((StartWateringWeight->state > 0 && WeightSensor->state <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight > 0 && WeightSensor->state <= DryWeight))
         {
           update_state(HempyStates::WATERING, true);
@@ -55,6 +62,7 @@ namespace esphome
       case HempyStates::WATERING:
         if (State != NewState)
         {
+          update_interval(1000);                                            // 1sec - Speed up calling update()
           BucketStateWeight = WeightSensor->state;                          // Store the bucket weight before starting the pump
           if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRAINING cycles
           {
@@ -154,7 +162,7 @@ namespace esphome
 
     void HempyBucket::toggle_watering()
     {
-      if (State != HempyStates::WATERING) // If watering is not in progress: start watering
+      if (State != HempyStates::WATERING && State != HempyStates::DRAINING) // If watering is not in progress: start watering
         update_state(HempyStates::WATERING, true);
       else
         update_state(HempyStates::IDLE); // If watering is in progress: stop it (second click stops watering)
