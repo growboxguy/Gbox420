@@ -19,16 +19,16 @@ debug:
   update_interval: 60s
 
 external_components:
- #- source:
+  #- source:
   #    type: local
   #    path: components
   - source:
       type: git
       url: https://github.com/Growboxguy/Gbox420
       ref: master
-      path: ESPHome/components 
-    components: [ hempy ]
-    refresh: 60s 
+      path: ESPHome/components
+    components: [hempy]
+    refresh: 60s
 
 text_sensor:
   - platform: debug
@@ -103,10 +103,10 @@ switch:
     name: "Bucket1 Pump"
     output: bucket1_relay
     on_turn_on:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "on:d=16,o=6,b=120:e,p,g" # Play sound when turning on
     on_turn_off:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "off:d=16,o=6,b=120:g,p,e" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket1 Watering logic"
@@ -117,12 +117,12 @@ switch:
     lambda: |-
       return id(bucket1).is_watering_active();
     turn_on_action:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "on:d=16,o=6,b=120:e,p,g"
       - lambda: |-
           id(bucket1).toggle_watering_logic(true);
     turn_off_action:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "off:d=16,o=6,b=120:g,p,e"
       - lambda: |-
           id(bucket1).toggle_watering_logic(false);
@@ -132,10 +132,10 @@ switch:
     name: "Bucket2 Pump"
     output: bucket2_relay
     on_turn_on:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "on:d=16,o=6,b=120:e,p,g" # Play sound when turning on
     on_turn_off:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "off:d=16,o=6,b=120:g,p,e" # Play sound when turning off
   - platform: template # Enable/Disable watering logic
     name: "Bucket2 Watering logic"
@@ -146,12 +146,12 @@ switch:
     lambda: |-
       return id(bucket2).is_watering_active();
     turn_on_action:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "on:d=16,o=6,b=120:e,p,g"
       - lambda: |-
           id(bucket2).toggle_watering_logic(true);
     turn_off_action:
-      - rtttl.play: 
+      - rtttl.play:
           rtttl: "off:d=16,o=6,b=120:g,p,e"
       - lambda: |-
           id(bucket2).toggle_watering_logic(false);
@@ -188,7 +188,7 @@ sensor:
     dout_pin: 7
     clk_pin: 6
     gain: 128
-    update_interval: 1s
+    update_interval: 1s #This gets overwritten by the Hempy bucket's dynamic update interval after the first state change to WATERING or DISABLED
     accuracy_decimals: 2
     filters:
       - calibrate_linear:
@@ -213,7 +213,7 @@ sensor:
     dout_pin: 9
     clk_pin: 8
     gain: 128
-    update_interval: 1s
+    update_interval: 1s #This gets overwritten by the Hempy bucket's dynamic update interval after the first state change to WATERING or DISABLED
     accuracy_decimals: 2
     filters:
       - calibrate_linear:
@@ -418,7 +418,7 @@ hempy:
       evaporation_target_weight: bucket1_evaporation_target_weight
       next_watering_weight: bucket1_next_watering_weight
       waterpump: bucket1_waterpump
-      update_interval: 20s
+      update_interval: 20s #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.
     - id: bucket2
       name: Bucket2
       state_sensor: bucket2_state_sensor
@@ -432,4 +432,4 @@ hempy:
       evaporation_target_weight: bucket2_evaporation_target_weight
       next_watering_weight: bucket2_next_watering_weight
       waterpump: bucket2_waterpump
-      update_interval: 20s   #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.
+      update_interval: 20s #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.

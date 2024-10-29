@@ -23,6 +23,9 @@ namespace esphome
       this->set_update_interval(miliseconds);
       this->stop_poller();
       this->start_poller();
+      WeightSensor->set_update_interval(miliseconds);
+      WeightSensor->stop_poller();
+      WeightSensor->start_poller();
     }
 
     void HempyBucket::update_state(HempyStates NewState, bool Force)
