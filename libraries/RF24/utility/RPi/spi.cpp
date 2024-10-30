@@ -8,7 +8,6 @@ bool bcmIsInitialized = false;
 
 SPI::SPI()
 {
-
 }
 
 void SPI::begin(int busNo, uint32_t spi_speed)
@@ -29,8 +28,8 @@ void SPI::beginTransaction(SPISettings settings)
     }
     pthread_mutex_lock(&spiMutex);
     setBitOrder(settings.border);
-    setDataMode(settings.dmode);
-    setClockDivider(settings.clck);
+    setDataMode(settings.dataMode);
+    setClockDivider(settings.clock);
 }
 
 void SPI::endTransaction()
@@ -62,5 +61,4 @@ void SPI::chipSelect(int csn_pin)
 
 SPI::~SPI()
 {
-
 }

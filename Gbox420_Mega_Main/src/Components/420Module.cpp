@@ -50,7 +50,7 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 {
   if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
   {
-    reportToSerial(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
+    runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
   }
 }
 
@@ -61,7 +61,7 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
 * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
 */
-void Module::reportToSerial(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
+void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
   if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
   {

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-
+# pylint: disable=invalid-name
 import os
 from sys import version_info
 from setuptools import setup, Extension
-import crossunixccompiler
 
 version = ""
 cflags = os.getenv("CFLAGS", "")
@@ -18,7 +17,7 @@ symlink_directory = []
 git_dir = os.path.split(os.path.abspath(os.getcwd()))[0]
 
 try:  # get compiler options from the generated Makefile.inc
-    with open(os.path.join(git_dir, "Makefile.inc"), "r") as f:
+    with open(os.path.join(git_dir, "Makefile.inc"), "r", encoding="utf-8") as f:
         for line in f.read().splitlines():
             identifier, value = line.split("=", 1)
             if identifier == "CPUFLAGS":
@@ -35,17 +34,15 @@ try:  # get compiler options from the generated Makefile.inc
                 os.environ[identifier] = value
 
 except FileNotFoundError:  # assuming lib was built & installed with CMake
-
     # get LIB_VERSION from library.properties file for Arduino IDE
-    with open(os.path.join(git_dir, "library.properties"), "r") as f:
+    with open(os.path.join(git_dir, "library.properties"), "r", encoding="utf-8") as f:
         for line in f.read().splitlines():
             if line.startswith("version"):
                 version = line.split("=")[1]
 
 # check C++ RF24 lib is installed
 finally:
-
-    # check for possible linker flags set via CFLAGS environment varible
+    # check for possible linker flags set via CFLAGS environment variable
     for flag in cflags.split("-"):
         if flag.startswith("L"):
             symlink_directory.append(
@@ -71,38 +68,23 @@ finally:
             )
         )
 
+
 # append any additionally found compiler flags
 os.environ["CFLAGS"] = cflags
 
 # get the proper boost.python lib symlink name according to version of python
-if version_info >= (3,):
-    BOOST_LIB = "boost_python3"
-else:
-    BOOST_LIB = "boost_python"
-
-crossunixccompiler.register()
-
-long_description = """
-.. warning:: This python wrapper for the RF24 C++ library was not intended
-    for distribution on pypi.org. If you're reading this, then this package
-    is likely unauthorized or unofficial.
-"""
+BOOST_LIB = "boost_python" + (
+    "" if version_info < (3,) else "%d%d" % (version_info.major, version_info.minor)
+)
 
 
 setup(
-    name="RF24",
     version=version,
-    license="GPLv2",
-    license_files=(os.path.join(git_dir, "LICENSE"),),
-    long_description=long_description,
-    long_description_content_type="text/x-rst",
-    classifiers=[
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: C++",
-        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-    ],
     ext_modules=[
-        Extension("RF24", sources=["pyRF24.cpp"], libraries=["rf24", BOOST_LIB])
+        Extension(
+            "RF24",
+            sources=["pyRF24.cpp"],
+            libraries=["rf24", BOOST_LIB],
+        )
     ],
 )

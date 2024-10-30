@@ -15,8 +15,11 @@ Adafruit_ADXL343 accel = Adafruit_ADXL343(12345);
 /* Uncomment following line for Wire1 bus */
 //Adafruit_ADXL343 accel = Adafruit_ADXL343(12345, &Wire1);
 
-/* Uncomment for SPI */
+/* Uncomment for software SPI */
 //Adafruit_ADXL343 accel = Adafruit_ADXL343(ADXL343_SCK, ADXL343_MISO, ADXL343_MOSI, ADXL343_CS, 12345);
+
+/* Uncomment for hardware SPI */
+//Adafruit_ADXL343 accel = Adafruit_ADXL343(ADXL343_CS, &SPI, 12345);
 
 void displayDataRate(void)
 {

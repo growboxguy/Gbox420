@@ -52,7 +52,7 @@ The following drivers are based on the Adafruit Unified Sensor Driver:
 
 Any driver that supports the Adafruit unified sensor abstraction layer will implement the Adafruit\_Sensor base class.  There are two main typedefs and one enum defined in Adafruit_Sensor.h that are used to 'abstract' away the sensor details and values:
 
-**Sensor Types (sensors\_type\_t)**
+## Sensor Types (`sensors_type_t`)
 
 These pre-defined sensor types are used to properly handle the two related typedefs below, and allows us determine what types of units the sensor uses, etc.
 
@@ -74,11 +74,25 @@ typedef enum
   SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
   SENSOR_TYPE_VOLTAGE               = (15),
   SENSOR_TYPE_CURRENT               = (16),
-  SENSOR_TYPE_COLOR                 = (17)
+  SENSOR_TYPE_COLOR                 = (17),
+  SENSOR_TYPE_TVOC                  = (18),
+  SENSOR_TYPE_VOC_INDEX             = (19),
+  SENSOR_TYPE_NOX_INDEX             = (20),
+  SENSOR_TYPE_CO2                   = (21),
+  SENSOR_TYPE_ECO2                  = (22),
+  SENSOR_TYPE_PM10_STD              = (23),
+  SENSOR_TYPE_PM25_STD              = (24),
+  SENSOR_TYPE_PM100_STD             = (25),
+  SENSOR_TYPE_PM10_ENV              = (26),
+  SENSOR_TYPE_PM25_ENV              = (27),
+  SENSOR_TYPE_PM100_ENV             = (28),
+  SENSOR_TYPE_GAS_RESISTANCE        = (29),
+  SENSOR_TYPE_UNITLESS_PERCENT      = (30),
+  SENSOR_TYPE_ALTITUDE              = (31),
 } sensors_type_t;
 ```
 
-**Sensor Details (sensor\_t)**
+## Sensor Details (`sensor_t`)
 
 This typedef describes the specific capabilities of this sensor, and allows us to know what sensor we are using beneath the abstraction layer.
 
@@ -109,7 +123,7 @@ The individual fields are intended to be used as follows:
 - **resolution**: The smallest difference between two values that this sensor can report (in the appropriate SI unit)
 - **min\_delay**: The minimum delay in microseconds between two sensor events, or '0' if there is no constant sensor rate
 
-**Sensor Data/Events (sensors\_event\_t)**
+## Sensor Data/Events (`sensors_event_t`)
 
 This typedef is used to return sensor data from any sensor supported by the abstraction layer, using standard SI units and scales.
 
@@ -137,6 +151,20 @@ typedef struct
         float           relative_humidity;
         float           current;
         float           voltage;
+        float           tvoc;
+        float           voc_index;
+        float           nox_index;
+        float           CO2,
+        float           eCO2,
+        float           pm10_std,
+        float           pm25_std,
+        float           pm100_std,
+        float           pm10_env,
+        float           pm25_env,
+        float           pm100_env,
+        float           gas_resistance,
+        float           unitless_percent,
+        float           altitude,
         sensors_color_t color;
     };
 } sensors_event_t;
@@ -149,7 +177,7 @@ It includes the following fields:
 - **timestamp**: time in milliseconds when the sensor value was read
 - **data[4]**: An array of four 32-bit values that allows us to encapsulate any type of sensor data via a simple union (further described below)
 
-**Required Functions**
+## Required Functions
 
 In addition to the two standard types and the sensor type enum, all drivers based on Adafruit_Sensor must also implement the following two functions:
 
@@ -163,9 +191,9 @@ void getSensor(sensor_t*);
 ```
 Calling this function will provide some basic information about the sensor (the sensor name, driver version, min and max values, etc.
 
-**Standardised SI values for sensors\_event\_t**
+## Standardised SI values for `sensors_event_t`
 
-A key part of the abstraction layer is the standardisation of values on SI units of a particular scale, which is accomplished via the data[4] union in sensors\_event\_t above.  This 16 byte union includes fields for each main sensor type, and uses the following SI units and scales:
+A key part of the abstraction layer is the standardization of values on SI units of a particular scale, which is accomplished via the data[4] union in sensors\_event\_t above.  This 16 byte union includes fields for each main sensor type, and uses the following SI units and scales:
 
 - **acceleration**: values are in **meter per second per second** (m/s^2)
 - **magnetic**: values are in **micro-Tesla** (uT)
@@ -179,12 +207,26 @@ A key part of the abstraction layer is the standardisation of values on SI units
 - **current**: values are in **milliamps** (mA)
 - **voltage**: values are in **volts** (V)
 - **color**: values are in 0..1.0 RGB channel luminosity and 32-bit RGBA format
+- **tvoc**: values are in **parts per billion** (ppb)
+- **voc_index**: values are an **index** from 1-500 with 100 being normal
+- **nox_index**: values are an **index** from 1-500 with 100 being normal
+- **CO2**: values are in **parts per million** (ppm)
+- **eCO2**: values are in **parts per million** (ppm)
+- **pm10_std**: values are in **parts per million** (ppm)
+- **pm25_std**: values are in **parts per million** (ppm)
+- **pm100_std**: values are in **parts per million** (ppm)
+- **pm10_env**: values are in **parts per million** (ppm)
+- **pm25_env**: values are in **parts per million** (ppm)
+- **pm100_env**: values are in **parts per million** (ppm)
+- **gas_resistance**: values are in **ohms**
+- **unitless_percent**: values are in **%**
+- **altitude**: values are in **meters** (m)
 
 ## The Unified Driver Abstraction Layer in Practice ##
 
 Using the unified sensor abstraction layer is relatively easy once a compliant driver has been created.
 
-Every compliant sensor can now be read using a single, well-known 'type' (sensors\_event\_t), and there is a standardised way of interrogating a sensor about its specific capabilities (via sensor\_t).
+Every compliant sensor can now be read using a single, well-known 'type' (sensors\_event\_t), and there is a standardized way of interrogating a sensor about its specific capabilities (via sensor\_t).
 
 An example of reading the [TSL2561](https://github.com/adafruit/Adafruit_TSL2561) light sensor can be seen below:
 

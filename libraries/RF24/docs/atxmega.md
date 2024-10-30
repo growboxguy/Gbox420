@@ -1,5 +1,7 @@
 # ATXMEGA
 
+@tableofcontents
+
 The RF24 driver can be build as a static library with Atmel Studio 7 in order to be included as any other library in another program for the XMEGA family.
 
 Currently only the [ATXMEGA D3](https://www.microchip.com/wwwproducts/en/ATxmega64d3) family is implemented.
@@ -52,4 +54,4 @@ Call the `__start_timer()` to start the millisecond timer.
 
 @note The millisecond functionality is based on the TCE0 so don't use these pins as IO.
 
-@note The operating frequency of the uC is 32MHz. If you have a different frequency, change the TCE0 registers appropriatly in function `__start_timer()` in **compatibility.c** file for your frequency.
+@note The operating frequency of the uC is 32MHz. If you have a different frequency, change the TCE0 registers appropriately in function `__start_timer()` in **compatibility.c** file for your frequency.

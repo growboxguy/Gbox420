@@ -8,6 +8,9 @@ endif()
 
 cmake_minimum_required(VERSION 3.15)
 
+# generate a compilation database for static analysis by clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Set the project name to your project name
 project(RF24 C CXX)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/StandardProjectSettings.cmake)
@@ -17,7 +20,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/PreventInSourceBuilds.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/GetLibInfo.cmake)
 
 # allow CMake CLI options to configure RF24_config.h macros
-option(SERIAL_DEBUG "enable/disable debugging output" OFF)
+option(RF24_DEBUG "enable/disable debugging output" OFF)
 option(MINIMAL "exclude optional source code to keep compile size compact" OFF)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
@@ -72,12 +75,12 @@ endif()
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/detectCPU.cmake) # sets the variable SOC accordingly
 
 # auto-detect what driver to use
-# auto-detect can be overriden using `cmake .. -D RF24_DRIVER=<supported driver>`
+# auto-detect can be overridden using `cmake .. -D RF24_DRIVER=<supported driver>`
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/AutoConfig_RF24_DRIVER.cmake)
 
 #[[ adding the utility sub-directory will
     1. set variables RF24_DRIVER, RF24_LINKED_DRIVER, and RF24_DRIVER_SOURCES
-    2. copy the approriate /utility/*/includes.h file to the /utility folder
+    2. copy the appropriate /utility/*/includes.h file to the /utility folder
     3. set additional install rules according to the RF24_DRIVER specified
 ]]
 add_subdirectory(utility)
@@ -115,9 +118,9 @@ else() # utility driver is compiled with the library - not linking to a pre-comp
 endif()
 
 # assert the appropriate preprocessor macros for RF24_config.h
-if(SERIAL_DEBUG)
-    message(STATUS "SERIAL_DEBUG asserted")
-    target_compile_definitions(${LibTargetName} PUBLIC SERIAL_DEBUG)
+if(RF24_DEBUG)
+    message(STATUS "RF24_DEBUG asserted")
+    target_compile_definitions(${LibTargetName} PUBLIC RF24_DEBUG)
 endif()
 if(MINIMAL)
     message(STATUS "MINIMAL asserted")
@@ -134,6 +137,13 @@ if(DEFINED RF24_SPI_SPEED)
     message(STATUS "RF24_SPI_SPEED set to ${RF24_SPI_SPEED}")
     target_compile_definitions(${LibTargetName} PUBLIC
         RF24_SPI_SPEED=${RF24_SPI_SPEED}
+    )
+endif()
+# allow user customization of default GPIO chip used with the SPIDEV driver
+if(DEFINED RF24_LINUX_GPIO_CHIP)
+    message(STATUS "RF24_LINUX_GPIO_CHIP set to ${RF24_LINUX_GPIO_CHIP}")
+    target_compile_definitions(${LibTargetName} PUBLIC
+        RF24_LINUX_GPIO_CHIP="${RF24_LINUX_GPIO_CHIP}"
     )
 endif()
 

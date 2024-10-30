@@ -21,12 +21,13 @@
 
 // We will be using the nRF24L01's IRQ pin for this example
 volatile bool wait_for_event = false; // used to wait for an IRQ event to trigger
+volatile bool got_interrupt = false;  // used to signal when an IRQ event has been triggered
 
 // instantiate an object for the nRF24L01 transceiver
 RF24 radio(CE_PIN, CSN_PIN);
 
 // Used to control whether this node is sending or receiving
-bool role = false;  // true = TX node, false = RX node
+bool role = false; // true = TX node, false = RX node
 
 // For this example, we'll be using a payload containing
 // a string that changes on every transmission. (successful or not)
@@ -40,7 +41,7 @@ char ack_payloads[][ack_pl_size + 1] = {"Yak ", "Back", " ACK"};
 
 void interruptHandler(uint gpio, uint32_t events); // prototype to handle IRQ events
 void printRxFifo();                                // prototype to print RX FIFO with 1 buffer
-
+void assessInterruptEvent();                       // prototype to assess IRQ flags triggered
 
 bool setup()
 {
@@ -83,12 +84,12 @@ bool setup()
     // Set the PA Level low to try preventing power supply related problems
     // because these examples are likely run with nodes in close proximity to
     // each other.
-    radio.setPALevel(RF24_PA_LOW);    // RF24_PA_MAX is default.
+    radio.setPALevel(RF24_PA_LOW); // RF24_PA_MAX is default.
 
     // For this example we use acknowledgment (ACK) payloads to trigger the
     // IRQ pin when data is received on the TX node.
     // to use ACK payloads, we need to enable dynamic payload lengths
-    radio.enableDynamicPayloads();    // ACK payloads are dynamically sized
+    radio.enableDynamicPayloads(); // ACK payloads are dynamically sized
 
     // Acknowledgement packets have no payloads by default. We need to enable
     // this feature for all nodes (TX & RX) to use ACK payloads.
@@ -96,7 +97,7 @@ bool setup()
     // Fot this example, we use the same address to send data back and forth
 
     // set the TX address of the RX node into the TX pipe
-    radio.openWritingPipe(address[radioNumber]);     // always uses pipe 0
+    radio.openWritingPipe(address[radioNumber]); // always uses pipe 0
 
     // set the RX address of the TX node into a RX pipe
     radio.openReadingPipe(1, address[!radioNumber]); // using pipe 1
@@ -105,7 +106,6 @@ bool setup()
     if (role) {
         // setup for TX mode
         radio.stopListening(); // put radio in TX mode
-
     }
     else {
         // setup for RX mode
@@ -123,7 +123,6 @@ bool setup()
     }
 
     // For debugging info
-    // printf_begin();             // needed only once for printing details
     // radio.printDetails();       // (smaller) function that prints raw register values
     // radio.printPrettyDetails(); // (larger) function that prints human readable data
 
@@ -145,7 +144,6 @@ void loop()
             printf("\nConfiguring IRQ pin to ignore the 'data sent' event\n");
             radio.maskIRQ(true, false, false); // args = "data_sent", "data_fail", "data_ready"
             printf("   Pinging RX node for 'data ready' event...\n");
-
         }
         else if (pl_iterator == 1) {
             // Test the "data sent" event with the IRQ pin
@@ -153,7 +151,6 @@ void loop()
             printf("\nConfiguring IRQ pin to ignore the 'data ready' event\n");
             radio.maskIRQ(false, false, true); // args = "data_sent", "data_fail", "data_ready"
             printf("   Pinging RX node for 'data sent' event...\n");
-
         }
         else if (pl_iterator == 2) {
             // Use this iteration to fill the RX node's FIFO which sets us up for the next test.
@@ -175,7 +172,6 @@ void loop()
                 printf("Transmission failed or timed out. Continuing anyway.\n");
                 radio.flush_tx(); // discard payload(s) that failed to transmit
             }
-
         }
         else if (pl_iterator == 3) {
             // test the "data fail" event with the IRQ pin
@@ -212,12 +208,10 @@ void loop()
             // inform user what to do next
             printf("\n*** PRESS 'T' to restart the transmissions");
             printf("\n*** PRESS 'R' to change to Receive role\n");
-
         }
         else if (pl_iterator == 2) {
             pl_iterator++; // proceed from step 3 to last step (stop at step 4 for readability)
         }
-
     }
     else if (!role && radio.rxFifoFull()) {
         // This device is a RX node
@@ -238,6 +232,10 @@ void loop()
 
     } // role
 
+    if (got_interrupt) {
+        assessInterruptEvent();
+    }
+
     char input = getchar_timeout_us(0); // get char from buffer for user input
     if (input != PICO_ERROR_TIMEOUT) {
         // change the role via the serial terminal
@@ -246,21 +244,21 @@ void loop()
             // Become the TX node
             if (!role)
                 printf("*** CHANGING TO TRANSMIT ROLE -- PRESS 'R' TO SWITCH BACK\n");
-            else if (role && wait_for_event) // don't interrupt on ongoing test
+            else if (role && wait_for_event) // don't interrupt an ongoing test
                 return;                      // exit now; start next loop()
             else
                 printf("*** RESTARTING IRQ PIN TEST ***\n");
 
             role = true;
             wait_for_event = false;
-            pl_iterator = 0;   // reset the iterator
-            radio.flush_tx();  // discard any payloads in the TX FIFO
+            pl_iterator = 0;  // reset the iterator
+            radio.flush_tx(); // discard any payloads in the TX FIFO
 
             // startListening() clears the IRQ masks also. This is required for
             // continued TX operations when a transmission fails.
             radio.stopListening(); // this also discards any unused ACK payloads
         }
-        else if ((input == 'R' || input == 'r')/*  && role */) {
+        else if ((input == 'R' || input == 'r') /*  && role */) {
             // Become the RX node
             printf("*** CHANGING TO RECEIVE ROLE -- PRESS 'T' TO SWITCH BACK\n");
 
@@ -284,16 +282,24 @@ void loop()
 } // loop
 
 /**
- * when the IRQ pin goes active LOW, call this fuction print out why
+ * when the IRQ pin goes active LOW.
+ * Here we just tell the main loop() to call `assessInterruptEve4nt()`.
  */
 void interruptHandler(uint gpio, uint32_t events)
 {
-
     if (gpio != IRQ_PIN && !(events | GPIO_IRQ_EDGE_FALL)) {
         // the gpio pin and event does not match the configuration we specified
         return;
     }
+    got_interrupt = true; // forward event handling back to main loop()
+}
 
+/**
+ * Called when an event has been triggered.
+ * Here, we want to verify the expected IRQ flag has been asserted.
+ */
+void assessInterruptEvent()
+{
     // print IRQ status and all masking flags' states
     printf("\tIRQ pin is actively LOW\n");   // show that this function was called
     bool tx_ds, tx_df, rx_dr;                // declare variables for IRQ masks
@@ -322,9 +328,9 @@ void interruptHandler(uint gpio, uint32_t events)
     else if (pl_iterator == 4) {
         printf("   'Data Fail' event test %s\n", tx_df ? "passed" : "failed");
     }
+    got_interrupt = false;  // reset this flag to prevent calling this function from loop()
     wait_for_event = false; // ready to continue with loop() operations
-} // interruptHandler
-
+}
 
 /**
  * Print the entire RX FIFO with one buffer. This will also flush the RX FIFO.
@@ -332,11 +338,11 @@ void interruptHandler(uint gpio, uint32_t events)
  */
 void printRxFifo()
 {
-    if (radio.available()) {                   // if there is data in the RX FIFO
+    if (radio.available()) { // if there is data in the RX FIFO
         // to flush the data from the RX FIFO, we'll fetch it all using 1 buffer
 
         uint8_t pl_size = !role ? tx_pl_size : ack_pl_size;
-        char rx_fifo[pl_size * 3 + 1];         // RX FIFO is full & we know ACK payloads' size
+        char rx_fifo[pl_size * 3 + 1]; // RX FIFO is full & we know ACK payloads' size
         if (radio.rxFifoFull()) {
             rx_fifo[pl_size * 3] = 0;          // add a NULL terminating char to use as a c-string
             radio.read(&rx_fifo, pl_size * 3); // this clears the RX FIFO (for this example)
@@ -347,7 +353,7 @@ void printRxFifo()
                 radio.read(&rx_fifo + (i * pl_size), pl_size);
                 i++;
             }
-            rx_fifo[i * pl_size] = 0;            // add a NULL terminating char to use as a c-string
+            rx_fifo[i * pl_size] = 0; // add a NULL terminating char to use as a c-string
         }
         printf("Complete RX FIFO: %s\n", rx_fifo); // print the entire RX FIFO with 1 buffer
     }

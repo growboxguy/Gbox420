@@ -1,23 +1,69 @@
 /*
- * https://github.com/mrshu/GPIOlib
- * Copyright (c) 2011, Copyright (c) 2011 mr.Shu
+ *
+ * Copyright (c) 2024, Copyright (c) 2024 TMRh20 & 2bndy5
  * All rights reserved.
  *
- * Modified on 24 June 2012, 11:06 AM
- * File:   gpio.cpp
- * Author: purinda (purinda@gmail.com)
  *
- *  Patched for filedescriptor catching and error control by L Diaz 2018
  */
-
+#include "linux/gpio.h"
+#include <unistd.h>    // close()
+#include <fcntl.h>     // open()
+#include <sys/ioctl.h> // ioctl()
+#include <errno.h>     // errno, strerror()
+#include <string.h>    // std::string, strcpy()
+#include <map>
 #include "gpio.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
-std::map<int, GPIOfdCache_t> GPIO::cache;
+// instantiate some global structs to setup cache
+// doing this globally ensures the data struct is zero-ed out
+typedef int gpio_fd; // for readability
+std::map<rf24_gpio_pin_t, gpio_fd> cachedPins;
+struct gpio_v2_line_request request;
+struct gpio_v2_line_values data;
+
+void GPIOChipCache::openDevice()
+{
+    if (fd < 0) {
+        fd = open(chip, O_RDONLY);
+        if (fd < 0) {
+            std::string msg = "Can't open device ";
+            msg += chip;
+            msg += "; ";
+            msg += strerror(errno);
+            throw GPIOException(msg);
+            return;
+        }
+    }
+    chipInitialized = true;
+}
+
+void GPIOChipCache::closeDevice()
+{
+    if (fd >= 0) {
+        close(fd);
+        fd = -1;
+    }
+}
+
+GPIOChipCache::GPIOChipCache()
+{
+    request.num_lines = 1;
+    strcpy(request.consumer, "RF24 lib");
+    data.mask = 1ULL; // only change value for specified pin
+}
+
+GPIOChipCache::~GPIOChipCache()
+{
+    closeDevice();
+    for (std::map<rf24_gpio_pin_t, gpio_fd>::iterator i = cachedPins.begin(); i != cachedPins.end(); ++i) {
+        if (i->second > 0) {
+            close(i->second);
+        }
+    }
+}
+
+// GPIO chip cache manager
+GPIOChipCache gpioCache;
 
 GPIO::GPIO()
 {
@@ -27,141 +73,118 @@ GPIO::~GPIO()
 {
 }
 
-void GPIO::open(int port, int DDR)
+void GPIO::open(rf24_gpio_pin_t port, int DDR)
 {
-    FILE* f;
-    f = fopen("/sys/class/gpio/export", "w");
-    if (f == NULL) {
-        throw GPIOException("can't export GPIO pin .check access rights");
+    try {
+        gpioCache.openDevice();
     }
-    fprintf(f, "%d\n", port);
-    fclose(f);
+    catch (GPIOException& exc) {
+        if (gpioCache.chipInitialized) {
+            throw exc;
+            return;
+        }
+        gpioCache.chip = "/dev/gpiochip0";
+        gpioCache.openDevice();
+    }
 
-    int counter = 0;
-    char file[128];
-    sprintf(file, "/sys/class/gpio/gpio%d/direction", port);
+    // get chip info
+    gpiochip_info info;
+    memset(&info, 0, sizeof(info));
+    int ret = ioctl(gpioCache.fd, GPIO_GET_CHIPINFO_IOCTL, &info);
+    if (ret < 0) {
+        std::string msg = "Could not gather info about ";
+        msg += gpioCache.chip;
+        throw GPIOException(msg);
+        return;
+    }
 
-    while ((f = fopen(file, "w")) == NULL) { //Wait 10 seconds for the file to be accessible if not open on first attempt
-        sleep(1);
-        counter++;
-        if (counter > 10) {
-            throw GPIOException("can't access /sys/class/gpio/gpio%d/direction GPIO pin. check access rights");
-            /*perror("Could not open /sys/class/gpio/gpio%d/direction");
-            exit(0); */
+    if (port > info.lines) {
+        std::string msg = "pin number " + std::to_string(port) + " not available for " + gpioCache.chip;
+        throw GPIOException(msg);
+        return;
+    }
+
+    // check if pin is already in use
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
+    if (pin == cachedPins.end()) { // pin not in use; add it to cached request
+        request.offsets[0] = port;
+        request.fd = 0;
+    }
+    else {
+        request.fd = pin->second;
+    }
+
+    if (request.fd <= 0) {
+        ret = ioctl(gpioCache.fd, GPIO_V2_GET_LINE_IOCTL, &request);
+        if (ret == -1 || request.fd <= 0) {
+            std::string msg = "[GPIO::open] Can't get line handle from IOCTL; ";
+            msg += strerror(errno);
+            throw GPIOException(msg);
+            return;
         }
     }
-    int l = (DDR == 0) ? fprintf(f, "in\n") : fprintf(f, "out\n");
-    if (!(l == 3 || l == 4)) {
-        fclose(f);
-        throw GPIOException("can't set direction on GPIO pin. check access rights");
-    }
-    /*
-    if (DDR == 0)
-          fprintf(f, "in\n");
-    else  printf(f, "out\n");
-  */
-    fclose(f);
+    gpioCache.closeDevice(); // in case other apps want to access it
 
-    // Caches the GPIO descriptor;
-    sprintf(file, "/sys/class/gpio/gpio%d/value", port);
-    int flags = (DDR == 0) ? O_RDONLY : O_WRONLY;
-    int fd = ::open(file, flags);
-    if (fd < 0) {
-        throw GPIOException("Can't open the GPIO");
-    } else {
-        cache[port] = fd;  // cache the fd;
-        lseek(fd, SEEK_SET, 0);
-    }
+    // set the pin and direction
+    request.config.flags = DDR ? GPIO_V2_LINE_FLAG_OUTPUT : GPIO_V2_LINE_FLAG_INPUT;
 
+    ret = ioctl(request.fd, GPIO_V2_LINE_SET_CONFIG_IOCTL, &request.config);
+    if (ret == -1) {
+        std::string msg = "[gpio::open] Can't set line config; ";
+        msg += strerror(errno);
+        throw GPIOException(msg);
+        return;
+    }
+    cachedPins.insert(std::pair<rf24_gpio_pin_t, gpio_fd>(port, request.fd));
 }
 
-void GPIO::close(int port)
+void GPIO::close(rf24_gpio_pin_t port)
 {
-    std::map<int, GPIOfdCache_t>::iterator i;
-    i = cache.find(port);
-    if (i != cache.end()) {
-        close(i->second); // close the cached fd
-        cache.erase(i); // Delete cache entry
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
+    if (pin == cachedPins.end()) {
+        return;
     }
-    // Do unexport
-    FILE* f;
-    f = fopen("/sys/class/gpio/unexport", "w");
-    if (f != NULL) {
-        fprintf(f, "%d\n", port);
-        fclose(f);
+    if (pin->second > 0) {
+        ::close(pin->second);
     }
+    cachedPins.erase(pin);
 }
 
-int GPIO::read(int port)
+int GPIO::read(rf24_gpio_pin_t port)
 {
-    std::map<int, GPIOfdCache_t>::iterator i;
-    int fd;
-    i = cache.find(port);
-    if (i == cache.end()) { // Fallback to open the gpio
-        GPIO::open(port, GPIO::DIRECTION_IN);
-        i = cache.find(port);
-        if (i == cache.end()) {
-            throw GPIOException("can't access to GPIO");
-        } else {
-            fd = i->second;
-        }
-    } else {
-        fd = i->second;
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
+    if (pin == cachedPins.end() || pin->second <= 0) {
+        throw GPIOException("[GPIO::read] pin not initialized! Use GPIO::open() first");
+        return -1;
     }
 
-    char c;
-    if (lseek(fd, 0, SEEK_SET) == 0 && ::read(fd, &c, 1) == 1) {
-        return (c == '0') ? 0 : 1;
-    } else {
-        throw GPIOException("can't access to GPIO");
+    data.bits = 0ULL;
+
+    int ret = ioctl(pin->second, GPIO_V2_LINE_GET_VALUES_IOCTL, &data);
+    if (ret == -1) {
+        std::string msg = "[GPIO::read] Can't get line value from IOCTL; ";
+        msg += strerror(errno);
+        throw GPIOException(msg);
+        return ret;
     }
-
-    /*FILE *f;
-
-    char file[128];
-    sprintf(file, "/sys/class/gpio/gpio%d/value", port);
-    f = fopen(file, "r");
-
-    int i;
-    fscanf(f, "%d", &i);
-    fclose(f);
-    return i;
-*/
+    return data.bits & 1ULL;
 }
 
-void GPIO::write(int port, int value)
+void GPIO::write(rf24_gpio_pin_t port, int value)
 {
-    std::map<int, GPIOfdCache_t>::iterator i;
-    int fd;
-    i = cache.find(port);
-    if (i == cache.end()) { // Fallback to open the gpio
-        GPIO::open(port, GPIO::DIRECTION_OUT);
-        i = cache.find(port);
-        if (i == cache.end()) {
-            throw GPIOException("can't access to GPIO");
-        } else {
-            fd = i->second;
-        }
-    } else {
-        fd = i->second;
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
+    if (pin == cachedPins.end() || pin->second <= 0) {
+        throw GPIOException("[GPIO::write] pin not initialized! Use GPIO::open() first");
+        return;
     }
 
-    if (lseek(fd, 0, SEEK_SET) != 0) {
-        throw GPIOException("can't access to GPIO");
+    data.bits = value;
+
+    int ret = ioctl(pin->second, GPIO_V2_LINE_SET_VALUES_IOCTL, &data);
+    if (ret == -1) {
+        std::string msg = "[GPIO::write] Can't set line value from IOCTL; ";
+        msg += strerror(errno);
+        throw GPIOException(msg);
+        return;
     }
-    int l = (value == 0) ? ::write(fd, "0\n", 2) : ::write(fd, "1\n", 2);
-    if (l != 2) {
-        throw GPIOException("can't access to GPIO");
-    }
-
-    /*FILE *f;
-
-    char file[128];
-    sprintf(file, "/sys/class/gpio/gpio%d/value", port);
-    f = fopen(file, "w");
-
-    if (value == 0)	fprintf(f, "0\n");
-    else		fprintf(f, "1\n");
-
-    fclose(f);*/
 }

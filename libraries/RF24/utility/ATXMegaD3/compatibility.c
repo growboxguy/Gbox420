@@ -11,9 +11,9 @@
 
 volatile uint32_t _millis;
 
-void __msleep(int milisec)
+void __msleep(int millisec)
 {
-    while (milisec-- > 0) {
+    while (millisec-- > 0) {
         _delay_ms(1);
     }
 }
@@ -27,7 +27,6 @@ void __usleep(int usec)
 
 void __start_timer()
 {
-
     // Timer details : Clock is 32MHz, Timer resolution is 8bit, Prescaler is 256, Period is 124, Real Time is 0.001s
 
     /* Set the timer to run at the fastest rate. */
@@ -58,7 +57,3 @@ void update_milisec()
 {
     _millis++;
 }
-
-
-
-

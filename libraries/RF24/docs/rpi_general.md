@@ -1,5 +1,7 @@
 # Linux General/Raspberry Pi
 
+@tableofcontents
+
 <!-- markdownlint-disable MD031 -->
 RF24 supports a variety of Linux based devices via various drivers. Some boards like RPi can utilize multiple methods
 to drive the GPIO and SPI functionality.
@@ -24,7 +26,7 @@ sudo raspi-config
 
 The default build on Raspberry Pi utilizes the included **BCM2835** driver from [the BCM2835 Library](http://www.airspayce.com/mikem/bcm2835)
 
-1. See [the Linux section for automated installation](md_docs_linux_install.html).
+1. See [the Linux section for automated installation](linux_install.md).
 2. Manual install:
    ```shell
    make
@@ -77,12 +79,12 @@ See [the Raspberry Pi documentation about the GPIO pins](https://www.raspberrypi
 | 2   | VCC      | rpi-3v3    | (17)              |
 | 3   | CE       | rpi-gpio22 | (15)              |
 | 4   | CSN      | rpi-gpio8  | (24)              |
-| 5   | SCK      | rpi-sckl   | (23)              |
+| 5   | SCK      | rpi-sclk   | (23)              |
 | 6   | MOSI     | rpi-mosi   | (19)              |
 | 7   | MISO     | rpi-miso   | (21)              |
 | 8   | IRQ      | -          | -                 |
 
-## breif history of RF24 library lineage
+## brief history of RF24 library lineage
 
 Based on the arduino lib from [J. Coliz](maniacbug@ymail.com),
 the library was berryfied by [Purinda Gunasekara](purinda@gmail.com)

@@ -29,21 +29,29 @@ using namespace std;
 // CE Pin uses GPIO number with BCM and SPIDEV drivers, other platforms use their own pin numbering
 // CS Pin addresses the SPI bus number at /dev/spidev<a>.<b>
 // ie: RF24 radio(<ce_pin>, <a>*10+<b>); spidev1.0 is 10, spidev1.1 is 11 etc..
-
+#define CSN_PIN 0
+#ifdef MRAA
+    #define CE_PIN 15 // GPIO22
+#elif defined(RF24_WIRINGPI)
+    #define CE_PIN 3 // GPIO22
+#else
+    #define CE_PIN 22
+#endif
 // Generic:
-RF24 radio(22, 0);
+RF24 radio(CE_PIN, CSN_PIN);
 /****************** Linux (BBB,x86,etc) ***********************/
 // See http://nRF24.github.io/RF24/pages.html for more information on usage
-// See http://iotdk.intel.com/docs/master/mraa/ for more information on MRAA
+// See https://github.com/eclipse/mraa/ for more information on MRAA
 // See https://www.kernel.org/doc/Documentation/spi/spidev for more information on SPIDEV
 
 // For this example, we'll be using a payload containing
 // a string & an integer number that will be incremented
 // on every successful transmission.
 // Make a data structure to store the entire payload of different datatypes
-struct PayloadStruct {
-  char message[7];          // only using 6 characters for TX & RX payloads
-  uint8_t counter;
+struct PayloadStruct
+{
+    char message[7]; // only using 6 characters for TX & RX payloads
+    uint8_t counter;
 };
 PayloadStruct payload;
 
@@ -53,10 +61,10 @@ void slave();   // prototype of the RX node's behavior
 
 // custom defined timer for evaluating transmission time in microseconds
 struct timespec startTimer, endTimer;
-uint32_t getMicros(); // prototype to get ellapsed time in microseconds
+uint32_t getMicros(); // prototype to get elapsed time in microseconds
 
-
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 
     // perform hardware check
     if (!radio.begin()) {
@@ -89,14 +97,14 @@ int main(int argc, char** argv) {
     // Set the PA Level low to try preventing power supply related problems
     // because these examples are likely run with nodes in close proximity to
     // each other.
-    radio.setPALevel(RF24_PA_LOW);  // RF24_PA_MAX is default.
+    radio.setPALevel(RF24_PA_LOW); // RF24_PA_MAX is default.
 
     // save on transmission time by setting the radio to only transmit the
     // number of bytes we need to transmit a float
     radio.setPayloadSize(sizeof(payload)); // char[7] & uint8_t datatypes occupy 8 bytes
 
     // set the TX address of the RX node into the TX pipe
-    radio.openWritingPipe(address[radioNumber]);     // always uses pipe 0
+    radio.openWritingPipe(address[radioNumber]); // always uses pipe 0
 
     // set the RX address of the TX node into a RX pipe
     radio.openReadingPipe(1, address[!radioNumber]); // using pipe 1
@@ -110,12 +118,12 @@ int main(int argc, char** argv) {
     return 0;
 } // main
 
-
 /**
  * set this node's role from stdin stream.
  * this only considers the first char as input.
  */
-void setRole() {
+void setRole()
+{
     string input = "";
     while (!input.length()) {
         cout << "*** PRESS 'T' to begin transmitting to the other node\n";
@@ -133,19 +141,19 @@ void setRole() {
                 cout << input[0] << " is an invalid input. Please try again." << endl;
         }
         input = ""; // stay in the while loop
-    } // while
+    }               // while
 } // setRole()
-
 
 /**
  * make this node act as the transmitter
  */
-void master() {
+void master()
+{
 
     memcpy(payload.message, "Hello ", 6); // set the outgoing message
     radio.stopListening();                // put in TX mode
 
-    unsigned int failures = 0;                                // keep track of failures
+    unsigned int failures = 0; // keep track of failures
     while (failures < 6) {
         clock_gettime(CLOCK_MONOTONIC_RAW, &startTimer);      // start the timer
         bool report = radio.write(&payload, sizeof(payload)); // transmit & save the report
@@ -153,101 +161,101 @@ void master() {
         if (report) {
             // transmission successful; wait for response and print results
 
-            radio.startListening();                          // put in RX mode
-            unsigned long start_timeout = millis();          // timer to detect no response
-            while (!radio.available()) {                     // wait for response
-                if (millis() - start_timeout > 200)          // only wait 200 ms
+            radio.startListening();                 // put in RX mode
+            unsigned long start_timeout = millis(); // timer to detect no response
+            while (!radio.available()) {            // wait for response
+                if (millis() - start_timeout > 200) // only wait 200 ms
                     break;
             }
-            unsigned long ellapsedTime = getMicros();        // end the timer
-            radio.stopListening();                           // put back in TX mode
+            unsigned long elapsedTime = getMicros(); // end the timer
+            radio.stopListening();                   // put back in TX mode
 
             // print summary of transactions
             uint8_t pipe;
             cout << "Transmission successful! ";
-            if (radio.available(&pipe)) {                    // is there a payload received? grab the pipe number that received it
-                uint8_t bytes = radio.getPayloadSize();      // grab the incoming payload size
+            if (radio.available(&pipe)) {               // is there a payload received? grab the pipe number that received it
+                uint8_t bytes = radio.getPayloadSize(); // grab the incoming payload size
                 cout << "Round trip delay = ";
-                cout << ellapsedTime;                        // print the timer result
-                cout << " us. Sent: " << payload.message;    // print outgoing message
-                cout << (unsigned int)payload.counter;       // print outgoing counter
+                cout << elapsedTime;                      // print the timer result
+                cout << " us. Sent: " << payload.message; // print outgoing message
+                cout << (unsigned int)payload.counter;    // print outgoing counter
                 PayloadStruct received;
                 radio.read(&received, sizeof(received));     // get incoming payload
-                cout << " Recieved " << (unsigned int)bytes; // print incoming payload size
+                cout << " Received " << (unsigned int)bytes; // print incoming payload size
                 cout << " on pipe " << (unsigned int)pipe;   // print RX pipe number
                 cout << ": " << received.message;            // print the incoming message
                 cout << (unsigned int)received.counter;      // print the incoming counter
                 cout << endl;
-                payload.counter = received.counter;          // save incoming counter for next outgoing counter
+                payload.counter = received.counter; // save incoming counter for next outgoing counter
             }
             else {
-                cout << "Recieved no response." << endl;     // no response received
+                cout << "Received no response." << endl; // no response received
             }
         }
         else {
-            cout << "Transmission failed or timed out";      // payload was not delivered
+            cout << "Transmission failed or timed out"; // payload was not delivered
             cout << endl;
-            failures++;                                      // increment failure counter
-        } // report
+            failures++; // increment failure counter
+        }               // report
 
         // to make this example readable in the terminal
-        delay(1000);  // slow transmissions down by 1 second
-    } // while
+        delay(1000); // slow transmissions down by 1 second
+    }                // while
 
     cout << failures << " failures detected. Leaving TX role." << endl;
 } // master
 
-
 /**
  * make this node act as the receiver
  */
-void slave() {
-    memcpy(payload.message, "World ", 6);                    // set the response message
-    radio.startListening();                                  // put in RX mode
+void slave()
+{
+    memcpy(payload.message, "World ", 6); // set the response message
+    radio.startListening();               // put in RX mode
 
-    time_t startTimer = time(nullptr);                       // start a timer
-    while (time(nullptr) - startTimer < 6) {                 // use 6 second timeout
+    time_t startTimer = time(nullptr);       // start a timer
+    while (time(nullptr) - startTimer < 6) { // use 6 second timeout
         uint8_t pipe;
-        if (radio.available(&pipe)) {                        // is there a payload? get the pipe number that recieved it
-            uint8_t bytes = radio.getPayloadSize();          // get size of incoming payload
+        if (radio.available(&pipe)) {               // is there a payload? get the pipe number that received it
+            uint8_t bytes = radio.getPayloadSize(); // get size of incoming payload
             PayloadStruct received;
-            radio.read(&received, sizeof(received));         // get incoming payload
-            payload.counter = received.counter + 1;          // increment payload for response
+            radio.read(&received, sizeof(received)); // get incoming payload
+            payload.counter = received.counter + 1;  // increment payload for response
 
             // transmit response & save result to `report`
-            radio.stopListening();                           // put in TX mode
-            radio.writeFast(&payload, sizeof(payload));      // load response into TX FIFO
-            bool report = radio.txStandBy(150);              // keep retrying for 150 ms
-            radio.startListening();                          // put back in RX mode
+            radio.stopListening();                      // put in TX mode
+            radio.writeFast(&payload, sizeof(payload)); // load response into TX FIFO
+            bool report = radio.txStandBy(150);         // keep retrying for 150 ms
+            radio.startListening();                     // put back in RX mode
 
             // print summary of transactions
-            cout << "Received " << (unsigned int)bytes;      // print the size of the payload
+            cout << "Received " << (unsigned int)bytes; // print the size of the payload
             cout << " bytes on pipe ";
-            cout << (unsigned int)pipe;                      // print the pipe number
-            cout << ": " << received.message;                // print incoming message
-            cout << (unsigned int)received.counter;          // print incoming counter
+            cout << (unsigned int)pipe;             // print the pipe number
+            cout << ": " << received.message;       // print incoming message
+            cout << (unsigned int)received.counter; // print incoming counter
 
             if (report) {
-                cout << " Sent: " << payload.message;        // print outgoing message
-                cout << (unsigned int)payload.counter;       // print outgoing counter
+                cout << " Sent: " << payload.message;  // print outgoing message
+                cout << (unsigned int)payload.counter; // print outgoing counter
                 cout << endl;
             }
             else {
                 cout << " Response failed to send." << endl; // failed to send response
             }
-            startTimer = time(nullptr);                      // reset timer
-        } // available
-    } // while
+            startTimer = time(nullptr); // reset timer
+        }                               // available
+    }                                   // while
 
     cout << "Nothing received in 6 seconds. Leaving RX role." << endl;
     radio.stopListening(); // recommended idle mode is TX mode
 } // slave
 
-
 /**
- * Calculate the ellapsed time in microseconds
+ * Calculate the elapsed time in microseconds
  */
-uint32_t getMicros() {
+uint32_t getMicros()
+{
     // this function assumes that the timer was started using
     // `clock_gettime(CLOCK_MONOTONIC_RAW, &startTimer);`
 
@@ -255,5 +263,5 @@ uint32_t getMicros() {
     uint32_t seconds = endTimer.tv_sec - startTimer.tv_sec;
     uint32_t useconds = (endTimer.tv_nsec - startTimer.tv_nsec) / 1000;
 
-    return ((seconds) * 1000 + useconds) + 0.5;
+    return ((seconds)*1000 + useconds) + 0.5;
 }

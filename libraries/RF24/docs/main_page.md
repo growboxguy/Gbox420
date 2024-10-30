@@ -1,5 +1,7 @@
 # Optimized High Speed Driver for nRF24L01(+) 2.4GHz Wireless Transceiver
 
+@tableofcontents
+
 ## Design Goals
 
 This library fork is designed to be...
@@ -22,8 +24,7 @@ changes.
 - [RF24 Class Documentation](classRF24.html)
 - [Support & Configuration](pages.html)
 - [Source Code](https://github.com/nRF24/RF24/)
-- [nRF24L01 v2.0 Datasheet](http://github.com/nRF24/RF24/raw/master/datasheets/nRF24L01_datasheet_v2.pdf)
-- [nRF24L01+ v1.0 Datasheet](http://github.com/nRF24/RF24/raw/master/datasheets/nRF24L01P_datasheet_v1.pdf)
+- [Datasheets](https://github.com/nRF24/RF24/tree/master/datasheets)
 
 ### Additional Information and Add-ons
 
@@ -31,6 +32,8 @@ changes.
 - [RF24Mesh](http://nRF24.github.io/RF24Mesh): Dynamic Mesh Layer for RF24Network
 - [RF24Ethernet](http://nRF24.github.io/RF24Ethernet): TCP/IP Radio Mesh Networking (shares Arduino Ethernet API)
 - [RF24Audio](http://nRF24.github.io/RF24Audio): Realtime Wireless Audio streaming
+- [nrf_to_nrf](https://github.com/TMRh20/nrf_to_nrf): OSI Layer 2 radio driver for NRF52x radios. Replaces RF24 layer for new radio devices.
+- [RF24G](https://hobietime.github.io/RF24G/html/): Create a true mesh of up to 7 nrf24l01 and/or nrf52x devices
 - [TMRh20 Blog: RF24 Optimization Overview](http://tmrh20.blogspot.com/2014/03/high-speed-data-transfers-and-wireless.html)
 - [TMRh20: RPi/Linux with RF24Gateway](http://tmrh20.blogspot.com/2016/08/raspberry-pilinux-with-nrf24l01.html)
 - [All TMRh20 Documentation Main Page](http://tmrh20.github.io/)
@@ -45,13 +48,13 @@ changes.
 
 ## Platform Support Pages
 
-- [Arduino](md_docs_arduino.html) (Uno, Nano, Mega, Due, Galileo, etc)
-- [ATTiny](md_docs_attiny.html)
-- [Pico SDK support](md_docs_pico_sdk.html)
-- [Linux Installation](md_docs_linux_install.html) (or the alternative [instructions using CMake](md_docs_using_cmake.html)),
-  ([Linux/RPi General](md_docs_rpi_general.html), [MRAA](md_docs_mraa.html) supported boards (Galileo, Edison, etc), LittleWire)
-- [Cross-compilation](md_docs_cross_compile.html) for linux devices
-- [Python wrapper](md_docs_python_wrapper.html) available for Linux devices
+- [Arduino](arduino.md) (Uno, Nano, Mega, Due, Galileo, etc)
+- [ATTiny](attiny.md)
+- [Pico SDK support](pico_sdk.md)
+- [Linux Installation](linux_install.md) (or the alternative [instructions using CMake](using_cmake.md)),
+  ([Linux/RPi General](rpi_general.md), [MRAA](mraa.md) supported boards (Galileo, Edison, etc), LittleWire)
+- [Cross-compilation](cross_compile.md) for linux devices
+- [Python wrapper](python_wrapper.md) available for Linux devices
 
 ### General µC Pin layout
 
@@ -59,9 +62,7 @@ changes.
 
 Observe
 
-![
-    @image html pinout.jpg
-    ](https://github.com/nRF24/RF24/blob/master/images/pinout.jpg)
+![@image HTML pinout.jpg](https://github.com/nRF24/RF24/raw/master/images/pinout.jpg)
 
 The table below shows how to connect the the pins of the NRF24L01(+) to different boards.
 CE and CSN are configurable.
@@ -72,7 +73,7 @@ CE and CSN are configurable.
 | 2   | VCC      | 3.3V        | pin 8              | pin 1           | regulator 3.3V required | rpi-3v3    | (17)              |
 | 3   | CE       | digIO 7     | pin 2              | pin 12          | pin to 3.3V             | rpi-gpio22 | (15)              |
 | 4   | CSN      | digIO 8     | pin 3              | pin 11          | RESET                   | rpi-gpio8  | (24)              |
-| 5   | SCK      | digIO 13    | pin 7              | pin 9           | SCK                     | rpi-sckl   | (23)              |
+| 5   | SCK      | digIO 13    | pin 7              | pin 9           | SCK                     | rpi-sclk   | (23)              |
 | 6   | MOSI     | digIO 11    | pin 6              | pin 7           | MOSI                    | rpi-mosi   | (19)              |
 | 7   | MISO     | digIO 12    | pin 5              | pin 8           | MISO                    | rpi-miso   | (21)              |
 | 8   | IRQ      | -           | -                  | -               | -                       | -          | -                 |

@@ -1,221 +1,185 @@
-/*
-Interrupts functions extruded from wiringPi library by Oitzu.
-
-wiringPi Copyright (c) 2012 Gordon Henderson
-https://projects.drogon.net/raspberry-pi/wiringpi
-wiringPi is free software: GNU Lesser General Public License
-see <http://www.gnu.org/licenses/>
-*/
-
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <sys/ioctl.h>
-#include <poll.h>
-#include <sys/stat.h>
-#include "interrupt.h"
+/**
+ * Interrupt implementations
+ */
+#include "linux/gpio.h"
+#include <unistd.h>    // close()
+#include <fcntl.h>     // open()
+#include <sys/ioctl.h> // ioctl()
+#include <errno.h>     // errno, strerror()
+#include <string.h>    // std::string, strcpy()
 #include <pthread.h>
+#include <map>
+#include "interrupt.h"
+#include "gpio.h" // GPIOChipCache, GPIOException
 
-//#define delay(x) bcm2835_delay(x)
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-static pthread_mutex_t pinMutex = PTHREAD_MUTEX_INITIALIZER;
-static volatile int pinPass = -1;
+static pthread_mutex_t irq_mutex = PTHREAD_MUTEX_INITIALIZER;
+std::map<rf24_gpio_pin_t, IrqPinCache> irqCache;
 
-pthread_t threadId[64];
-
-// sysFds:
-//      Map a file descriptor from the /sys/class/gpio/gpioX/value
-static int sysFds[64] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                         -1, -1, -1, -1, -1, -1,};
-
-// ISR Data
-static void (* isrFunctions[64])(void);
-
-int waitForInterrupt(int pin, int mS)
+struct IrqChipCache : public GPIOChipCache
 {
-    int fd, x;
-    uint8_t c;
-    struct pollfd polls;
-
-    if ((fd = sysFds[pin]) == -1) {
-        return -2;
+    IrqChipCache() : GPIOChipCache() {};
+    ~IrqChipCache()
+    {
+        for (std::map<rf24_gpio_pin_t, IrqPinCache>::iterator i = irqCache.begin(); i != irqCache.end(); ++i) {
+            pthread_cancel(i->second.id);     // send cancel request
+            pthread_join(i->second.id, NULL); // wait till thread terminates
+            close(i->second.fd);
+        }
+        irqCache.clear();
     }
+};
 
-    // Setup poll structure
+IrqChipCache irqChipCache;
 
-    polls.fd = fd;
-    polls.events = POLLPRI;      // Urgent data!
-
-    // Wait for it ...
-    x = poll(&polls, 1, mS);
-
-    // Do a dummy read to clear the interrupt
-    //      A one character read appars to be enough.
-    //      Followed by a seek to reset it.
-
-    (void) (read(fd, &c, 1) + 1);
-    lseek(fd, 0, SEEK_SET);
-
-    return x;
-}
-
-int piHiPri(const int pri)
+void* poll_irq(void* arg)
 {
-    struct sched_param sched;
-
-    memset(&sched, 0, sizeof(sched));
-
-    if (pri > sched_get_priority_max(SCHED_RR)) {
-        sched.sched_priority = sched_get_priority_max(SCHED_RR);
-    } else {
-        sched.sched_priority = pri;
-    }
-
-    return sched_setscheduler(0, SCHED_RR, &sched);
-}
-
-void* interruptHandler(void* arg)
-{
-    int myPin;
-
-    (void) piHiPri(55);  // Only effective if we run as root
-
-    myPin = pinPass;
-    pinPass = -1;
+    IrqPinCache* pinCache = (IrqPinCache*)(arg);
+    unsigned int lastEventSeqNo = 0;
+    gpio_v2_line_event irqEventInfo;
+    memset(&irqEventInfo, 0, sizeof(irqEventInfo));
 
     for (;;) {
-        if (waitForInterrupt(myPin, -1) > 0) {
-            pthread_mutex_lock(&pinMutex);
-            isrFunctions[myPin]();
-            pthread_mutex_unlock(&pinMutex);
-            pthread_testcancel(); //Cancel at this point if we have an cancellation request.
+        int ret = read(pinCache->fd, &irqEventInfo, sizeof(gpio_v2_line_event));
+        if (ret < 0) {
+            std::string msg = "[poll_irq] Could not read event info; ";
+            msg += strerror(errno);
+            throw IRQException(msg);
+            return NULL;
         }
+        if (ret > 0 && irqEventInfo.line_seqno != lastEventSeqNo) {
+            lastEventSeqNo = irqEventInfo.line_seqno;
+            pinCache->function();
+        }
+        pthread_testcancel();
     }
-
     return NULL;
 }
 
-int attachInterrupt(int pin, int mode, void (* function)(void))
+int attachInterrupt(rf24_gpio_pin_t pin, int mode, void (*function)(void))
 {
-    const char* modeS;
-    char fName[64];
-    char pinS[8];
-    pid_t pid;
-    int count, i;
-    char c;
-    int bcmGpioPin;
+    // ensure pin is not already being used in a separate thread
+    detachInterrupt(pin);
+    GPIO::close(pin);
 
-    bcmGpioPin = pin;
-
-    if (mode != INT_EDGE_SETUP) {
-        /**/ if (mode == INT_EDGE_FALLING) {
-            modeS = "falling";
-        } else if (mode == INT_EDGE_RISING) {
-            modeS = "rising";
-        } else {
-            modeS = "both";
+    try {
+        irqChipCache.openDevice();
+    }
+    catch (GPIOException& exc) {
+        if (irqChipCache.chipInitialized) {
+            throw exc;
+            return 0;
         }
-
-        sprintf(pinS, "%d", bcmGpioPin);
-
-        if ((pid = fork()) < 0) {    // Fail
-            return printf("wiringPiISR: fork failed: %s\n", strerror(errno));
-        }
-
-        if (pid == 0)       // Child, exec
-        {
-            /**/ if (access("/usr/local/bin/gpio", X_OK) == 0) {
-                execl("/usr/local/bin/gpio", "gpio", "edge", pinS, modeS, (char*) NULL);
-                return printf("wiringPiISR: execl failed: %s\n", strerror(errno));
-            } else if (access("/usr/bin/gpio", X_OK) == 0) {
-                execl("/usr/bin/gpio", "gpio", "edge", pinS, modeS, (char*) NULL);
-                return printf("wiringPiISR: execl failed: %s\n", strerror(errno));
-            } else {
-                return printf("wiringPiISR: Can't find gpio program\n");
-            }
-        } else {                // Parent, wait
-            wait(NULL);
-        }
+        irqChipCache.chip = "/dev/gpiochip0";
+        irqChipCache.openDevice();
     }
 
-    if (sysFds[bcmGpioPin] == -1) {
-        sprintf(fName, "/sys/class/gpio/gpio%d/value", bcmGpioPin);
-        if ((sysFds[bcmGpioPin] = open(fName, O_RDWR)) < 0) {
-            return printf("wiringPiISR: unable to open %s: %s\n", fName, strerror(errno));
-        }
+    // get chip info
+    gpiochip_info info;
+    memset(&info, 0, sizeof(info));
+    int ret = ioctl(irqChipCache.fd, GPIO_GET_CHIPINFO_IOCTL, &info);
+    if (ret < 0) {
+        std::string msg = "[attachInterrupt] Could not gather info about ";
+        msg += irqChipCache.chip;
+        throw IRQException(msg);
+        return 0;
     }
 
-    ioctl(sysFds[bcmGpioPin], FIONREAD, &count);
-    for (i = 0; i < count; ++i) {
-        (void) (read(sysFds[bcmGpioPin], &c, 1) + 1);
+    if (pin > info.lines) {
+        std::string msg = "[attachInterrupt] pin " + std::to_string(pin) + " is not available on " + irqChipCache.chip;
+        throw IRQException(msg);
+        return 0;
     }
 
-    isrFunctions[pin] = function;
+    // create a request object to configure the specified pin
+    struct gpio_v2_line_request request;
+    memset(&request, 0, sizeof(request));
+    strcpy(request.consumer, "RF24 IRQ");
+    request.num_lines = 1U;
+    request.offsets[0] = pin;
+    request.event_buffer_size = sizeof(gpio_v2_line_event);
 
-    pthread_mutex_lock(&pinMutex);
-    pinPass = pin;
-    pthread_create(&threadId[bcmGpioPin], NULL, interruptHandler, NULL);
-    while (pinPass != -1)
-        delay (1);
-    pthread_mutex_unlock(&pinMutex);
+    // set debounce for the pin
+    // request.config.attrs[0].mask = 1LL;
+    // request.config.attrs[0].attr.id = GPIO_V2_LINE_ATTR_ID_DEBOUNCE;
+    // request.config.attrs[0].attr.debounce_period_us = 10U;
+    // request.config.num_attrs = 1U;
 
-    return 0;
+    // set pin as input and configure edge detection
+    request.config.flags = GPIO_V2_LINE_FLAG_INPUT | GPIO_V2_LINE_FLAG_EVENT_CLOCK_REALTIME;
+    switch (mode) {
+        case INT_EDGE_BOTH:
+        case INT_EDGE_RISING:
+        case INT_EDGE_FALLING:
+            request.config.flags |= mode;
+            break;
+        default:
+            // bad user input!
+            return 0; // stop here
+    }
+
+    // write pin request's config
+    ret = ioctl(irqChipCache.fd, GPIO_V2_GET_LINE_IOCTL, &request);
+    if (ret < 0 || request.fd <= 0) {
+        std::string msg = "[attachInterrupt] Could not get line handle from ioctl; ";
+        msg += strerror(errno);
+        throw IRQException(msg);
+        return 0;
+    }
+    irqChipCache.closeDevice();
+
+    ret = ioctl(request.fd, GPIO_V2_LINE_SET_CONFIG_IOCTL, &request.config);
+    if (ret < 0) {
+        std::string msg = "[attachInterrupt] Could not set line config; ";
+        msg += strerror(errno);
+        throw IRQException(msg);
+        return 0;
+    }
+
+    // cache details
+    IrqPinCache irqPinCache;
+    irqPinCache.fd = request.fd;
+    irqPinCache.function = function;
+    std::pair<std::map<rf24_gpio_pin_t, IrqPinCache>::iterator, bool> indexPair = irqCache.insert(std::pair<rf24_gpio_pin_t, IrqPinCache>(pin, irqPinCache));
+
+    if (!indexPair.second) {
+        // this should not be reached, but indexPair.first needs to be the inserted map element
+        throw IRQException("[attachInterrupt] Could not cache the IRQ pin with function pointer");
+        return 0;
+    }
+
+    // create and start thread
+    pthread_mutex_lock(&irq_mutex);
+    pthread_create(&indexPair.first->second.id, nullptr, poll_irq, &indexPair.first->second);
+    pthread_mutex_unlock(&irq_mutex);
+
+    return 1;
 }
 
-int detachInterrupt(int pin)
+int detachInterrupt(rf24_gpio_pin_t pin)
 {
-    char pinS[8];
-    const char* modeS = "none";
-    pid_t pid;
-
-    if (!pthread_cancel(threadId[pin])) //Cancel the thread
-    {
-        return 0;
+    std::map<rf24_gpio_pin_t, IrqPinCache>::iterator cachedPin = irqCache.find(pin);
+    if (cachedPin == irqCache.end()) {
+        return 0; // pin not in cache; just exit
     }
-
-    if (!close(sysFds[pin])) //Close filehandle
-    {
-        return 0;
-    }
-
-    /* Set wiringPi to 'none' interrupt mode */
-
-    sprintf(pinS, "%d", pin);
-
-    if ((pid = fork()) < 0) {    // Fail
-        return printf("wiringPiISR: fork failed: %s\n", strerror(errno));
-    }
-
-    if (pid == 0)       // Child, exec
-    {
-        /**/ if (access("/usr/local/bin/gpio", X_OK) == 0) {
-            execl("/usr/local/bin/gpio", "gpio", "edge", pinS, modeS, (char*) NULL);
-            return printf("wiringPiISR: execl failed: %s\n", strerror(errno));
-        } else if (access("/usr/bin/gpio", X_OK) == 0) {
-            execl("/usr/bin/gpio", "gpio", "edge", pinS, modeS, (char*) NULL);
-            return printf("wiringPiISR: execl failed: %s\n", strerror(errno));
-        } else {
-            return printf("wiringPiISR: Can't find gpio program\n");
-        }
-    } else {                // Parent, wait
-        wait(NULL);
-    }
-
+    pthread_cancel(cachedPin->second.id);     // send cancel request
+    pthread_join(cachedPin->second.id, NULL); // wait till thread terminates
+    close(cachedPin->second.fd);
+    irqCache.erase(cachedPin);
     return 1;
 }
 
 void rfNoInterrupts()
 {
-    pthread_mutex_lock(&pinMutex);
 }
 
 void rfInterrupts()
 {
-    pthread_mutex_unlock(&pinMutex);
 }
+
+#ifdef __cplusplus
+}
+#endif

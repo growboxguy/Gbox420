@@ -27,7 +27,7 @@ struct adxl_int_stats {
 };
 
 /** Global stats block, incremented inside the interrupt handler(s). */
-struct adxl_int_stats g_int_stats = { 0 };
+struct adxl_int_stats g_int_stats = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 /** Global counter to track the numbers of unused interrupts fired. */
 uint32_t g_ints_fired = 0;

@@ -19,13 +19,15 @@ include $(CONFIG_FILE)
 # Objects to compile
 OBJECTS=RF24.o
 ifeq ($(DRIVER), MRAA)
-OBJECTS+=spi.o gpio.o compatibility.o
+OBJECTS+=spi.o gpio.o compatibility.o interrupt.o
 else ifeq ($(DRIVER), RPi)
-OBJECTS+=spi.o bcm2835.o interrupt.o compatibility.o
+OBJECTS+=spi.o bcm2835.o compatibility.o interrupt.o
 else ifeq ($(DRIVER), SPIDEV)
 OBJECTS+=spi.o gpio.o compatibility.o interrupt.o
 else ifeq ($(DRIVER), wiringPi)
 OBJECTS+=spi.o
+else ifeq ($(DRIVER), pigpio)
+OBJECTS+=spi.o gpio.o interrupt.o compatibility.o
 endif
 
 # make all

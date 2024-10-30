@@ -3,70 +3,48 @@
  * Class declaration for SPI helper files
  */
 
-#ifndef SPI_H
-#define    SPI_H
+#ifndef RF24_UTILITY_WIRINGPI_SPI_H_
+#define RF24_UTILITY_WIRINGPI_SPI_H_
 
-/**
-* Example of spi.h class declaration for SPI portability
-*
-* @defgroup Porting_SPI Porting: SPI
-*
-* @{
-*/
+#include <stdint.h>
+#include <stdexcept>
+#include <string>
 
-#include <stdio.h>
-#include <inttypes.h>
+#ifndef RF24_SPI_SPEED
+    #define RF24_SPI_SPEED 10000000
+#endif
 
-#include "../../RF24_config.h"
-
-using namespace std;
-
-class SPI {
+/** Specific exception for SPI errors */
+class SPIException : public std::runtime_error
+{
 public:
-    /**
-    * SPI default constructor
-    */
+    explicit SPIException(const std::string& msg)
+        : std::runtime_error(msg)
+    {
+    }
+};
+
+class SPI
+{
+
+public:
     SPI();
 
-    /**
-    * Start SPI communication
-    * @param pin used for SPI
-    */
     void begin(int csn_pin, uint32_t spi_speed = RF24_SPI_SPEED);
 
-    /**
-    * Transfer a single byte of data
-    * @param tx Byte to send
-    * @return Data returned via spi
-    */
     uint8_t transfer(uint8_t);
 
-    /**
-    * Transfer a buffer of data using rx and tx buffer
-    * @param tbuf Transmit buffer
-    * @param rbuf Receive buffer
-    * @param len Length of the data
-    */
     void transfernb(char*, char*, uint32_t);
 
-    /**
-    * Transfer a buffer of data without using an rx buffer
-    * @param buf Pointer to a buffer of data
-    * @param len Length of the data
-    */
     void transfern(char*, const uint32_t);
 
-    /**
-    * SPI destructor
-    */
     virtual ~SPI();
 
 private:
     int fd;
-    uint8_t msg[32 + 1];
-    uint8_t msgByte;
+    int channel;
+    uint8_t xferBuf[32 + 1];
+    uint8_t xferByte;
 };
 
-/*@}*/
-#endif    /* SPI_H */
-
+#endif // RF24_UTILITY_WIRINGPI_SPI_H_

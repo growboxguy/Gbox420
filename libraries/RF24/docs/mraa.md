@@ -1,5 +1,7 @@
 # MRAA
 
+@tableofcontents
+
 <!-- markdownlint-disable MD031 -->
 MRAA is a Low Level Skeleton Library for Communication on GNU/Linux platforms.
 Review the [MRAA documentation](http://iotdk.intel.com/docs/master/mraa/index.html) for more information
@@ -37,4 +39,4 @@ MRAA is not included.
    ```
 3. Install RF24, using MRAA
 
-   See [Linux Install instructions](md_docs_linux_install.html)
+   See [Linux Install instructions](linux_install.md)

@@ -3,85 +3,82 @@
  *
  */
 
+#include <map>
+#include <mraa.h> // mraa_strresult()
 #include "gpio.h"
+
+// cache for mraa::Gpio instances
+std::map<rf24_gpio_pin_t, mraa::Gpio*> gpio_cache;
 
 GPIO::GPIO()
 {
-    // Prophet: basic members initialization
-    gpio_ce_pin = -1;
-    //gpio_cs_pin = -1;
-    gpio_0 = NULL;
-    //gpio_1 = NULL;
 }
 
 GPIO::~GPIO()
 {
-    // Prophet: this should free memory, and unexport pins when RF24 and/or GPIO gets deleted or goes out of scope
-    this->close(gpio_ce_pin);
-    //this->close(gpio_cs_pin);
-}
-
-void GPIO::begin(uint8_t ce_pin, uint8_t cs_pin)
-{
-    gpio_ce_pin = ce_pin;
-    //gpio_cs_pin = cs_pin;
-
-    // Prophet: owner can be set here, because we use our pins exclusively, and are making mraa:Gpio context persistent
-    // so pins will be unexported only if close is called, or on destruction
-    gpio_0 = new mraa::Gpio(ce_pin/*,0*/);
-    //gpio_1 = new mraa::Gpio(cs_pin/*,0*/);
-}
-
-void GPIO::open(int port, int DDR)
-{
-    if (port == gpio_ce_pin) {
-        gpio_0 = new mraa::Gpio(port, 0);
-        // WARNING: use of memory mapped file system is deprecated in MRAA lib
-        gpio_0->useMmap(true); // `false` (or just not calling `useMmap()`) uses default file system?
-        gpio_0->dir((mraa::Dir) DDR);
-    }/*else
-	if(port == gpio_cs_pin){
-		gpio_1 = new mraa::Gpio(port,0);
-		gpio_1->useMmap(true);
-		gpio_1->dir( (mraa::Dir)DDR);
-	}*/
-}
-
-void GPIO::close(int port)
-{
-    // Prophet: using same theme of working with port numbers as with GPIO::open,
-    // checking for mraa::Gpio context existence to be sure, that GPIO::begin was called
-    if (port == gpio_ce_pin) {
-        if (gpio_0 != NULL) {
-            delete gpio_0;
-        }
+    // deinitialize cache of mraa::Gpio instances/pointers
+    std::map<rf24_gpio_pin_t, mraa::Gpio*>::iterator i;
+    for (i = gpio_cache.begin(); i != gpio_cache.end(); i++) {
+        i->second->close();
     }
-
-    /*if(port == gpio_cs_pin) {
-        if (gpio_1 != NULL)	{
-            delete gpio_1;
-        }
-    }*/
+    gpio_cache.clear();
 }
 
-int GPIO::read(int port)
+void GPIO::open(rf24_gpio_pin_t port, mraa::Dir DDR)
 {
-    if (port == gpio_ce_pin) {
-        return gpio_0->read();
-    }/*else
-	if(port == gpio_cs_pin){
-		return gpio_1->read();
-	}*/
+    mraa::Result status;
+
+    // check that mraa::Gpio context doesn't already exist
+    std::map<rf24_gpio_pin_t, mraa::Gpio*>::iterator i = gpio_cache.find(port);
+    if (i == gpio_cache.end()) {
+        mraa::Gpio* gpio_inst = new mraa::Gpio(port);
+        gpio_cache[port] = gpio_inst;
+        status = gpio_inst->dir(DDR);
+    }
+    else {
+        status = i->second->dir(DDR);
+    }
+    if (status != mraa::SUCCESS) {
+        std::string msg = "[GPIO::open] Could not set the pin direction; ";
+        msg += mraa_strresult((mraa_result_t)status);
+        throw GPIOException(msg);
+    }
+}
+
+void GPIO::close(rf24_gpio_pin_t port)
+{
+    // check that mraa::Gpio context exists, meaning GPIO::open() was called.
+    std::map<rf24_gpio_pin_t, mraa::Gpio*>::iterator i = gpio_cache.find(port);
+    if (i != gpio_cache.end()) {
+        i->second->close();  // close the cached Gpio instance
+        gpio_cache.erase(i); // Delete cache entry
+    }
+}
+
+int GPIO::read(rf24_gpio_pin_t port)
+{
+    // get cache gpio instance
+    std::map<rf24_gpio_pin_t, mraa::Gpio*>::iterator i = gpio_cache.find(port);
+    if (i != gpio_cache.end()) {
+        return i->second->read();
+    }
+    throw GPIOException("[GPIO::read] pin was not initialized with GPIO::open()");
     return -1;
 }
 
-void GPIO::write(int port, int value)
+void GPIO::write(rf24_gpio_pin_t port, int value)
 {
-
-    if (port == gpio_ce_pin) {
-        gpio_0->write(value);
-    }/*else
-	if(port == gpio_cs_pin){
-		gpio_1->write( value);
-	}*/
+    // get cache gpio instance
+    std::map<rf24_gpio_pin_t, mraa::Gpio*>::iterator i = gpio_cache.find(port);
+    if (i != gpio_cache.end()) {
+        mraa::Result result = i->second->write(value);
+        if (result != mraa::Result::SUCCESS) {
+            std::string msg = "[GPIO::write] Could not set pin output value; ";
+            msg += mraa_strresult((mraa_result_t)result);
+            throw GPIOException(msg);
+        }
+    }
+    else {
+        throw GPIOException("[GPIO::write] pin was not initialized with GPIO::open()");
+    }
 }

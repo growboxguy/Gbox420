@@ -1,15 +1,16 @@
-# RaspberryPi Pico SDK (for the RP2040)
+# Raspberry Pi Pico SDK (for the RP2040)
+
+@tableofcontents
 
 <!-- markdownlint-disable MD031 MD046 -->
 Just to be very clear and concise: The following instructions are
 **not required to use the Arduino IDE** with any RP2040-based boards.
-These instructions pertain to using only the
-[Raspberry Pi foundation's Pico SDK](https://github.com/raspberrypi/pico-sdk)
+These instructions pertain to using only [Raspberry Pi's Pico SDK](https://github.com/raspberrypi/pico-sdk)
 for RP2040 based boards.
 
 ## Prerequisite
 
-Follow the Raspberry Pi Foundation's
+Follow Raspberry Pi's
 ["Getting Started with Pico" document](https://rptl.io/pico-get-started) to
 setup a proper development environment on your host PC (the machine that
 will build your project). Notice that the setup instructions are a little
@@ -38,17 +39,17 @@ come from the Pico SDK repository's
 
 1. Create a "build" directory in the RF24 repository's root directory and
    navigate to it:
-   ```shell
+   ```sh
    cd RF24
    mkdir build
    cd build
    ```
 2. Configure CMake for your desired build type and specific RP2040-based board
-   ```shell
+   ```sh
    cmake ../examples_pico -DCMAKE_BUILD_TYPE=Release -DPICO_BOARD=pico
    ```
    Or if building on a Windows PC:
-   ```shell
+   ```sh
    cmake -G "NMake Makefiles" ../examples_pico -DCMAKE_BUILD_TYPE=Release -DPICO_BOARD=pico
    ```
    The supported RP2040-based boards are listed in header files in the Pico SDK
@@ -56,7 +57,7 @@ come from the Pico SDK repository's
    If the `-DPICO_BOARD` option is not specified, then the Pico SDK will default to building for the Raspberry Pi Pico board.
 3. Build the examples using the CMakeLists.txt file located in the
    RF24/examples_pico directory.
-   ```shell
+   ```sh
    cmake --build . --config Release
    ```
    Notice we specified the build type again using the `--config` option.
@@ -124,10 +125,10 @@ In order to use the RF24 libraries in your RP2040 based project:
 Initially (without modification), the SPI bus uses the default pins defined in the
 Pico SDK repository's [pico-sdk/src/boards/include/boards/\<board_name>.h files](https://github.com/raspberrypi/pico-sdk/tree/master/src/boards/include/boards).
 However, there may be some boards that do not define the necessary pins to use as defaults. This can
-be rememdied using either project source code or build-time configuration.
+be remedied using either project source code or build-time configuration.
 
 @warning There is no support for software driven SPI on RP2040 based boards at this time.
-If someone is so inclined to implement this using the Pico SDK's PIO (Programable Input
+If someone is so inclined to implement this using the Pico SDK's PIO (Programmable Input
 Output) feature, please submit an issue or pull request to the
 [RF24 repository](http://github.com/nRF24/RF24).
 
@@ -143,6 +144,7 @@ This option is the most reliable and flexible. It involves calling `SPI.begin()`
 #include <RF24.h>
 
 RF24 radio(7, 8); // pin numbers connected to the radio's CE and CSN pins (respectively)
+SPI spi;
 
 int main()
 {
@@ -173,3 +175,60 @@ To specify the default SPI pins used at build time, you can use either:
    ```shell
    cmake --build . --config Release -DPICO_DEFAULT_SPI=0 -DPICO_DEFAULT_SPI_SCK_PIN=2 -DPICO_DEFAULT_SPI_TX_PIN=3 -DPICO_DEFAULT_SPI_RX_PIN=4
    ```
+
+## Using Multiple Radios
+
+It is possible to drive multiple nRF24L01 transceivers on a single board. To do this each radio needs dedicated digital output pins for the CE and CSN pins.
+
+@warning The RPi Pico board's 3v regulator is typically insufficient to power more than 1 radio.
+It is also worth mentioning that the RPi Pico board uses a switching regulator which inherently
+produces electrical noise (a not steady 3v signal otherwise referred to as "power instability").
+
+If you want to drive each radio with a separate SPI bus, then the following example will demonstrate how to do that.
+
+```cpp
+#include <RF24.h>
+
+// Declare the pin numbers connected to the radios' CE and CSN pins (respectively)
+RF24 radio0(8, 5);   // first radio object
+RF24 radio1(14, 13); // second radio object
+
+// By default, one SPI bus instance is created by the RF24 lib. We'll use this
+// default instance of the `spi0` interface for our first radio, but we want a
+// different SPI bus for the second radio.
+// 
+// So, here we declare a second SPI bus instance:
+SPI my_spi; // we specify the `spi1` bus interface below
+
+bool setupRadios()
+{
+    // Initialize the first radio using the default SPI instance
+    if (!radio0.begin()) {
+        printf("Radio0 hardware is not responding!\n");
+        return false;
+    }
+    // first radio object initialized successfully
+
+    // specify the the second SPI bus interface and corresponding GPIO pins
+    my_spi.begin(spi1, 10, 11, 12); // spi1 bus, SCK, TX, RX
+    if (!radio1.begin(&my_spi)) {
+        printf("Radio1 hardware is not responding!\n");
+        return false;
+    }
+    // second radio object initialized successfully
+
+    return true;
+}
+
+int main()
+{
+    stdio_init_all(); // init necessary IO for the RP2040
+
+    while (!setupRadios()) { // if either radioX.begin() failed
+        sleep_ms(1000); // add 1 second delay for console readability
+        // hold program in infinite attempts to initialize the radios
+    }
+
+    // continue with program as normal ...
+}
+```

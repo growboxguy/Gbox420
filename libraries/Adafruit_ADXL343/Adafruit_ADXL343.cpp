@@ -166,6 +166,27 @@ int16_t Adafruit_ADXL343::getZ(void) { return read16(ADXL3XX_REG_DATAZ0); }
 
 /**************************************************************************/
 /*!
+    @brief  Reads 3x16-bits from the x, y, and z data register
+    @param x reference to return x acceleration data
+    @param y reference to return y acceleration data
+    @param z reference to return z acceleration data
+    @return True if the operation was successful, otherwise false.
+*/
+/**************************************************************************/
+bool Adafruit_ADXL343::getXYZ(int16_t &x, int16_t &y, int16_t &z) {
+  int16_t buffer[] = {0, 0, 0};
+  Adafruit_BusIO_Register reg_obj = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_DATAX0, 6);
+  if (!reg_obj.read((uint8_t *)&buffer, 6))
+    return false;
+  x = buffer[0];
+  y = buffer[1];
+  z = buffer[2];
+  return true;
+}
+
+/**************************************************************************/
+/*!
  *   @brief  Instantiates a new ADXL343 class
  *
  *   @param sensorID  An optional ID # so you can track this sensor, it will
@@ -193,14 +214,14 @@ Adafruit_ADXL343::Adafruit_ADXL343(int32_t sensorID, TwoWire *wireBus) {
 
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new ADXL343 class in SPI mode
+    @brief  Instantiates a new ADXL343 class in software SPI mode
 
     @param clock The SCK pin
     @param miso The MISO pin
     @param mosi The MOSI pin
     @param cs The CS/SSEL pin
     @param sensorID An optional ID # so you can track this sensor, it will tag
-           sensoorEvents you create.
+           sensorEvents you create.
 */
 /**************************************************************************/
 Adafruit_ADXL343::Adafruit_ADXL343(uint8_t clock, uint8_t miso, uint8_t mosi,
@@ -215,6 +236,24 @@ Adafruit_ADXL343::Adafruit_ADXL343(uint8_t clock, uint8_t miso, uint8_t mosi,
 
 /**************************************************************************/
 /*!
+    @brief  Instantiates a new ADXL343 class in hardware SPI mode
+
+    @param cs The CS/SSEL pin
+    @param theSPI SPIClass instance to use for SPI communication.
+    @param sensorID An optional ID # so you can track this sensor, it will tag
+           sensorEvents you create.
+*/
+/**************************************************************************/
+Adafruit_ADXL343::Adafruit_ADXL343(uint8_t cs, SPIClass *theSPI,
+                                   int32_t sensorID) {
+  _sensorID = sensorID;
+  _cs = cs;
+  _spi = theSPI;
+  _wire = NULL;
+}
+
+/**************************************************************************/
+/*!
     @brief  Setups the HW (reads coefficients values, etc.)
     @param  i2caddr The 7-bit I2C address to find the ADXL on
     @return True if the sensor was successfully initialised.
@@ -223,6 +262,7 @@ Adafruit_ADXL343::Adafruit_ADXL343(uint8_t clock, uint8_t miso, uint8_t mosi,
 bool Adafruit_ADXL343::begin(uint8_t i2caddr) {
 
   if (_wire) {
+    //-- I2C --------------
     if (i2c_dev) {
       delete i2c_dev; // remove old interface
     }
@@ -233,15 +273,27 @@ bool Adafruit_ADXL343::begin(uint8_t i2caddr) {
     }
 
   } else {
+    //-- SPI --------------
     i2c_dev = NULL;
 
     if (spi_dev) {
       delete spi_dev; // remove old interface
     }
-    spi_dev = new Adafruit_SPIDevice(_cs, _clk, _di, _do,
-                                     1000000,               // frequency
-                                     SPI_BITORDER_MSBFIRST, // bit order
-                                     SPI_MODE3);            // data mode
+    if (_spi) {
+      // hardware spi
+      spi_dev = new Adafruit_SPIDevice(_cs,
+                                       1000000,               // frequency
+                                       SPI_BITORDER_MSBFIRST, // bit order
+                                       SPI_MODE3,             // data mode
+                                       _spi);                 // hardware SPI
+    } else {
+      // software spi
+      spi_dev = new Adafruit_SPIDevice(_cs, _clk, _di, _do,
+                                       1000000,               // frequency
+                                       SPI_BITORDER_MSBFIRST, // bit order
+                                       SPI_MODE3);            // data mode
+    }
+
     if (!spi_dev->begin()) {
       return false;
     }
@@ -350,6 +402,60 @@ adxl3xx_dataRate_t Adafruit_ADXL343::getDataRate(void) {
 
 /**************************************************************************/
 /*!
+    @brief  Retrieves the X Y Z trim offsets, note that they are 4 bits signed
+    but we use int8_t to store and 'extend' the sign bit!
+    @param x Pointer to the x offset, from -5 to 4 (internally multiplied by 8
+   lsb)
+    @param y Pointer to the y offset, from -5 to 4 (internally multiplied by 8
+   lsb)
+    @param z Pointer to the z offset, from -5 to 4 (internally multiplied by 8
+   lsb)
+*/
+/**************************************************************************/
+void Adafruit_ADXL343::getTrimOffsets(int8_t *x, int8_t *y, int8_t *z) {
+  Adafruit_BusIO_Register x_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSX, 1);
+  if (x != NULL)
+    *x = x_off.read();
+  Adafruit_BusIO_Register y_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSY, 1);
+  if (y != NULL)
+    *y = y_off.read();
+  Adafruit_BusIO_Register z_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSZ, 1);
+  if (z != NULL)
+    *z = z_off.read();
+
+  return;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Sets the X Y Z trim offsets, note that they are 4 bits signed
+    but we use int8_t to store and 'extend' the sign bit!
+    @param x The x offset, from -5 to 4 (internally multiplied by 8 lsb)
+    @param y The y offset, from -5 to 4 (internally multiplied by 8 lsb)
+    @param z The z offset, from -5 to 4 (internally multiplied by 8 lsb)
+*/
+/**************************************************************************/
+void Adafruit_ADXL343::setTrimOffsets(int8_t x, int8_t y, int8_t z) {
+  Adafruit_BusIO_Register x_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSX, 1);
+  x_off.write(x);
+
+  Adafruit_BusIO_Register y_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSY, 1);
+  y_off.write(y);
+
+  Adafruit_BusIO_Register z_off = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_OFSZ, 1);
+  z_off.write(z);
+
+  return;
+}
+
+/**************************************************************************/
+/*!
     @brief  Gets the most recent sensor event
 
     @param event Pointer to the sensors_event_t placeholder
@@ -358,6 +464,7 @@ adxl3xx_dataRate_t Adafruit_ADXL343::getDataRate(void) {
 */
 /**************************************************************************/
 bool Adafruit_ADXL343::getEvent(sensors_event_t *event) {
+  int16_t x, y, z;
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
@@ -365,12 +472,14 @@ bool Adafruit_ADXL343::getEvent(sensors_event_t *event) {
   event->sensor_id = _sensorID;
   event->type = SENSOR_TYPE_ACCELEROMETER;
   event->timestamp = millis();
+  if (!getXYZ(x, y, z))
+    return false;
   event->acceleration.x =
-      getX() * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
+      x * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
   event->acceleration.y =
-      getY() * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
+      y * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
   event->acceleration.z =
-      getZ() * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
+      z * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
 
   return true;
 }
