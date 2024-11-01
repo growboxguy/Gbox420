@@ -23,7 +23,7 @@ public:
 private:
 protected:
   Module *Parent;
-  TonePlayer *Tone1;
+  TonePlayer Tone1;
   void OnSound();
   void OffSound();
   uint8_t *Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)

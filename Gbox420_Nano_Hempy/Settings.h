@@ -9,16 +9,16 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 10; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 10; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
 ///< Global constants
-static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
-static const uint16_t MaxLongTextLength = 128; ///< Default char * buffer length for storing a long text. Memory intense!
-static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
-static const uint8_t MovingAverageDepth = 8;   ///< Number of previous readings to keep when calculating average. Memory intense!
+constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+constexpr uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+constexpr uint16_t MaxLongTextLength = 128; ///< Default char * buffer length for storing a long text. Memory intense!
+constexpr uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
+constexpr uint8_t MovingAverageDepth = 3;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -26,12 +26,12 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-static const uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-static const uint8_t WirelessChannel[6] = {"Hemp1"};  ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
+constexpr uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+constexpr uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+constexpr uint8_t WirelessChannel[6] = {"Hemp1"};  ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
+constexpr uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+constexpr uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+constexpr uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12

@@ -194,46 +194,40 @@ char *toText_TDS(float TDS)
   return ShortMessage;
 }
 
-char *toText_yesNo(bool Status)
-{
-  if (Status)
-    return toText(F("YES"));
-  else
-    return toText(F("NO"));
+// Boolean to text
+
+const char* toTextBool(bool Status, const __FlashStringHelper* trueStr, const __FlashStringHelper* falseStr) {
+    return Status ? toText(trueStr) : toText(falseStr);
 }
 
-char *toText_enabledDisabled(bool Status)
+const char *toText_yesNo(bool Status)
 {
-  if (Status)
-    return toText(F("ENABLED"));
-  else
-    return toText(F("DISABLED"));
+  return toTextBool(Status, F("YES"), F("NO"));
 }
 
-char *toText_onOff(bool Status)
+const char *toText_enabledDisabled(bool Status)
 {
-  if (Status)
-    return toText(F("ON"));
-  else
-    return toText(F("OFF"));
+   return toTextBool(Status, F("ENABLED"), F("DISABLED")); 
 }
 
-char *toText_onOffDisabled(bool Enabled, bool OnStatus)
+const char *toText_onOff(bool Status)
+{
+  return toTextBool(Status, F("ON"), F("OFF")); 
+}
+
+const char *toText_onlineStatus(bool Status)
+{
+   return toTextBool(Status, F("ONLINE"), F("OFFLINE"));  
+}
+
+const char *toText_onOffDisabled(bool Enabled, bool Status)
 {
   if (!Enabled)
     return toText(F("DISABLED"));
   else
   {
-    return toText_onOff(OnStatus);
+    return toTextBool(Status, F("ON"), F("OFF")); 
   }
-}
-
-char *toText_onlineStatus(bool Status)
-{
-  if (Status)
-    return toText(F("ONLINE"));
-  else
-    return toText(F("OFFLINE"));
 }
 
 ///Converting text
@@ -285,42 +279,20 @@ char *toText_ACMotorState(ACMotorStates State)
   }
 }
 
-char *toText_waterPumpState(WaterPumpStates State)
-{
-  switch (State)
-  {
-  case WaterPumpStates::DISABLED:
-    return toText(F("DISABLED"));
-    break;
-  case WaterPumpStates::IDLE:
-    return toText(F("IDLE"));
-    break;
-  case WaterPumpStates::RUNNING:
-    return toText(F("RUNNING"));
-    break;
-  default:
-    return toText(F("?"));
-    break;
-  }
+const char* const waterPumpStateNames[] PROGMEM = {
+    "DISABLED", "IDLE", "RUNNING"
+};
+
+const char *toText_waterPumpState(WaterPumpStates State) {
+    return (char*)pgm_read_word(&(waterPumpStateNames[static_cast<uint8_t>(State)]));
 }
 
-char *toText_wasteReservoirStates(WasteReservoirStates State)
-{
-  switch (State)
-  {
-  case WasteReservoirStates::FULL:
-    return toText(F("FULL"));
-    break;
-  case WasteReservoirStates::IDLE:
-    return toText(F("IDLE"));
-    break;
-  case WasteReservoirStates::RESERVED:
-    return toText(F("RESERVED"));
-    break;
-  default:
-    return toText(F("?"));
-    break;
-  }
+const char* const wasteReservoirStatesNames[] PROGMEM = {
+    "FULL", "IDLE", "RESERVED"
+};
+
+const char *toText_wasteReservoirStates(WasteReservoirStates State) {
+    return (char*)pgm_read_word(&(wasteReservoirStatesNames[static_cast<uint8_t>(State)]));
 }
 
 char *toText_pressurePumpState(PressurePumpStates State)
@@ -419,26 +391,12 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
   }
 }
 
-char *toText_hempyState(HempyStates State)
-{
-  switch (State)
-  {
-  case HempyStates::DISABLED:
-    return toText(F("DISABLED"));
-    break;
-  case HempyStates::IDLE:
-    return toText(F("IDLE"));
-    break;
-  case HempyStates::WATERING:
-    return toText(F("WATERING"));
-    break;
-  case HempyStates::DRAINING:
-    return toText(F("DRAINING"));
-    break;
-  default:
-    return toText(F("?"));
-    break;
-  }
+const char* const hempyStateNames[] PROGMEM = {
+    "DISABLED", "IDLE", "WATERING", "DRAINING"
+};
+
+const char *toText_hempyState(HempyStates State) {
+    return (char*)pgm_read_word(&(hempyStateNames[static_cast<uint8_t>(State)]));
 }
 
 char *toText_lightState(LightStates State)
