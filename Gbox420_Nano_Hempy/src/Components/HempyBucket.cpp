@@ -1,18 +1,18 @@
 #include "HempyBucket.h"
 
-HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name)
+HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings &DefaultSettings, WeightSensor &BucketWeightSensor, WasteReservoir &BucketWasteReservoir, WaterPump &BucketPump) 
+: Common(Name), 
+  Parent(Parent), 
+  BucketWeightSensor(BucketWeightSensor), 
+  BucketWasteReservoir(BucketWasteReservoir), 
+  BucketPump(BucketPump), 
+  EvaporationTarget(DefaultSettings.EvaporationTarget), 
+  OverflowTarget(DefaultSettings.OverflowTarget), 
+  InitialDryWeight(DefaultSettings.InitialDryWeight), 
+  DrainWaitTime(DefaultSettings.DrainWaitTime)
 {
-  this->Parent = Parent;
-  this->BucketWeightSensor = BucketWeightSensor;
-  this->BucketPump = BucketPump;
-  this->BucketWeightSensor = BucketWeightSensor;
-  this->BucketWasteReservoir = BucketWasteReservoir;
-  EvaporationTarget = &DefaultSettings->EvaporationTarget;
-  OverflowTarget = &DefaultSettings->OverflowTarget;
-  InitialDryWeight = &DefaultSettings->InitialDryWeight;
-  DryWeight = DefaultSettings->InitialDryWeight;
-  WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget; //Initial value will get re-calculated after a watering
-  DrainWaitTime = &DefaultSettings->DrainWaitTime;
+  DryWeight = DefaultSettings.InitialDryWeight;
+  WetWeight = DryWeight + EvaporationTarget - OverflowTarget;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -84,20 +84,20 @@ void HempyBucket::updateState(HempyStates NewState)
     logToSerials(&LongMessage, true, 3);
   }
 
-  BucketWeightSensor->readWeight(false); ///< Force Bucket weight update
+  BucketWeightSensor.readWeight(false); ///< Force Bucket weight update
 
   switch (NewState)
   {
   case HempyStates::DISABLED:
-    BucketPump->disablePump();
+    BucketPump.disablePump();
     break;
   case HempyStates::IDLE:
-    BucketPump->stopPump(true);
-    if (BucketPump->getState() != WaterPumpStates::DISABLED && (DryWeight <= 0 || BucketWeightSensor->getWeight() <= DryWeight))
+    BucketPump.stopPump(true);
+    if (BucketPump.getState() != WaterPumpStates::DISABLED && (DryWeight <= 0 || BucketWeightSensor.getWeight() <= DryWeight))
     {
-      if (BucketWeightSensor->getWeight() >= DryWeight - *OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
+      if (BucketWeightSensor.getWeight() >= DryWeight - OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
       {
-        if (BucketWasteReservoir->setReserved())
+        if (BucketWasteReservoir.setReserved())
         {
           updateState(HempyStates::WATERING);
           BlockOverWritingState = true;
@@ -108,7 +108,7 @@ void HempyBucket::updateState(HempyStates NewState)
   case HempyStates::WATERING:
     if (State != NewState)
     {
-      BucketStartWeight = BucketWeightSensor->getWeight();              // Store the bucket weight before starting the pump
+      BucketStartWeight = BucketWeightSensor.getWeight();              // Store the bucket weight before starting the pump
       if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRIAINING cycles
       {
         PumpOnTimer = millis(); ///Start measuring the pump ON time for this cycle
@@ -118,31 +118,31 @@ void HempyBucket::updateState(HempyStates NewState)
       {
         PumpOnTimer = millis(); ///Start measuring the pump ON time for this cycle
       }
-      BucketPump->startPump(true);
+      BucketPump.startPump(true);
     }
-    if (BucketWeightSensor->getWeight(false) >= WetWeight && BucketWeightSensor->getWeight(false) - BucketStartWeight + BucketWasteReservoir->getWeightIncrease() >= *OverflowTarget) //Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor.getWeight(false) >= WetWeight && BucketWeightSensor.getWeight(false) - BucketStartWeight + BucketWasteReservoir.getWeightIncrease() >= OverflowTarget) //Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
     {
       WateringTime += millis() - PumpOnTimer;
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (WateringTime > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteReservoir->getState() == WasteReservoirStates::FULL) ///< Disable watering if: Timeout before the waste target was reached, pump failed or the waste reservoir got full
+    if (WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED || BucketWasteReservoir.getState() == WasteReservoirStates::FULL) ///< Disable watering if: Timeout before the waste target was reached, pump failed or the waste reservoir got full
     {
-      BucketWasteReservoir->clearReservation();
+      BucketWasteReservoir.clearReservation();
       updateState(HempyStates::DISABLED);
       BlockOverWritingState = true;
     }
     break;
   case HempyStates::DRAINING:
-    BucketPump->stopPump();
+    BucketPump.stopPump();
     State = HempyStates::DRAINING;                                 //Store the new state immediately - Only important when DrainWaitTime is set to 0
-    if (millis() - StateTimer > ((uint32_t)*DrainWaitTime * 1000)) ///< Waiting for the water to drain
+    if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
-      if (BucketWasteReservoir->checkTarget(*OverflowTarget)) //Check if target overflow weight is reached
+      if (BucketWasteReservoir.checkTarget(OverflowTarget)) //Check if target overflow weight is reached
       {
-        WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-        DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
-        BucketWasteReservoir->clearReservation();    ///< Free up the waste reservoir
+        WetWeight = BucketWeightSensor.getWeight(); //Measure wet weight
+        DryWeight = WetWeight - EvaporationTarget;  //Calculate next watering weight
+        BucketWasteReservoir.clearReservation();    ///< Free up the waste reservoir
         updateState(HempyStates::IDLE);
       }
       else
@@ -163,7 +163,7 @@ void HempyBucket::updateState(HempyStates NewState)
 void HempyBucket::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
   if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
-    BucketWasteReservoir->clearReservation();
+    BucketWasteReservoir.clearReservation();
   updateState(HempyStates::DISABLED);
   Parent->addToLog(getName(getStateText(true)));
   Parent->getSoundObject()->playOffSound();
@@ -176,7 +176,7 @@ void HempyBucket::disableRequest() //Stores the request only, will apply the nex
 
 void HempyBucket::startWatering()
 {
-  if (BucketWasteReservoir->setReserved())
+  if (BucketWasteReservoir.setReserved())
   {
     Parent->addToLog(getName(F("watering")));
     updateState(HempyStates::WATERING);
@@ -184,7 +184,7 @@ void HempyBucket::startWatering()
   }
   else
   {
-    Parent->addToLog(BucketWasteReservoir->getName(F("busy")));
+    Parent->addToLog(BucketWasteReservoir.getName(F("busy")));
     updateState(HempyStates::IDLE);
   }
 }
@@ -197,7 +197,7 @@ void HempyBucket::startWateringRequest() //Stores the request only, will apply t
 void HempyBucket::stopWatering()
 {
   if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
-    BucketWasteReservoir->clearReservation();
+    BucketWasteReservoir.clearReservation();
   updateState(HempyStates::IDLE);
   Parent->addToLog(getName(F("stopped")));
   Parent->getSoundObject()->playOnSound();
@@ -210,13 +210,13 @@ void HempyBucket::stopWateringRequest() //Stores the request only, will apply th
 
 void HempyBucket::setEvaporationTarget(float Weight)
 {
-  if (*EvaporationTarget != Weight)
+  if (EvaporationTarget != Weight)
   {
     if (DryWeight > 0) //If the next watering weight is already known
     {
-      DryWeight += *EvaporationTarget - Weight;
+      DryWeight += EvaporationTarget - Weight;
     }
-    *EvaporationTarget = Weight;
+    EvaporationTarget = Weight;
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -225,19 +225,19 @@ char *HempyBucket::getEvaporationTargetText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_weight(*EvaporationTarget);
+    return toText_weight(EvaporationTarget);
   }
   else
   {
-    return toText(*EvaporationTarget);
+    return toText(EvaporationTarget);
   }
 }
 
 void HempyBucket::setOverflowTarget(float Weight)
 {
-  if (*OverflowTarget != Weight)
+  if (OverflowTarget != Weight)
   {
-    *OverflowTarget = Weight;
+    OverflowTarget = Weight;
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -246,37 +246,37 @@ char *HempyBucket::getOverflowTargetText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_weight(*OverflowTarget);
+    return toText_weight(OverflowTarget);
   }
   else
   {
-    return toText(*OverflowTarget);
+    return toText(OverflowTarget);
   }
 }
 
 void HempyBucket::setDrainWaitTime(uint16_t Seconds)
 {
-  if (*DrainWaitTime != Seconds)
+  if (DrainWaitTime != Seconds)
   {
-    *DrainWaitTime = Seconds;
+    DrainWaitTime = Seconds;
     Parent->getSoundObject()->playOnSound();
   }
 }
 
 uint16_t HempyBucket::getDrainWaitTime()
 {
-  return *DrainWaitTime;
+  return DrainWaitTime;
 }
 
 char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_second(*DrainWaitTime);
+    return toText_second(DrainWaitTime);
   }
   else
   {
-    return toText(*DrainWaitTime);
+    return toText(DrainWaitTime);
   }
 }
 
@@ -302,8 +302,8 @@ void HempyBucket::setDryWeight(float Weight)
   if (!isnan(Weight) && DryWeight != Weight)
   {
     DryWeight = Weight;
-    WetWeight = DryWeight + *EvaporationTarget; ///< Calculate initial wet weight based on the evaporation target. Updated to the actual wet weight at the next watering
-    *InitialDryWeight = Weight;                 //Store the value in EEPROM
+    WetWeight = DryWeight + EvaporationTarget; ///< Calculate initial wet weight based on the evaporation target. Updated to the actual wet weight at the next watering
+    InitialDryWeight = Weight;                 //Store the value in EEPROM
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -344,8 +344,8 @@ char *HempyBucket::getWetWeightText(bool FriendlyFormat)
 
 void HempyBucket::tareDryWetWeight()
 {
-  DryWeight = *InitialDryWeight;
-  WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget;
+  DryWeight = InitialDryWeight;
+  WetWeight = DryWeight + EvaporationTarget - OverflowTarget;
   logToSerials(getName(F("Dry/Wet tared")), true, 3);
   Parent->getSoundObject()->playOnSound();
 }

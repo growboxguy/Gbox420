@@ -1,20 +1,17 @@
 #include "Switch_PWM.h"
 
-Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *DutyCycle, uint8_t *DutyCycleLowLimit, uint8_t *DutyCycleHighLimit, bool NegativeLogic) : Switch(Name)
+Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool NegativeLogic) : Switch(Name), DutyCycle(DutyCycle), DutyCycleLowLimit(DutyCycleLowLimit), DutyCycleHighLimit(DutyCycleHighLimit)
 {
   this->Pin = Pin;
   this->NegativeLogic = NegativeLogic;
-  this->DutyCycle = DutyCycle;
-  this->DutyCycleLowLimit = DutyCycleLowLimit;
-  this->DutyCycleHighLimit = DutyCycleHighLimit;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
   logToSerials(F("Switch_PWM ready"), true, 3);
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Switch_PWM::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -25,11 +22,14 @@ void Switch_PWM::report(bool FriendlyFormat)
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
 {
-  if (*this->DutyCycle != DutyCycle)
+  // Ensure the new duty cycle value does not exceed the maximum limit
+  if (DutyCycle > 100)
+    DutyCycle = 100;
+
+  // Check if the current duty cycle is different from the new value
+  if (this->DutyCycle != DutyCycle)
   {
-    if (DutyCycle > 100)
-      DutyCycle = 100;
-    *this->DutyCycle = DutyCycle;
+    this->DutyCycle = DutyCycle; // Directly assign the value to the reference
   }
 }
 
@@ -39,27 +39,27 @@ void Switch_PWM::turnOn()
 
   if (NegativeLogic)
   {
-    analogWrite(Pin, 255 - map(*DutyCycle, 0, 100, int(255 * (*DutyCycleLowLimit / 100.0f)), int(255 * (*DutyCycleHighLimit / 100.0f)))); ///< mapping motor speed to duty cycle https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+    analogWrite(Pin, 255 - map(DutyCycle, 0, 100, int(255 * (DutyCycleLowLimit / 100.0f)), int(255 * (DutyCycleHighLimit / 100.0f)))); ///< mapping motor speed to duty cycle https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   }
   else
   {
-    analogWrite(Pin, map(*DutyCycle, 0, 100, int(255 * (*DutyCycleLowLimit / 100.0f)), int(255 * (*DutyCycleHighLimit / 100.0f))));
+    analogWrite(Pin, map(DutyCycle, 0, 100, int(255 * (DutyCycleLowLimit / 100.0f)), int(255 * (DutyCycleHighLimit / 100.0f))));
   }
 }
 
 uint8_t Switch_PWM::getDutyCycle()
 {
-  return *DutyCycle;
+  return DutyCycle;
 }
 
 char *Switch_PWM::getDutyCycleText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_percentage(*DutyCycle);
+    return toText_percentage(DutyCycle);
   }
   else
   {
-    return toText(*DutyCycle);
+    return toText(DutyCycle);
   }
 }
