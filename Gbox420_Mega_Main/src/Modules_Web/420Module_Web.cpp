@@ -115,7 +115,7 @@ void Module_Web::refresh_Minute()
 {
   Common::refresh_Minute();
   reportToGoogleSheetsTrigger();  
-  reportToHomeAssistantTrigger();
+  //reportToHomeAssistantTrigger();
 }
 
 /**
@@ -510,6 +510,7 @@ void Module_Web::setPushingBoxLogRelayID(const char *ID)
   addToLog(F("Sheets log relay ID updated"));
 }
 
+/*
 void Module_Web::reportToHomeAssistantTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if (*ReportToHomeAssistant || ForceRun)
@@ -524,6 +525,7 @@ void Module_Web::reportToHomeAssistantTrigger(bool ForceRun)
     HomeAssistantRestAPI.request(HomeAssistantServerURL,"POST",LongMessage);  // Send the JSON data to Home Assistant
   }
 }
+*/
 
 void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets

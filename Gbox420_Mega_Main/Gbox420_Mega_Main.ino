@@ -179,6 +179,7 @@ void resetWebServer()
   }
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2);                                   ///< If begin returns a negative number the initialization failed
+  /*
   if (HomeAssistantRestAPI.begin(HomeAssistantServerIP, HomeAssistantServerPort, true) == 0) ///< Pre-setup RestAPI with Home Assistant (Not actual connection)
   {
     HomeAssistantRestAPI.setContentType("application/json");
@@ -188,7 +189,7 @@ void resetWebServer()
   }
   else
     logToSerials(F("HomeAssistant RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
-
+  */
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");      ///< setup handling request from GrowBox.html
   GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
