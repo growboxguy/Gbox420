@@ -22,7 +22,7 @@ class AeroModule_Web;
 class ACMotorModule_Web;
 class ReservoirModule_Web;
 
-extern ELClientRest PushingBoxRestAPI;
+extern ELClientRest PushingBoxRestAPI,HomeAssistantRestAPI;
 
 class MainModule : virtual public Common_Web, virtual public Module_Web
 {

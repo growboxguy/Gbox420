@@ -1,15 +1,15 @@
 #pragma once
 
-/*! 
+/*!
  *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
- *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.  
- *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
+ *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.
+ *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory!
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
  */
 
-static const uint8_t Version = 11; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 12; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -35,6 +35,21 @@ static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless 
 static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
 static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
 
+///< PUSHINGBOX REST API
+#define PushingBoxLogRelayID "v755877CF53383E1" ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
+
+///< MQTT Server Settings - The actual MQTT server is configured on the ESP-link web interface REST/MQTT tab
+#define MqttPubTopic "Gbox420/"          ///< Publish MQTT messages to this topic. Ends with a forward slash
+#define MqttSubTopic "Gbox420CMD/#"      ///< Subscribe to messages of this topic and all sub-topic
+#define MqttLwtTopic "Gbox420LWT/"       ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+#define MqttLwtMessage "Gbox420 Offline" ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
+
+///< Home Assistant REST API
+#define HomeAssistantServerIP "192.168.1.100"               ///< Address of Home Assistant server ip
+#define HomeAssistantServerPort 8123                        ///< Address of Home Assistant server port
+#define HomeAssistantServerURL "/api/states/sensor.gbox420" ///< Where to send the JSON formatted Log containing sensor readings
+#define HomeAssistantServerToken "Authorization: Bearer YOUR-TOKEN" ///< Generate a token in Home Assistant - USERNAME- Security - Long-lived access tokens
+
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
 
@@ -42,12 +57,6 @@ typedef struct
 {
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
-
-  char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-  char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
@@ -65,10 +74,10 @@ typedef struct
   };
   struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
-struct ACMotorModuleSettings ///< AeroModule default settings
+  struct ACMotorModuleSettings ///< AeroModule default settings
   {
     ACMotorModuleSettings(uint8_t Speed = 0) : Speed(Speed) {}
-    uint8_t Speed;        ///< PWM duty cycle to adjust motor speed
+    uint8_t Speed; ///< PWM duty cycle to adjust motor speed
   };
   struct ACMotorModuleSettings ACMotor1 = {.Speed = 50};
 
@@ -116,7 +125,7 @@ struct ACMotorModuleSettings ///< AeroModule default settings
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMqtt = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMqtt(ReportToMqtt), MQTTReportFrequency(MQTTReportFrequency) {}
+    MainModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, bool ReportToHomeAssistant = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMqtt = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), ReportToHomeAssistant(ReportToHomeAssistant), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMqtt(ReportToMqtt), MQTTReportFrequency(MQTTReportFrequency) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -124,11 +133,12 @@ struct ACMotorModuleSettings ///< AeroModule default settings
     bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
     bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
+    bool ReportToHomeAssistant;        ///< Enable/disable reporting sensor readings to Home Assistant
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
-  struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
+  struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .ReportToHomeAssistant = false, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
 
   struct HempyModuleSettings ///< Hempy default settings
   {
@@ -179,7 +189,7 @@ struct ACMotorModuleSettings ///< AeroModule default settings
 
   struct ReservoirModuleSettings ///< ReservoirModule default settings
   {
-    //ReservoirModuleSettings() :  {}
+    // ReservoirModuleSettings() :  {}
   };
   struct ReservoirModuleSettings ReservoirMod1 = {};
 
@@ -196,7 +206,7 @@ struct ACMotorModuleSettings ///< AeroModule default settings
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 void saveSettings(Settings *ToSave);
 /**

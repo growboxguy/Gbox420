@@ -13,10 +13,10 @@
 #include "../Components_Web/420Common_Web.h"
 #include "../Components/420Module.h"
 
-///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module 
+///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module
 
 extern ELClientWebServer WebServer;
-extern ELClientRest PushingBoxRestAPI;
+extern ELClientRest PushingBoxRestAPI, HomeAssistantRestAPI;
 extern ELClientMqtt MqttAPI;
 extern bool MqttConnected;
 class Sound_Web;
@@ -33,7 +33,7 @@ public:
   void commandEventTrigger(char *Command, char *Data);                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void refresh_FiveSec();
   void refresh_Minute();
-  char * settingsToJSON();
+  char *settingsToJSON();
   void settingsEvent_Load(__attribute__((unused)) char *Url);                                            ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
   void settingsEvent_Refresh(__attribute__((unused)) char *Url);                                         ///< Gets called when the /Settings.html is refreshed.
   void settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data); ///< Gets called a button is clicked or a field is submitted on the /Settings.html page
@@ -41,6 +41,8 @@ public:
   void addToLog(const char *Text, uint8_t Indent = 3);                                                   ///< Add a Log entry that is displayed on the web interface
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true);                                ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
+  void relayToHomeAssistant(char (*JSONData)[MaxLongTextLength]);                                        ///< Home Assistant reporting - Send a JSON formatted report via REST API to the HomeAssistanServer (from Setting.h)
+  void reportToHomeAssistantTrigger(bool ForceRun = false);                                              ///< Home Assistant reporting - Handles custom reporting frequencies
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
@@ -74,6 +76,7 @@ protected:
   bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
   bool *ReportToGoogleSheets;
+  bool *ReportToHomeAssistant;
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsTriggerCounter = 0;
   bool *ReportToMqtt;

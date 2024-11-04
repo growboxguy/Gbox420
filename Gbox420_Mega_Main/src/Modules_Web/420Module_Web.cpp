@@ -114,7 +114,8 @@ void Module_Web::refresh_FiveSec()
 void Module_Web::refresh_Minute()
 {
   Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
+  reportToGoogleSheetsTrigger();  
+  reportToHomeAssistantTrigger();
 }
 
 /**
@@ -205,22 +206,24 @@ char *Module_Web::settingsToJSON()
   strcat(LongMessage, toText(*SerialReportWireless));
   strcat_P(LongMessage, (PGM_P)F("\",\"Sheets\":\""));
   strcat(LongMessage, toText(*ReportToGoogleSheets));
+  strcat_P(LongMessage, (PGM_P)F("\",\"HA\":\""));
+  strcat(LongMessage, toText(*ReportToHomeAssistant));
   strcat_P(LongMessage, (PGM_P)F("\",\"SheetsF\":\""));
   strcat(LongMessage, toText(*SheetsReportingFrequency));
   strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));
-  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat(LongMessage, PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("\",\"MQTT\":\""));
   strcat(LongMessage, toText(*ReportToMqtt));
   strcat_P(LongMessage, (PGM_P)F("\",\"MQTTF\":\""));
   strcat(LongMessage, toText(*MQTTReportFrequency));
   strcat_P(LongMessage, (PGM_P)F("\",\"MPT\":\""));
-  strcat(LongMessage, ModuleSettings->MqttPubTopic);
+  strcat(LongMessage, MqttPubTopic);
   strcat_P(LongMessage, (PGM_P)F("\",\"MST\":\""));
-  strcat(LongMessage, ModuleSettings->MqttSubTopic);
+  strcat(LongMessage, MqttSubTopic);
   strcat_P(LongMessage, (PGM_P)F("\",\"MLT\":\""));
-  strcat(LongMessage, ModuleSettings->MqttLwtTopic);
+  strcat(LongMessage, MqttLwtTopic);
   strcat_P(LongMessage, (PGM_P)F("\",\"MLM\":\""));
-  strcat(LongMessage, ModuleSettings->MqttLwtMessage);
+  strcat(LongMessage, MqttLwtMessage);
   strcat_P(LongMessage, (PGM_P)F("\"}}")); ///< closing the curly brackets at the end of the JSON
   return LongMessage;
 }
@@ -238,13 +241,13 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgInt(F("Wire"), *SerialReportWireless);
   WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
   WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
-  WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
+  WebServer.setArgString(F("Relay"), PushingBoxLogRelayID);
   WebServer.setArgBoolean(F("MQTT"), *ReportToMqtt);
   WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
-  WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
-  WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
-  WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
-  WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
+  WebServer.setArgString(F("MPT"), MqttPubTopic);
+  WebServer.setArgString(F("MST"), MqttSubTopic);
+  WebServer.setArgString(F("MLT"), MqttLwtTopic);
+  WebServer.setArgString(F("MLM"), MqttLwtMessage);
   WebServer.setArgInt(getSoundObject()->getName(F("E"), true), getSoundObject()->getEnabledState());
 }
 
@@ -378,7 +381,7 @@ void Module_Web::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
-  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat(LongMessage, PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("&BoxData="));
 }
 
@@ -408,12 +411,12 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
   if (*Debug)
   {
     logToSerials(F("MQTT reporting:"), false, 2);
-    logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
+    logToSerials(&(MqttPubTopic), false, 1);
     logToSerials(JSONData, true, 0);
   }
   if (MqttConnected)
   {
-    MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+    MqttAPI.publish(MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
   else
   {
@@ -502,9 +505,24 @@ void Module_Web::setSheetsReportingFrequency(uint16_t Frequency)
 
 void Module_Web::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
+  strncpy(PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog(F("Sheets log relay ID updated"));
+}
+
+void Module_Web::reportToHomeAssistantTrigger(bool ForceRun)
+{ ///< Handles custom reporting frequency for Google Sheets
+  if (*ReportToHomeAssistant || ForceRun)
+  {
+    runReport(false, true, true, true); //Loads sensor readings to the LongMessage buffer in JSON format
+    if (*Debug)
+    {      
+      logToSerials(HomeAssistantServerIP, false, 2);
+      logToSerials(F("REST API:"), false, 1);
+      logToSerials(&LongMessage, true, 0);
+    }     
+    HomeAssistantRestAPI.request(HomeAssistantServerURL,"POST",LongMessage);  // Send the JSON data to Home Assistant
+  }
 }
 
 void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
@@ -541,28 +559,28 @@ void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
 
 void Module_Web::setMqttPublishTopic(const char *Topic)
 {
-  strncpy(ModuleSettings->MqttPubTopic, Topic, MaxShotTextLength);
+  strncpy(MqttPubTopic, Topic, MaxShotTextLength);
   getSoundObject()->playOnSound();
   addToLog(F("MQTT publish updated"));
 }
 
 void Module_Web::setMqttSubscribeTopic(const char *Topic)
 {
-  strncpy(ModuleSettings->MqttSubTopic, Topic, MaxShotTextLength);
+  strncpy(MqttSubTopic, Topic, MaxShotTextLength);
   getSoundObject()->playOnSound();
   addToLog(F("MQTT subscribe updated"));
 }
 
 void Module_Web::setMQTTLWTTopic(const char *LWTTopic)
 {
-  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxShotTextLength);
+  strncpy(MqttLwtTopic, LWTTopic, MaxShotTextLength);
   getSoundObject()->playOnSound();
   addToLog(F("LWT topic updated"));
 }
 
 void Module_Web::setMQTTLWTMessage(const char *LWTMessage)
 {
-  strncpy(ModuleSettings->MqttLwtMessage, LWTMessage, MaxWordLength);
+  strncpy(MqttLwtMessage, LWTMessage, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog(F("LWT message updated"));
 }

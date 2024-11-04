@@ -1,9 +1,9 @@
-/*! \file 
+/*! \file
  *  \brief     Main module for Mega2560 - Grow tent monitoring and controlling sketch.
  *  \details   To change the default pin layout / startup settings navigate to: Settings.h
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
- * 
+ *
  *  \todo Proper doxygen documentation
  */
 
@@ -31,18 +31,19 @@ char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling shor
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
-HardwareSerial &ArduinoSerial = Serial;   ///< Reference to the Arduino Serial output
-HardwareSerial &ESPSerial = Serial3;      ///< Reference to the ESP Link Serial output
-ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
-ELClientWebServer WebServer(&ESPLink);    ///< ESP-link - WebServer API
-ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the current time from the internet using NTP
-ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
-ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
-Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
-bool *Metric;                             ///< True - Use metric units, False - Use imperial units
-bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
-MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
+HardwareSerial &ArduinoSerial = Serial;      ///< Reference to the Arduino Serial output
+HardwareSerial &ESPSerial = Serial3;         ///< Reference to the ESP Link Serial output
+ELClient ESPLink(&ESPSerial);                ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
+ELClientWebServer WebServer(&ESPLink);       ///< ESP-link - WebServer API
+ELClientCmd ESPCmd(&ESPLink);                ///< ESP-link - Helps getting the current time from the internet using NTP
+ELClientRest PushingBoxRestAPI(&ESPLink);    ///< ESP-link - REST API for PushingBox
+ELClientRest HomeAssistantRestAPI(&ESPLink); ///< ESP-link - REST API for HomeAssistant
+ELClientMqtt MqttAPI(&ESPLink);              ///< ESP-link - MQTT protocol for sending and receiving messages
+Settings *ModuleSettings;                    ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
+bool *Debug;                                 ///< True - Turns on extra debug messages on the Serial Output
+bool *Metric;                                ///< True - Use metric units, False - Use imperial units
+bool MqttConnected = false;                  ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
+MainModule *Main1;                           ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 
@@ -76,7 +77,7 @@ void setup()
   setSyncInterval(86400);            ///< Sync time every day
   if ((ModuleSettings->Main1).ReportToMqtt)
   {
-    setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+    setupMqtt(); // MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
@@ -95,7 +96,7 @@ void setup()
   Timer3.start();
   logToSerials(F("done"), true, 3);
 
-  //Initialize wireless communication with remote Modules
+  // Initialize wireless communication with remote Modules
   logToSerials(F("Setting up wireless transceiver"), false, 0);
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
@@ -149,7 +150,7 @@ void run1min()
 }
 
 /**
-  \brief Turns the integrated LED on the Arduino board ON/OFF 
+  \brief Turns the integrated LED on the Arduino board ON/OFF
 */
 void heartBeat()
 {
@@ -172,12 +173,22 @@ void resetWebServer()
     delay(1000);
   };
   logToSerials(F(""), true, 0);                           ///< line break
-  if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0) ///< Pre-setup relay to Google Sheets
+  if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0) ///< Pre-setup PushingBox relay to Google Sheets (Not actual connection)
   {
     logToSerials(F("PushingBox RestAPI ready"), true, 2);
   }
   else
-    logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
+    logToSerials(F("PushingBox RestAPI failed"), true, 2);                                   ///< If begin returns a negative number the initialization failed
+  if (HomeAssistantRestAPI.begin(HomeAssistantServerIP, HomeAssistantServerPort, true) == 0) ///< Pre-setup RestAPI with Home Assistant (Not actual connection)
+  {
+    HomeAssistantRestAPI.setContentType("application/json");
+    HomeAssistantRestAPI.setHeader(HomeAssistantServerToken);
+
+    logToSerials(F("HomeAssistant RestAPI ready"), true, 2);
+  }
+  else
+    logToSerials(F("HomeAssistant RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
+
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");      ///< setup handling request from GrowBox.html
   GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
@@ -207,33 +218,33 @@ void setupMqtt()
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
 
-  memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
-  strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
-  MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
+  memset(&ShortMessage[0], 0, MaxShotTextLength); // reset variable to store the Publish to path
+  strcat(ShortMessage, MqttLwtTopic);
+  MqttAPI.lwt(ShortMessage, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
 void mqttConnected(__attribute__((unused)) void *response)
 {
-  MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
+  MqttAPI.subscribe(MqttSubTopic);
   MqttConnected = true;
-  //if(*Debug) logToSerials(F("MQTT connected"), true);
+  // if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
 void mqttDisconnected(__attribute__((unused)) void *response)
 {
-  //if(*Debug) logToSerials(F("MQTT disconnected"), true);
+  // if(*Debug) logToSerials(F("MQTT disconnected"), true);
   MqttConnected = false;
 }
 
 void mqttPublished(__attribute__((unused)) void *response)
 {
-  //if(*Debug) logToSerials(F("MQTT published"), true);
+  // if(*Debug) logToSerials(F("MQTT published"), true);
 }
 
 void mqttReceived(void *response)
 {
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
+  static uint8_t MqttSubTopicLength = strlen(MqttSubTopic) - 1; // Get length of the command topic
   static char command[MaxShotTextLength];
   static char data[MaxShotTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
@@ -241,11 +252,11 @@ void mqttReceived(void *response)
   String mqttData = (*res).popString();
   logToSerials(F("MQTT"), false, 0);
   logToSerials(&mqttTopic, false, 1);
-  mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
+  mqttTopic.remove(0, MqttSubTopicLength); // Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   Main1->commandEventTrigger(command, data);
-  Main1->reportToMqttTrigger(true); //send out a fresh report
+  Main1->reportToMqttTrigger(true); // send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -266,7 +277,7 @@ time_t getNtpTime()
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
       logToSerials(F("."), false, 0);
-      wdt_reset(); ///reset watchdog timeout
+      wdt_reset(); /// reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
@@ -285,7 +296,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
+  Main1->websiteLoadEventTrigger(Url); // Runs through all components that are subscribed to this event
 }
 
 /**
@@ -331,7 +342,7 @@ void fieldCallback(char *Field)
 */
 void settingsLoadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->settingsEvent_Load(Url); //Runs through all components that are subscribed to this event
+  Main1->settingsEvent_Load(Url); // Runs through all components that are subscribed to this event
 }
 
 /**
