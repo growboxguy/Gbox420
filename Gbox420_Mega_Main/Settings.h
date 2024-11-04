@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 12; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 13; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -197,11 +197,11 @@ typedef struct
 
   struct SoundSettings ///< Sound default settings
   {
-    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
+    SoundSettings(uint8_t Pin = 0, bool Enabled = true) : Pin(Pin), Enabled(Enabled) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
-    bool Enabled = true; ///< Enable/Disable sound
+    bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

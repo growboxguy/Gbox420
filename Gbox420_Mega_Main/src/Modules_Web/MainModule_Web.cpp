@@ -25,7 +25,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
-  ReportToHomeAssistant = &DefaultSettings->ReportToHomeAssistant;
+  //ReportToHomeAssistant = &DefaultSettings->ReportToHomeAssistant;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToMqtt = &DefaultSettings->ReportToMqtt;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;

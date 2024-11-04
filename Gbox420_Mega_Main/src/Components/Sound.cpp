@@ -6,7 +6,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
-  Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
+  //Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
   pinMode(*Pin, OUTPUT);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Sound ready"), true, 3);
@@ -72,12 +72,9 @@ void Sound::OnSound()
 {
   if (*Enabled)
   {
-    Tone1->tone(500);
-    delay(100);
-    Tone1->noTone();
-    Tone1->tone(1000);
-    delay(100);
-    Tone1->noTone();
+    buzz(250,100);
+    buzz(0,20);
+    buzz(750,100);
   }
 }
 
@@ -85,13 +82,25 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    Tone1->tone(1000);
-    delay(100);
-    Tone1->noTone();
-    Tone1->tone(500);
-    delay(100);
-    Tone1->noTone();
+    buzz(750,100);
+    buzz(0,20);
+    buzz(250,100);
   }
+}
+
+void Sound::buzz(uint32_t frequency, uint32_t length)
+{
+  digitalWrite(13, HIGH); //Blink built-in LED
+  uint32_t delayValue = 1000000 / frequency / 2;
+  uint32_t numCycles = frequency * length / 1000;
+  for (uint32_t i = 0; i < numCycles; i++)
+  {
+    digitalWrite(*Pin, HIGH);
+    delayMicroseconds(delayValue);
+    digitalWrite(*Pin, LOW);
+    delayMicroseconds(delayValue);
+  }
+  digitalWrite(13, LOW);  //Blink built-in LED
 }
 
 bool Sound::getEnabledState()
