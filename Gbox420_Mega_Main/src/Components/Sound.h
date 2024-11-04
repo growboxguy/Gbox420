@@ -2,7 +2,6 @@
 
 #include "420Common.h"
 #include "420Module.h"
-//#include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
 
 ///< Sound feedback buzzer
 
@@ -23,7 +22,6 @@ public:
 private:
 protected:
   Module *Parent;
-  //TonePlayer *Tone1;
   void OnSound();
   void OffSound();
   void buzz(uint32_t frequency, uint32_t length);

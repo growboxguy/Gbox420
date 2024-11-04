@@ -55,27 +55,11 @@ void Sound_Web::EE()
   Parent->addToLog(F("♬Easter egg♬"));
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
-    int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///< tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///< https://forum.arduino.cc/index.php?topic=106603.0
-    buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
-    delay(noteDuration);
-    buzz(0, noteDuration);
+    buzz((int)pgm_read_word(&melody[thisNote]), (int)pgm_read_word(&noteDurations[thisNote]));
+    delay((int)pgm_read_word(&noteDurations[thisNote]));
+    buzz(0, (int)pgm_read_word(&noteDurations[thisNote]));
     wdt_reset(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
   }
-}
-
-void Sound_Web::buzz(uint32_t frequency, uint32_t length)
-{
-  digitalWrite(13, HIGH);
-  uint32_t delayValue = 1000000 / frequency / 2;
-  uint32_t numCycles = frequency * length / 1000;
-  for (uint32_t i = 0; i < numCycles; i++)
-  {
-    digitalWrite(*Pin, HIGH);
-    delayMicroseconds(delayValue);
-    digitalWrite(*Pin, LOW);
-    delayMicroseconds(delayValue);
-  }
-  digitalWrite(13, LOW);
 }
 
 const PROGMEM int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
@@ -125,49 +109,50 @@ const PROGMEM int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/
     415, 311, 247,
     233, 220, 208};
 
-const PROGMEM uint8_t Sound_Web::tempo[] = {
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
+const PROGMEM uint8_t Sound_Web::noteDurations[] = {
+    83, 83, 83, 83, 
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
 
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
+    111, 111, 111,  
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
 
-    9, 9, 9,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
 
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
+    111, 111, 111,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
+    83, 83, 83, 83,
 
-    9, 9, 9,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
-    12, 12, 12, 12,
+    33, 33, 33,   
 
-    30, 30, 30,
-
-    12, 12, 12, 12,
-    12, 12, 6,
-    3,
-    12, 12, 12, 12,
-    12, 12, 6,
-    3,
-    12, 12, 12, 12,
-    12, 12, 6,
-    3,
-    12, 12, 12, 12,
-    12, 12, 6,
-    6, 18, 18, 18,
-    6, 6,
-    6, 6,
-    6, 6,
-    18, 18, 18, 18, 18, 18,
-    10, 10, 10,
-    10, 10, 10};
+    83, 83, 83, 83,
+    83, 83, 166,    
+    255,            
+    83, 83, 83, 83,
+    83, 83, 166,
+    255,
+    83, 83, 83, 83,
+    83, 83, 166,
+    255,
+    83, 83, 83, 83,
+    83, 83, 166,
+    166, 55, 55, 55,  
+    166, 166,
+    166, 166,
+    166, 166,
+    55, 55, 55, 55, 55, 55,
+    100, 100, 100, 
+    100, 100, 100
+};

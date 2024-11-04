@@ -19,8 +19,7 @@ public:
 private:
 protected:
   Module_Web *Parent;
-  void EE();
-  
+  void EE();  
   bool PlayEE = false;
   const PROGMEM static int melody[];
   const PROGMEM static uint8_t noteDurations[];
