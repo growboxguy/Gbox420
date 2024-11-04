@@ -88,12 +88,14 @@ typedef struct
   struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
   struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
+  /*
   struct WasteReservoirSettings ///< WaterPump default settings
   {
     WasteReservoirSettings(float WasteLimit = 0.0) : WasteLimit(WasteLimit) {}
     float WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
   };
   struct WasteReservoirSettings WasteRes = {.WasteLimit = 13.0};
+  */
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {

@@ -3,21 +3,14 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
-#include "WasteReservoir.h"
+//#include "WasteReservoir.h"
 #include "WaterPump.h"
 
-///< Weight sensor measures the bucket weight and watering is based on the measured weight
-enum WateringMode
-{
-  WEIGHT,
-  TIMER,
-  MANUAL
-}; ///< Tracks what triggered the currently running watering
 
 class HempyBucket : virtual public Common
 {
 public:
-  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings &DefaultSettings, WeightSensor &BucketWeightSensor, WasteReservoir &BucketWasteReservoir, WaterPump &BucketPump);
+  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings &DefaultSettings, WeightSensor &BucketWeightSensor, WaterPump &BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
@@ -57,7 +50,7 @@ private:
 protected:
   Module *Parent;
   WeightSensor &BucketWeightSensor;     ///< Reference to the weight sensor
-  WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
+  //WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
   WaterPump &BucketPump;                ///< Reference to the water pump
   HempyStates State = HempyStates::IDLE;
   float &EvaporationTarget; ///< Reference to the evaporation target

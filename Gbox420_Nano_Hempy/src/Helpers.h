@@ -24,12 +24,14 @@ enum class ACMotorStates
   STOPPING  
 };
 
+/*
 enum class WasteReservoirStates
 {
   FULL,
   IDLE,
   RESERVED  
 };
+*/
 
 enum class WaterPumpStates
 {
@@ -123,7 +125,7 @@ const char *toText_onlineStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_ACMotorState(ACMotorStates State);
-const char *toText_wasteReservoirStates(WasteReservoirStates State);
+//const char *toText_wasteReservoirStates(WasteReservoirStates State);
 const char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
 const char *toText_hempyState(HempyStates State);

@@ -287,6 +287,7 @@ const char *toText_waterPumpState(WaterPumpStates State) {
     return (char*)pgm_read_word(&(waterPumpStateNames[static_cast<uint8_t>(State)]));
 }
 
+/*
 const char* const wasteReservoirStatesNames[] PROGMEM = {
     "FULL", "IDLE", "RESERVED"
 };
@@ -294,6 +295,7 @@ const char* const wasteReservoirStatesNames[] PROGMEM = {
 const char *toText_wasteReservoirStates(WasteReservoirStates State) {
     return (char*)pgm_read_word(&(wasteReservoirStatesNames[static_cast<uint8_t>(State)]));
 }
+*/
 
 char *toText_pressurePumpState(PressurePumpStates State)
 {

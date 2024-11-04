@@ -7,7 +7,7 @@
 #include "../Components/Sound.h"
 #include "../Components/WeightSensor.h"
 #include "../Components/WaterPump.h"
-#include "../Components/WasteReservoir.h"
+//#include "../Components/WasteReservoir.h"
 #include "../Components/HempyBucket.h"
 
 ///< Variables used during wireless communication
@@ -30,12 +30,14 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
   WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
-  WeightWR = new WeightSensor(F("WeightWR"), this, &ModuleSettings->WeightWR);
-  WasteRes = new WasteReservoir(F("WasteRes"), this, &ModuleSettings->WasteRes, WeightWR);
+  //WeightWR = new WeightSensor(F("WeightWR"), this, &ModuleSettings->WeightWR);
+  //WasteRes = new WasteReservoir(F("WasteRes"), this, &ModuleSettings->WasteRes, WeightWR);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, ModuleSettings->Bucket1, *WeightB1, *WasteRes, *Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, ModuleSettings->Bucket2, *WeightB2, *WasteRes, *Pump2);
+  //Bucket1 = new HempyBucket(F("Bucket1"), this, ModuleSettings->Bucket1, *WeightB1, *WasteRes, *Pump1);
+  //Bucket2 = new HempyBucket(F("Bucket2"), this, ModuleSettings->Bucket2, *WeightB2, *WasteRes, *Pump2);
+  Bucket1 = new HempyBucket(F("Bucket1"), this, ModuleSettings->Bucket1, *WeightB1,*Pump1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, ModuleSettings->Bucket2, *WeightB2,*Pump2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
@@ -190,7 +192,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
-    WasteRes->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
+    //WasteRes->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     break;
   case HempyMessages::HempyBucketCommand2:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
