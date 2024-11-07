@@ -53,8 +53,9 @@ namespace esphome
       uint32_t PumpOnTimer = 0;                // Track how long watering pump is on continuously (one water-drain cycle)
       uint32_t WateringTimer = 0;              // Track how long watering pump is on in total (all water-drain cycles)
       float DryWeight = 0;                     // Stores the next watering weight (Calculated after watering using EvaporationTargetWeight)
-      float BucketStateWeight = 0;             // Used to store the weight of the bucket when entering a new state
-      float BucketWetWeight = 0;               // Used to store the weight of the bucket right after watering is complete
+      float StateWeight = 0;             // Used to store the weight of the bucket when entering a new state
+      float WetWeight = 0;               // Used to store the weight of the bucket right after watering is complete
+      float DrainProgress = 0;           // Tracks how much water have drained away during the WATERING-DRAINING cycles
       bool UpdateInProgress = false;           // True while the state of the hempy bucket is updating (update_state running)
       uint32_t DefaultUpdateInterval = 1000;   // Stores the update_interval set in the YAML file in miliseconds
     };
