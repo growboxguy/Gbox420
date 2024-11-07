@@ -1,0 +1,39 @@
+alias: Gbox420 Hempy Buckets DISABLED Notification
+description: "Sends a notification when either Hempy bucket1 or bucket2 is disabled."
+trigger:
+  - platform: state
+    entity_id: sensor.hempy_bucket1_state
+    to: "DISABLED"
+  - platform: state
+    entity_id: sensor.hempy_bucket2_state
+    to: "DISABLED"
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: sensor.hempy_bucket1_state
+            state: "DISABLED"
+        sequence:
+          - service: notify.mobile_app_bitone
+            data:
+              message: "Hempy bucket1 DISABLED"
+              title: "Gbox420"
+          - service: notify.persistent_notification.create
+            data:
+              message: "Hempy bucket1 DISABLED"
+              title: "Gbox420"
+      - conditions:
+          - condition: state
+            entity_id: sensor.hempy_bucket2_state
+            state: "DISABLED"
+        sequence:
+          - service: notify.mobile_app_bitone
+            data:
+              message: "Hempy bucket2 DISABLED"
+              title: "Gbox420"
+          - service: notify.persistent_notification.create
+            data:
+              message: "Hempy bucket2 DISABLED"
+              title: "Gbox420"
+mode: single
