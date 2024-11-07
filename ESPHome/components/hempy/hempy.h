@@ -39,7 +39,7 @@ namespace esphome
     private:
       std::string Name;                        // Name of the object
       text_sensor::TextSensor *StateSensor;    // Register a sensor to publish current state: IDLE/WATERING/DRAINING/DISABLED
-      hx711::HX711Sensor *WeightSensor;            // Weight sensor object
+      hx711::HX711Sensor *WeightSensor;        // Weight sensor object
       number::Number *StartWateringWeight;     // When the bucket weight drops below this -> Start the watering process
       number::Number *WateringIncrements;      // How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
       number::Number *MaxWateringWeight;       // Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
@@ -54,6 +54,7 @@ namespace esphome
       uint32_t WateringTimer = 0;              // Track how long watering pump is on in total (all water-drain cycles)
       float DryWeight = 0;                     // Stores the next watering weight (Calculated after watering using EvaporationTargetWeight)
       float BucketStateWeight = 0;             // Used to store the weight of the bucket when entering a new state
+      float BucketWetWeight = 0;               // Used to store the weight of the bucket right after watering is complete
       bool UpdateInProgress = false;           // True while the state of the hempy bucket is updating (update_state running)
       uint32_t DefaultUpdateInterval = 1000;   // Stores the update_interval set in the YAML file in miliseconds
     };

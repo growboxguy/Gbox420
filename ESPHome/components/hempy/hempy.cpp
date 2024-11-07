@@ -79,7 +79,7 @@ namespace esphome
           }
           WaterPump->turn_on();
         }
-        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= BucketStateWeight + WateringIncrements->state)) // Max weight reached OR WateringIncrements's worth of water was added, wait for it to drain
+        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= BucketStateWeight + WateringIncrements->state && WeightSensor->state >= BucketWetWeight)) // Max weight reached OR (WateringIncrements's worth of water was added AND WetWeight is reached), wait for it to drain
         {
           WateringTimer += CurrentTime - PumpOnTimer;
           update_state(HempyStates::DRAINING, true);
@@ -110,6 +110,7 @@ namespace esphome
               NextWateringWeight->publish_state(DryWeight);
             else
               NextWateringWeight->publish_state(StartWateringWeight->state);
+            BucketWetWeight = BucketStateWeight = WeightSensor->state; // Store the wet weight
             update_state(HempyStates::IDLE, true);
           }
           else
