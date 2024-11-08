@@ -92,7 +92,7 @@ void HempyBucket::updateState(HempyStates NewState)
     BucketPump.disablePump();
     break;
   case HempyStates::IDLE:
-    BucketPump.  BucketPump.stopPump(true);
+    BucketPump.stopPump(true);
     if (BucketPump.getState() != WaterPumpStates::DISABLED && (DryWeight <= 0 || BucketWeightSensor.getWeight() <= DryWeight))
     {
       if (BucketWeightSensor.getWeight() >= DryWeight - OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor

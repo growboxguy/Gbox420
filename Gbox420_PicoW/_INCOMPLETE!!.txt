@@ -1,0 +1,2 @@
+This folder contains an incomplete version of Gbox420, which may not even compile. 
+The porting effort for Gbox420 to the Raspberry Pi Pico W was abandoned in favor of ESPHome

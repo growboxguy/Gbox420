@@ -1,9 +1,9 @@
 #pragma once
 
-/*! 
+/*!
  *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
- *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.  
- *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
+ *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.
+ *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory!
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
@@ -35,14 +35,13 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};        ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};       ///< Publish MQTT messages to this topic. Ends with a forward slash
   char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};   ///< Subscribe to messages of this topic and all sub-topic
   char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};    ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};          ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
-  {
-    DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
+  {    
     uint8_t Pin;  ///< DAT pin of the DHT sensor
     uint8_t Type; ///< Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
@@ -50,7 +49,6 @@ typedef struct
 
   struct Hempy_StandaloneSettings ///< Dev module default settings
   {
-    Hempy_StandaloneSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMqtt = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMqtt(ReportToMqtt), MQTTReportFrequency(MQTTReportFrequency) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -66,7 +64,6 @@ typedef struct
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
-    HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
     float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float OverflowTarget;    //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     float InitialDryWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
@@ -77,7 +74,6 @@ typedef struct
 
   struct SoundSettings ///< Sound default settings
   {
-    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
     bool Enabled = true; ///< Enable/Disable sound
   };
@@ -85,27 +81,25 @@ typedef struct
 
   struct WasteReservoirSettings ///< WaterPump default settings
   {
-    WasteReservoirSettings(float WasteLimit = 0.0) : WasteLimit(WasteLimit) {}
     float WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
   };
   struct WasteReservoirSettings WR1 = {.WasteLimit = 13.0};
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint16_t PumpTimeOut = 0, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), Speed(Speed), SpeedLowLimit(SpeedLowLimit) {}
     uint8_t PumpPin;           ///< Pump relay pin
     bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
     uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitLow;     ///< Minimum allowed speed to avoid stalling
+    uint8_t SpeedLimitHigh;    ///< Maximum allowed speed to prevent over-revving
   };
-  struct WaterPumpSettings B1P = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
-  struct WaterPumpSettings B2P = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings B1P = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  struct WaterPumpSettings B2P = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
-    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
     uint8_t DTPin;  ///< Weight sensor DT pin
     uint8_t SCKPin; ///< Weight sensor SCK pin
     long Offset;    ///< Reading at 0 weight on the scale
@@ -121,7 +115,7 @@ typedef struct
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 void saveSettings(Settings *ToSave);
 /**

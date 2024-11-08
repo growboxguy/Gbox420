@@ -72,7 +72,6 @@ typedef struct
 
   struct PressureSensorSettings ///< PressureSensor default settings
   {
-    PressureSensorSettings(uint8_t Pin = 0, float Offset = 0.0, float Ratio = 0.0) : Pin(Pin), Offset(Offset), Ratio(Ratio) {}
     uint8_t Pin;  ///< Pressure sensor Pin: Signal(yellow)
     float Offset; ///< Pressure sensor calibration: voltage reading at 0 pressure
     float Ratio;  ///< Pressure sensor voltage to pressure ratio
@@ -81,15 +80,13 @@ typedef struct
 
   struct SoundSettings ///< Sound default settings
   {
-    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
-    bool Enabled = true; ///< Enable/Disable sound
+    bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
   struct PressurePumpSettings ///< PressurePump default settings
   {
-    PressurePumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t BypassSolenoidMaxOpenTime = 0, uint16_t BypassSolenoidClosingDelay = 0, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidMaxOpenTime(BypassSolenoidMaxOpenTime), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
     uint8_t PumpPin;                     ///< Pump relay pin
     bool PumpPinNegativeLogic;           ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin;           ///< Bypass solenoid relay pin
@@ -98,16 +95,16 @@ typedef struct
     uint16_t BypassSolenoidClosingDelay; ///< (ms) How long it takes for the solenoid to close
     bool PumpEnabled;                    ///< Enable/disable pump. false= Block running the pump
     uint8_t Speed;                       ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLowLimit;               ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitLow;               ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitHigh;    ///< Maximum allowed speed to prevent over-revving
     uint16_t PumpTimeOut;                ///< (Sec) Max pump run time
     uint16_t PrimingTime;                ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
     uint16_t BlowOffTime;                ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
-  struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420, .PrimingTime = 10, .BlowOffTime = 3};
+  struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 70, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpTimeOut = 420, .PrimingTime = 10, .BlowOffTime = 3};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
-    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
     uint8_t DTPin;  ///< Weight sensor DT pin
     uint8_t SCKPin; ///< Weight sensor SCK pin
     long Offset;    ///< Reading at 0 weight on the scale

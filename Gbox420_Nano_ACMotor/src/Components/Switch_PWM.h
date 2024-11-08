@@ -7,7 +7,7 @@
 class Switch_PWM : public Switch
 {
 public:
-  Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool NegativeLogic = false);
+  Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool &NegativeLogic);
   void report(bool FriendlyFormat = false);
   void setDutyCycle(uint8_t DutyCycle);
   void turnOn();

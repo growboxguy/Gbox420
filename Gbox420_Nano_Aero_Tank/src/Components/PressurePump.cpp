@@ -5,7 +5,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   this->Parent = Parent;
   logToSerials(F(""), true, 0);  //New line
   logToSerials(F(""), false, 1); //Extra indentation
-  PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, &DefaultSettings->Speed, &DefaultSettings->SpeedLowLimit, DefaultSettings->PumpPinNegativeLogic);
+  PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, DefaultSettings->Speed, DefaultSettings->SpeedLimitLow, DefaultSettings->SpeedLimitHigh,  DefaultSettings->PumpPinNegativeLogic);
   logToSerials(F(""), false, 1); //Extra indentation
   BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
   BypassSolenoidMaxOpenTime = &DefaultSettings->BypassSolenoidMaxOpenTime;

@@ -125,10 +125,11 @@ typedef struct
     bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
     uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitLow;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitHigh;    ///< Maximum allowed speed to prevent over-revving
   };
-  struct WaterPumpSettings B1P = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
-  struct WaterPumpSettings B2P = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings B1P = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  struct WaterPumpSettings B2P = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
