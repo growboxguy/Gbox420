@@ -25,7 +25,7 @@ mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
 del .\Webpages\Main.html > nul 2>&1
 mklink /h .\Webpages\Main.html ..\src\Webpages\Main.html
 del .\Webpages\Hempy_Lite\Main.html > nul 2>&1
-mklink /h .\Webpages\Main.html ..\src\Webpages\Hempy_Lite\Main.html
+mklink /h .\Webpages\Hempy_Lite\Main.html ..\src\Webpages\Hempy_Lite\Main.html
 
 mklink /h .\src\Modules_Web\420Module_Web.h ..\src\Modules_Web\420Module_Web.h
 mklink /h .\src\Modules_Web\420Module_Web.cpp ..\src\Modules_Web\420Module_Web.cpp

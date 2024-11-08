@@ -119,7 +119,7 @@ void ReservoirModule_Web::sendMessages()
 ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
-  ReservoirMessages ReceivedSequenceID;
+  ReservoirMessages ReceivedSequenceID = NULL;
   if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);

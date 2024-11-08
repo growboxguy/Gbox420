@@ -37,8 +37,6 @@ mklink /h .\src\Components\Switch_PWM.h ..\src\Components\Switch_PWM.h
 mklink /h .\src\Components\Switch_PWM.cpp ..\src\Components\Switch_PWM.cpp
 mklink /h .\src\Components\WaterPump.h ..\src\Components\WaterPump.h
 mklink /h .\src\Components\WaterPump.cpp ..\src\Components\WaterPump.cpp
-mklink /h .\src\Components\WasteReservoir.h ..\src\Components\WasteReservoir.h
-mklink /h .\src\Components\WasteReservoir.cpp ..\src\Components\WasteReservoir.cpp
 mklink /h .\src\Components\WeightSensor.h ..\src\Components\WeightSensor.h
 mklink /h .\src\Components\WeightSensor.cpp ..\src\Components\WeightSensor.cpp
 

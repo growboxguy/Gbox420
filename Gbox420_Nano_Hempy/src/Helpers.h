@@ -24,14 +24,12 @@ enum class ACMotorStates
   STOPPING  
 };
 
-/*
 enum class WasteReservoirStates
 {
   FULL,
   IDLE,
   RESERVED  
 };
-*/
 
 enum class WaterPumpStates
 {
@@ -110,6 +108,7 @@ char *toText(int);
 char *toText(long);
 char *toText(unsigned int);
 char *toText(float); ///< function overloading: Same named function, different parameter type
+char *toText(double);
 char *toText(int Number1, const char *Separator, int Number2);
 char *toText(float Number1, const char *Separator, float Number2);
 char *toText_floatDecimals(float Number);
@@ -118,23 +117,25 @@ char *toText_temp(float Temp);
 char *toText_pressure(float Pressure);
 char *toText_weight(float Weight);
 char *toText_percentage(float Humidity);
-const char *toText_onOff(bool Status);
-const char *toText_yesNo(bool Status);
-const char *toText_enabledDisabled(bool Status);
-const char *toText_onlineStatus(bool Status);
+char *toText_onOff(bool Status);
+char *toText_yesNo(bool Status);
+char *toText_enabledDisabled(bool Status);
+char *toText_onlineStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_ACMotorState(ACMotorStates State);
-//const char *toText_wasteReservoirStates(WasteReservoirStates State);
-const char *toText_waterPumpState(WaterPumpStates State);
+char *toText_wasteReservoirStates(WasteReservoirStates State);
+char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
-const char *toText_hempyState(HempyStates State);
+char *toText_hempyState(HempyStates State);
 char *toText_lightState(LightStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
+char *toText_milisecond(int MiliSecond);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
 char *toText_rpm(float RPM);
 bool toBool(char *Boolean);
 int toInt(char *Integer);
 float toFloat(char *Float);
+int roundToTenth(int Number);

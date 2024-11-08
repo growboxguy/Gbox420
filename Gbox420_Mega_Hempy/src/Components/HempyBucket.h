@@ -3,21 +3,14 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
-#include "WasteReservoir.h"
+//#include "WasteReservoir.h"
 #include "WaterPump.h"
 
-///< Weight sensor measures the bucket weight and watering is based on the measured weight
-enum WateringMode
-{
-  WEIGHT,
-  TIMER,
-  MANUAL
-}; ///< Tracks what triggered the currently running watering
 
 class HempyBucket : virtual public Common
 {
 public:
-  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump);
+  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings &DefaultSettings, WeightSensor &BucketWeightSensor, WaterPump &BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
@@ -56,14 +49,14 @@ private:
 
 protected:
   Module *Parent;
-  WeightSensor *BucketWeightSensor;     ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
-  WasteReservoir *BucketWasteReservoir; ///< Logic for sharing a Waste reservoir between multiple buckets
-  WaterPump *BucketPump;                ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
+  WeightSensor &BucketWeightSensor;     ///< Reference to the weight sensor
+  //WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
+  WaterPump &BucketPump;                ///< Reference to the water pump
   HempyStates State = HempyStates::IDLE;
-  float *EvaporationTarget; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-  float *OverflowTarget;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-  float *InitialDryWeight;  ///When the module starts up the Hempy Bucket's wet weight is unknown, use this weight as the first watering weight
-  uint16_t *DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
-  float DryWeight = 0.0;    ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
-  float WetWeight = 0.0;    ///< (kg/lbs) Bucket weight after watering, measured after watering timeout is expired.
+  float &EvaporationTarget; ///< Reference to the evaporation target
+  float &OverflowTarget;    ///< Reference to the overflow target
+  float &InitialDryWeight;  ///< Reference to the initial dry weight
+  uint16_t &DrainWaitTime;  ///< Reference to the drain wait time
+  float DryWeight = 0.0;    ///< Bucket dry weight
+  float WetWeight = 0.0;    ///< Bucket wet weight
 };

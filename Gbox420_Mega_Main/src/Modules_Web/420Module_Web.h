@@ -16,7 +16,7 @@
 ///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module
 
 extern ELClientWebServer WebServer;
-extern ELClientRest PushingBoxRestAPI, HomeAssistantRestAPI;
+extern ELClientRest PushingBoxRestAPI; //, HomeAssistantRestAPI;
 extern ELClientMqtt MqttAPI;
 extern bool MqttConnected;
 class Sound_Web;
@@ -41,8 +41,8 @@ public:
   void addToLog(const char *Text, uint8_t Indent = 3);                                                   ///< Add a Log entry that is displayed on the web interface
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true);                                ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
-  void relayToHomeAssistant(char (*JSONData)[MaxLongTextLength]);                                        ///< Home Assistant reporting - Send a JSON formatted report via REST API to the HomeAssistanServer (from Setting.h)
-  void reportToHomeAssistantTrigger(bool ForceRun = false);                                              ///< Home Assistant reporting - Handles custom reporting frequencies
+  //void relayToHomeAssistant(char (*JSONData)[MaxLongTextLength]);                                        ///< Home Assistant reporting - Send a JSON formatted report via REST API to the HomeAssistanServer (from Setting.h)
+  //void reportToHomeAssistantTrigger(bool ForceRun = false);                                              ///< Home Assistant reporting - Handles custom reporting frequencies
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
@@ -76,7 +76,7 @@ protected:
   bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
   bool *ReportToGoogleSheets;
-  bool *ReportToHomeAssistant;
+  //bool *ReportToHomeAssistant;
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsTriggerCounter = 0;
   bool *ReportToMqtt;

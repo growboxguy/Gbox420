@@ -206,8 +206,8 @@ char *Module_Web::settingsToJSON()
   strcat(LongMessage, toText(*SerialReportWireless));
   strcat_P(LongMessage, (PGM_P)F("\",\"Sheets\":\""));
   strcat(LongMessage, toText(*ReportToGoogleSheets));
-  strcat_P(LongMessage, (PGM_P)F("\",\"HA\":\""));
-  strcat(LongMessage, toText(*ReportToHomeAssistant));
+  //strcat_P(LongMessage, (PGM_P)F("\",\"HA\":\""));
+  //strcat(LongMessage, toText(*ReportToHomeAssistant));
   strcat_P(LongMessage, (PGM_P)F("\",\"SheetsF\":\""));
   strcat(LongMessage, toText(*SheetsReportingFrequency));
   strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));

@@ -305,7 +305,7 @@ void HempyModule_Web::sendMessages()
 HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
-  HempyMessages ReceivedSequenceID;
+  HempyMessages ReceivedSequenceID = NULL;
   if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);

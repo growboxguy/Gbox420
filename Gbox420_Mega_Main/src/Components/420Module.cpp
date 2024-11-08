@@ -27,19 +27,6 @@ void Module::runAll()
 }
 
 /**
-* @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
-* @param Frequency Send a report every X seconds
-*/
-void Module::setSerialReportingFrequency(uint16_t Frequency)
-{
-  if (Frequency != *SerialReportFrequency)
-  {
-    *SerialReportFrequency = Frequency;
-  }
-  getSoundObject()->playOnSound();
-}
-
-/**
 * @brief Handles custom reporting frequency for Serial
 * @param ForceRun Send a report instantly, even when regular reports are disabled
 * @param ClearBuffer Flush the LongMessage buffer before starting to report
@@ -52,6 +39,19 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
   {
     runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
   }
+}
+
+/**
+* @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
+* @param Frequency Send a report every X seconds
+*/
+void Module::setSerialReportingFrequency(uint16_t Frequency)
+{
+  if (Frequency != *SerialReportFrequency)
+  {
+    *SerialReportFrequency = Frequency;
+  }
+  getSoundObject()->playOnSound();
 }
 
 /**

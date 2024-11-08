@@ -22,7 +22,7 @@ class AeroModule_Web;
 class ACMotorModule_Web;
 class ReservoirModule_Web;
 
-extern ELClientRest PushingBoxRestAPI;
+extern ELClientRest PushingBoxRestAPI; //,HomeAssistantRestAPI;
 
 class MainModule : virtual public Common_Web, virtual public Module_Web
 {
@@ -44,7 +44,7 @@ public:
   AeroModule_Web *AeroModule1 = NULL;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1 = NULL; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1 = NULL;         ///< <Represents the website controls and feedback for a HempyModule
-  ACMotorModule_Web *ACMotorModule1 = NULL;         ///< <Represents the website controls and feedback for a AC Motor module
+  //ACMotorModule_Web *ACMotorModule1 = NULL;         ///< <Represents the website controls and feedback for a AC Motor module
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);

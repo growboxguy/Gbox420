@@ -61,6 +61,14 @@ char *toText(float Number)
   return ShortMessage;
 }
 
+char *toText(double Number)
+{
+  if (isnan(Number))
+    Number = -1.0;
+  dtostrf(Number, 4, 2, ShortMessage); ///< minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
+  return ShortMessage;
+}
+
 char *toText_floatDecimals(float Number)
 {
   if (isnan(Number))
@@ -173,6 +181,13 @@ char *toText_second(int Second)
   return ShortMessage;
 }
 
+char *toText_milisecond(int MiliSecond)
+{
+  itoa(MiliSecond, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("ms"));
+  return ShortMessage;
+}
+
 char *toText_distance(float Distance)
 {
   dtostrf(Distance, 4, 2, ShortMessage);
@@ -194,65 +209,46 @@ char *toText_TDS(float TDS)
   return ShortMessage;
 }
 
-// Boolean to text
-
-const char* toTextBool(bool Status, const __FlashStringHelper* trueStr, const __FlashStringHelper* falseStr) {
-    return Status ? toText(trueStr) : toText(falseStr);
-}
-
-const char *toText_yesNo(bool Status)
+char *toText_yesNo(bool Status)
 {
-  return toTextBool(Status, F("YES"), F("NO"));
+  if (Status)
+    return toText(F("YES"));
+  else
+    return toText(F("NO"));
 }
 
-const char *toText_enabledDisabled(bool Status)
+char *toText_enabledDisabled(bool Status)
 {
-   return toTextBool(Status, F("ENABLED"), F("DISABLED")); 
+  if (Status)
+    return toText(F("ENABLED"));
+  else
+    return toText(F("DISABLED"));
 }
 
-const char *toText_onOff(bool Status)
+char *toText_onOff(bool Status)
 {
-  return toTextBool(Status, F("ON"), F("OFF")); 
+  if (Status)
+    return toText(F("ON"));
+  else
+    return toText(F("OFF"));
 }
 
-const char *toText_onlineStatus(bool Status)
-{
-   return toTextBool(Status, F("ONLINE"), F("OFFLINE"));  
-}
-
-const char *toText_onOffDisabled(bool Enabled, bool Status)
+char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 {
   if (!Enabled)
     return toText(F("DISABLED"));
   else
   {
-    return toTextBool(Status, F("ON"), F("OFF")); 
+    return toText_onOff(OnStatus);
   }
 }
 
-///Converting text
-
-bool toBool(char *Boolean)
+char *toText_onlineStatus(bool Status)
 {
-  if (strcmp_P(Boolean, PSTR("on")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("1")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("true")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("yes")) == 0)
-    return 1;
-  return 0;
-}
-
-int toInt(char *Integer)
-{
-  return atoi(Integer);
-}
-
-float toFloat(char *Float)
-{
-  return atof(Float);
+  if (Status)
+    return toText(F("ONLINE"));
+  else
+    return toText(F("OFFLINE"));
 }
 
 //< State related functions
@@ -279,23 +275,43 @@ char *toText_ACMotorState(ACMotorStates State)
   }
 }
 
-const char* const waterPumpStateNames[] PROGMEM = {
-    "DISABLED", "IDLE", "RUNNING"
-};
-
-const char *toText_waterPumpState(WaterPumpStates State) {
-    return (char*)pgm_read_word(&(waterPumpStateNames[static_cast<uint8_t>(State)]));
+char *toText_waterPumpState(WaterPumpStates State)
+{
+  switch (State)
+  {
+  case WaterPumpStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case WaterPumpStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case WaterPumpStates::RUNNING:
+    return toText(F("RUNNING"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
 }
 
-/*
-const char* const wasteReservoirStatesNames[] PROGMEM = {
-    "FULL", "IDLE", "RESERVED"
-};
-
-const char *toText_wasteReservoirStates(WasteReservoirStates State) {
-    return (char*)pgm_read_word(&(wasteReservoirStatesNames[static_cast<uint8_t>(State)]));
+char *toText_wasteReservoirStates(WasteReservoirStates State)
+{
+  switch (State)
+  {
+  case WasteReservoirStates::FULL:
+    return toText(F("FULL"));
+    break;
+  case WasteReservoirStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case WasteReservoirStates::RESERVED:
+    return toText(F("RESERVED"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
 }
-*/
 
 char *toText_pressurePumpState(PressurePumpStates State)
 {
@@ -393,12 +409,26 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
   }
 }
 
-const char* const hempyStateNames[] PROGMEM = {
-    "DISABLED", "IDLE", "WATERING", "DRAINING"
-};
-
-const char *toText_hempyState(HempyStates State) {
-    return (char*)pgm_read_word(&(hempyStateNames[static_cast<uint8_t>(State)]));
+char *toText_hempyState(HempyStates State)
+{
+  switch (State)
+  {
+  case HempyStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case HempyStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case HempyStates::WATERING:
+    return toText(F("WATERING"));
+    break;
+  case HempyStates::DRAINING:
+    return toText(F("DRAINING"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
 }
 
 char *toText_lightState(LightStates State)
@@ -424,4 +454,38 @@ char *toText_lightState(LightStates State)
     return toText(F("?"));
     break;
   }
+}
+
+///Converting text to value
+
+bool toBool(char *Boolean)
+{
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("1")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("true")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+    return 1;
+  return 0;
+}
+
+int toInt(char *Integer)
+{
+  return atoi(Integer);
+}
+
+float toFloat(char *Float)
+{
+  return atof(Float);
+}
+
+///Rounding numbers
+
+int roundToTenth(int Number)
+{
+  int SmallerMultiple = (Number / 10) * 10;
+  int LargerMultiple = SmallerMultiple + 10;
+  return (Number - SmallerMultiple > LargerMultiple - Number) ? LargerMultiple : SmallerMultiple;
 }

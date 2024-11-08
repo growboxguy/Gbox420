@@ -1,9 +1,10 @@
 #include "Switch.h"
 
-Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic) : Common(Name)
+Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic, uint16_t FlipDelay) : Common(Name)
 {
   this->Pin = Pin;
   this->NegativeLogic = NegativeLogic;
+  this->FlipDelay = FlipDelay;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
   logToSerials(F("Switch ready"), true, 3);
@@ -46,6 +47,12 @@ void Switch::turnOn()
   }
 }
 
+void Switch::turnOn_Wait()
+{
+  turnOn();
+  delay(FlipDelay);
+}
+
 void Switch::turnOff()
 {
   State = false;
@@ -58,6 +65,12 @@ void Switch::turnOff()
   {
     digitalWrite(Pin, LOW); ///< with positive logic switches
   }
+}
+
+void Switch::turnOff_Wait()
+{
+  turnOff();
+  delay(FlipDelay);
 }
 
 bool Switch::getState()

@@ -61,6 +61,14 @@ char *toText(float Number)
   return ShortMessage;
 }
 
+char *toText(double Number)
+{
+  if (isnan(Number))
+    Number = -1.0;
+  dtostrf(Number, 4, 2, ShortMessage); ///< minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
+  return ShortMessage;
+}
+
 char *toText_floatDecimals(float Number)
 {
   if (isnan(Number))
@@ -173,6 +181,13 @@ char *toText_second(int Second)
   return ShortMessage;
 }
 
+char *toText_milisecond(int MiliSecond)
+{
+  itoa(MiliSecond, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("ms"));
+  return ShortMessage;
+}
+
 char *toText_distance(float Distance)
 {
   dtostrf(Distance, 4, 2, ShortMessage);
@@ -234,31 +249,6 @@ char *toText_onlineStatus(bool Status)
     return toText(F("ONLINE"));
   else
     return toText(F("OFFLINE"));
-}
-
-///Converting text
-
-bool toBool(char *Boolean)
-{
-  if (strcmp_P(Boolean, PSTR("on")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("1")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("true")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("yes")) == 0)
-    return 1;
-  return 0;
-}
-
-int toInt(char *Integer)
-{
-  return atoi(Integer);
-}
-
-float toFloat(char *Float)
-{
-  return atof(Float);
 }
 
 //< State related functions
@@ -464,4 +454,38 @@ char *toText_lightState(LightStates State)
     return toText(F("?"));
     break;
   }
+}
+
+///Converting text to value
+
+bool toBool(char *Boolean)
+{
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("1")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("true")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+    return 1;
+  return 0;
+}
+
+int toInt(char *Integer)
+{
+  return atoi(Integer);
+}
+
+float toFloat(char *Float)
+{
+  return atof(Float);
+}
+
+///Rounding numbers
+
+int roundToTenth(int Number)
+{
+  int SmallerMultiple = (Number / 10) * 10;
+  int LargerMultiple = SmallerMultiple + 10;
+  return (Number - SmallerMultiple > LargerMultiple - Number) ? LargerMultiple : SmallerMultiple;
 }

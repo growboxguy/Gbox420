@@ -290,7 +290,7 @@ void AeroModule_Web::sendMessages()
 AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
-  AeroMessages ReceivedSequenceID;
+  AeroMessages ReceivedSequenceID = NULL;
   if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);
