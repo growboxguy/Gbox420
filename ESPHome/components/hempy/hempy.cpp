@@ -106,12 +106,12 @@ namespace esphome
           // ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, StateWeight, DrainTargetWeight->state);
           if (DrainProgress >= DrainTargetWeight->state) // Check if enough water was drained into the waste reservoir
           {
-            DryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight
+            WetWeight = WeightSensor->state; // Store the wet weight
+            DryWeight = WetWeight - EvaporationTargetWeight->state; // Calculate next watering weight
             if (DryWeight >= StartWateringWeight->state)
               NextWateringWeight->publish_state(DryWeight);
             else
-              NextWateringWeight->publish_state(StartWateringWeight->state);
-            WetWeight = StateWeight = WeightSensor->state; // Store the wet weight
+              NextWateringWeight->publish_state(StartWateringWeight->state);           
             DrainProgress = 0;                             // Reset the drain tracker
             update_state(HempyStates::IDLE, true);
           }

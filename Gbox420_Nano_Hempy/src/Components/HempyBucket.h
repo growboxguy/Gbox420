@@ -3,9 +3,7 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
-//#include "WasteReservoir.h"
 #include "WaterPump.h"
-
 
 class HempyBucket : virtual public Common
 {
@@ -25,8 +23,8 @@ public:
   void stopWateringRequest();                      ///< Turn off water pump - Runs fast
   void setEvaporationTarget(float Weight);         ///< Weight decrease between waterings
   char *getEvaporationTargetText(bool FriendlyFormat = false);
-  void setOverflowTarget(float Weight);
-  char *getOverflowTargetText(bool FriendlyFormat = false);
+  void setDrainTargetWeight(float Weight);
+  char *getDrainTargetWeightText(bool FriendlyFormat = false);
   void setDrainWaitTime(uint16_t Seconds);
   uint16_t getDrainWaitTime();
   char *getDrainWaitTimeText(bool FriendlyFormat = false);
@@ -42,21 +40,22 @@ private:
   uint32_t PumpOnTimer = millis();     ///< Used to measure pump's ON time in a cycle
   uint32_t WateringTime = 0;           ///< Measures total time the pump was ON during a watering (sum of multiple cycles)
   uint32_t StateTimer = millis();      ///< Measures how much time is spent in a state
-  float BucketStartWeight = 0.0;       ///< Store the bucket start weight at each watering cycle
+  float StateWeight = 0.0;             ///< Store the bucket start weight at each watering cycle
   bool DisableRequested = false;       ///< Signals to disable the watering logic
   bool StartWateringRequested = false; ///< Signals to start watering
   bool StopWateringRequested = false;  ///< Signals to stop watering
+  float &EvaporationTarget;            ///< Reference to the evaporation target
+  float &DrainTargetWeight;            ///< Reference to the overflow target
+  float &WateringIncrements;           ///< Reference to the overflow target
+  float &InitialDryWeight;             ///< Reference to the initial dry weight
+  uint16_t &DrainWaitTime;             ///< Reference to the drain wait time
+  float DrainProgress;                 ///< Tracks how much water have drained away during the WATERING-DRAINING cycles
+  float DryWeight = 0.0;               ///< Bucket dry weight
+  float WetWeight = 0.0;               ///< Bucket wet weight
 
 protected:
   Module *Parent;
-  WeightSensor &BucketWeightSensor;     ///< Reference to the weight sensor
-  //WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
-  WaterPump &BucketPump;                ///< Reference to the water pump
+  WeightSensor &BucketWeightSensor; ///< Reference to the weight sensor
+  WaterPump &BucketPump;            ///< Reference to the water pump
   HempyStates State = HempyStates::IDLE;
-  float &EvaporationTarget; ///< Reference to the evaporation target
-  float &OverflowTarget;    ///< Reference to the overflow target
-  float &InitialDryWeight;  ///< Reference to the initial dry weight
-  uint16_t &DrainWaitTime;  ///< Reference to the drain wait time
-  float DryWeight = 0.0;    ///< Bucket dry weight
-  float WetWeight = 0.0;    ///< Bucket wet weight
 };
