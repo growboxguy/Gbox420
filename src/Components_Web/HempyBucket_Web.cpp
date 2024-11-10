@@ -11,7 +11,7 @@ HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Pa
 void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("ET"), true), getEvaporationTargetText());
-  WebServer.setArgString(getName(F("OF"), true), getOverflowTargetText());
+  WebServer.setArgString(getName(F("OF"), true), getDrainTargetWeightText());
   WebServer.setArgInt(getName(F("D"), true), getDrainWaitTime());
   WebServer.setArgString(getName(F("DW"), true), getDryWeightText());
   //WebServer.setArgInt(getName(F("PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
@@ -65,7 +65,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OF")) == 0)
     {
-      setOverflowTarget(toFloat(Data));
+      setDrainTargetWeight(toFloat(Data));
       Parent->addToLog(F("Targets updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)

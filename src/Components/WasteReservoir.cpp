@@ -37,9 +37,9 @@ void WasteReservoir::checkFull()
     updateState(WasteReservoirStates::IDLE);
 }
 
-bool WasteReservoir::checkTarget(float OverflowTarget)
+bool WasteReservoir::checkTarget(float DrainTargetWeight)
 {
-  if (WasteWeightSensor->readWeight(false) - StartWeight >= OverflowTarget || State == WasteReservoirStates::FULL) ///< When the overflow target is reached or the reservoir is full: Signal back the target is reached
+  if (WasteWeightSensor->readWeight(false) - StartWeight >= DrainTargetWeight || State == WasteReservoirStates::FULL) ///< When the overflow target is reached or the reservoir is full: Signal back the target is reached
   {
     return true;
   }

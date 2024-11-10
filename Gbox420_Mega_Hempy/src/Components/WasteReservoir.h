@@ -21,7 +21,7 @@ public:
   void checkFull();        ///< Compares the waste reservoir weight against the WasteLimit. Sets Full flag once the limit is reached
   void setWasteLimit(float Weight);
   char *getWasteLimitText(bool FriendlyFormat = false);
-  bool checkTarget(float OverflowTarget); ///<Check if the OverflowTarget is reached
+  bool checkTarget(float DrainTargetWeight); ///<Check if the DrainTargetWeight is reached
   float getWeightIncrease();
 
 private:

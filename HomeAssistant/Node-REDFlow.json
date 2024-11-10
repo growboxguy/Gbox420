@@ -7710,7 +7710,7 @@
         "id": "5068dbeb.45f674",
         "type": "ha-entity",
         "z": "8e880181.88003",
-        "name": "Gbox420 Bucket1 OverflowTarget",
+        "name": "Gbox420 Bucket1 DrainTargetWeight",
         "server": "a7c93785.9fe448",
         "version": 1,
         "debugenabled": false,
@@ -7719,7 +7719,7 @@
         "config": [
             {
                 "property": "name",
-                "value": "Gbox420 Bucket1 OverflowTarget"
+                "value": "Gbox420 Bucket1 DrainTargetWeight"
             },
             {
                 "property": "device_class",
@@ -8420,7 +8420,7 @@
         "id": "ec4ce6c0.d99cc8",
         "type": "ha-entity",
         "z": "8e880181.88003",
-        "name": "Gbox420 Bucket2 OverflowTarget",
+        "name": "Gbox420 Bucket2 DrainTargetWeight",
         "server": "a7c93785.9fe448",
         "version": 1,
         "debugenabled": false,
@@ -8429,7 +8429,7 @@
         "config": [
             {
                 "property": "name",
-                "value": "Gbox420 Bucket2 OverflowTarget"
+                "value": "Gbox420 Bucket2 DrainTargetWeight"
             },
             {
                 "property": "device_class",

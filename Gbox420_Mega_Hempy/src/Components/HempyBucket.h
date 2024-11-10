@@ -3,6 +3,7 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
+// #include "WasteReservoir.h"
 #include "WaterPump.h"
 
 class HempyBucket : virtual public Common
@@ -56,6 +57,7 @@ private:
 protected:
   Module *Parent;
   WeightSensor &BucketWeightSensor; ///< Reference to the weight sensor
-  WaterPump &BucketPump;            ///< Reference to the water pump
+  // WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
+  WaterPump &BucketPump; ///< Reference to the water pump
   HempyStates State = HempyStates::IDLE;
 };

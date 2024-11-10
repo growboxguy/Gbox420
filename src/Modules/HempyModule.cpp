@@ -139,7 +139,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
@@ -190,7 +190,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Pump1->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
-    Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
+    Bucket1->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     //WasteRes->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     break;
@@ -208,7 +208,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
@@ -261,7 +261,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
-    Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
+    Bucket2->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     break;
   case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
