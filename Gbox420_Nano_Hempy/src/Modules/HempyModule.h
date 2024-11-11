@@ -14,7 +14,6 @@
 
 class Sound;
 class WeightSensor;
-//class WasteReservoir;
 class WaterPump;
 class HempyBucket;
 extern RF24 Wireless;
@@ -33,7 +32,6 @@ public:
   WeightSensor *WeightWR = NULL;
   HempyBucket *Bucket1 = NULL;
   HempyBucket *Bucket2 = NULL;
-  //WasteReservoir *WasteRes = NULL;
   WaterPump *Pump1 = NULL;
   WaterPump *Pump2 = NULL;
   void report(__attribute__((unused)) bool FriendlyFormat = false){};

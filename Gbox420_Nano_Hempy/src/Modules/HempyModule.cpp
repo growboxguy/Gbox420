@@ -3,11 +3,9 @@
 ///< Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
 
 #include "HempyModule.h"
-//#include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
 #include "../Components/WeightSensor.h"
 #include "../Components/WaterPump.h"
-//#include "../Components/WasteReservoir.h"
 #include "../Components/HempyBucket.h"
 
 ///< Variables used during wireless communication
@@ -30,12 +28,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
   WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
-  //WeightWR = new WeightSensor(F("WeightWR"), this, &ModuleSettings->WeightWR);
-  //WasteRes = new WasteReservoir(F("WasteRes"), this, &ModuleSettings->WasteRes, WeightWR);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  //Bucket1 = new HempyBucket(F("Bucket1"), this, ModuleSettings->Bucket1, *WeightB1, *WasteRes, *Pump1);
-  //Bucket2 = new HempyBucket(F("Bucket2"), this, ModuleSettings->Bucket2, *WeightB2, *WasteRes, *Pump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, ModuleSettings->Bucket1, *WeightB1,*Pump1);
   Bucket2 = new HempyBucket(F("Bucket2"), this, ModuleSettings->Bucket2, *WeightB2,*Pump2);
   addToRefreshQueue_Sec(this);
@@ -139,8 +133,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);      
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->MaxWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
     if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket1ResponseToSend.ConfirmDisable)
@@ -177,22 +171,15 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       HempyBucket1ResponseToSend.ConfirmTareWeightDW = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket1ResponseToSend.ConfirmTareWeightWR)
-    {
-      WeightWR->tareRequest();
-      HempyBucket1ResponseToSend.ConfirmTareWeightWR = true;
-    }
-    else
-      HempyBucket1ResponseToSend.ConfirmTareWeightWR = false;
+      HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;    
 
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Pump1->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
+    Bucket1->setMaxWeight(((HempyBucketCommand *)ReceivedCommand)->MaxWeight);
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
-    //WasteRes->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     break;
   case HempyMessages::HempyBucketCommand2:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
@@ -203,13 +190,12 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->MaxWeight, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
     if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket2ResponseToSend.ConfirmDisable)
@@ -260,6 +246,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Pump2->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
+    Bucket2->setMaxWeight(((HempyBucketCommand *)ReceivedCommand)->MaxWeight);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket2->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);

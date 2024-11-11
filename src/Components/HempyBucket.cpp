@@ -33,9 +33,9 @@ void HempyBucket::report(bool FriendlyFormat)
   strcat(LongMessage, getWetWeightText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
   strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DTW\":\""));
   strcat(LongMessage, getDrainTargetWeightText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DWT\":\""));
   strcat(LongMessage, getDrainWaitTimeText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -114,7 +114,7 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       BucketPump.startPump(true);
     }
-    if (BucketWeightSensor.getWeight(false) >= StateWeight + WateringIncrements && BucketWeightSensor.getWeight(false) >= WetWeight) //+ BucketWasteReservoir.getWeightIncrease() >= DrainTargetWeight //Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor.getWeight(false) >= StateWeight + WateringIncrements && BucketWeightSensor.getWeight(false) >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
     {
       WateringTime += millis() - PumpOnTimer;
       updateState(HempyStates::DRAINING);
@@ -135,13 +135,13 @@ void HempyBucket::updateState(HempyStates NewState)
     if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
       DrainProgress += StateWeight - BucketWeightSensor.getWeight(false); ///<  Calculate how much water has drained
-      if (DrainProgress >= DrainTargetWeight) //Check if target overflow weight is reached
+      if (DrainProgress >= DrainTargetWeight)                             // Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor.getWeight(); // Measure wet weight
         DryWeight = WetWeight - EvaporationTarget;  // Calculate next watering weight
-        DrainProgress = 0;                             // Reset the drain tracker
+        DrainProgress = 0;                          // Reset the drain tracker
         updateState(HempyStates::IDLE);
-      }      
+      }
       else
       {
         updateState(HempyStates::WATERING); /// Continue watering
@@ -157,10 +157,8 @@ void HempyBucket::updateState(HempyStates NewState)
   }
 }
 
-void HempyBucket::disable() // Takes time, do not call directly from an interupt (ESP-link website would timeout)
+void HempyBucket::disable() // Takes time, do not call directly from an interrupt (ESP-link website would timeout)
 {
-  // if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
-  //  BucketWasteReservoir.clearReservation();
   updateState(HempyStates::DISABLED);
   Parent->addToLog(getName(getStateText(true)));
   Parent->getSoundObject()->playOffSound();
@@ -173,19 +171,9 @@ void HempyBucket::disableRequest() // Stores the request only, will apply the ne
 
 void HempyBucket::startWatering()
 {
-  // if (BucketWasteReservoir.setReserved())
-  {
-    Parent->addToLog(getName(F("watering")));
-    updateState(HempyStates::WATERING);
-    Parent->getSoundObject()->playOnSound();
-  }
-  /*
-  else
-  {
-    Parent->addToLog(BucketWasteReservoir.getName(F("busy")));
-    updateState(HempyStates::IDLE);
-  }
-  */
+  Parent->addToLog(getName(F("watering")));
+  updateState(HempyStates::WATERING);
+  Parent->getSoundObject()->playOnSound();
 }
 
 void HempyBucket::startWateringRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
@@ -195,8 +183,6 @@ void HempyBucket::startWateringRequest() // Stores the request only, will apply 
 
 void HempyBucket::stopWatering()
 {
-  // if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
-  //   BucketWasteReservoir.clearReservation();
   updateState(HempyStates::IDLE);
   Parent->addToLog(getName(F("stopped")));
   Parent->getSoundObject()->playOnSound();
@@ -205,6 +191,11 @@ void HempyBucket::stopWatering()
 void HempyBucket::stopWateringRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StopWateringRequested = true;
+}
+
+void HempyBucket::setMaxWeight(float Weight)
+{
+  ; // TODO: Implement logic for disabling the watering logic above a certain weight (possibly clogged drain line)
 }
 
 void HempyBucket::setEvaporationTarget(float Weight)

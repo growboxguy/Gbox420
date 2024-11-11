@@ -37,6 +37,8 @@ void ReservoirModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_TDS(ReservoirResponse1Received.TDS) : toText(ReservoirResponse1Received.TDS));
   strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(ReservoirResponse1Received.Weight) : toText(ReservoirResponse1Received.Weight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WR\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(ReservoirResponse1Received.WeightWR) : toText(ReservoirResponse1Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.WaterTemperature) : toText(ReservoirResponse1Received.WaterTemperature));
   strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
@@ -52,6 +54,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url
   WebServer.setArgString(getName(F("PH"), true), toText(ReservoirResponse1Received.PH));
   WebServer.setArgString(getName(F("TDS"), true), toText_TDS(ReservoirResponse1Received.TDS));
   WebServer.setArgString(getName(F("W"), true), toText_weight(ReservoirResponse1Received.Weight));
+  WebServer.setArgString(getName(F("WR"), true), toText_weight(ReservoirResponse1Received.WeightWR));
   WebServer.setArgString(getName(F("WT"), true), toText_temp(ReservoirResponse1Received.WaterTemperature));
   WebServer.setArgString(getName(F("AT"), true), toText_temp(ReservoirResponse1Received.AirTemperature));
   WebServer.setArgString(getName(F("H"), true), toText_percentage(ReservoirResponse1Received.Humidity));
@@ -158,7 +161,8 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.ConfirmTareWeight, false, 1);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
-          logToSerials(ReservoirResponse1Received.Weight, false, 1);
+          logToSerials(ReservoirResponse1Received.Weight, false, 1);          
+          logToSerials(ReservoirResponse1Received.ConfirmTareWeightWR, false, 1);
           logToSerials(ReservoirResponse1Received.WaterTemperature, false, 1);
           logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
@@ -169,6 +173,8 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         }
         if (ReservoirResponse1Received.ConfirmTareWeight)
           ReservoirCommand1ToSend.TareWeight = false; //Turn off the Flag once the Receiver confirms processing it
+        if (ReservoirResponse1Received.ConfirmTareWeightWR)
+          ReservoirCommand1ToSend.TareWeightWR = false;
         break;
       case ReservoirMessages::ReservoirReset:
         if (*(Parent->SerialReportWireless))

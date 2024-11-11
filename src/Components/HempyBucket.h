@@ -3,7 +3,6 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
-// #include "WasteReservoir.h"
 #include "WaterPump.h"
 
 class HempyBucket : virtual public Common
@@ -24,12 +23,12 @@ public:
   void stopWateringRequest();                      ///< Turn off water pump - Runs fast
   void setEvaporationTarget(float Weight);         ///< Weight decrease between waterings
   char *getEvaporationTargetText(bool FriendlyFormat = false);
+  void setMaxWeight(float Weight);
   void setDrainTargetWeight(float Weight);
   char *getDrainTargetWeightText(bool FriendlyFormat = false);
   void setDrainWaitTime(uint16_t Seconds);
   uint16_t getDrainWaitTime();
   char *getDrainWaitTimeText(bool FriendlyFormat = false);
-
   float getDryWeight();
   char *getDryWeightText(bool FriendlyFormat = false);
   void setDryWeight(float Weight);
@@ -57,7 +56,6 @@ private:
 protected:
   Module *Parent;
   WeightSensor &BucketWeightSensor; ///< Reference to the weight sensor
-  // WasteReservoir &BucketWasteReservoir; ///< Reference to the waste reservoir
   WaterPump &BucketPump; ///< Reference to the water pump
   HempyStates State = HempyStates::IDLE;
 };

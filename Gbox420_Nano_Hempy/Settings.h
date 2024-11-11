@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 11; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 12; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,21 +56,21 @@ typedef struct
   struct HempyBucketSettings ///< HempyBucket default settings
   {
     float EvaporationTarget;  //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float WasteLimit;         ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float MaxWeight;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     float InitialDryWeight;   ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
     float WateringIncrements; ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     float DrainTargetWeight;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     uint16_t DrainWaitTime;   ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {
     uint8_t Pin;  ///< Piezo Buzzer red(+) cable
     bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 4, .Enabled = true};
+  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
@@ -85,15 +85,6 @@ typedef struct
   struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
   struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
-  /*
-  struct WasteReservoirSettings ///< WaterPump default settings
-  {
-    WasteReservoirSettings(float WasteLimit = 0.0) : WasteLimit(WasteLimit) {}
-    float WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
-  };
-  struct WasteReservoirSettings WasteRes = {.WasteLimit = 13.0};
-  */
-
   struct WeightSensorSettings ///< WeightSensor default settings
   {
     uint8_t DTPin;  ///< Weight sensor DT pin
@@ -103,7 +94,6 @@ typedef struct
   };
   struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -176647, .Scale = -20810.75};  ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
   struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 387148, .Scale = -22333.25};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightWR = {.DTPin = A2, .SCKPin = A3, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

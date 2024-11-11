@@ -27,10 +27,11 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   WTemp1 = new WaterTempSensor(F("WTemp1"), this, &ModuleSettings->WTemp1);
   PHSen1 = new PHSensor(F("PHSen1"), this, &ModuleSettings->PHSen1);
   TDS1 = new TDSSensor(F("TDS1"), this, &ModuleSettings->TDS1);
+  WeightWR = new WeightSensor(F("WeightWR"), this, &ModuleSettings->WeightWR);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
-  //addToRefreshQueue_Minute(this);
+  // addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
   runAll();
@@ -63,6 +64,7 @@ void ReservoirModule::updateResponse()
   ReservoirResponse1ToSend.PH = PHSen1->getPH();
   ReservoirResponse1ToSend.TDS = TDS1->getTDS();
   ReservoirResponse1ToSend.Weight = Weight1->getWeight();
+  ReservoirResponse1ToSend.WeightWR = WeightWR->getWeight();
   ReservoirResponse1ToSend.WaterTemperature = WTemp1->getTemp();
   ReservoirResponse1ToSend.AirTemperature = DHT1->getTemp();
   ReservoirResponse1ToSend.Humidity = DHT1->getHumidity();
@@ -115,7 +117,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
-      logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
+      logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, false, 1);
+      logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeightWR, true, 1);
     }
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight && !ReservoirResponse1ToSend.ConfirmTareWeight)
     {
@@ -126,6 +129,13 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     {
       ReservoirResponse1ToSend.ConfirmTareWeight = false;
     }
+    if (((ReservoirCommand *)ReceivedCommand)->TareWeightWR && !ReservoirResponse1ToSend.ConfirmTareWeightWR)
+    {
+      WeightWR->tareRequest();
+      ReservoirResponse1ToSend.ConfirmTareWeightWR = true;
+    }
+    else
+      ReservoirResponse1ToSend.ConfirmTareWeightWR = false;
     break;
   case ReservoirMessages::ReservoirReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); ///< Load the first response for the next message exchange
@@ -149,7 +159,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
 
 void ReservoirModule::updateAckData(ReservoirMessages NewSequenceID)
 {
-  //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  // Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   NextSequenceID = NewSequenceID; // update the next Message that will be copied to the buffer
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer

@@ -3,7 +3,7 @@
 
 Module::Module(const __FlashStringHelper *Name) : Common(Name)
 {
-  //logToSerials(F("Module object created"), true, 3);
+  // logToSerials(F("Module object created"), true, 3);
 }
 
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
@@ -13,8 +13,8 @@ Module::Module(const __FlashStringHelper *Name) : Common(Name)
 } */
 
 /**
-* @brief Run every thread
-*/
+ * @brief Run every thread
+ */
 void Module::runAll()
 {
   wdt_reset();
@@ -27,12 +27,12 @@ void Module::runAll()
 }
 
 /**
-* @brief Handles custom reporting frequency for Serial
-* @param ForceRun Send a report instantly, even when regular reports are disabled
-* @param ClearBuffer Flush the LongMessage buffer before starting to report
-* @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
-* @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
-*/
+ * @brief Handles custom reporting frequency for Serial
+ * @param ForceRun Send a report instantly, even when regular reports are disabled
+ * @param ClearBuffer Flush the LongMessage buffer before starting to report
+ * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
+ */
 void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
   if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
@@ -42,25 +42,25 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 }
 
 /**
-* @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
-* @param Frequency Send a report every X seconds
-*/
+ * @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
+ * @param Frequency Send a report every X seconds
+ */
 void Module::setSerialReportingFrequency(uint16_t Frequency)
 {
   if (Frequency != *SerialReportFrequency)
   {
     *SerialReportFrequency = Frequency;
+    getSoundObject()->playOnSound();
   }
-  getSoundObject()->playOnSound();
 }
 
 /**
-* @brief Reports sensor readings to the Serial output (Arduino and ESP) or to the LongMessage buffer
-* @param ForceRun Send a report instantly, even when regular reports are disabled
-* @param ClearBuffer Flush the LongMessage buffer before starting to report
-* @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
-* @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
-*/
+ * @brief Reports sensor readings to the Serial output (Arduino and ESP) or to the LongMessage buffer
+ * @param ForceRun Send a report instantly, even when regular reports are disabled
+ * @param ClearBuffer Flush the LongMessage buffer before starting to report
+ * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
+ */
 void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
   if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
@@ -220,61 +220,61 @@ void Module::setDebug(bool DebugEnabled)
   if (DebugEnabled != *Debug)
   {
     *Debug = DebugEnabled;
+    getSoundObject()->playOnOffSound(*Debug);
   }
-  getSoundObject()->playOnOffSound(*Debug);
 }
 
 void Module::setMetric(bool MetricEnabled)
 {
   if (MetricEnabled != *Metric)
-  { //if there was a change
+  { // if there was a change
     *Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
+    getSoundObject()->playOnOffSound(*Metric);
   }
-  getSoundObject()->playOnOffSound(*Metric);
 }
 
 void Module::setSerialReportDate(bool State)
 {
   if (State != *SerialReportDate)
-  { //if there was a change
+  { // if there was a change
     *SerialReportDate = State;
+    getSoundObject()->playOnOffSound(*SerialReportDate);
   }
-  getSoundObject()->playOnOffSound(*SerialReportDate);
 }
 
 void Module::setSerialReportMemory(bool State)
 {
   if (State != *SerialReportMemory)
-  { //if there was a change
+  { // if there was a change
     *SerialReportMemory = State;
+    getSoundObject()->playOnOffSound(*SerialReportMemory);
   }
-  getSoundObject()->playOnOffSound(*SerialReportMemory);
 }
 
 void Module::setSerialReportJSONFriendly(bool State)
 {
   if (State != *SerialReportJSONFriendly)
-  { //if there was a change
+  { // if there was a change
     *SerialReportJSONFriendly = State;
+    getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
 }
 
 void Module::setSerialReportJSON(bool State)
 {
-  if (State != *SerialReportJSON)
-  { //if there was a change
+  if (State != *SerialReportJSON) // if there was a change
+  {
     *SerialReportJSON = State;
+    getSoundObject()->playOnOffSound(*SerialReportJSON);
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSON);
 }
 
 void Module::setSerialReportWireless(bool State)
 {
-  if (State != *SerialReportWireless)
-  { //if there was a change
+  if (State != *SerialReportWireless) // if there was a change
+  {
     *SerialReportWireless = State;
+    getSoundObject()->playOnOffSound(*SerialReportWireless);
   }
-  getSoundObject()->playOnOffSound(*SerialReportWireless);
 }

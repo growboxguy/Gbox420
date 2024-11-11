@@ -1,9 +1,9 @@
 #pragma once
 
-/*! 
+/*!
  *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
- *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.  
- *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
+ *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.
+ *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory!
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
@@ -102,14 +102,15 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 246106, .Scale = -22716.50}; ///< Update the calibration values here for the Weight Sensor
+  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 246106, .Scale = -22716.50};    ///< Update the calibration values here for the Weight Sensor
+  struct WeightSensorSettings WeightWR = {.DTPin = A2, .SCKPin = A3, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
 
   uint8_t CompatibilityVersion = Version; ///< Version should always be the last value stored in the struct
 } Settings;
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 void saveSettings(Settings *ToSave);
 /**

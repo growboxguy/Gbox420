@@ -92,7 +92,7 @@ struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless resp
 struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless command
 {
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float DrainTargetWeight, __attribute__((unused)) float WasteLimit, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float DrainTargetWeight, __attribute__((unused)) float MaxWeight, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
    bool Disable = false; ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
    bool StopWatering = false;
@@ -104,7 +104,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
    float DryWeight = NAN;
    float EvaporationTarget = 0.0;
    float DrainTargetWeight = 0.0;
-   float WasteLimit = 0.0;
+   float MaxWeight = 0.0;
    uint16_t DrainWaitTime = 0;
 };
 

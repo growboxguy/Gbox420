@@ -3,14 +3,14 @@
 /**
  * @file ReservoirModule.h
  * @author GrowBoxGuy (growboxguy@gmail.com)
- * @brief Module for monitoring a nutrient reservoir. Measures PH, Water/Air temperature, humidity and the water level 
+ * @brief Module for monitoring a nutrient reservoir. Measures PH, Water/Air temperature, humidity and the water level
  * @version 4.20
- * 
- * Responsible for setting up the components attached to the Reservoir module (Temperature/Weight/pH sensors..), 
+ *
+ * Responsible for setting up the components attached to the Reservoir module (Temperature/Weight/pH sensors..),
  * and reporting the sensor readings to the Main module wirelessly.
- * 
+ *
  * @copyright https://sites.google.com/site/growboxguy
- * 
+ *
  */
 
 #include "RF24.h" // https://github.com/maniacbug/RF24
@@ -39,17 +39,18 @@ public:
   PHSensor *PHSen1;
   TDSSensor *TDS1;
   WaterTempSensor *WTemp1;
-  WeightSensor *Weight1;
-  void report(__attribute__((unused)) bool FriendlyFormat = false){};
+  WeightSensor *Weight1;  ///< Reservoir weight sensor
+  WeightSensor *WeightWR; ///< Waste reservoir weight sensor
+  void report(__attribute__((unused)) bool FriendlyFormat = false) {};
   void refresh_Sec();
   void refresh_FiveSec();
-  //void refresh_Minute();
+  // void refresh_Minute();
   bool processCommand(void *Command);
   void updateResponse();
   void updateAckData(ReservoirMessages NewSequenceID);
 
 private:
-  unsigned long LastMessageReceived = 0; //When was the last wireless message received
+  unsigned long LastMessageReceived = 0; // When was the last wireless message received
 
 protected:
 };
