@@ -4,11 +4,13 @@
 #include "420Module.h"
 
 ///< Air Pump controller
-
 class AirPump : virtual public Common
 {
 public:
-  AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirPumpSettings *DefaultSettings);
+  AirPump(const __FlashStringHelper *Name, 
+          Module *Parent, 
+          Settings::AirPumpSettings *DefaultSettings); ///< Keep original constructor signature
+
   void refresh_Minute();
   void report(bool FriendlyFormat = false);
   void TurnOn();
@@ -20,7 +22,7 @@ public:
 private:
 protected:
   Module *Parent;
-  bool *State;
-  uint8_t *Pin;
+  bool &State;
+  uint8_t &Pin;
   void checkStatus();
 };

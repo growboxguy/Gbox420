@@ -11,9 +11,8 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};      
 /**
  * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
  */
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
-{ ///< Constructor
-  this->Parent = Parent;
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
+{ 
   this->DefaultSettings = DefaultSettings;
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
@@ -292,7 +291,7 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&HempyBucketCommand1ToSend); ///< Command - Response exchange
   sendCommand(&HempyBucketCommand2ToSend); ///< Command - Response exchange
-  if (*(Parent->SerialReportWireless) && *Debug)
+  if (Parent->SerialReportWireless && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -302,7 +301,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if (*(Parent->SerialReportWireless))
+  if (Parent->SerialReportWireless)
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
@@ -317,7 +316,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true; ///< Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
       {
         logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
@@ -328,14 +327,14 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       {
       case HempyMessages::HempyModuleResponse1:
         memcpy(&HempyModuleResponse1Received, ReceivedResponse, sizeof(struct HempyModuleResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(HempyModuleResponse1Received.Status, true, 1);
         }
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(HempyBucketResponse1Received.ConfirmDisable, false, 1);
           logToSerials(HempyBucketResponse1Received.ConfirmStartWatering, false, 1);
@@ -371,7 +370,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(HempyBucketResponse2Received.ConfirmDisable, false, 1);
           logToSerials(HempyBucketResponse2Received.ConfirmStartWatering, false, 1);
@@ -406,13 +405,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       case HempyMessages::HempyReset:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("SequenceID unknown"), true, 1);
         }
@@ -422,13 +421,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
         logToSerials(F("; Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
     }
   }
   else
   {
-    if (*(Parent->SerialReportWireless))
+    if (Parent->SerialReportWireless)
       logToSerials(F("; No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -443,12 +442,12 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.Time = now();
   HempyModuleCommand1ToSend.Debug = *Debug;
   HempyModuleCommand1ToSend.Metric = *Metric;
-  HempyModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
-  HempyModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
-  HempyModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  HempyModuleCommand1ToSend.SerialReportJSONFriendly = *(Parent->SerialReportJSONFriendly);
-  HempyModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
-  HempyModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
+  HempyModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
+  HempyModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
+  HempyModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
+  HempyModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;
+  HempyModuleCommand1ToSend.SerialReportJSON = Parent->SerialReportJSON;
+  HempyModuleCommand1ToSend.SerialReportWireless = Parent->SerialReportWireless;
   HempyBucketCommand1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B1;
   HempyBucketCommand1ToSend.DrainTargetWeight = DefaultSettings->DrainTargetWeight_B1;
   HempyBucketCommand1ToSend.MaxWeight = DefaultSettings->MaxWeight_B1;

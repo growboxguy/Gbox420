@@ -1,8 +1,7 @@
 #include "WasteReservoir_Web.h"
 
-WasteReservoir_Web::WasteReservoir_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WasteReservoirSettings *DefaultSettings, WeightSensor *WasteWeightSensor) : Common(Name), WasteReservoir(Name, Parent, DefaultSettings, WasteWeightSensor), Common_Web(Name)
+WasteReservoir_Web::WasteReservoir_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WasteReservoirSettings *DefaultSettings, WeightSensor *WasteWeightSensor) : Common(Name), WasteReservoir(Name, Parent, DefaultSettings, WasteWeightSensor), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);

@@ -1,8 +1,7 @@
 #include "AirPump_Web.h"
 
-AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name), Common_Web(Name), AirPump(Name, Parent, DefaultSettings)
+AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name), Common_Web(Name), AirPump(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
 }

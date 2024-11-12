@@ -1,8 +1,7 @@
 #include "HempyBucket_Web.h"
 
-HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name), Common_Web(Name), HempyBucket(Name, Parent, DefaultSettings, BucketWeightSensor, BucketWasteReservoir, BucketPump)
+HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name), Common_Web(Name), HempyBucket(Name, Parent, DefaultSettings, BucketWeightSensor, BucketWasteReservoir, BucketPump), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);

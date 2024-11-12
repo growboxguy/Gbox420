@@ -1,9 +1,7 @@
 #include "ModuleSkeleton_Web.h"
 
-ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name), ModuleSkeleton(Name, Parent, DefaultSettings), Common_Web(Name)
-{ ///< constructor
-  this->Parent = Parent;
-  this->Name = Name;
+ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name), ModuleSkeleton(Name, Parent, DefaultSettings), Common_Web(Name), Parent(Parent), Name(Name)
+{ 
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);

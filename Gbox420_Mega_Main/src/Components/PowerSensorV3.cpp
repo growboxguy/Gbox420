@@ -1,8 +1,7 @@
 #include "PowerSensorV3.h"
 
-PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name)
-{
-  this->Parent = Parent;
+PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name),Parent(Parent)
+{  
   Sensor = new PZEM004Tv30(SerialPort);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);

@@ -1,8 +1,7 @@
 #include "Fan_PWM_Web.h"
 
-Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::Fan_PWMSettings *DefaultSettings) : Common(Name), Fan_PWM(Name, Parent, DefaultSettings), Common_Web(Name)
+Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::Fan_PWMSettings *DefaultSettings) : Common(Name), Fan_PWM(Name, Parent, DefaultSettings), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToCommandQueue(this);

@@ -1,24 +1,25 @@
 #include "WasteReservoir.h"
 
-WasteReservoir::WasteReservoir(const __FlashStringHelper *Name, Module *Parent, Settings::WasteReservoirSettings *DefaultSettings, WeightSensor *WasteWeightSensor) : Common(Name)
+WasteReservoir::WasteReservoir(const __FlashStringHelper *Name, Module *Parent, Settings::WasteReservoirSettings *DefaultSettings, WeightSensor *WasteWeightSensor)
+    : Common(Name),
+      Parent(Parent),
+      WasteWeightSensor(WasteWeightSensor),
+      WasteLimit(DefaultSettings->WasteLimit)
 {
-  this->Parent = Parent;
-  this->WasteWeightSensor = WasteWeightSensor;
-  WasteLimit = &DefaultSettings->WasteLimit;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("WasteReservoir ready"), true, 3);
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void WasteReservoir::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat);              //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   strcat_P(LongMessage, (PGM_P)F("\"S\":\"")); //< Reserved
   strcat(LongMessage, getStateText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"L\":\"")); //Limit
+  strcat_P(LongMessage, (PGM_P)F("\",\"L\":\"")); // Limit
   strcat(LongMessage, getWasteLimitText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -62,8 +63,8 @@ void WasteReservoir::updateState(WasteReservoirStates NewState)
 }
 
 /**
-* @brief Reserves the waste reservoir and store the start weight if the reservoir. Returns false if a reservation cannot be made
-*/
+ * @brief Reserves the waste reservoir and store the start weight if the reservoir. Returns false if a reservation cannot be made
+ */
 bool WasteReservoir::setReserved()
 {
   if (State == WasteReservoirStates::RESERVED || State == WasteReservoirStates::FULL)

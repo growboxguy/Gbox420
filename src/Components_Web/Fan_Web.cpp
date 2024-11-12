@@ -1,8 +1,7 @@
 #include "Fan_Web.h"
 
-Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Common(Name), Common_Web(Name), Fan(Name, Parent, DefaultSettings)
+Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Common(Name), Common_Web(Name), Fan(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
 }

@@ -1,11 +1,11 @@
 #include "PressureSensor.h"
 
-PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common(Name)
+PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings) 
+    : Common(Name), Parent(Parent),
+      Pin(DefaultSettings->Pin),
+      Offset(DefaultSettings->Offset),
+      Ratio(DefaultSettings->Ratio)
 {
-  this->Parent = Parent;
-  Pin = &DefaultSettings->Pin;
-  Ratio = &DefaultSettings->Ratio;
-  Offset = &DefaultSettings->Offset;
   AveragePressure = new movingAvg(MovingAverageDepth);
   AveragePressure->begin();
   Parent->addToReportQueue(this);
@@ -32,11 +32,11 @@ void PressureSensor::refresh_FiveSec()
 
 float PressureSensor::readPressure(bool ReturnAverage)
 {
-  float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
+  float Voltage = ((float)analogRead(Pin)) * 5 / 1024;
   if (*Metric)
-    Pressure = *Ratio * (Voltage - *Offset) * 1.0f; ///< unit: bar / 100kPa
+    Pressure = Ratio * (Voltage - Offset) * 1.0f; ///< unit: bar / 100kPa
   else
-    Pressure = *Ratio * (Voltage - *Offset) * 14.5038f; ///< unit: PSI
+    Pressure = Ratio * (Voltage - Offset) * 14.5038f; ///< unit: PSI
   AveragePressure->reading(Pressure * 100);
   if (ReturnAverage)
   {
@@ -69,7 +69,7 @@ void PressureSensor::readOffset()
   float sum = 0;
   for (uint8_t i = 0; i < 50; i++)
   {
-    sum += analogRead(*Pin);
+    sum += analogRead(Pin);
     delay(10);
   }
   float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///< Reads voltage at 0 pressure
@@ -81,14 +81,14 @@ void PressureSensor::readOffset()
 
 void PressureSensor::setOffset(float Value)
 {
-  *Offset = Value;
+  Offset = Value;
   AveragePressure->reset();
   Parent->addToLog(getName(F("offset updated")));
 }
 
 void PressureSensor::setRatio(float Value)
 {
-  *Ratio = Value;
+  Ratio = Value;
   AveragePressure->reset();
   Parent->addToLog(getName(F("ratio updated")));
 }

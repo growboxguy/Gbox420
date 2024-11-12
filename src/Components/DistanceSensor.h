@@ -15,8 +15,8 @@ public:
   float Distance = 0.0;
 
 private:
-  uint8_t *EchoPin;
-  uint8_t *TriggerPin;
+  uint8_t &EchoPin;   ///< Use reference instead of pointer
+  uint8_t &TriggerPin;///< Use reference instead of pointer
 
 protected:
   Module *Parent;

@@ -28,7 +28,7 @@ protected:
   RollingAverage *RollingFloat;
 
   ///< Variables stored in EEPROM, values kept between reboots
-  bool *PersistentBool;
-  int *PersistentInt;
-  float *PersistentFloat;
+  bool &PersistentBool;  ///< Reference to PersistentBool
+  int &PersistentInt;    ///< Reference to PersistentInt
+  float &PersistentFloat;///< Reference to PersistentFloat
 };

@@ -16,11 +16,11 @@ public:
 private:
 protected:
   Module *Parent;
-  uint8_t *Pin;
+  uint8_t &Pin;
   float PH;
   movingAvg *AveragePH;
-  float *Intercept;
-  float *Slope;
+  float &Intercept;
+  float &Slope;
   void updatePH(bool ShowRaw);
   void setSlope(float Value);
   void setIntercept(float Value);

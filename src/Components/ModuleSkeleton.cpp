@@ -1,11 +1,12 @@
 #include "ModuleSkeleton.h"
 
-ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
-{ ///< constructor
-  this->Parent = Parent;
-  PersistentBool = &DefaultSettings->PersistentBool;
-  PersistentInt = &DefaultSettings->PersistentInt;
-  PersistentFloat = &DefaultSettings->PersistentFloat;
+ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      PersistentBool(DefaultSettings->PersistentBool),
+      PersistentInt(DefaultSettings->PersistentInt),
+      PersistentFloat(DefaultSettings->PersistentFloat)
+{
   RollingInt = new RollingAverage();
   RollingFloat = new RollingAverage();
   Parent->addToReportQueue(this);
@@ -40,11 +41,11 @@ void ModuleSkeleton::report()
   Common::report();
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PersistentBool:"));
-  strcat(LongMessage, toText_yesNo(*PersistentBool));
+  strcat(LongMessage, toText_yesNo(PersistentBool));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentInt:"));
-  strcat(LongMessage, toText(*PersistentInt));
+  strcat(LongMessage, toText(PersistentInt));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentFloat:"));
-  strcat(LongMessage, toText(*PersistentFloat));
+  strcat(LongMessage, toText(PersistentFloat));
   strcat_P(LongMessage, (PGM_P)F(" ; RuntimeBool:"));
   strcat(LongMessage, toText_yesNo(RuntimeBool));
   strcat_P(LongMessage, (PGM_P)F(" ; RuntimeInt:"));

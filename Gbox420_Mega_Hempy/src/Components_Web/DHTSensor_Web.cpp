@@ -1,8 +1,7 @@
 #include "DHTSensor_Web.h"
 
-DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), Common_Web(Name), DHTSensor(Name, Parent, DefaultSettings)
+DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), Common_Web(Name), DHTSensor(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
 }
 

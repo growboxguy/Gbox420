@@ -1,8 +1,7 @@
 #include "Aeroponics_Tank_Web.h"
 
-Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_Tank(Name, Parent, DefaultSettings, TankSpecificSettings, FeedbackPressureSensor, Pump), Common_Web(Name)
-{ ///< constructor
-  this->Parent = Parent;
+Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_Tank(Name, Parent, DefaultSettings, TankSpecificSettings, FeedbackPressureSensor, Pump), Common_Web(Name), Parent(Parent)
+{ 
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
@@ -10,12 +9,12 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
 
 void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgFloat(getName(F("PresMin")), *MinPressure);
-  WebServer.setArgFloat(getName(F("PresMax")), *MaxPressure);
+  WebServer.setArgFloat(getName(F("PresMin")), MinPressure);
+  WebServer.setArgFloat(getName(F("PresMax")), MaxPressure);
   WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
   WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
-  WebServer.setArgInt(getName(F("Int")), *Interval);
-  WebServer.setArgFloat(getName(F("Dur")), *Duration);
+  WebServer.setArgInt(getName(F("Int")), Interval);
+  WebServer.setArgFloat(getName(F("Dur")), Duration);
 }
 
 void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)

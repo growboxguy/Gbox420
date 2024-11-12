@@ -16,8 +16,9 @@ public:
 
 private:
 protected:
-  uint8_t &DutyCycle;         ///< PWM duty cycle when the switch is on. 100 = always on.
-  uint8_t &DutyCycleLowLimit; ///< Limits the lowers PWM duty cycle when the switch is on.
+  bool &NegativeLogic;
+  uint8_t &Pin;
+  uint8_t &DutyCycle;          ///< PWM duty cycle when the switch is on. 100 = always on.
+  uint8_t &DutyCycleLowLimit;  ///< Limits the lowers PWM duty cycle when the switch is on.
   uint8_t &DutyCycleHighLimit; ///< Limits the lowers PWM duty cycle when the switch is on.
-  
 };

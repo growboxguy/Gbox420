@@ -8,7 +8,10 @@
 class Fan : virtual public Common
 {
 public:
-  Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
+  Fan(const __FlashStringHelper *Name,
+      Module *Parent,
+      Settings::FanSettings *DefaultSettings); ///< Keep original constructor signature
+
   void refresh_Minute();
   void report(bool FriendlyFormat = false);
   uint8_t fanSpeed();
@@ -20,9 +23,9 @@ public:
 private:
 protected:
   Module *Parent;
-  bool *State;
-  bool *HighSpeed;
-  uint8_t *OnOffPin;
-  uint8_t *SpeedPin;
+  bool &State;
+  bool &HighSpeed;
+  uint8_t &OnOffPin;
+  uint8_t &SpeedPin;
   void checkFanStatus();
 };

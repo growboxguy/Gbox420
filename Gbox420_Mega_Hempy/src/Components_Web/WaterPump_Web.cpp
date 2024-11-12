@@ -1,8 +1,7 @@
 #include "WaterPump_Web.h"
 
-WaterPump_Web::WaterPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterPumpSettings *DefaultSettings) : Common(Name), Common_Web(Name), WaterPump(Name, Parent, DefaultSettings)
+WaterPump_Web::WaterPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterPumpSettings *DefaultSettings) : Common(Name), Common_Web(Name), WaterPump(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);

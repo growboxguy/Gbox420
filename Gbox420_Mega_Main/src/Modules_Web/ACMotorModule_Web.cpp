@@ -9,9 +9,8 @@ struct ACMotorCommonTemplate ACMotorResetToSend = {ACMotorMessages::ACMotorReset
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-ACMotorModule_Web::ACMotorModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ACMotorModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
-{ ///< Constructor
-  this->Parent = Parent;
+ACMotorModule_Web::ACMotorModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ACMotorModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
+{
   this->DefaultSettings = DefaultSettings;
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
@@ -120,7 +119,7 @@ void ACMotorModule_Web::sendMessages()
   sendCommand(&ACMotorResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ACMotorModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&ACMotorCommand1ToSend); ///< Command - Response exchange
-  if (*(Parent->SerialReportWireless) && *Debug)
+  if (Parent->SerialReportWireless && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -130,7 +129,7 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
 {
   ACMotorMessages SequenceIDToSend = ((ACMotorCommonTemplate *)CommandToSend)->SequenceID;
   ACMotorMessages ReceivedSequenceID;
-  if (*(Parent->SerialReportWireless))
+  if (Parent->SerialReportWireless)
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_ACMotorSequenceID(SequenceIDToSend), false, 1);
@@ -145,7 +144,7 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true; ///< Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((ACMotorCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
       {
         logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_ACMotorSequenceID(ReceivedSequenceID), false, 1);
@@ -156,14 +155,14 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
       {
       case ACMotorMessages::ACMotorModuleResponse1:
         memcpy(&ACMotorModuleResponse1Received, ReceivedResponse, sizeof(struct ACMotorModuleResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(ACMotorModuleResponse1Received.Status, true, 1);
         }
         break;
       case ACMotorMessages::ACMotorResponse1:
         memcpy(&ACMotorResponse1Received, ReceivedResponse, sizeof(struct ACMotorResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(toText((int)ACMotorResponse1Received.ACMotorState), false, 1);
           logToSerials(ACMotorResponse1Received.RPM, true, 1);
@@ -180,13 +179,13 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
           ACMotorCommand1ToSend.Stop = false;
         break;
       case ACMotorMessages::ACMotorReset:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("SequenceID unknown"), true, 1);
         }
@@ -196,13 +195,13 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
         logToSerials(F("; Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
     }
   }
   else
   {
-    if (*(Parent->SerialReportWireless))
+    if (Parent->SerialReportWireless)
       logToSerials(F("; No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -217,11 +216,11 @@ void ACMotorModule_Web::updateCommands()
   ACMotorModuleCommand1ToSend.Time = now();
   ACMotorModuleCommand1ToSend.Debug = *Debug;
   ACMotorModuleCommand1ToSend.Metric = *Metric;
-  ACMotorModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
-  ACMotorModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
-  ACMotorModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  ACMotorModuleCommand1ToSend.SerialReportJSONFriendly = *(Parent->SerialReportJSONFriendly);
-  ACMotorModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
-  ACMotorModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
+  ACMotorModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
+  ACMotorModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
+  ACMotorModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
+  ACMotorModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;
+  ACMotorModuleCommand1ToSend.SerialReportJSON = Parent->SerialReportJSON;
+  ACMotorModuleCommand1ToSend.SerialReportWireless = Parent->SerialReportWireless;
   ACMotorCommand1ToSend.Speed = DefaultSettings->Speed;
 }

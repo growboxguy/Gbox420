@@ -1,23 +1,24 @@
 #include "DistanceSensor.h"
 
-/*! 
+/*!
  *  @brief  Class for the Ultrasonic distance sensor - HC-SR04 or JSN-SR04T
  */
-DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DistanceSensorSettings *DefaultSettings) : Common(Name)
+DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DistanceSensorSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      EchoPin(DefaultSettings->EchoPin),
+      TriggerPin(DefaultSettings->TriggerPin)
 {
-  this->Parent = Parent;
-  EchoPin = &DefaultSettings->EchoPin;
-  TriggerPin = &DefaultSettings->TriggerPin;
-  pinMode(*TriggerPin, OUTPUT);
-  pinMode(*EchoPin, INPUT);
+  pinMode(TriggerPin, OUTPUT);
+  pinMode(EchoPin, INPUT);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Distance Sensor ready"), true, 3);
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void DistanceSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat);

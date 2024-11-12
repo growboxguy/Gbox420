@@ -2,17 +2,18 @@
 #include "Lights.h"
 #include "Sound.h"
 
-LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name)
-{ ///< constructor
-  this->Parent = Parent;
-  this->LightSource = LightSource;
-  this->DigitalPin = &DefaultSettings->DigitalPin;
-  this->AnalogPin = &DefaultSettings->AnalogPin;
-  pinMode(*DigitalPin, INPUT);
-  pinMode(*AnalogPin, INPUT);
-  //calibrate(false);
-  Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_FiveSec(this);
+LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource)
+    : Common(Name),
+      Parent(Parent),              // Dereferencing Parent to use reference
+      LightSource(LightSource),    // Dereferencing LightSource to use reference
+      DigitalPin(DefaultSettings->DigitalPin),   // Using DefaultSettings pointer but passing values as references
+      AnalogPin(DefaultSettings->AnalogPin)
+{
+  pinMode(DigitalPin, INPUT);
+  pinMode(AnalogPin, INPUT);
+  // calibrate(false);  // Uncomment to calibrate when needed
+  Parent->addToReportQueue(this);  // Using pointer notation here for consistency
+  Parent->addToRefreshQueue_FiveSec(this);  // Using pointer notation here for consistency
   logToSerials(F("LightSensor ready"), true, 3);
 }
 
@@ -22,14 +23,14 @@ void LightSensor::refresh_FiveSec()
   if (CalibrateRequested)
   {
     calibrate();
-  }                                ///< If calibration was requested
-  Dark = digitalRead(*DigitalPin); ///< True: No light detected
-  LightReading = (1023 - analogRead(*AnalogPin));
+  } ///< If calibration was requested
+  Dark = digitalRead(DigitalPin); ///< True: No light detected
+  LightReading = (1023 - analogRead(AnalogPin));
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void LightSensor::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -54,14 +55,14 @@ void LightSensor::calibrate(bool AddToLog)
   uint8_t LastBrightness = LightSource->getBrightness();
   LightSource->setLightOnOff(false, false);    ///< turn off light, without adding a log entry
   delay(DelaySec);                             ///< wait for light output change
-  Readings[0] = 1023 - analogRead(*AnalogPin); ///< store the reading in darkness to the first element of the Readings[10] array
+  Readings[0] = 1023 - analogRead(AnalogPin); ///< store the reading in darkness to the first element of the Readings[10] array
   LightSource->setLightOnOff(true, false);     ///< turn on light, without adding a log entry
   for (uint8_t ReadingCounter = 0; ReadingCounter < (ReadingArrayDepth - 1);)
   {                                                                  ///< This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
     LightSource->setBrightness(ReadingCounter++ * 10, false, false); ///< Increment ReadingCounter AFTER reading its value
     wdt_reset();                                                     ///< Reset watchdog timer before waiting
     delay(DelaySec);                                                 ///< wait for light output change
-    Readings[ReadingCounter] = 1023 - analogRead(*AnalogPin);
+    Readings[ReadingCounter] = 1023 - analogRead(AnalogPin);
   }
   LightSource->setBrightness(LastBrightness, false, false); ///< restore original brightness, without adding a log entry
   LightSource->setLightOnOff(LastStatus, false);            ///< restore original state, without adding a log entry

@@ -1,8 +1,7 @@
 #include "LightSensor_Web.h"
 
-LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name), Common_Web(Name), LightSensor(Name, Parent, DefaultSettings, LightSource)
-{ ///< constructor
-  this->Parent = Parent;
+LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name), Common_Web(Name), LightSensor(Name, Parent, DefaultSettings, LightSource), Parent(Parent)
+{
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
 }

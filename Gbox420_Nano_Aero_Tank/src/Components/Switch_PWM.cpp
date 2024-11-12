@@ -1,9 +1,13 @@
 #include "Switch_PWM.h"
 
-Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool &NegativeLogic) : Switch(Name), DutyCycle(DutyCycle), DutyCycleLowLimit(DutyCycleLowLimit), DutyCycleHighLimit(DutyCycleHighLimit)
+Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool &NegativeLogic)
+    : Switch(Name),
+      DutyCycle(DutyCycle),
+      DutyCycleLowLimit(DutyCycleLowLimit),
+      DutyCycleHighLimit(DutyCycleHighLimit),
+      Pin(Pin),
+      NegativeLogic(NegativeLogic)
 {
-  this->Pin = Pin;
-  this->NegativeLogic = NegativeLogic;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
   logToSerials(F("Switch_PWM ready"), true, 3);

@@ -31,7 +31,7 @@ protected:
   Module *Parent;
   WeightSensor *WasteWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   WasteReservoirStates State = WasteReservoirStates::IDLE;
-  float *WasteLimit;
+  float &WasteLimit;
   float StartWeight = 0.0; ///< When a reservation is made the current waste reservoir weight is stored here
   void checkLimit();       ///< Compare the weight to the WasteLimit
 };

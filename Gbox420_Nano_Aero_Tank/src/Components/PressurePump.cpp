@@ -1,21 +1,17 @@
 #include "PressurePump.h"
 
-PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Settings::PressurePumpSettings *DefaultSettings) : Common(Name)
+PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Settings::PressurePumpSettings *DefaultSettings)
+    : Common(Name), Parent(Parent), PumpEnabled(DefaultSettings->PumpEnabled),
+      PumpTimeOut(DefaultSettings->PumpTimeOut), BypassSolenoidMaxOpenTime(DefaultSettings->BypassSolenoidMaxOpenTime),
+      BypassSolenoidClosingDelay(DefaultSettings->BypassSolenoidClosingDelay), PrimingTime(DefaultSettings->PrimingTime),
+      BlowOffTime(DefaultSettings->BlowOffTime),Speed(DefaultSettings->Speed)
 {
-  this->Parent = Parent;
-  logToSerials(F(""), true, 0);  //New line
-  logToSerials(F(""), false, 1); //Extra indentation
-  PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, DefaultSettings->Speed, DefaultSettings->SpeedLimitLow, DefaultSettings->SpeedLimitHigh,  DefaultSettings->PumpPinNegativeLogic);
-  logToSerials(F(""), false, 1); //Extra indentation
+  logToSerials(F(""), true, 0);  // New line
+  logToSerials(F(""), false, 1); // Extra indentation  
+  PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, DefaultSettings->Speed, DefaultSettings->SpeedLimitLow, DefaultSettings->SpeedLimitHigh, DefaultSettings->PumpPinNegativeLogic);
+  logToSerials(F(""), false, 1); // Extra indentation
   BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
-  BypassSolenoidMaxOpenTime = &DefaultSettings->BypassSolenoidMaxOpenTime;
-  BypassSolenoidClosingDelay = &DefaultSettings->BypassSolenoidClosingDelay;
-  PrimingTime = &DefaultSettings->PrimingTime;
-  BlowOffTime = &DefaultSettings->BlowOffTime;
-  PumpTimeOut = &DefaultSettings->PumpTimeOut;
-  PumpEnabled = &DefaultSettings->PumpEnabled;
-
-  if (*PumpEnabled)
+  if (PumpEnabled)
   {
     State = PressurePumpStates::IDLE;
   }
@@ -72,7 +68,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     {
       PumpSwitch->turnOff();
       BypassSwitch->turnOff();
-      *PumpEnabled = true;
+      PumpEnabled = true;
     }
     break;
   case PressurePumpStates::PRIMING:
@@ -81,7 +77,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
       PumpSwitch->turnOn();
       BypassSwitch->turnOn();
     }
-    if (millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
+    if (millis() - PumpTimer > ((uint32_t)PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::RUNNING);
       BlockOverWritingState = true;
@@ -92,12 +88,12 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     {
       PumpSwitch->turnOn();
       BypassSwitch->turnOff();
-      *PumpEnabled = true;
+      PumpEnabled = true;
     }
-    if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
+    if (millis() - PumpTimer > ((uint32_t)PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       Parent->addToLog(getName(F("timeout")));
-      *PumpEnabled = false;
+      PumpEnabled = false;
       updateState(PressurePumpStates::BLOWOFF);
       BlockOverWritingState = true;
     }
@@ -108,7 +104,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
       PumpSwitch->turnOff();
       BypassSwitch->turnOn();
     }
-    if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
+    if (millis() - PumpTimer > ((uint32_t)BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
@@ -120,7 +116,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
       PumpSwitch->turnOff();
       BypassSwitch->turnOn();
     }
-    if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
+    if (millis() - PumpTimer > ((uint32_t)BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
@@ -132,9 +128,9 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
       PumpSwitch->turnOff();
       BypassSwitch->turnOff();
     }
-    if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidClosingDelay)) ///< Bypass is fully closed
+    if (millis() - PumpTimer > ((uint32_t)BypassSolenoidClosingDelay)) ///< Bypass is fully closed
     {
-      if (*PumpEnabled)
+      if (PumpEnabled)
         updateState(PressurePumpStates::IDLE);
       else
         updateState(PressurePumpStates::DISABLED);
@@ -147,8 +143,8 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
       PumpSwitch->turnOn();
       BypassSwitch->turnOn();
     }
-    *PumpEnabled = true;
-    if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
+    PumpEnabled = true;
+    if (millis() - PumpTimer > ((uint32_t)PumpTimeOut * 1000))
     {
       updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
@@ -159,7 +155,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     {
       PumpSwitch->turnOff();
       BypassSwitch->turnOff();
-      *PumpEnabled = false;
+      PumpEnabled = false;
     }
     break;
   }
@@ -174,9 +170,9 @@ void PressurePump::startPump(bool ResetState)
 {
   if (ResetState)
   {
-    *PumpEnabled = true;
+    PumpEnabled = true;
   }
-  if (*PumpEnabled)
+  if (PumpEnabled)
   {
     Parent->getSoundObject()->playOnSound();
     updateState(PressurePumpStates::PRIMING);
@@ -187,7 +183,7 @@ void PressurePump::stopPump(bool ResetState)
 {
   if (ResetState)
   {
-    *PumpEnabled = true;
+    PumpEnabled = true;
   }
   Parent->getSoundObject()->playOffSound();
   if (State == PressurePumpStates::RUNNING)
@@ -204,7 +200,7 @@ void PressurePump::stopPump(bool ResetState)
 void PressurePump::disablePump()
 {
   Parent->getSoundObject()->playOffSound();
-  *PumpEnabled = false;
+  PumpEnabled = false;
   if (State == PressurePumpStates::RUNNING)
   {
     updateState(PressurePumpStates::BLOWOFF);
@@ -266,49 +262,49 @@ char *PressurePump::getStateText(bool FriendlyFormat)
 
 bool PressurePump::getEnabledState()
 {
-  return *PumpEnabled;
+  return PumpEnabled;
 }
 
 void PressurePump::setTimeOut(int TimeOut)
 {
-  if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
+  if (PumpTimeOut != TimeOut && TimeOut > 0)
   {
-    *this->PumpTimeOut = TimeOut;
+    PumpTimeOut = TimeOut;
     Parent->getSoundObject()->playOnSound();
   }
 }
 
 int PressurePump::getTimeOut()
 {
-  return *PumpTimeOut;
+  return PumpTimeOut;
 }
 
 char *PressurePump::getTimeOutText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_second(*PumpTimeOut);
+    return toText_second(PumpTimeOut);
   else
-    return toText(*PumpTimeOut);
+    return toText(PumpTimeOut);
 }
 
 void PressurePump::setPrimingTime(int Timing)
 {
-  if (*PrimingTime != Timing && Timing > 0)
+  if (PrimingTime != Timing && Timing > 0)
   {
-    *PrimingTime = Timing;
+    PrimingTime = Timing;
     Parent->getSoundObject()->playOnSound();
   }
 }
 
 int PressurePump::getPrimingTime()
 {
-  return *PrimingTime;
+  return PrimingTime;
 }
 
 char *PressurePump::getPrimingTimeText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_second(*PrimingTime);
+    return toText_second(PrimingTime);
   else
-    return toText(*PrimingTime);
+    return toText(PrimingTime);
 }

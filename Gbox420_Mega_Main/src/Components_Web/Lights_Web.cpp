@@ -1,8 +1,7 @@
 #include "Lights_Web.h"
 
-Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Common_Web(Name), Lights(Name, Parent, DefaultSettings)
+Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Common_Web(Name), Lights(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
@@ -10,15 +9,15 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgInt(getName(F("OnH"), true), *OnHour);    ///< On hour
-  WebServer.setArgInt(getName(F("OnM"), true), *OnMinute);  ///< On minute
-  WebServer.setArgInt(getName(F("OfH"), true), *OffHour);   ///< Off hour
-  WebServer.setArgInt(getName(F("OfM"), true), *OffMinute); ///< Off minute
-  WebServer.setArgInt(getName(F("B"), true), *Brightness);  ///< Brightness percentage
-  // WebServer.setArgBoolean(getName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
-  // WebServer.setArgInt(getName(F("FInc")), *FadingIncrements); ///< Fade change (%)
-  // WebServer.setArgInt(getName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
-  // WebServer.setArgInt(getName(F("DD"),true), *DimmingDuration); ///< Fade step interval (sec)
+  WebServer.setArgInt(getName(F("OnH"), true), OnHour);    ///< On hour
+  WebServer.setArgInt(getName(F("OnM"), true), OnMinute);  ///< On minute
+  WebServer.setArgInt(getName(F("OfH"), true), OffHour);   ///< Off hour
+  WebServer.setArgInt(getName(F("OfM"), true), OffMinute); ///< Off minute
+  WebServer.setArgInt(getName(F("B"), true), Brightness);  ///< Brightness percentage
+  // WebServer.setArgBoolean(getName(F("F")), FadingEnabled);   ///< Enable or disable Fade in/out
+  // WebServer.setArgInt(getName(F("FInc")), FadingIncrements); ///< Fade change (%)
+  // WebServer.setArgInt(getName(F("FInt")), FadingInterval);   ///< Fade step interval (sec)
+  // WebServer.setArgInt(getName(F("DD"),true), DimmingDuration); ///< Fade step interval (sec)
 }
 
 void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)

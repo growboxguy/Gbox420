@@ -27,13 +27,13 @@ public:
   char *getFormattedTime(bool PrintToSerials);
   Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
-  uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
+  uint16_t &SerialReportFrequency;   ///< Frequency of Serial reports in seconds
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
-  bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
-  bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *SerialReportJSONFriendly;    ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *SerialReportJSON;            ///< Enable/disable sending JSON formatted reports to the Serial output
-  bool *SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
+  bool &SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
+  bool &SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
+  bool &SerialReportJSONFriendly;    ///< Enable/disable sending Text formatted reports to the Serial output
+  bool &SerialReportJSON;            ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool &SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
 
 private:
 protected:

@@ -1,23 +1,20 @@
 #include "TDSSensor.h"
 
-TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings) : Common(Name)
-{ ///< constructor
-  this->Parent = Parent;
-  this->Pin = &DefaultSettings->Pin;
-  this->PowerPin = &DefaultSettings->PowerPin;
-  pinMode(*Pin, INPUT);
-  pinMode(*PowerPin, OUTPUT);
-  digitalWrite(*PowerPin, HIGH); //Turn on power
+TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings) : Common(Name), Pin(DefaultSettings->Pin), PowerPin(DefaultSettings->PowerPin), Parent(Parent)
+{
+  pinMode(Pin, INPUT);
+  pinMode(PowerPin, OUTPUT);
+  digitalWrite(PowerPin, HIGH); // Turn on power
   delay(50);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("TDSSensor ready"), true, 3);
-  digitalWrite(*PowerPin, LOW); //Turn off power
+  digitalWrite(PowerPin, LOW); // Turn off power
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void TDSSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -39,9 +36,9 @@ void TDSSensor::refresh_Minute()
 
 void TDSSensor::updateTDS(bool ShowRaw)
 {
-  digitalWrite(*PowerPin, HIGH); //Turn on power
+  digitalWrite(PowerPin, HIGH); // Turn on power
   delay(50);
-  int TDSRaw = analogRead(*Pin);
+  int TDSRaw = analogRead(Pin);
   if (ShowRaw)
   {
     appendName(true);
@@ -55,15 +52,15 @@ void TDSSensor::updateTDS(bool ShowRaw)
   {
     if (*Metric)
     {
-      Voltage = Voltage / (1.0 + 0.02 * (WaterTempSensor1->getTemp() - 25.0)); //Compensate TDS reading with temperature
+      Voltage = Voltage / (1.0 + 0.02 * (WaterTempSensor1->getTemp() - 25.0)); // Compensate TDS reading with temperature
     }
     else
     {
-      Voltage = Voltage / (1.0 + 0.02 * ((WaterTempSensor1->getTemp() - 32) * 0.55555 - 25.0)); //Compensate TDS reading with temperature
+      Voltage = Voltage / (1.0 + 0.02 * ((WaterTempSensor1->getTemp() - 32) * 0.55555 - 25.0)); // Compensate TDS reading with temperature
     }
   }
   TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
-  digitalWrite(*PowerPin, LOW); //Turn off power
+  digitalWrite(PowerPin, LOW); // Turn off power
 }
 
 float TDSSensor::getTDS()

@@ -15,14 +15,14 @@ struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBuc
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
-HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module(Name)
+HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings &DefaultSettings) : Common(Name), Module(Name)
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
-  SerialReportDate = &DefaultSettings->SerialReportDate;
-  SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
-  SerialReportJSON = &DefaultSettings->SerialReportJSON;
-  SerialReportWireless = &DefaultSettings->SerialReportWireless;
+  SerialReportFrequency = DefaultSettings.SerialReportFrequency;
+  SerialReportDate = DefaultSettings.SerialReportDate;
+  SerialReportMemory = DefaultSettings.SerialReportMemory;
+  SerialReportJSONFriendly = DefaultSettings.SerialReportJSONFriendly;
+  SerialReportJSON = DefaultSettings.SerialReportJSON;
+  SerialReportWireless = DefaultSettings.SerialReportWireless;
   logToSerials(F(""), true, 0);                                   // line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -80,7 +80,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
 {
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*SerialReportWireless)
+  if (SerialReportWireless)
   {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
@@ -98,7 +98,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   {
   case HempyMessages::HempyModuleCommand1:
     updateAckData(HempyMessages::HempyBucketResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -121,7 +121,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     break;
   case HempyMessages::HempyBucketCommand1:
     updateAckData(HempyMessages::HempyBucketResponse2); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
@@ -183,7 +183,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     break;
   case HempyMessages::HempyBucketCommand2:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
@@ -253,13 +253,13 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     break;
   case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(HempyMessages::HempyModuleResponse1); ///< Load the first response for the next message exchange
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
     }
     break;
   default:
-    //if (*SerialReportWireless)
+    //if (SerialReportWireless)
     //{
     // logToSerials(F("SequenceID unknown"), true, 1);
     //}

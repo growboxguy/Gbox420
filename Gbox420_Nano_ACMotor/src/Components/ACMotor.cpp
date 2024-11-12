@@ -2,9 +2,8 @@
 
 volatile long ACMotor::TachoPulseCounter = 0;
 
-ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *MotorSettings, Settings::RelaySettings *RelaySettings) : Common(Name)
+ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *MotorSettings, Settings::RelaySettings *RelaySettings) : Common(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   State = ACMotorStates::IDLE;
   OnOffSwitch = new Switch(F("OnOff"), RelaySettings->OnOffRelayPin, &RelaySettings->NegativeLogic, RelaySettings->FlipDelay);
   BrushSwitch = new Switch(F("Brush"), RelaySettings->BrushRelayPin, &RelaySettings->NegativeLogic, RelaySettings->FlipDelay);

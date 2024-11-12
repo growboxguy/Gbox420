@@ -1,32 +1,40 @@
 #include "Aeroponics_NoTank.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump) : Common(Name)
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, 
+                                     Module *Parent, 
+                                     Settings::AeroponicsSettings *DefaultSettings, 
+                                     PressureSensor *FeedbackPressureSensor, 
+                                     PressurePump *Pump) 
+  : Common(Name), 
+    Parent(Parent), 
+    FeedbackPressureSensor(FeedbackPressureSensor), 
+    Pump(Pump), 
+    SprayEnabled(DefaultSettings->SprayEnabled),   ///< Pointer to SprayEnabled
+    Duration(DefaultSettings->Duration),           ///< Pointer to Duration
+    DayInterval(DefaultSettings->DayInterval),     ///< Pointer to DayInterval
+    NightInterval(DefaultSettings->NightInterval), ///< Pointer to NightInterval
+    MaxPressure(DefaultSettings->MaxPressure),     ///< Pointer to MaxPressure
+    State(AeroNoTankStates::IDLE),   ///< Initialize to IDLE state
+    RunTillTimeout(false),            ///< Default RunTillTimeout to false
+    LastSprayPressure(0),             ///< Initialize pressure to 0
+    DayMode(true)                     ///< Default to Day Mode
 {
-  this->Parent = Parent;
-  this->FeedbackPressureSensor = FeedbackPressureSensor;
-  this->Pump = Pump;
-  SprayEnabled = &DefaultSettings->SprayEnabled;   ///< Enable/disable misting
-  Duration = &DefaultSettings->Duration;           ///< Spray time in seconds
-  DayInterval = &DefaultSettings->DayInterval;     ///< Spray every X minutes - With lights ON
-  NightInterval = &DefaultSettings->NightInterval; ///< Spray every X minutes - With lights OFF
-  MaxPressure = &DefaultSettings->MaxPressure;     ///< Aeroponics - Turn off pump above this pressure (bar)
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Aeroponics_NoTank ready"), true, 3);
-  if (*SprayEnabled)
+  if (SprayEnabled)
   {
-    State = AeroNoTankStates::IDLE;
-    sprayNow(false); ///< This is a safety feature,start with a spray after a reset
+    sprayNow(false); ///< Start with a spray after a reset if enabled
   }
   else
   {
-    State = AeroNoTankStates::DISABLED;
+    State = AeroNoTankStates::DISABLED;  ///< If not enabled, set state to DISABLED
   }
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Aeroponics_NoTank::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -65,7 +73,7 @@ void Aeroponics_NoTank::processTimeCriticalStuff() ///< Runs every 0.1 sec
 
 void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
-  bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  bool BlockOverWritingState = false; // Used when a state transitions to a new state
   if (State != NewState && *Debug)
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -93,11 +101,11 @@ void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a pa
     uint32_t Interval;
     if (DayMode)
     {
-      Interval = *DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
+      Interval = DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
     }
     else
     {
-      Interval = *NightInterval * 60000; ///< Duration is miliseconds
+      Interval = NightInterval * 60000; ///< Duration is miliseconds
     }
     if (millis() - SprayTimer >= Interval)
     { ///< if time to start spraying
@@ -121,7 +129,7 @@ void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a pa
     {
       SprayTimer = millis();
     }
-    if (FeedbackPressureSensor->readPressure(false) > *MaxPressure || millis() - SprayTimer >= *Duration * 1000)
+    if (FeedbackPressureSensor->readPressure(false) > MaxPressure || millis() - SprayTimer >= Duration * 1000)
     {
       LastSprayPressure = FeedbackPressureSensor->getPressure();
       updateState(AeroNoTankStates::RELEASE);
@@ -218,61 +226,61 @@ char *Aeroponics_NoTank::getDayModeText(bool FriendlyFormat)
 
 void Aeroponics_NoTank::setDayInterval(int Interval)
 {
-  if (*DayInterval != Interval && Interval > 0)
+  if (DayInterval != Interval && Interval > 0)
   {
-    *DayInterval = Interval;
+    DayInterval = Interval;
     Parent->getSoundObject()->playOnSound();
   }
 }
 
 int Aeroponics_NoTank::getDayInterval()
 {
-  return *DayInterval;
+  return DayInterval;
 }
 
 char *Aeroponics_NoTank::getDayIntervalText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_minute(*DayInterval);
+    return toText_minute(DayInterval);
   }
   else
   {
-    return toText(*DayInterval);
+    return toText(DayInterval);
   }
 }
 
 void Aeroponics_NoTank::setNightInterval(int Interval)
 {
-  if (*NightInterval != Interval && Interval > 0)
+  if (NightInterval != Interval && Interval > 0)
   {
-    *NightInterval = Interval;
+    NightInterval = Interval;
     Parent->getSoundObject()->playOnSound();
   }
 }
 
 int Aeroponics_NoTank::getNightInterval()
 {
-  return *NightInterval;
+  return NightInterval;
 }
 
 char *Aeroponics_NoTank::getNightIntervalText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_minute(*NightInterval);
+    return toText_minute(NightInterval);
   }
   else
   {
-    return toText(*NightInterval);
+    return toText(NightInterval);
   }
 }
 
 void Aeroponics_NoTank::setDuration(float duration)
 {
-  if (*Duration != duration && duration > 0)
+  if (Duration != duration && duration > 0)
   {
-    *Duration = duration;
+    Duration = duration;
     Parent->addToLog(getName(F("duration updated")));
     Parent->getSoundObject()->playOnSound();
   }
@@ -280,8 +288,8 @@ void Aeroponics_NoTank::setDuration(float duration)
 
 void Aeroponics_NoTank::setSprayOnOff(bool State)
 {
-  *SprayEnabled = State;
-  if (*SprayEnabled)
+  SprayEnabled = State;
+  if (SprayEnabled)
   {
     updateState(AeroNoTankStates::IDLE);
     Parent->getSoundObject()->playOnSound();
@@ -295,41 +303,41 @@ void Aeroponics_NoTank::setSprayOnOff(bool State)
 
 bool Aeroponics_NoTank::getSprayEnabled()
 {
-  return *SprayEnabled;
+  return SprayEnabled;
 }
 
 char *Aeroponics_NoTank::getSprayEnabledText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_enabledDisabled(*SprayEnabled);
+    return toText_enabledDisabled(SprayEnabled);
   }
   else
   {
-    return toText(*SprayEnabled);
+    return toText(SprayEnabled);
   }
 }
 
 float Aeroponics_NoTank::getDuration()
 {
-  return *Duration;
+  return Duration;
 }
 
 char *Aeroponics_NoTank::getDurationText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_second(*Duration);
+    return toText_second(Duration);
   }
   else
   {
-    return toText(*Duration);
+    return toText(Duration);
   }
 }
 
 char *Aeroponics_NoTank::sprayStateToText()
 {
-  return toText_onOff(*SprayEnabled);
+  return toText_onOff(SprayEnabled);
 }
 
 float Aeroponics_NoTank::getLastSprayPressure()
@@ -356,9 +364,9 @@ float Aeroponics_NoTank::getPressure()
 
 void Aeroponics_NoTank::setMinPressure(float Pressure)
 {
-  if (*MinPressure != Pressure && Pressure > 0)
+  if (MinPressure != Pressure && Pressure > 0)
   {
-    *MinPressure = Pressure;
+    MinPressure = Pressure;
   }
 }
 
@@ -366,19 +374,19 @@ char *Aeroponics_NoTank::getMinPressureText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_pressure(*MinPressure);
+    return toText_pressure(MinPressure);
   }
   else
   {
-    return toText(*MinPressure);
+    return toText(MinPressure);
   }
 }
 
 void Aeroponics_NoTank::setMaxPressure(float Pressure)
 {
-  if (*MaxPressure != Pressure && Pressure > 0)
+  if (MaxPressure != Pressure && Pressure > 0)
   {
-    *MaxPressure = Pressure;
+    MaxPressure = Pressure;
     Parent->addToLog(getName(F("max pressure updated")));
     Parent->getSoundObject()->playOnSound();
   }
@@ -388,10 +396,10 @@ char *Aeroponics_NoTank::getMaxPressureText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_pressure(*MaxPressure);
+    return toText_pressure(MaxPressure);
   }
   else
   {
-    return toText(*MaxPressure);
+    return toText(MaxPressure);
   }
 }

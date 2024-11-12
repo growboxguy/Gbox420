@@ -18,8 +18,8 @@ public:
   void tareRequest();
   void triggerCalibration(float KnownWeight);
   void setScale(float Scale);
-  float *Scale; ///< Calibration value: Raw reading of one unit
-  long *Offset; ///< Read value at no weight on the scale
+  float &Scale; ///< Calibration value: Raw reading of one unit
+  long &Offset; ///< Read value at no weight on the scale
 
 private:
 protected:

@@ -3,17 +3,18 @@
 
 ///< PWM control an AC device using a Robodyn AC Light Dimming Module with Zero-cross detection
 
-Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_PWMSettings *DefaultSettings) : Common(Name)
+Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_PWMSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      MinSpeed(DefaultSettings->MinSpeed),
+      State(DefaultSettings->State),
+      Speed(DefaultSettings->Speed),
+      ZeroCrossingPin(DefaultSettings->ZeroCrossingPin),
+      PWMPin(DefaultSettings->PWMPin)
 {
-  this->Parent = Parent;
-  ZeroCrossingPin = &DefaultSettings->ZeroCrossingPin;
-  PWMPin = &DefaultSettings->PWMPin;
-  State = &DefaultSettings->State;
-  MinSpeed = &DefaultSettings->MinSpeed;
-  Speed = &DefaultSettings->Speed;
-  PWMDimmer = new dimmerLamp(*PWMPin);
+  PWMDimmer = new dimmerLamp(PWMPin);
   PWMDimmer->begin(NORMAL_MODE, OFF);
-  PWMDimmer->setPower(*Speed);
+  PWMDimmer->setPower(Speed);
   checkState();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
@@ -21,8 +22,8 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Fan_PWM::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -39,7 +40,7 @@ void Fan_PWM::refresh_Minute()
 
 void Fan_PWM::checkState()
 {
-  if (*State) // Device should be ON
+  if (State) // Device should be ON
   {
     PWMDimmer->setState(ON);
   }
@@ -51,7 +52,7 @@ void Fan_PWM::checkState()
 
 void Fan_PWM::turnOn()
 {
-  *State = true;
+  State = true;
   checkState();
   Parent->addToLog(getName(getSpeedText(true)));
   Parent->getSoundObject()->playOnSound();
@@ -59,7 +60,7 @@ void Fan_PWM::turnOn()
 
 void Fan_PWM::turnOff()
 {
-  *State = false;
+  State = false;
   checkState();
   Parent->addToLog(getName(getSpeedText(true)));
   Parent->getSoundObject()->playOffSound();
@@ -75,7 +76,7 @@ void Fan_PWM::setSpeed(uint8_t NewSpeed)
 
 uint8_t Fan_PWM::getSpeed(bool CurrentSpeed)
 {
-  if (CurrentSpeed && !*State)
+  if (CurrentSpeed && !State)
   {
     return 0;
   }
@@ -87,11 +88,11 @@ uint8_t Fan_PWM::getSpeed(bool CurrentSpeed)
 
 char *Fan_PWM::getSpeedText(bool CurrentSpeed, bool FriendlyFormat)
 {
-  if (CurrentSpeed && !*State)
+  if (CurrentSpeed && !State)
   {
     if (FriendlyFormat)
     {
-      return toText_onOff(*State);
+      return toText_onOff(State);
     }
     else
     {

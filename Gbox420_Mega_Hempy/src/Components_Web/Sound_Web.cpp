@@ -1,8 +1,7 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
+Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->SoundFeedback = this;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToCommandQueue(this);
@@ -20,7 +19,7 @@ void Sound_Web::refresh_Sec()
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
+  WebServer.setArgBoolean(getName(F("E"), true), Enabled);
 }
 
 bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

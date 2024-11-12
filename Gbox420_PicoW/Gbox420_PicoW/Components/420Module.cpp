@@ -19,7 +19,7 @@ Module::Module(const char *Name) : Common(Name)
  */
 void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
+  if ((SerialTriggerCounter++ % (SerialReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
   }
@@ -47,9 +47,9 @@ void Module::commandEventTrigger(char *Command, char *Data)
  */
 void Module::setSerialReportingFrequency(uint16_t Frequency)
 {
-  if (Frequency != *SerialReportFrequency)
+  if (Frequency != SerialReportFrequency)
   {
-    *SerialReportFrequency = Frequency;
+    SerialReportFrequency = Frequency;
   }
   getSoundObject()->playOnSound();
 }
@@ -67,11 +67,11 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   {
     getCurrentTime(true);
   }
-  if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportMemory || ForceRun) && !JSONToBufferOnly)
   {
     // getFreeMemory();
   }
-  if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
   {
     printf("%u items reporting:\n", ReportQueueItemCount); ///< Prints the number of items that will report
     for (int i = 0; i < ReportQueueItemCount; i++)
@@ -79,7 +79,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       ReportQueue[i]->report(false);
     }
   }
-  if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
+  if (SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
@@ -93,7 +93,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     }
     for (int i = 0; i < ReportQueueItemCount;)
     {
-      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
+      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : SerialReportJSONFriendly);
       if (i != ReportQueueItemCount)
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
@@ -231,38 +231,38 @@ void Module::setSerialReportDate(bool State)
 
 void Module::setSerialReportMemory(bool State)
 {
-  if (State != *SerialReportMemory)
+  if (State != SerialReportMemory)
   { // if there was a change
-    *SerialReportMemory = State;
+    SerialReportMemory = State;
   }
-  getSoundObject()->playOnOffSound(*SerialReportMemory);
+  getSoundObject()->playOnOffSound(SerialReportMemory);
 }
 
 void Module::setSerialReportJSONFriendly(bool State)
 {
-  if (State != *SerialReportJSONFriendly)
+  if (State != SerialReportJSONFriendly)
   { // if there was a change
-    *SerialReportJSONFriendly = State;
+    SerialReportJSONFriendly = State;
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
+  getSoundObject()->playOnOffSound(SerialReportJSONFriendly);
 }
 
 void Module::setSerialReportJSON(bool State)
 {
-  if (State != *SerialReportJSON)
+  if (State != SerialReportJSON)
   { // if there was a change
-    *SerialReportJSON = State;
+    SerialReportJSON = State;
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSON);
+  getSoundObject()->playOnOffSound(SerialReportJSON);
 }
 
 void Module::setSerialReportWireless(bool State)
 {
-  if (State != *SerialReportWireless)
+  if (State != SerialReportWireless)
   { // if there was a change
-    *SerialReportWireless = State;
+    SerialReportWireless = State;
   }
-  getSoundObject()->playOnOffSound(*SerialReportWireless);
+  getSoundObject()->playOnOffSound(SerialReportWireless);
 }
 
 /**
@@ -438,17 +438,17 @@ char *Module::settingsToJSON()
   strcat(LongMessage, "\",\"Metric\":\"");
   strcat(LongMessage, toText(*Metric));
   strcat(LongMessage, "\",\"SerialF\":\"");
-  strcat(LongMessage, toText(*SerialReportFrequency));
+  strcat(LongMessage, toText(SerialReportFrequency));
   strcat(LongMessage, "\",\"Date\":\"");
   strcat(LongMessage, toText(*SerialReportDate));
   strcat(LongMessage, "\",\"Mem\":\"");
-  strcat(LongMessage, toText(*SerialReportMemory));
+  strcat(LongMessage, toText(SerialReportMemory));
   strcat(LongMessage, "\",\"JSON\":\"");
-  strcat(LongMessage, toText(*SerialReportJSON));
+  strcat(LongMessage, toText(SerialReportJSON));
   strcat(LongMessage, "\",\"JSONF\":\"");
-  strcat(LongMessage, toText(*SerialReportJSONFriendly));
+  strcat(LongMessage, toText(SerialReportJSONFriendly));
   strcat(LongMessage, "\",\"Wire\":\"");
-  strcat(LongMessage, toText(*SerialReportWireless));
+  strcat(LongMessage, toText(SerialReportWireless));
   strcat(LongMessage, "\",\"Sheets\":\"");
   strcat(LongMessage, toText(*ReportToGoogleSheets));
   strcat(LongMessage, "\",\"SheetsF\":\"");
@@ -479,12 +479,12 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
   /*
   WebServer.setArgInt("Debug", *Debug);
   WebServer.setArgInt("Metric", *Metric);
-  WebServer.setArgInt("SerialF", *SerialReportFrequency);
+  WebServer.setArgInt("SerialF", SerialReportFrequency);
   WebServer.setArgInt("Date", *SerialReportDate);
-  WebServer.setArgInt("Mem", *SerialReportMemory);
-  WebServer.setArgInt("JSON", *SerialReportJSON);
-  WebServer.setArgInt("JSONF", *SerialReportJSONFriendly);
-  WebServer.setArgInt("Wire", *SerialReportWireless);
+  WebServer.setArgInt("Mem", SerialReportMemory);
+  WebServer.setArgInt("JSON", SerialReportJSON);
+  WebServer.setArgInt("JSONF", SerialReportJSONFriendly);
+  WebServer.setArgInt("Wire", SerialReportWireless);
   WebServer.setArgBoolean("Sheets", *ReportToGoogleSheets);
   WebServer.setArgInt("SheetsF", *SheetsReportingFrequency);
   WebServer.setArgString("Relay", GboxSettings->PushingBoxLogRelayID);

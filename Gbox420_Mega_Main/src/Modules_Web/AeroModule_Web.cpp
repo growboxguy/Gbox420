@@ -11,9 +11,8 @@ struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};          
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
-{ ///< Constructor
-  this->Parent = Parent;
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
+{ 
   this->DefaultSettings = DefaultSettings;
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
@@ -278,7 +277,7 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);
   sendCommand(&AeroCommand2ToSend); ///< Command - Response exchange
-  if (*(Parent->SerialReportWireless) && *Debug)
+  if (Parent->SerialReportWireless && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -291,7 +290,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if (*(Parent->SerialReportWireless))
+  if (Parent->SerialReportWireless)
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
@@ -306,7 +305,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true;
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
       {
         logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
@@ -317,14 +316,14 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       {
       case AeroMessages::AeroModuleResponse1:
         memcpy(&AeroModuleResponse1Received, ReceivedResponse, sizeof(struct AeroModuleResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(AeroModuleResponse1Received.Status, true, 1);
         }
         break;
       case AeroMessages::AeroResponse1:
         memcpy(&AeroResponse1Received, ReceivedResponse, sizeof(struct AeroResponse_P1));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(AeroResponse1Received.ConfirmSprayEnabled, false, 1);
           logToSerials(AeroResponse1Received.ConfirmSprayDisabled, false, 1);
@@ -353,7 +352,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         break;
       case AeroMessages::AeroResponse2:
         memcpy(&AeroResponse2Received, ReceivedResponse, sizeof(struct AeroResponse_P2));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(AeroResponse2Received.ConfirmPumpOn, false, 1);
           logToSerials(AeroResponse2Received.ConfirmPumpOff, false, 1);
@@ -383,7 +382,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand2ToSend.TareWeight = false;
         break;
       case AeroMessages::AeroReset:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
@@ -396,13 +395,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
         logToSerials(F("; Ack received without data"), true, 1);
     }
   }
   else
   {
-    if (*(Parent->SerialReportWireless))
+    if (Parent->SerialReportWireless)
       logToSerials(F("; No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -420,12 +419,12 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
-  AeroModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
-  AeroModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
-  AeroModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  AeroModuleCommand1ToSend.SerialReportJSONFriendly = *(Parent->SerialReportJSONFriendly);
-  AeroModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
-  AeroModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
+  AeroModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
+  AeroModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
+  AeroModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
+  AeroModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;
+  AeroModuleCommand1ToSend.SerialReportJSON = Parent->SerialReportJSON;
+  AeroModuleCommand1ToSend.SerialReportWireless = Parent->SerialReportWireless;
   AeroCommand1ToSend.DayMode = ((MainModule *)Parent)->getDayMode();
   AeroCommand1ToSend.Duration = DefaultSettings->Duration;
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;

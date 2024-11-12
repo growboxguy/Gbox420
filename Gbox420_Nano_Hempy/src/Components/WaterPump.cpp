@@ -1,14 +1,16 @@
 #include "WaterPump.h"
 
-WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings) : Common(Name)
+WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      PumpEnabled(DefaultSettings->PumpEnabled),
+      Speed(DefaultSettings->Speed),
+      PumpTimeOut(DefaultSettings->PumpTimeOut)
 {
-  this->Parent = Parent;
-  logToSerials(F(""), true, 0);  //New line
-  logToSerials(F(""), false, 1); //Extra indentation
+  logToSerials(F(""), true, 0);  // New line
+  logToSerials(F(""), false, 1); // Extra indentation
   PumpSwitch = new Switch_PWM(F("PumpPWM"), DefaultSettings->PumpPin, DefaultSettings->Speed, DefaultSettings->SpeedLimitLow, DefaultSettings->SpeedLimitHigh, DefaultSettings->PumpPinNegativeLogic);
-  PumpTimeOut = &DefaultSettings->PumpTimeOut;
-  PumpEnabled = &DefaultSettings->PumpEnabled;
-  if (*PumpEnabled)
+  if (PumpEnabled)
   {
     State = WaterPumpStates::IDLE;
   }
@@ -22,8 +24,8 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void WaterPump::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -63,14 +65,13 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
+    memset(&LongMessage[0], 0, MaxLongTextLength); // reset variable to store the Publish to path
     strcpy_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_waterPumpState(State));
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_waterPumpState(NewState));
     logToSerials(&LongMessage, true, 3);
-
     State = NewState;
     StateTimer = millis(); ///< Start measuring the time spent in the new State
   }
@@ -79,22 +80,22 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
   {
   case WaterPumpStates::DISABLED:
     PumpSwitch->turnOff();
-    *PumpEnabled = false;
+    PumpEnabled = false;
     break;
   case WaterPumpStates::IDLE:
     PumpSwitch->turnOff();
-    *PumpEnabled = true;
+    PumpEnabled = true;
     break;
   case WaterPumpStates::RUNNING:
     PumpSwitch->turnOn();
-    *PumpEnabled = true;
+    PumpEnabled = true;
     if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
     {
       RunTime = 0;
       logToSerials(getName(F("finished")), true, 3);
       updateState(WaterPumpStates::IDLE);
     }
-    if (millis() - StateTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
+    if (millis() - StateTimer > ((uint32_t)PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       Parent->addToLog(getName(F("timeout")));
       updateState(WaterPumpStates::DISABLED);
@@ -103,7 +104,7 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
   }
 }
 
-void WaterPump::startPumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+void WaterPump::startPumpRequest() // Stores the request only, will apply the next time the Pump is refreshing
 {
   StartPumpRequested = true;
 }
@@ -111,7 +112,7 @@ void WaterPump::startPumpRequest() //Stores the request only, will apply the nex
 void WaterPump::startPump(bool ResetState)
 {
   Parent->getSoundObject()->playOnSound();
-  if (*PumpEnabled || ResetState)
+  if (PumpEnabled || ResetState)
   {
     updateState(WaterPumpStates::RUNNING);
   }
@@ -121,7 +122,7 @@ void WaterPump::startPump(bool ResetState)
   }
 }
 
-void WaterPump::stopPumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+void WaterPump::stopPumpRequest() // Stores the request only, will apply the next time the Pump is refreshing
 {
   StopPumpRequested = true;
 }
@@ -131,7 +132,7 @@ void WaterPump::stopPump(bool ResetState)
   if ((State != WaterPumpStates::IDLE && State != WaterPumpStates::DISABLED) || (State == WaterPumpStates::DISABLED && ResetState))
   {
     Parent->getSoundObject()->playOffSound();
-    if (*PumpEnabled || ResetState)
+    if (PumpEnabled || ResetState)
     {
       updateState(WaterPumpStates::IDLE);
     }
@@ -142,7 +143,7 @@ void WaterPump::stopPump(bool ResetState)
   }
 }
 
-void WaterPump::disablePumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+void WaterPump::disablePumpRequest() // Stores the request only, will apply the next time the Pump is refreshing
 {
   DisablePumpRequested = true;
 }
@@ -156,17 +157,17 @@ void WaterPump::disablePump()
   }
 }
 
-void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
+void WaterPump::setSpeed(uint8_t DutyCycle) // Set PWM duty cycle
 {
   PumpSwitch->setDutyCycle(DutyCycle);
 }
 
-uint8_t WaterPump::getSpeed() //Get PWM duty cycle
+uint8_t WaterPump::getSpeed() // Get PWM duty cycle
 {
   return PumpSwitch->getDutyCycle();
 }
 
-char *WaterPump::getSpeedText(bool FriendlyFormat) //Get PWM duty cycle text
+char *WaterPump::getSpeedText(bool FriendlyFormat) // Get PWM duty cycle text
 {
   return PumpSwitch->getDutyCycleText(FriendlyFormat);
 }
@@ -190,14 +191,14 @@ char *WaterPump::getStateText(bool FriendlyFormat)
 
 bool WaterPump::getEnabledState()
 {
-  return *PumpEnabled;
+  return PumpEnabled;
 }
 
 void WaterPump::setTimeOut(uint16_t TimeOut)
 {
-  if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
+  if (PumpTimeOut != TimeOut && TimeOut > 0)
   {
-    *this->PumpTimeOut = TimeOut;
+    PumpTimeOut = TimeOut;
     logToSerials(getName(F("timeout updated")), true, 1);
     Parent->getSoundObject()->playOnSound();
   }
@@ -205,13 +206,13 @@ void WaterPump::setTimeOut(uint16_t TimeOut)
 
 int WaterPump::getTimeOut()
 {
-  return *PumpTimeOut;
+  return PumpTimeOut;
 }
 
 char *WaterPump::getTimeOutText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_second(*PumpTimeOut);
+    return toText_second(PumpTimeOut);
   else
-    return toText(*PumpTimeOut);
+    return toText(PumpTimeOut);
 }

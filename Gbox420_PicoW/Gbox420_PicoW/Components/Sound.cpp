@@ -1,13 +1,12 @@
 #include "Sound.h"
 
-Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(DefaultSettings->Name)
+Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(DefaultSettings->Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->DefaultSound = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
-  gpio_init(*Pin);
-  gpio_set_dir(*Pin, GPIO_OUT);
+  gpio_init(Pin);
+  gpio_set_dir(Pin, GPIO_OUT);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_1sec(this);
   Parent->addToCommandQueue(this);
@@ -49,7 +48,7 @@ bool Sound::commandEvent(char *Command, char *Data)
 /*
 void Sound::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  // WebServer.setArgBoolean(getName("E"), true), *Enabled);
+  // WebServer.setArgBoolean(getName("E"), true), Enabled);
 }
 
 */
@@ -62,7 +61,7 @@ void Sound::run1sec()
 
 void Sound::checkEvents()
 {
-  if (*Enabled)
+  if (Enabled)
   {
     if (PlayOffSound)
       OffSound();
@@ -101,15 +100,15 @@ void Sound::playEE()
 
 void Sound::setSoundOnOff(bool State)
 {
-  *Enabled = State;
-  playOnOffSound(*Enabled);
+  Enabled = State;
+  playOnOffSound(Enabled);
   Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
 void Sound::toggleSoundOnOff()
 {
-  *Enabled = !(*Enabled);
-  playOnOffSound(*Enabled);
+  Enabled = !(Enabled);
+  playOnOffSound(Enabled);
   Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
@@ -119,16 +118,16 @@ void Sound::buzz(uint32_t frequency, uint32_t length)
   uint32_t numCycles = frequency * length / 1000;
   for (uint32_t i = 0; i < numCycles; i++)
   {
-    gpio_put(*Pin, true);
+    gpio_put(Pin, true);
     busy_wait_us_32(delayValue);
-    gpio_put(*Pin, false);
+    gpio_put(Pin, false);
     busy_wait_us_32(delayValue);
   }
 }
 
 void Sound::OnSound()
 {
-  if (*Enabled)
+  if (Enabled)
   {
     buzz(500, 100);
     sleep_ms(10);
@@ -138,7 +137,7 @@ void Sound::OnSound()
 
 void Sound::OffSound()
 {
-  if (*Enabled)
+  if (Enabled)
   {
     buzz(500, 100);
     sleep_ms(10);
@@ -148,18 +147,18 @@ void Sound::OffSound()
 
 bool Sound::getEnabledState()
 {
-  return *Enabled;
+  return Enabled;
 }
 
 char *Sound::getEnabledStateText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_enabledDisabled(*Enabled);
+    return toText_enabledDisabled(Enabled);
   }
   else
   {
-    return toText(*Enabled);
+    return toText(Enabled);
   }
 }
 

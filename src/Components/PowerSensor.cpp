@@ -1,8 +1,7 @@
 #include "PowerSensor.h"
 
-PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name)
+PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Sensor = new PZEM004T(SerialPort);
   PowerSensorIP = new IPAddress(192, 168, 1, 1);
   Sensor->setAddress(*PowerSensorIP); ///< start power meter

@@ -38,8 +38,8 @@ protected:
   void OnSound();
   void OffSound();
   void EE();
-  uint8_t *Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
-  bool *Enabled;            ///< Sound ON or OFF
+  uint8_t Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
+  bool Enabled;            ///< Sound ON or OFF
   bool PlayOnSound = true;  ///< Play on beep flag - website controls it
   bool PlayOffSound = true; ///< Play off beep flag - website controls it
   bool PlayEE = false;

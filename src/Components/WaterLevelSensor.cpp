@@ -1,16 +1,16 @@
 #include "WaterLevelSensor.h"
 
-WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) : Common(Name)
-{ ///< constructor
-  this->Parent = Parent;
-  Pin_1 = &DefaultSettings->Pin_1;
-  Pin_2 = &DefaultSettings->Pin_2;
-  Pin_3 = &DefaultSettings->Pin_3;
-  Pin_4 = &DefaultSettings->Pin_4;
-  pinMode(*Pin_1, INPUT_PULLUP);
-  pinMode(*Pin_2, INPUT_PULLUP);
-  pinMode(*Pin_3, INPUT_PULLUP);
-  pinMode(*Pin_4, INPUT_PULLUP);
+WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) 
+    : Common(Name), Parent(Parent),
+      Pin_1(DefaultSettings->Pin_1),
+      Pin_2(DefaultSettings->Pin_2),
+      Pin_3(DefaultSettings->Pin_3),
+      Pin_4(DefaultSettings->Pin_4)
+{
+  pinMode(Pin_1, INPUT_PULLUP);
+  pinMode(Pin_2, INPUT_PULLUP);
+  pinMode(Pin_3, INPUT_PULLUP);
+  pinMode(Pin_4, INPUT_PULLUP);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("WaterLevelSensor ready"), true, 3);
@@ -31,10 +31,10 @@ void WaterLevelSensor::report()
 void WaterLevelSensor::refresh_FiveSec()
 {
   Common::refresh_Minute();
-  bool isAboveSensor1 = !digitalRead(*Pin_1); ///< Empty: Lowest Water sensor, true if level reached
-  bool isAboveSensor2 = !digitalRead(*Pin_2);
-  bool isAboveSensor3 = !digitalRead(*Pin_3);
-  bool isAboveSensor4 = !digitalRead(*Pin_4); ///< Full: Highest Water sensor, true if level reached
+  bool isAboveSensor1 = !digitalRead(Pin_1); ///< Empty: Lowest Water sensor, true if level reached
+  bool isAboveSensor2 = !digitalRead(Pin_2);
+  bool isAboveSensor3 = !digitalRead(Pin_3);
+  bool isAboveSensor4 = !digitalRead(Pin_4); ///< Full: Highest Water sensor, true if level reached
 
   memset(&LevelGauge, 0, sizeof(LevelGauge)); ///< clear variable
   strcpy_P(LevelGauge, (PGM_P)F("E["));

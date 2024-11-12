@@ -1,8 +1,7 @@
 #include "PowerSensor_Web.h"
 
-PowerSensor_Web::PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : Common(Name), PowerSensor(Name, Parent, SerialPort), Common_Web(Name)
+PowerSensor_Web::PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : Common(Name), PowerSensor(Name, Parent, SerialPort), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
 }
 

@@ -74,7 +74,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
 {
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*SerialReportWireless)
+  if (SerialReportWireless)
   {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
@@ -92,7 +92,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   {
   case ReservoirMessages::ReservoirModuleCommand1:
     updateAckData(ReservoirMessages::ReservoirResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -115,7 +115,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     break;
   case ReservoirMessages::ReservoirCommand1:
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, false, 1);
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeightWR, true, 1);
@@ -139,13 +139,13 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     break;
   case ReservoirMessages::ReservoirReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); ///< Load the first response for the next message exchange
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
     }
     break;
   default:
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("SequenceID unknown"), true, 1);
     }

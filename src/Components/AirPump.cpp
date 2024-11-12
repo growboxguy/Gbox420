@@ -3,13 +3,16 @@
 
 ///< AirPump controller (2 speed)
 
-AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name)
+AirPump::AirPump(const __FlashStringHelper *Name, 
+                 Module *Parent, 
+                 Settings::AirPumpSettings *DefaultSettings)  ///< Original constructor
+  : Common(Name), 
+    Parent(Parent),   ///< Initialize Parent in the constructor
+    State(DefaultSettings->State),   ///< Initialize reference to DefaultSettings->State
+    Pin(DefaultSettings->Pin)         ///< Initialize reference to DefaultSettings->Pin
 {
-  this->Parent = Parent;
-  Pin = &DefaultSettings->Pin;
-  State = &DefaultSettings->State;
-  pinMode(*Pin, OUTPUT);
-  digitalWrite(*Pin, HIGH); ///< Turn relay off initially
+  pinMode(Pin, OUTPUT);
+  digitalWrite(Pin, HIGH);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("AirPump ready"), true, 3);
@@ -34,10 +37,10 @@ void AirPump::refresh_Minute()
 
 void AirPump::checkStatus()
 {
-  if (*State) ///< True turns relay ON (LOW signal activates the Relay)
-    digitalWrite(*Pin, LOW);
+  if (State) ///< True turns relay ON (LOW signal activates the Relay)
+    digitalWrite(Pin, LOW);
   else
-    digitalWrite(*Pin, HIGH);
+    digitalWrite(Pin, HIGH);
 }
 
 void AirPump::TurnOff()
@@ -54,25 +57,25 @@ void AirPump::TurnOn()
 
 void AirPump::setState(bool NewState)
 {
-  *State = NewState;
+  State = NewState;
   checkStatus();
-  Parent->getSoundObject()->playOnOffSound(*State);
+  Parent->getSoundObject()->playOnOffSound(State);
   Parent->addToLog(getName(getStateText(true)));
 }
 
 bool AirPump::getState()
 {
-  return *State;
+  return State;
 }
 
 char *AirPump::getStateText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*State);
+    return toText_onOff(State);
   }
   else
   {
-    return toText(*State);
+    return toText(State);
   }
 }

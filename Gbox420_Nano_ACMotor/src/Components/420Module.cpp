@@ -35,7 +35,7 @@ void Module::runAll()
  */
 void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
+  if ((SerialTriggerCounter++ % (SerialReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
   }
@@ -47,9 +47,9 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
  */
 void Module::setSerialReportingFrequency(uint16_t Frequency)
 {
-  if (Frequency != *SerialReportFrequency)
+  if (Frequency != SerialReportFrequency)
   {
-    *SerialReportFrequency = Frequency;
+    SerialReportFrequency = Frequency;
     getSoundObject()->playOnSound();
   }
 }
@@ -63,16 +63,16 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
  */
 void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportDate || ForceRun) && !JSONToBufferOnly)
   {
     getFormattedTime(true);
   }
-  if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportMemory || ForceRun) && !JSONToBufferOnly)
   {
     getFreeMemory();
   }
   /*
-  if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
   {
     logToSerials(ReportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -82,7 +82,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     }
   }
   */
-  if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
+  if (SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
@@ -96,7 +96,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     }
     for (int i = 0; i < ReportQueueItemCount;)
     {
-      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
+      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : SerialReportJSONFriendly);
       if (i != ReportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
@@ -236,45 +236,45 @@ void Module::setMetric(bool MetricEnabled)
 
 void Module::setSerialReportDate(bool State)
 {
-  if (State != *SerialReportDate)
+  if (State != SerialReportDate)
   { // if there was a change
-    *SerialReportDate = State;
-    getSoundObject()->playOnOffSound(*SerialReportDate);
+    SerialReportDate = State;
+    getSoundObject()->playOnOffSound(SerialReportDate);
   }
 }
 
 void Module::setSerialReportMemory(bool State)
 {
-  if (State != *SerialReportMemory)
+  if (State != SerialReportMemory)
   { // if there was a change
-    *SerialReportMemory = State;
-    getSoundObject()->playOnOffSound(*SerialReportMemory);
+    SerialReportMemory = State;
+    getSoundObject()->playOnOffSound(SerialReportMemory);
   }
 }
 
 void Module::setSerialReportJSONFriendly(bool State)
 {
-  if (State != *SerialReportJSONFriendly)
+  if (State != SerialReportJSONFriendly)
   { // if there was a change
-    *SerialReportJSONFriendly = State;
-    getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
+    SerialReportJSONFriendly = State;
+    getSoundObject()->playOnOffSound(SerialReportJSONFriendly);
   }
 }
 
 void Module::setSerialReportJSON(bool State)
 {
-  if (State != *SerialReportJSON) // if there was a change
+  if (State != SerialReportJSON) // if there was a change
   {
-    *SerialReportJSON = State;
-    getSoundObject()->playOnOffSound(*SerialReportJSON);
+    SerialReportJSON = State;
+    getSoundObject()->playOnOffSound(SerialReportJSON);
   }
 }
 
 void Module::setSerialReportWireless(bool State)
 {
-  if (State != *SerialReportWireless) // if there was a change
+  if (State != SerialReportWireless) // if there was a change
   {
-    *SerialReportWireless = State;
-    getSoundObject()->playOnOffSound(*SerialReportWireless);
+    SerialReportWireless = State;
+    getSoundObject()->playOnOffSound(SerialReportWireless);
   }
 }

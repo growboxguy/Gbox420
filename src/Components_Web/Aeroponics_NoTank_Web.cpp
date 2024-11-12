@@ -1,8 +1,7 @@
 #include "Aeroponics_NoTank_Web.h"
 
-Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_NoTank(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump), Common_Web(Name)
+Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_NoTank(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
@@ -12,8 +11,8 @@ void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
   WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
-  WebServer.setArgInt(getName(F("Int")), *Interval);
-  WebServer.setArgFloat(getName(F("Dur")), *Duration);
+  WebServer.setArgInt(getName(F("Int")), Interval);
+  WebServer.setArgFloat(getName(F("Dur")), Duration);
 }
 
 void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)

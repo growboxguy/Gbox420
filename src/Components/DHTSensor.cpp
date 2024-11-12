@@ -3,9 +3,8 @@
 /*! 
  *  @brief  Class for the Digital Humidity and Temperature sensor
  */
-DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
+DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Sensor = new DHT(DefaultSettings->Pin, DefaultSettings->Type);
   Sensor->begin(); ///< dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
   Parent->addToReportQueue(this);

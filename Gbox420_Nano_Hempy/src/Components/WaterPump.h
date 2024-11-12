@@ -13,7 +13,7 @@ public:
   void report(bool FriendlyFormat = false);
   void refresh_Sec();
   void updateState(WaterPumpStates NewState = (WaterPumpStates)-1);
-  void setSpeed(uint8_t DutyCycle); //Set Motor speed - Adjust PWM duty cycle
+  void setSpeed(uint8_t DutyCycle); // Set Motor speed - Adjust PWM duty cycle
   uint8_t getSpeed();
   char *getSpeedText(bool FriendlyFormat);
   void startPumpRequest();
@@ -40,8 +40,8 @@ private:
 protected:
   Module *Parent;
   Switch_PWM *PumpSwitch;
-  bool *PumpEnabled;            ///< Enable/disable pump. false= Block running the pump
-  uint8_t *Speed = NULL;        ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
-  int RunTime = 0;              ///< Max pump run time in seconds
-  uint16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
+  bool &PumpEnabled;     ///< Enable/disable pump. false= Block running the pump
+  uint8_t &Speed;        ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
+  int RunTime = 0;       ///< Max pump run time in seconds
+  uint16_t &PumpTimeOut; ///< Max pump run time in seconds
 };

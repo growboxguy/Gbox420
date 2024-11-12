@@ -77,7 +77,7 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
 {
   ACMotorMessages ReceivedSequenceID = ((ACMotorCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*SerialReportWireless)
+  if (SerialReportWireless)
   {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_ACMotorSequenceID(ReceivedSequenceID), false, 1);
@@ -95,7 +95,7 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
   {
   case ACMotorMessages::ACMotorModuleCommand1:
     updateAckData(ACMotorMessages::ACMotorResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -119,7 +119,7 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
 
   case ACMotorMessages::ACMotorCommand1:
     updateAckData(ACMotorMessages::ACMotorReset); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((ACMotorCommand *)ReceivedCommand)->Forward, false, 1);
       logToSerials(((ACMotorCommand *)ReceivedCommand)->Backward, false, 1);
@@ -154,13 +154,13 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
 
   case ACMotorMessages::ACMotorReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ACMotorMessages::ACMotorModuleResponse1); ///< Load the first response for the next message exchange
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
     }
     break;
   default:
-    //if (*SerialReportWireless)
+    //if (SerialReportWireless)
     //{
     // logToSerials(F("SequenceID unknown"), true, 1);
     //}

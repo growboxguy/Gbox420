@@ -72,7 +72,7 @@ void setup()
   MinuteThread.onRun(run1min);
 
   ///< Create the Hempy bucket object
-  HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  HempyMod1 = new HempyModule(F("Hempy1"), ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
@@ -133,7 +133,7 @@ void run1min()
 {
   wdt_reset();
   HempyMod1->run1min();
-  getWirelessStatus();
+  // getWirelessStatus();   ///< USES TOO MUCH MEMORY, causes crash
 }
 
 void heartBeat()

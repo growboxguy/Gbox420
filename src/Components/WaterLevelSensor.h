@@ -4,7 +4,6 @@
 #include "420Module.h"
 
 ///< Contactless water sensor array (4 levels)
-
 class WaterLevelSensor : virtual public Common
 {
 public:
@@ -16,10 +15,10 @@ public:
   char *getLevelGauge();
 
 private:
-  uint8_t *Pin_1; ///< Lowest water level
-  uint8_t *Pin_2;
-  uint8_t *Pin_3;
-  uint8_t *Pin_4;
+  const uint8_t &Pin_1; ///< Lowest water level
+  const uint8_t &Pin_2;
+  const uint8_t &Pin_3;
+  const uint8_t &Pin_4;
   bool isAboveSensor1; ///< Lowest water sensor, true if level reached. Below this level the reservoir should be refilled
   bool isAboveSensor2;
   bool isAboveSensor3;

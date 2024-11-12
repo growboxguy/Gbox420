@@ -1,28 +1,29 @@
 #include "ACMotor.h"
 
-ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : Common(Name)
+#include "ACMotor.h"
+
+ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : 
+  Common(Name), 
+  Parent(Parent) // Initialize Parent in the initialization list
+  OnOffSwitch(new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic)),
+  BrushSwitch(new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic)),
+  SpeedSwitchPWM(new Switch_PWM(F("Speed"), DefaultSettings->SpeedPWMPin, *Speed, &DefaultSettings->SpeedLimitLow, &DefaultSettings->SpeedLimitHigh)),
 {
-  this->Parent = Parent;
   State = ACMotorStates::IDLE;
-  ForwardPin = &DefaultSettings->ForwardPin;
-  pinMode(*ForwardPin, INPUT_PULLUP);
-  BackwardPin = &DefaultSettings->BackwardPin;
-  pinMode(*BackwardPin, INPUT_PULLUP);
+  ForwardPin = DefaultSettings->ForwardPin;
+  pinMode(ForwardPin, INPUT_PULLUP);
+  BackwardPin = DefaultSettings->BackwardPin;
+  pinMode(BackwardPin, INPUT_PULLUP);
   Speed = &DefaultSettings->Speed;
   SpinOffTime = &DefaultSettings->SpinOffTime;
-  OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
-  BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
-  Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
-  Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2Pin, &DefaultSettings->RelayNegativeLogic);
-  SpeedSwitchPWM = new Switch_PWM(F("Speed"), DefaultSettings->SpeedPWMPin, *Speed, &DefaultSettings->SpeedLimitLow, &DefaultSettings->SpeedLimitHigh);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void ACMotor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -82,7 +83,7 @@ void ACMotor::refresh_Sec()
 
 void ACMotor::updateState(ACMotorStates NewState)
 {
-  bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  bool BlockOverWritingState = false; // Used when a state transitions to a new state
   if (State != NewState)
   {
     StateTimer = millis();                         ///< Start measuring the time spent in the new State
@@ -97,7 +98,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   switch (NewState)
   {
   case ACMotorStates::IDLE:
-    digitalWrite(*OnOffPin, HIGH);
+    digitalWrite(OnOffPin, HIGH);
     break;
   case ACMotorStates::FORWARD:
     if (getState() == ACMotorStates::IDLE)
@@ -153,14 +154,14 @@ void ACMotor::updateState(ACMotorStates NewState)
   }
 }
 
-void ACMotor::stop() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
+void ACMotor::stop() // Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
   if (State != ACMotorStates::IDLE)
     updateState(ACMotorStates::STOPPING);
   Parent->getSoundObject()->playOffSound();
 }
 
-void ACMotor::stopRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::stopRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   BackwardRequested = false;
   ForwardRequested = false;
@@ -172,7 +173,7 @@ void ACMotor::forward()
   updateState(ACMotorStates::FORWARD);
 }
 
-void ACMotor::forwardRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::forwardRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StopRequested = false;
   BackwardRequested = false;
@@ -184,7 +185,7 @@ void ACMotor::backward()
   updateState(ACMotorStates::BACKWARD);
 }
 
-void ACMotor::backwardRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::backwardRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   ForwardRequested = false;
   StopRequested = false;

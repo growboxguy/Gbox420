@@ -9,9 +9,8 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 /**
 * @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
@@ -110,7 +109,7 @@ void ReservoirModule_Web::sendMessages()
   sendCommand(&ReservoirResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ReservoirModuleCommand1ToSend); ///< Module specific Command - Response exchange
   sendCommand(&ReservoirCommand1ToSend);       ///< Command - Response exchange
-  if (*(Parent->SerialReportWireless) && *Debug)
+  if (Parent->SerialReportWireless && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -123,7 +122,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
-  if (*(Parent->SerialReportWireless))
+  if (Parent->SerialReportWireless)
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 1);
@@ -138,7 +137,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true;
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
       {
         logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
@@ -149,14 +148,14 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       {
       case ReservoirMessages::ReservoirModuleResponse1:
         memcpy(&ReservoirModuleResponse1Received, ReceivedResponse, sizeof(struct ReservoirModuleResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(ReservoirModuleResponse1Received.Status, true, 1);
         }
         break;
       case ReservoirMessages::ReservoirResponse1:
         memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(ReservoirResponse1Received.ConfirmTareWeight, false, 1);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
@@ -177,13 +176,13 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           ReservoirCommand1ToSend.TareWeightWR = false;
         break;
       case ReservoirMessages::ReservoirReset:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:
-        if (*(Parent->SerialReportWireless))
+        if (Parent->SerialReportWireless)
         {
           logToSerials(F("SequenceID unknown"), true, 1);
         }
@@ -193,13 +192,13 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*(Parent->SerialReportWireless))
+      if (Parent->SerialReportWireless)
         logToSerials(F("; Ack received without data"), true, 1);
     }
   }
   else
   {
-    if (*(Parent->SerialReportWireless))
+    if (Parent->SerialReportWireless)
       logToSerials(F("; No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -217,10 +216,10 @@ void ReservoirModule_Web::updateCommands()
   ReservoirModuleCommand1ToSend.Time = now();
   ReservoirModuleCommand1ToSend.Debug = *Debug;
   ReservoirModuleCommand1ToSend.Metric = *Metric;
-  ReservoirModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
-  ReservoirModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
-  ReservoirModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  ReservoirModuleCommand1ToSend.SerialReportJSONFriendly = *(Parent->SerialReportJSONFriendly);
-  ReservoirModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
-  ReservoirModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
+  ReservoirModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
+  ReservoirModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
+  ReservoirModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
+  ReservoirModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;
+  ReservoirModuleCommand1ToSend.SerialReportJSON = Parent->SerialReportJSON;
+  ReservoirModuleCommand1ToSend.SerialReportWireless = Parent->SerialReportWireless;
 }

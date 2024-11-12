@@ -1,16 +1,17 @@
 #include "WeightSensor.h"
 
-WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
+WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      Scale(DefaultSettings->Scale),
+      Offset(DefaultSettings->Offset)
 {
-  this->Parent = Parent;
   AverageWeight = new movingAvg(MovingAverageDepth);
   AverageWeight->begin();
-  Scale = &DefaultSettings->Scale;
-  Offset = &DefaultSettings->Offset;
   Sensor = new HX711();
   Sensor->begin(*(&DefaultSettings->DTPin), *(&DefaultSettings->SCKPin));
-  Sensor->set_scale(*Scale);
-  Sensor->set_offset(*Offset);
+  Sensor->set_scale(Scale);
+  Sensor->set_offset(Offset);
   Parent->addToReportQueue(this);
   readWeight();
   Parent->addToRefreshQueue_FiveSec(this);
@@ -92,10 +93,10 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
 {
   TareRequested = false; ///< Clear the flag requesting a tare
   Sensor->tare();
-  *Offset = Sensor->get_offset();
+  Offset = Sensor->get_offset();
   AverageWeight->reset();
   strcpy(ShortMessage, getName(F("offset ")));
-  sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
+  sprintf(ShortMessage + strlen(ShortMessage), "%ld", Offset);
   Parent->addToLog(ShortMessage);
 }
 
@@ -109,16 +110,16 @@ void WeightSensor::triggerCalibration(float KnownWeight)
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
   char LogEntry[MaxShotTextLength] = "";  
-  *Scale = Sensor->get_value() / KnownWeight; 
-  Sensor->set_scale(*Scale);
+  Scale = Sensor->get_value() / KnownWeight; 
+  Sensor->set_scale(Scale);
   AverageWeight->reset();
   strcpy(LogEntry, getName(F("scale ")));
-  strcat(LogEntry, toText(*Scale));  
+  strcat(LogEntry, toText(Scale));  
   Parent->addToLog(LogEntry);
 }
 
 void WeightSensor::setScale(float NewScale)
 {
-  *Scale = NewScale;
-  Sensor->set_scale(*Scale);
+  Scale = NewScale;
+  Sensor->set_scale(Scale);
 }

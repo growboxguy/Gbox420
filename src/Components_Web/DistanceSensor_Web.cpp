@@ -1,8 +1,7 @@
 #include "DistanceSensor_Web.h"
 
-DistanceSensor_Web::DistanceSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DistanceSensorSettings *DefaultSettings) : Common(Name), DistanceSensor(Name, Parent, DefaultSettings), Common_Web(Name)
+DistanceSensor_Web::DistanceSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DistanceSensorSettings *DefaultSettings) : Common(Name), DistanceSensor(Name, Parent, DefaultSettings), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
 }
 

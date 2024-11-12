@@ -74,7 +74,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
 {
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*SerialReportWireless)
+  if (SerialReportWireless)
   {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
@@ -92,7 +92,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   {
   case AeroMessages::AeroModuleCommand1:
     updateAckData(AeroMessages::AeroResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -115,7 +115,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroCommand1:
     updateAckData(AeroMessages::AeroResponse2); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled, false, 1);
@@ -166,7 +166,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroCommand2:
     updateAckData(AeroMessages::AeroModuleResponse1); // update the next Message that will be copied to the buffer
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank, false, 1);
@@ -235,13 +235,13 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
     }
     break;
   default:
-    if (*SerialReportWireless)
+    if (SerialReportWireless)
     {
       logToSerials(F("SequenceID unknown"), true, 1);
     }

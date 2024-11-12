@@ -1,8 +1,7 @@
 #include "WeightSensor_Web.h"
 
-WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name), WeightSensor(Name, Parent, DefaultSettings), Common_Web(Name)
+WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name), WeightSensor(Name, Parent, DefaultSettings), Common_Web(Name), Parent(Parent)
 {
-  this->Parent = Parent;
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
 }

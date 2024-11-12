@@ -24,11 +24,11 @@ private:
 protected:
   Module *Parent;
   dimmerLamp *PWMDimmer;    //Robodyn AC PWM module (with confusing dimmerLamp class name...)
-  bool *State;              //ON or OFF
-  uint8_t *MinSpeed;        //Limit the lowest output (%)
-  uint8_t *Speed;           //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
-  uint8_t *ZeroCrossingPin; // On Arduino Mega2560 and Nano this has to be D2 pin
-  uint8_t *PWMPin;          //PWM capable digital pin
+  bool &State;               //ON or OFF
+  uint8_t &MinSpeed;        //Limit the lowest output (%)
+  uint8_t &Speed;           //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
+  uint8_t &ZeroCrossingPin; // On Arduino Mega2560 and Nano this has to be D2 pin
+  uint8_t &PWMPin;          //PWM capable digital pin
   void checkState();
   void turnOff();
   void turnOn();
