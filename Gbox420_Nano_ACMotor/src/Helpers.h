@@ -96,8 +96,8 @@ extern char CurrentTime[MaxWordLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *ModuleSettings;
-extern bool *Debug;
-extern bool *Metric;
+extern bool &Debug;
+extern bool &Metric;
 
 // Class specific variables
 void getFreeMemory();

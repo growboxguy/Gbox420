@@ -21,8 +21,8 @@
 #include "src/WirelessCommands_Hempy.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
 // Global variable initialization
-bool *Debug;
-bool *Metric;
+bool &Debug = *new bool;                      // Placeholder reference, to be initialized in setup()
+bool &Metric = *new bool;                     // Placeholder reference, to be initialized in setup()
 char LongMessage[MaxLongTextLength] = "";     // Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = "";    // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";         // Buffer for storing current time in text format
@@ -55,8 +55,8 @@ void setup()
   setSyncProvider(updateTime);
   setSyncInterval(3600);           // Sync time every hour with the main module
   ModuleSettings = loadSettings(); ///< Loading settings from EEPROM
-  Debug = &ModuleSettings->Debug;
-  Metric = &ModuleSettings->Metric;
+  Debug = ModuleSettings->Debug;
+  Metric = ModuleSettings->Metric;
   InitializeWireless();           ///< Setting up wireless module
   OneSecThread.setInterval(1000); ///< 1000ms - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.onRun(run1sec);
@@ -66,12 +66,12 @@ void setup()
   MinuteThread.onRun(run1min);
   HempyMod1 = new HempyModule(F("Hempy1"), ModuleSettings->Hemp1); ///< This Module contains the watering logic, weight sensors, pump controllers
   getFreeMemory();
-  logToSerials(F("Setup ready, starting loops:"), true, 0);  
+  logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
 void InitializeWireless()
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
   }
@@ -92,7 +92,7 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("done"), true, 3);
   }
@@ -102,8 +102,7 @@ void InitializeWireless()
 void loop()
 {                      ///< put your main code here, to run repeatedly:
   ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
-  ///< If a control package is received from the main module
-  getWirelessData();
+  getWirelessData();   ///< Checks for a control package from the main module
 }
 
 ///< Threads
@@ -159,7 +158,7 @@ void getWirelessData()
 
 void getWirelessStatus()
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("Wireless report:"), true, 0);
     wdt_reset();

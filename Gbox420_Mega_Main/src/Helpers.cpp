@@ -13,7 +13,7 @@ void getFreeMemory()
 
 float convertBetweenTempUnits(float Value)
 {
-  if (*Metric)
+  if (Metric)
     return round((Value - 32) * 55.555555) / 100.0;
   else
     return round(Value * 180 + 3200.0) / 100.0f;
@@ -21,7 +21,7 @@ float convertBetweenTempUnits(float Value)
 
 float convertBetweenPressureUnits(float Value)
 {
-  if (*Metric)
+  if (Metric)
     return round(Value / 0.145038) / 100.0;
   else
     return round(Value * 1450.38) / 100.0f;
@@ -106,7 +106,7 @@ char *toText_time(uint8_t Hour, uint8_t Minute)
 char *toText_temp(float Temp)
 {
   dtostrf(Temp, 4, 2, ShortMessage);
-  if (*Metric)
+  if (Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("°C"));
   }
@@ -120,7 +120,7 @@ char *toText_temp(float Temp)
 char *toText_pressure(float Pressure)
 {
   dtostrf(Pressure, 4, 2, ShortMessage);
-  if (*Metric)
+  if (Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("bar"));
   }
@@ -134,7 +134,7 @@ char *toText_pressure(float Pressure)
 char *toText_weight(float Weight)
 {
   dtostrf(Weight, 4, 2, ShortMessage);
-  if (*Metric)
+  if (Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("kg"));
   }
@@ -191,7 +191,7 @@ char *toText_milisecond(int MiliSecond)
 char *toText_distance(float Distance)
 {
   dtostrf(Distance, 4, 2, ShortMessage);
-  if (*Metric)
+  if (Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("cm"));
   }

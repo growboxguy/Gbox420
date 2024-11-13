@@ -71,8 +71,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   {
     getFreeMemory();
   }
-  /*
-  if ((SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
+  if ((SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
   {
     logToSerials(ReportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -81,7 +80,6 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       ReportQueue[i]->report(false);
     }
   }
-  */
   if (SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
@@ -122,7 +120,7 @@ void Module::run1sec()
   }
   else
   {
-    if (*Debug)
+    if (Debug)
     {
       logToSerials(F("1sec"), true, 1);
     }
@@ -135,7 +133,7 @@ void Module::run1sec()
 
 void Module::run5sec()
 {
-  if (*Debug)
+  if (Debug)
     logToSerials(F("5sec"), true, 1);
   for (int i = 0; i < RefreshQueueItemCount_FiveSec; i++)
   {
@@ -145,7 +143,7 @@ void Module::run5sec()
 
 void Module::run1min()
 {
-  if (*Debug)
+  if (Debug)
     logToSerials(F("1min"), true, 1);
   for (int i = 0; i < RefreshQueueItemCount_Minute; i++)
   {
@@ -217,20 +215,20 @@ char *Module::getFormattedTime(bool PrintToSerials)
 ///< Settings
 void Module::setDebug(bool DebugEnabled)
 {
-  if (DebugEnabled != *Debug)
+  if (DebugEnabled != Debug)
   {
-    *Debug = DebugEnabled;
-    getSoundObject()->playOnOffSound(*Debug);
+    Debug = DebugEnabled;
+    getSoundObject()->playOnOffSound(Debug);
   }
 }
 
 void Module::setMetric(bool MetricEnabled)
 {
-  if (MetricEnabled != *Metric)
+  if (MetricEnabled != Metric)
   { // if there was a change
-    *Metric = MetricEnabled;
+    Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
-    getSoundObject()->playOnOffSound(*Metric);
+    getSoundObject()->playOnOffSound(Metric);
   }
 }
 
