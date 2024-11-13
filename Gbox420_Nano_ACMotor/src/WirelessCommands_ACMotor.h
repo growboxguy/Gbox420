@@ -62,11 +62,10 @@ struct ACMotorCommonTemplate ///< ACMotor wireless template - Shared between Com
 struct ACMotorModuleCommand : ACMotorCommonTemplate ///< ACMotor module wireless command
 {
    ACMotorModuleCommand(__attribute__((unused)) ACMotorMessages SequenceID) : ACMotorCommonTemplate(SequenceID) {}
-   ACMotorModuleCommand(__attribute__((unused)) ACMotorMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : ACMotorCommonTemplate(SequenceID) {}
+   ACMotorModuleCommand(__attribute__((unused)) ACMotorMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : ACMotorCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   uint16_t SerialReportFrequency = 15;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
    bool SerialReportJSONFriendly = true;

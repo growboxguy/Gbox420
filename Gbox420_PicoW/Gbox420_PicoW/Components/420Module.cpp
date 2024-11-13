@@ -11,21 +11,6 @@ Module::Module(const char *Name) : Common(Name)
 }
 
 /**
- * @brief Handles custom reporting frequency for Serial
- * @param ForceRun Send a report instantly, even when regular reports are disabled
- * @param ClearBuffer Flush the LongMessage buffer before starting to report
- * @param KeepBuffer Stores the full JSON report in the LongMessage buffer (up to 1024kB)
- * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
- */
-void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
-{
-  if ((SerialTriggerCounter++ % (SerialReportFrequency / 5) == 0) || ForceRun)
-  {
-    runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
-  }
-}
-
-/**
  * @brief Notify subscribed components of a received MQTT/Website command
  */
 void Module::commandEventTrigger(char *Command, char *Data)
@@ -39,19 +24,6 @@ void Module::commandEventTrigger(char *Command, char *Data)
   }
   // if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
   //  settingsEvent_Command(Command, Data); // TODO: The module should subscribe to the commandEvent callback the same way as any other component
-}
-
-/**
- * @brief Set how often a report should be sent to stdout
- * @param Frequency Send a report every X seconds
- */
-void Module::setSerialReportingFrequency(uint16_t Frequency)
-{
-  if (Frequency != SerialReportFrequency)
-  {
-    SerialReportFrequency = Frequency;
-  }
-  getSoundObject()->playOnSound();
 }
 
 /**
@@ -329,7 +301,7 @@ void Module::run1sec()
 void Module::run5sec()
 {
   Common::run5sec();
-  reportToSerialTrigger();
+  runReport();
   reportToMqttTrigger();
 
   for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
@@ -437,8 +409,6 @@ char *Module::settingsToJSON()
   strcat(LongMessage, toText(Debug));
   strcat(LongMessage, "\",\"Metric\":\"");
   strcat(LongMessage, toText(Metric));
-  strcat(LongMessage, "\",\"SerialF\":\"");
-  strcat(LongMessage, toText(SerialReportFrequency));
   strcat(LongMessage, "\",\"Date\":\"");
   strcat(LongMessage, toText(*SerialReportDate));
   strcat(LongMessage, "\",\"Mem\":\"");
@@ -479,7 +449,6 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
   /*
   WebServer.setArgInt("Debug", Debug);
   WebServer.setArgInt("Metric", Metric);
-  WebServer.setArgInt("SerialF", SerialReportFrequency);
   WebServer.setArgInt("Date", *SerialReportDate);
   WebServer.setArgInt("Mem", SerialReportMemory);
   WebServer.setArgInt("JSON", SerialReportJSON);
@@ -547,10 +516,6 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
     setMetric(toBool(Data));
   }
   // Settings - Serial reporting
-  else if (strcmp(Command, "SerialF") == 0)
-  {
-    setSerialReportingFrequency(toInt(Data));
-  }
   else if (strcmp(Command, "Date") == 0)
   {
     setSerialReportDate(toBool(Data));
@@ -741,7 +706,7 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
   Sample messages:
   Gbox420/Hempy/{"Log":{"DHT1":{"T":"29.00","H":"52.00"},"B1W":{"W":"19.35"},"B2W":{"W":"19.75"},"NRW":{"W":"43.30"},"WRW":{"W":"1.87"},"WR1":{"S":"1","L":"13.00"},"B1P":{"S":"1","T":"120"},"B2P":{"S":"1","T":"120"},"B1":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"B2":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"Hemp1":{"M":"1","D":"1"}}}
   Gbox420/Hempy/{"EventLog":["","","","HempyModule ready"]}
-  Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
+  Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
 */
 void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT

@@ -26,34 +26,6 @@ void Module::commandEventTrigger(char *Command, char *Data)
 }
 
 /**
- * @brief Set how often a report should be sent to stdout
- * @param Frequency Send a report every X seconds
- */
-void Module::setSerialReportingFrequency(uint16_t Frequency)
-{
-  if (Frequency != SerialReportFrequency)
-  {
-    SerialReportFrequency = Frequency;
-  }
-  getSoundObject()->playOnSound();
-}
-
-/**
- * @brief Handles custom reporting frequency for Serial
- * @param ForceRun Send a report instantly, even when regular reports are disabled
- * @param ClearBuffer Flush the LongMessage buffer before starting to report
- * @param KeepBuffer Stores the full JSON report in the LongMessage buffer (up to MaxLongTextLength)
- * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
- */
-void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
-{
-  if ((SerialTriggerCounter++ % (SerialReportFrequency / 5) == 0) || ForceRun)
-  {
-    reportToSerial(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
-  }
-}
-
-/**
  * @brief Reports sensor readings to stdout or to the LongMessage buffer
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
@@ -287,7 +259,7 @@ void Module::run5sec()
     Component->run5sec();
   }
 
-  reportToSerialTrigger(); // Report the readings to stdout
+  runReport(); // Report the readings to stdout
   reportToMqttTrigger();   // Report the readings to MQTT
 
   /*
@@ -388,8 +360,6 @@ char *Module::settingsToJSON()
   strcat(LongMessage, toText(Debug));
   strcat(LongMessage, "\",\"M\":\"");
   strcat(LongMessage, toText(Metric));
-  strcat(LongMessage, "\",\"RF\":\"");
-  strcat(LongMessage, toText(SerialReportFrequency));
   /*
   strcat(LongMessage, "\",\"RD\":\"");
   strcat(LongMessage, toText(*SerialReportDate));
@@ -430,7 +400,6 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt("Debug", Debug);
   WebServer.setArgInt("Metric", Metric);
-  WebServer.setArgInt("SerialF", SerialReportFrequency);
   WebServer.setArgInt("Date", *SerialReportDate);
   WebServer.setArgInt("Mem", SerialReportMemory);
   WebServer.setArgInt("JSON", SerialReportJSON);
@@ -487,11 +456,7 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
     addToLog("Refreshing", false);
     getSoundObject()->playOnSound();
   }
-  // Settings - Serial reporting
-  else if (strcmp(Command, "SerialF") == 0)
-  {
-    setSerialReportingFrequency(toInt(Data));
-  }
+  // Settings - Serial reporting 
   else if (strcmp(Command, "Date") == 0)
   {
     setSerialReportDate(toBool(Data));

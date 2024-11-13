@@ -17,7 +17,6 @@ struct ACMotorCommonTemplate ACMotorResetToSend = {ACMotorMessages::ACMotorReset
 
 ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorModuleSettings *DefaultSettings) : Common(Name), Module(Name)
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
@@ -43,7 +42,7 @@ void ACMotorModule::processTimeCriticalStuff()
 void ACMotorModule::refresh_Sec()
 {
   Common::refresh_Sec();  
-  reportToSerialTrigger();
+  runReport();
   //WIRELESS DISBLED// 
   /*
   if (NextSequenceID != ACMotorMessages::ACMotorModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
@@ -100,7 +99,6 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->Metric, false, 1);
-      logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
       logToSerials(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
@@ -109,7 +107,6 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
     }
     setDebug(((ACMotorModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ACMotorModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportJSONFriendly(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);

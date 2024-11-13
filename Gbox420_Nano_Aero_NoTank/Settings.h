@@ -44,14 +44,13 @@ typedef struct
   //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsModuleSettings
   {
-    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
     bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
     bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = false, .SerialReportMemory = false, .SerialReportJSONFriendly = false, .SerialReportJSON = false, .SerialReportWireless = true};
+  struct AeroponicsModuleSettings Aero1 = {.SerialReportDate = false, .SerialReportMemory = false, .SerialReportJSONFriendly = false, .SerialReportJSON = false, .SerialReportWireless = true};
 
   struct AeroponicsSettings
   {

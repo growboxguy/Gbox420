@@ -20,7 +20,6 @@ unsigned long LastMessageSent = 0;                                     //When wa
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings) : Common(Name), Module(Name)
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
@@ -61,7 +60,7 @@ void AeroModule::refresh_Sec()
 void AeroModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  reportToSerialTrigger();
+  runReport();
   updateResponse();
 }
 
@@ -97,7 +96,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, false, 1);
-      logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
@@ -106,7 +104,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportJSONFriendly(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);

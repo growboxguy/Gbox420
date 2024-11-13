@@ -51,7 +51,6 @@ typedef struct
   struct HempyModuleSettings ///< Dev module default settings
   {
     char Name[MaxWordLength];          ///< Must be unique
-    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
@@ -61,7 +60,7 @@ typedef struct
     uint16_t SheetsReportingFrequency; ///< In seconds - How often to report to Google Sheets
     bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
   };
-  struct HempyModuleSettings HempyModule1 = {.Name = "Hempy1", .SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 1800, .ReportToMqtt = true};
+  struct HempyModuleSettings HempyModule1 = {.Name = "Hempy1", .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 1800, .ReportToMqtt = true};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {

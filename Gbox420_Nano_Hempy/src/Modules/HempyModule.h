@@ -29,7 +29,6 @@ public:
   //DHTSensor *DHT1;          ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   WeightSensor *WeightB1 = NULL;
   WeightSensor *WeightB2 = NULL;
-  WeightSensor *WeightWR = NULL;
   HempyBucket *Bucket1 = NULL;
   HempyBucket *Bucket2 = NULL;
   WaterPump *Pump1 = NULL;

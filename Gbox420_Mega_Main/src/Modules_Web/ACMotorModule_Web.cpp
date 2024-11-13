@@ -216,7 +216,6 @@ void ACMotorModule_Web::updateCommands()
   ACMotorModuleCommand1ToSend.Time = now();
   ACMotorModuleCommand1ToSend.Debug = Debug;
   ACMotorModuleCommand1ToSend.Metric = Metric;
-  ACMotorModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   ACMotorModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   ACMotorModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
   ACMotorModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;

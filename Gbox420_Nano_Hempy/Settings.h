@@ -9,14 +9,14 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 12; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 13; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
 ///< Global constants
 constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 constexpr uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
-constexpr uint16_t MaxLongTextLength = 128; ///< Default char * buffer length for storing a long text. Memory intense!
+constexpr uint16_t MaxLongTextLength = 168; ///< Default char * buffer length for storing a long text. Memory intense!
 constexpr uint8_t QueueDepth = 6;           ///< Limits the maximum number of active modules. Memory intense!
 //constexpr uint8_t MovingAverageDepth = 2;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
@@ -44,14 +44,13 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct HempyModuleSettings
   {
-    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
     bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
     bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct HempyModuleSettings Hemp1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
+  struct HempyModuleSettings Hemp1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {

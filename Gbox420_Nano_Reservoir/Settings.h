@@ -44,15 +44,14 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct ReservoirModuleSettings
   {
-    ReservoirModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
-    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    ReservoirModuleSettings(bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
     bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
     bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
     bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct ReservoirModuleSettings Res1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
+  struct ReservoirModuleSettings Res1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {

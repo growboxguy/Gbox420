@@ -75,6 +75,11 @@ bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __
       ReservoirCommand1ToSend.TareWeight = true;
       Parent->addToLog(F("Taring reservoir scale"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("TW")) == 0)
+    {
+      ReservoirCommand1ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring waste scale"), false);
+    }
     else
     {
       return false;
@@ -166,7 +171,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
-        if (ReservoirCommand1ToSend.TareWeight)
+        if (ReservoirCommand1ToSend.TareWeight || ReservoirCommand1ToSend.TareWeightWR)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
@@ -216,7 +221,6 @@ void ReservoirModule_Web::updateCommands()
   ReservoirModuleCommand1ToSend.Time = now();
   ReservoirModuleCommand1ToSend.Debug = Debug;
   ReservoirModuleCommand1ToSend.Metric = Metric;
-  ReservoirModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   ReservoirModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   ReservoirModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
   ReservoirModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;

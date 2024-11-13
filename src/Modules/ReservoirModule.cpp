@@ -14,7 +14,6 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module(Name)
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
@@ -55,7 +54,7 @@ void ReservoirModule::refresh_Sec()
 void ReservoirModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  reportToSerialTrigger();
+  runReport();
   updateResponse();
 }
 
@@ -97,7 +96,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
@@ -106,7 +104,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     }
     setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportJSONFriendly(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);

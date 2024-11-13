@@ -7,7 +7,6 @@
 */
 DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;

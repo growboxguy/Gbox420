@@ -70,11 +70,10 @@ struct HempyCommonTemplate ///< Hempy wireless template - Shared between Command
 struct HempyModuleCommand : HempyCommonTemplate ///< Hempy module wireless command
 {
    HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : HempyCommonTemplate(SequenceID) {}
+   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : HempyCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   uint16_t SerialReportFrequency = 0;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
    bool SerialReportJSONFriendly = true;
@@ -92,13 +91,12 @@ struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless resp
 struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless command
 {
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float DrainTargetWeight, __attribute__((unused)) float MaxWeight, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float DrainTargetWeight, __attribute__((unused)) float MaxWeight, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
    bool Disable = false; ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
    bool StopWatering = false;
    bool TareWeightB = false;  ///< Flag to signal a request to Tare bucket weight scale
    bool TareWeightDW = false; ///< Flag to signal a request to Tare dry/wet weight
-   bool TareWeightWR = false; ///< Flag to signal a request to Tare waste reservoir weight scale
    uint8_t PumpSpeed = 0;
    uint16_t PumpTimeOut = 0;
    float DryWeight = NAN;
@@ -111,7 +109,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response
 {
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) float WeightB, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
    WaterPumpStates PumpState = WaterPumpStates::DISABLED;
    bool ConfirmDisable = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
@@ -120,7 +118,6 @@ struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless resp
    bool ConfirmTareWeightB = false;
    bool ConfirmTareWeightDW = false;
    float WeightB = 0.0;
-   float WeightWR = 0.0;
    float DryWeight = 0.0;
    float WetWeight = 0.0;
 };

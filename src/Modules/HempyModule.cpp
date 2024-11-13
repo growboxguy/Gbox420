@@ -17,12 +17,11 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings &DefaultSettings) : Common(Name), Module(Name)
 {
-  SerialReportFrequency = DefaultSettings.SerialReportFrequency;
-  SerialReportDate = DefaultSettings.SerialReportDate;
-  SerialReportMemory = DefaultSettings.SerialReportMemory;
-  SerialReportJSONFriendly = DefaultSettings.SerialReportJSONFriendly;
-  SerialReportJSON = DefaultSettings.SerialReportJSON;
-  SerialReportWireless = DefaultSettings.SerialReportWireless;
+  SerialReportDate = &DefaultSettings.SerialReportDate;
+  SerialReportMemory = &DefaultSettings.SerialReportMemory;
+  SerialReportJSONFriendly = &DefaultSettings.SerialReportJSONFriendly;
+  SerialReportJSON = &DefaultSettings.SerialReportJSON;
+  SerialReportWireless = &DefaultSettings.SerialReportWireless;
   logToSerials(F(""), true, 0);                                   // line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -57,7 +56,7 @@ void HempyModule::refresh_Sec()
 void HempyModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  reportToSerialTrigger();
+  runReport();
   updateResponse();
 }
 
@@ -66,7 +65,6 @@ void HempyModule::updateResponse()
   HempyBucket1ResponseToSend.HempyState = Bucket1->getState();
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
   HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
-  HempyBucket1ResponseToSend.WeightWR = WeightWR->getWeight(false);
   HempyBucket1ResponseToSend.DryWeight = Bucket1->getDryWeight();
   HempyBucket1ResponseToSend.WetWeight = Bucket1->getWetWeight();
   HempyBucket2ResponseToSend.HempyState = Bucket2->getState();
@@ -103,7 +101,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
@@ -112,7 +109,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportJSONFriendly(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
@@ -128,7 +124,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);

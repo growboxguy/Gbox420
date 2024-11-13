@@ -20,7 +20,7 @@ extern bool &Metric;
 class Common
 {
 public:
-  const __FlashStringHelper *Name PROGMEM;         ///< Name of the instance
+  const __FlashStringHelper *Name;         ///< Name of the instance
   bool isThisMine(char const *lookupName); ///< Checks if lookupName starts with the Name of the instance followed by _
   char *getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator = false);
   char *getName(char *AppendToEnd, bool UnderscoreSeparator = false);

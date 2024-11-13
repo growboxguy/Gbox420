@@ -64,11 +64,10 @@ struct DevCommonTemplate ///< Devponics wireless template - Shared between Comma
 struct DevModuleCommand : DevCommonTemplate ///< Devponics wireless module commands
 {
    DevModuleCommand(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
-   DevModuleCommand(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : DevCommonTemplate(SequenceID) {}
+   DevModuleCommand(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric,__attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : DevCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   uint16_t SerialReportFrequency = 0;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
    bool SerialReportJSONFriendly = true;

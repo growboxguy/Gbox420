@@ -103,12 +103,10 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) //
 {
   WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
   WebServer.setArgString(getName(F("B1W"), true), toText_weight(HempyBucketResponse1Received.WeightB));
-  WebServer.setArgString(getName(F("B1WR"), true), toText_weight(HempyBucketResponse1Received.WeightWR));
   WebServer.setArgString(getName(F("B1DWW"), true), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
   WebServer.setArgString(getName(F("B1S"), true), toText_hempyState(HempyBucketResponse1Received.HempyState));
   WebServer.setArgString(getName(F("B1P"), true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
   WebServer.setArgString(getName(F("B2W"), true), toText_weight(HempyBucketResponse2Received.WeightB));
-  WebServer.setArgString(getName(F("B2WR"), true), toText_weight(HempyBucketResponse2Received.WeightWR));
   WebServer.setArgString(getName(F("B2DWW"), true), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
   WebServer.setArgString(getName(F("B2S"), true), toText_hempyState(HempyBucketResponse2Received.HempyState));
   WebServer.setArgString(getName(F("B2P"), true), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
@@ -147,12 +145,7 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     {
       HempyBucketCommand1ToSend.TareWeightDW = true;
       Parent->addToLog(F("Taring Bucket 1 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
-    {
-      HempyBucketCommand1ToSend.TareWeightWR = true;
-      Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
-    }
+    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B1 = toFloat(Data);
@@ -212,12 +205,7 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     {
       HempyBucketCommand2ToSend.TareWeightDW = true;
       Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
-      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
-    }
+    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
@@ -344,11 +332,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
-          logToSerials(HempyBucketResponse1Received.WeightWR, false, 1);
           logToSerials(HempyBucketResponse1Received.DryWeight, false, 1);
           logToSerials(HempyBucketResponse1Received.WetWeight, true, 1);
         }
-        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightDW ) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
         }
@@ -380,11 +367,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(toText((int)HempyBucketResponse2Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
-          logToSerials(HempyBucketResponse2Received.WeightWR, false, 1);
           logToSerials(HempyBucketResponse2Received.DryWeight, false, 1);
           logToSerials(HempyBucketResponse2Received.WetWeight, true, 1);
         }
-        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW ) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
@@ -442,7 +428,6 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.Time = now();
   HempyModuleCommand1ToSend.Debug = Debug;
   HempyModuleCommand1ToSend.Metric = Metric;
-  HempyModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   HempyModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   HempyModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;
   HempyModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;

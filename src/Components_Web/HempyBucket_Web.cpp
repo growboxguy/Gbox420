@@ -21,7 +21,6 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   //WebServer.setArgFloat(getName(F("W"),true), BucketWeightSensor->getWeightText());
   //WebServer.setArgString(getName(F("W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
-  //WebServer.setArgString(getName(F("WR"),true), toText_weight(HempyBucketResponse1Received.WeightWR));
   WebServer.setArgString(getName(F("DWW"), true), toText(getDryWeight(), "/", getWetWeight()));
   WebServer.setArgString(getName(F("S"), true), getStateText(true));
   //WebServer.setArgString(getName(F("P"),true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
