@@ -48,7 +48,7 @@ void AeroModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   { ///< If there is a package exchange in progress
-    if (*Debug)
+    if (Debug)
     {
       logToSerials(F("Message timeout"), true, 0);
     }

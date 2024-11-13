@@ -43,7 +43,7 @@ void DistanceSensor::readSensor()
   digitalWrite(*TriggerPin, LOW);
   // Reads the echoPin, returns the sound wave travel time in microseconds
   long Duration = pulseIn(*EchoPin, HIGH);
-  if (*Metric)
+  if (Metric)
   {
     Distance = Duration * 0.017;
   }

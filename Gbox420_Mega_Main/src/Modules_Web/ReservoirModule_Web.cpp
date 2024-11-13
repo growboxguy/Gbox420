@@ -109,7 +109,7 @@ void ReservoirModule_Web::sendMessages()
   sendCommand(&ReservoirResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ReservoirModuleCommand1ToSend); ///< Module specific Command - Response exchange
   sendCommand(&ReservoirCommand1ToSend);       ///< Command - Response exchange
-  if (Parent->SerialReportWireless && *Debug)
+  if (Parent->SerialReportWireless && Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -214,8 +214,8 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 void ReservoirModule_Web::updateCommands()
 {
   ReservoirModuleCommand1ToSend.Time = now();
-  ReservoirModuleCommand1ToSend.Debug = *Debug;
-  ReservoirModuleCommand1ToSend.Metric = *Metric;
+  ReservoirModuleCommand1ToSend.Debug = Debug;
+  ReservoirModuleCommand1ToSend.Metric = Metric;
   ReservoirModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   ReservoirModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   ReservoirModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;

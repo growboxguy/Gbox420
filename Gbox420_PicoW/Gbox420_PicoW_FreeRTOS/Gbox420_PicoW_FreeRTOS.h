@@ -71,7 +71,7 @@ struct udp_pcb *NtpPcb;                                       ///< UDP control b
 datetime_t CurrentTime;                                       ///< Used when getting/setting the Real Time Clock
 char LongMessage[MaxLongTextLength] = "";                     ///< Temp storage for assembling long messages (REST API, MQTT reporting) //TODO: Use Message buffers instead
 char ShortMessage[MaxShotTextLength] = "";                    ///< Temp storage for assembling short messages (Log entries, Error messages) //TODO: Use Message buffers instead
-bool *Debug;                                                  ///< True - Turns on extra debug messages on the Serial Output
+bool &Debug = *new bool;                                                     ///< True - Turns on extra debug messages on the Serial Output
 __attribute__((noinit)) char DebugMessage[MaxShotTextLength]; ///< Not zero initialized, keeps value from last watchdog reset
-bool *Metric;                                                 ///< True - Use metric units, False - Use imperial units
+bool &Metric = *new bool;                                                 ///< True - Use metric units, False - Use imperial units
 bool ledStatus = true;                                        ///< Track the current state of the built-in LED

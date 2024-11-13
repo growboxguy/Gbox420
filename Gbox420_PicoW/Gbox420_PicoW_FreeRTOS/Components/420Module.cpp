@@ -385,9 +385,9 @@ char *Module::settingsToJSON()
   memset(&LongMessage[0], 0, MaxLongTextLength);
   strcat(LongMessage, "{\"Settings\":{"); ///< Adds a curly bracket that needs to be closed at the end
   strcat(LongMessage, "\"D\":\"");
-  strcat(LongMessage, toText(*Debug));
+  strcat(LongMessage, toText(Debug));
   strcat(LongMessage, "\",\"M\":\"");
-  strcat(LongMessage, toText(*Metric));
+  strcat(LongMessage, toText(Metric));
   strcat(LongMessage, "\",\"RF\":\"");
   strcat(LongMessage, toText(SerialReportFrequency));
   /*
@@ -428,8 +428,8 @@ char *Module::settingsToJSON()
 ///< ESP-link web interface functions
 void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgInt("Debug", *Debug);
-  WebServer.setArgInt("Metric", *Metric);
+  WebServer.setArgInt("Debug", Debug);
+  WebServer.setArgInt("Metric", Metric);
   WebServer.setArgInt("SerialF", SerialReportFrequency);
   WebServer.setArgInt("Date", *SerialReportDate);
   WebServer.setArgInt("Mem", SerialReportMemory);
@@ -578,7 +578,7 @@ void Module::addPushingBoxLogRelayID()
 /*
 void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  REST API reporting: api.pushingbox.com");
     printf("%s\n", *(char(*)[MaxLongTextLength])JSONData);

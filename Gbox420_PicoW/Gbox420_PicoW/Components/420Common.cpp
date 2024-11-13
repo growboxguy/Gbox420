@@ -18,7 +18,7 @@ void Common::report(bool FriendlyFormat)
 
 void Common::run1sec()
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  1sec - %s\n", Name);
   }
@@ -26,7 +26,7 @@ void Common::run1sec()
 
 void Common::run5sec()
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  5sec - %s\n", Name);
   }
@@ -34,7 +34,7 @@ void Common::run5sec()
 
 void Common::run1min()
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  1min - %s\n", Name);
   }
@@ -42,7 +42,7 @@ void Common::run1min()
 
 void Common::run30min()
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  30min - %s\n", Name);
   }

@@ -33,7 +33,7 @@ void PressureSensor::refresh_FiveSec()
 float PressureSensor::readPressure(bool ReturnAverage)
 {
   float Voltage = ((float)analogRead(Pin)) * 5 / 1024;
-  if (*Metric)
+  if (Metric)
     Pressure = Ratio * (Voltage - Offset) * 1.0f; ///< unit: bar / 100kPa
   else
     Pressure = Ratio * (Voltage - Offset) * 14.5038f; ///< unit: PSI

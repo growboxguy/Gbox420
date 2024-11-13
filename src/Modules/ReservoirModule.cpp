@@ -43,7 +43,7 @@ void ReservoirModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   { ///< If there is a package exchange in progress
-    if (*Debug)
+    if (Debug)
     {
       logToSerials(F("Message timeout"), true, 0);
     }

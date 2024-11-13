@@ -20,8 +20,8 @@
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
-bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output
-bool *Metric;                              ///< True - Use metric units, False - Use imperial units
+bool &Debug = *new bool;                                  ///< True - Turns on extra debug messages on the Serial Output
+bool &Metric = *new bool;                              ///< True - Use metric units, False - Use imperial units
 
 // Component initialization/declaration
 /*ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
@@ -163,7 +163,7 @@ int main()
 /*
 void getWirelessStatus()
 {
-  if (*Debug)
+  if (Debug)
   {
     //printf("Wireless report:\n");
     cyw43_wifi_link_status();

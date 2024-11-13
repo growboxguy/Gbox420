@@ -59,7 +59,7 @@ bool GboxModule::commandEvent(char *Command, char *Data)
     }
     else if (strcmp(ShortMessage, "M") == 0)
     {
-      setMetric(!*Metric);
+      setMetric(!Metric);
     }
     return true; // Match found
   }
@@ -71,11 +71,11 @@ char *GboxModule::getDebugText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Debug);
+    return toText_onOff(Debug);
   }
   else
   {
-    return toText(*Debug);
+    return toText(Debug);
   }
 }
 
@@ -83,19 +83,19 @@ char *GboxModule::getMetricText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Metric);
+    return toText_onOff(Metric);
   }
   else
   {
-    return toText(*Metric);
+    return toText(Metric);
   }
 }
 
 ///< Settings
 void GboxModule::setDebug(bool DebugEnabled)
 {
-  *Debug = DebugEnabled;
-  if (*Debug)
+  Debug = DebugEnabled;
+  if (Debug)
   {
     addToLog("Debug ON");
   }
@@ -103,22 +103,22 @@ void GboxModule::setDebug(bool DebugEnabled)
   {
     addToLog("Debug OFF");
   }
-  getSoundObject()->playOnOffSound(*Debug);
+  getSoundObject()->playOnOffSound(Debug);
 }
 
 void GboxModule::toggleDebug()
 {
-  setDebug(!*Debug);
+  setDebug(!Debug);
 }
 
 void GboxModule::setMetric(bool MetricEnabled)
 {
-  if (MetricEnabled != *Metric)
+  if (MetricEnabled != Metric)
   { ///< if there was a change
-    *Metric = MetricEnabled;
+    Metric = MetricEnabled;
     RefreshRequested = true;
   }
-  if (*Metric)
+  if (Metric)
     addToLog("Using Metric units");
   else
     addToLog("Using Imperial units");

@@ -119,7 +119,7 @@ void ACMotorModule_Web::sendMessages()
   sendCommand(&ACMotorResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ACMotorModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&ACMotorCommand1ToSend); ///< Command - Response exchange
-  if (Parent->SerialReportWireless && *Debug)
+  if (Parent->SerialReportWireless && Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -214,8 +214,8 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
 void ACMotorModule_Web::updateCommands()
 {
   ACMotorModuleCommand1ToSend.Time = now();
-  ACMotorModuleCommand1ToSend.Debug = *Debug;
-  ACMotorModuleCommand1ToSend.Metric = *Metric;
+  ACMotorModuleCommand1ToSend.Debug = Debug;
+  ACMotorModuleCommand1ToSend.Metric = Metric;
   ACMotorModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   ACMotorModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   ACMotorModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;

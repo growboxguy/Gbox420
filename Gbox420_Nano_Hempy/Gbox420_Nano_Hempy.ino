@@ -56,7 +56,7 @@ void setup()
   setSyncInterval(3600);           // Sync time every hour with the main module
   ModuleSettings = loadSettings(); ///< Loading settings from EEPROM
   Debug = ModuleSettings->Debug;
-  Metric = ModuleSettings->Metric;
+  Metric = &ModuleSettings->Metric;
   InitializeWireless();           ///< Setting up wireless module
   OneSecThread.setInterval(1000); ///< 1000ms - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.onRun(run1sec);

@@ -194,8 +194,8 @@ void Module::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t I
 ///< Settings
 void Module::setDebug(bool DebugEnabled)
 {
-  *Debug = DebugEnabled;
-  if (*Debug)
+  Debug = DebugEnabled;
+  if (Debug)
   {
     addToLog("Debug ON");
   }
@@ -203,17 +203,17 @@ void Module::setDebug(bool DebugEnabled)
   {
     addToLog("Debug OFF");
   }
-  getSoundObject()->playOnOffSound(*Debug);
+  getSoundObject()->playOnOffSound(Debug);
 }
 
 void Module::setMetric(bool MetricEnabled)
 {
-  if (MetricEnabled != *Metric)
+  if (MetricEnabled != Metric)
   { ///< if there was a change
-    *Metric = MetricEnabled;
+    Metric = MetricEnabled;
     RefreshRequested = true;
   }
-  if (*Metric)
+  if (Metric)
     addToLog("Using Metric units");
   else
     addToLog("Using Imperial units");
@@ -434,9 +434,9 @@ char *Module::settingsToJSON()
   memset(&LongMessage[0], 0, MaxLongTextLength);
   strcat(LongMessage, "{\"Settings\":{"); ///< Adds a curly bracket that needs to be closed at the end
   strcat(LongMessage, "\"Debug\":\"");
-  strcat(LongMessage, toText(*Debug));
+  strcat(LongMessage, toText(Debug));
   strcat(LongMessage, "\",\"Metric\":\"");
-  strcat(LongMessage, toText(*Metric));
+  strcat(LongMessage, toText(Metric));
   strcat(LongMessage, "\",\"SerialF\":\"");
   strcat(LongMessage, toText(SerialReportFrequency));
   strcat(LongMessage, "\",\"Date\":\"");
@@ -477,8 +477,8 @@ char *Module::settingsToJSON()
 void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
   /*
-  WebServer.setArgInt("Debug", *Debug);
-  WebServer.setArgInt("Metric", *Metric);
+  WebServer.setArgInt("Debug", Debug);
+  WebServer.setArgInt("Metric", Metric);
   WebServer.setArgInt("SerialF", SerialReportFrequency);
   WebServer.setArgInt("Date", *SerialReportDate);
   WebServer.setArgInt("Mem", SerialReportMemory);
@@ -633,7 +633,7 @@ void Module::addPushingBoxLogRelayID()
  */
 void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  if (Debug)
   {
     printf("  REST API reporting: api.pushingbox.com");
     printf("%s\n", JSONData);
@@ -652,7 +652,7 @@ void Module::mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength])
 
   if (DefaultMqttClient->mqttIsConnected())
   {
-    // if (*Debug)
+    // if (Debug)
     {
       printf("  MQTT reporting to %s - %s\n", DefaultMqttClient->PubTopic, JSONData);
     }
@@ -661,7 +661,7 @@ void Module::mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength])
 
   else
   {
-    if (*Debug)
+    if (Debug)
     {
       printf("  MQTT broker not connected\n");
     }
@@ -674,11 +674,11 @@ char *Module::getDebugText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Debug);
+    return toText_onOff(Debug);
   }
   else
   {
-    return toText(*Debug);
+    return toText(Debug);
   }
 }
 
@@ -686,11 +686,11 @@ char *Module::getMetricText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Metric);
+    return toText_onOff(Metric);
   }
   else
   {
-    return toText(*Metric);
+    return toText(Metric);
   }
 }
 

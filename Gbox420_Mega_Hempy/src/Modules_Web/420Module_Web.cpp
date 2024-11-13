@@ -189,9 +189,9 @@ char *Module_Web::settingsToJSON()
   memset(&LongMessage[0], 0, MaxLongTextLength);
   strcat_P(LongMessage, (PGM_P)F("{\"Settings\":{")); ///< Adds a curly bracket that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"Debug\":\""));
-  strcat(LongMessage, toText(*Debug));
+  strcat(LongMessage, toText(Debug));
   strcat_P(LongMessage, (PGM_P)F("\",\"Metric\":\""));
-  strcat(LongMessage, toText(*Metric));
+  strcat(LongMessage, toText(Metric));
   strcat_P(LongMessage, (PGM_P)F("\",\"SerialF\":\""));
   strcat(LongMessage, toText(SerialReportFrequency));
   strcat_P(LongMessage, (PGM_P)F("\",\"Date\":\""));
@@ -231,8 +231,8 @@ char *Module_Web::settingsToJSON()
 ///< ESP-link web interface functions
 void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgInt(F("Debug"), *Debug);
-  WebServer.setArgInt(F("Metric"), *Metric);
+  WebServer.setArgInt(F("Debug"), Debug);
+  WebServer.setArgInt(F("Metric"), Metric);
   WebServer.setArgInt(F("SerialF"), SerialReportFrequency);
   WebServer.setArgInt(F("Date"), SerialReportDate);
   WebServer.setArgInt(F("Mem"), SerialReportMemory);
@@ -392,7 +392,7 @@ void Module_Web::addPushingBoxLogRelayID()
 */
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
     logToSerials(JSONData, true, 0);
@@ -408,7 +408,7 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("MQTT reporting:"), false, 2);
     logToSerials(&(MqttPubTopic), false, 1);
@@ -420,7 +420,7 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
   }
   else
   {
-    if (*Debug)
+    if (Debug)
     {
       logToSerials(F("MQTT broker not connected"), true, 2);
     }
@@ -430,8 +430,8 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 ///< Settings
 void Module_Web::setDebug(bool DebugEnabled)
 {
-  *Debug = DebugEnabled;
-  if (*Debug)
+  Debug = DebugEnabled;
+  if (Debug)
   {
     addToLog(F("Debug ON"));
   }
@@ -439,29 +439,29 @@ void Module_Web::setDebug(bool DebugEnabled)
   {
     addToLog(F("Debug OFF"));
   }
-  getSoundObject()->playOnOffSound(*Debug);
+  getSoundObject()->playOnOffSound(Debug);
 }
 
 char *Module_Web::getDebugText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Debug);
+    return toText_onOff(Debug);
   }
   else
   {
-    return toText(*Debug);
+    return toText(Debug);
   }
 }
 
 void Module_Web::setMetric(bool MetricEnabled)
 {
-  if (MetricEnabled != *Metric)
+  if (MetricEnabled != Metric)
   { ///< if there was a change
-    *Metric = MetricEnabled;
+    Metric = MetricEnabled;
     RefreshAllRequested = true;
   }
-  if (*Metric)
+  if (Metric)
     addToLog(F("Using Metric units"));
   else
     addToLog(F("Using Imperial units"));
@@ -472,11 +472,11 @@ char *Module_Web::getMetricText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_onOff(*Metric);
+    return toText_onOff(Metric);
   }
   else
   {
-    return toText(*Metric);
+    return toText(Metric);
   }
 }
 
@@ -516,7 +516,7 @@ void Module_Web::reportToHomeAssistantTrigger(bool ForceRun)
   if (*ReportToHomeAssistant || ForceRun)
   {
     runReport(false, true, true, true); //Loads sensor readings to the LongMessage buffer in JSON format
-    if (*Debug)
+    if (Debug)
     {      
       logToSerials(HomeAssistantServerIP, false, 2);
       logToSerials(F("REST API:"), false, 1);

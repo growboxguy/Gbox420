@@ -32,7 +32,7 @@ void WaterTempSensor::refresh_FiveSec()
 void WaterTempSensor::readSensor()
 {
   TempSensor->requestTemperatures();
-  if (*Metric)
+  if (Metric)
   {
     Temp = TempSensor->getTempCByIndex(0);
   }

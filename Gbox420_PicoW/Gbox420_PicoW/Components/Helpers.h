@@ -101,8 +101,8 @@ extern char CurrentTime[MaxWordLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *GboxSettings;
-extern bool *Debug;
-extern bool *Metric;
+extern bool &Debug = *new bool;   
+extern bool &Metric = *new bool;
 
 ///< DNS client
 struct DnsCallbackData

@@ -40,8 +40,8 @@ ELClientRest PushingBoxRestAPI(&ESPLink);    ///< ESP-link - REST API for Pushin
 ELClientRest HomeAssistantRestAPI(&ESPLink); ///< ESP-link - REST API for HomeAssistant
 ELClientMqtt MqttAPI(&ESPLink);              ///< ESP-link - MQTT protocol for sending and receiving messages
 Settings *ModuleSettings;                    ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool *Debug;                                 ///< True - Turns on extra debug messages on the Serial Output
-bool *Metric;                                ///< True - Use metric units, False - Use imperial units
+bool &Debug = *new bool;                                    ///< True - Turns on extra debug messages on the Serial Output
+bool &Metric = *new bool;                                ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;                  ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
 MainModule *Main1;                           ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
 
@@ -67,7 +67,7 @@ void setup()
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
   ModuleSettings = loadSettings();
-  Debug = &ModuleSettings->Debug;
+  Debug = ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
   logToSerials(F("Setting up ESP-link connection"), true, 0);
@@ -229,18 +229,18 @@ void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(MqttSubTopic);
   MqttConnected = true;
-  // if(*Debug) logToSerials(F("MQTT connected"), true);
+  // if(Debug) logToSerials(F("MQTT connected"), true);
 }
 
 void mqttDisconnected(__attribute__((unused)) void *response)
 {
-  // if(*Debug) logToSerials(F("MQTT disconnected"), true);
+  // if(Debug) logToSerials(F("MQTT disconnected"), true);
   MqttConnected = false;
 }
 
 void mqttPublished(__attribute__((unused)) void *response)
 {
-  // if(*Debug) logToSerials(F("MQTT published"), true);
+  // if(Debug) logToSerials(F("MQTT published"), true);
 }
 
 void mqttReceived(void *response)
@@ -360,7 +360,7 @@ void settingsRefreshCallback(__attribute__((unused)) char *Url)
 */
 void settingsButtonCallback(char *Button)
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("Settings button:"), false, 0);
     logToSerials(&Button, true, 1);
@@ -382,7 +382,7 @@ void settingsButtonCallback(char *Button)
 */
 void settingsFieldCallback(char *Field)
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("Settings field:"), false, 0);
     logToSerials(&Field, true, 1);
@@ -396,7 +396,7 @@ void settingsFieldCallback(char *Field)
 */
 void getWirelessStatus()
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();

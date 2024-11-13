@@ -253,7 +253,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
             }
             char DataReceived[MaxLongTextLength] = {}; // Initialize null terminated Data storage
             memcpy(DataReceived, Data, DataLength);    // Copy data to null terminated buffer
-            if (*Debug)
+            if (Debug)
             {
                 printf("TopicMQTT: %s - %s\n", ((MqttClient *)Arg)->ReceivedTopicShort, ((MqttClient *)Arg)->ReceivedTopicLong);
                 printf("DataMQTT[%u]: %s\n", DataLength, DataReceived);
@@ -317,7 +317,7 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
     }
     else
     {
-        if (*Debug)
+        if (Debug)
         {
             printf(" MQTT published to %s\n", ((MqttClient *)Arg)->PubTopic);
         }

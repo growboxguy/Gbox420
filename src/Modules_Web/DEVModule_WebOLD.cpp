@@ -67,9 +67,9 @@ void DEVModule_Web::reportToJSON()
   Common_Web::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-  strcat(LongMessage, toText(*Metric));
+  strcat(LongMessage, toText(Metric));
   strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
-  strcat(LongMessage, toText(*Debug));
+  strcat(LongMessage, toText(Debug));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 

@@ -277,7 +277,7 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);
   sendCommand(&AeroCommand2ToSend); ///< Command - Response exchange
-  if (Parent->SerialReportWireless && *Debug)
+  if (Parent->SerialReportWireless && Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
   }
@@ -417,8 +417,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 void AeroModule_Web::updateCommands()
 {
   AeroModuleCommand1ToSend.Time = now();
-  AeroModuleCommand1ToSend.Debug = *Debug;
-  AeroModuleCommand1ToSend.Metric = *Metric;
+  AeroModuleCommand1ToSend.Debug = Debug;
+  AeroModuleCommand1ToSend.Metric = Metric;
   AeroModuleCommand1ToSend.SerialReportFrequency = Parent->SerialReportFrequency;
   AeroModuleCommand1ToSend.SerialReportDate = Parent->SerialReportDate;
   AeroModuleCommand1ToSend.SerialReportMemory = Parent->SerialReportMemory;

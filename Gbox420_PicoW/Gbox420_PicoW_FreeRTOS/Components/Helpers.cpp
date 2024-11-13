@@ -74,7 +74,7 @@ bool isThisForMe(char const *Name, char const *Command) ///< Returns true when t
 
 float convertBetweenTempUnits(float Value)
 {
-  if (*Metric)
+  if (Metric)
     return round((Value - 32) * 55.555555) / 100.0;
   else
     return round(Value * 180 + 3200.0) / 100.0f;
@@ -82,7 +82,7 @@ float convertBetweenTempUnits(float Value)
 
 float convertBetweenPressureUnits(float Value)
 {
-  if (*Metric)
+  if (Metric)
     return round(Value / 0.145038) / 100.0;
   else
     return round(Value * 1450.38) / 100.0f;
@@ -153,7 +153,7 @@ char *toText_time(uint8_t Hour, uint8_t Minute)
 char *toText_temp(float Temp)
 {
   sprintf(ShortMessage, "%.2f", Temp);
-  if (*Metric)
+  if (Metric)
   {
     strcat(ShortMessage, "°C");
   }
@@ -167,7 +167,7 @@ char *toText_temp(float Temp)
 char *toText_pressure(float Pressure)
 {
   sprintf(ShortMessage, "%.2f", Pressure);
-  if (*Metric)
+  if (Metric)
   {
     strcat(ShortMessage, "bar");
   }
@@ -181,7 +181,7 @@ char *toText_pressure(float Pressure)
 char *toText_weight(float Weight)
 {
   sprintf(ShortMessage, "%.2f", Weight);
-  if (*Metric)
+  if (Metric)
   {
     strcat(ShortMessage, "kg");
   }
@@ -231,7 +231,7 @@ char *toText_second(int Second)
 char *toText_distance(float Distance)
 {
   sprintf(ShortMessage, "%.2f", Distance);
-  if (*Metric)
+  if (Metric)
   {
     strcat(ShortMessage, "cm");
   }

@@ -12,8 +12,8 @@
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern Settings *GboxSettings;
-extern bool *Debug;
-extern bool *Metric;
+extern bool &Debug = *new bool;   
+extern bool &Metric = *new bool;
 
 extern bool isThisForMe(char const *Name, char const *Command); ///< Checks if Command starts with the Name of the instance followed by _
 

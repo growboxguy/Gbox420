@@ -33,7 +33,7 @@ void DHTSensor::refresh_FiveSec()
 
 void DHTSensor::readSensor()
 {
-  if (*Metric)
+  if (Metric)
   {
     Temp = Sensor->readTemperature();
   }

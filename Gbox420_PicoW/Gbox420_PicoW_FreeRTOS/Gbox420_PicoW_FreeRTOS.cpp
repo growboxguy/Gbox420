@@ -54,7 +54,7 @@ printf("NICE TRY\n");
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
-  if (*Debug)
+  if (Debug)
     printf("1sec\n");
   watchdog_update(); // Pet watchdog
   GboxModule1->run1sec();
@@ -64,7 +64,7 @@ void run1Sec(TimerHandle_t xTimer)
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
-  if (*Debug)
+  if (Debug)
     printf("5sec\n");
   watchdog_update(); // Pet watchdog
   GboxModule1->run5sec();
@@ -76,7 +76,7 @@ void run5Sec(TimerHandle_t xTimer)
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
-  if (*Debug)
+  if (Debug)
     printf("1min\n");
   watchdog_update(); // Pet watchdog
   GboxModule1->run1min();
@@ -86,7 +86,7 @@ void run1Min(TimerHandle_t xTimer)
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
-  if (*Debug)
+  if (Debug)
     printf("30min\n");
   watchdog_update(); // Pet watchdog
   GboxModule1->run30min();
@@ -211,8 +211,8 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
   {
     if (strcmp(ShortMessage, "D") == 0)
     {
-      *Debug = !*Debug;
-      printf("Debug %s\n", toText_enabledDisabled(*Debug));
+      Debug = !Debug;
+      printf("Debug %s\n", toText_enabledDisabled(Debug));
     }
     /*
     else if (strcmp(ShortMessage, "Ee") == 0)

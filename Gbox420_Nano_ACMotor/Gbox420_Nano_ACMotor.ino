@@ -21,8 +21,8 @@
 //WIRELESS DISBLED// #include "src/WirelessCommands_ACMotor.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
 // Global variable initialization
-bool *Debug;
-bool *Metric;
+bool &Debug = *new bool;   
+bool &Metric = *new bool;
 char LongMessage[MaxLongTextLength] = "";  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = ""; // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";      // Buffer for storing current time in text format
@@ -58,7 +58,7 @@ void setup()
 
   ///< Loading settings from EEPROM
   ModuleSettings = loadSettings();
-  Debug = &ModuleSettings->Debug;
+  Debug = ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
@@ -94,7 +94,7 @@ void setup()
 /*
 void InitializeWireless()
 {
-  if (*Debug)
+  if (Debug)
   {
    logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
   }
@@ -115,7 +115,7 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  if (*Debug)
+  if (Debug)
   {
   logToSerials(F("done"), true, 3);
   }
@@ -189,7 +189,7 @@ void getWirelessData()
 
 void getWirelessStatus()
 {
-  if (*Debug)
+  if (Debug)
   {
     logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();

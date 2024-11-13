@@ -50,7 +50,7 @@ void TDSSensor::updateTDS(bool ShowRaw)
   float Voltage = ((float)TDSRaw) * 5 / 1024;
   if (WaterTempSensor1) // if a Water Temperature is available
   {
-    if (*Metric)
+    if (Metric)
     {
       Voltage = Voltage / (1.0 + 0.02 * (WaterTempSensor1->getTemp() - 25.0)); // Compensate TDS reading with temperature
     }

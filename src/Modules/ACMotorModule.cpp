@@ -37,7 +37,7 @@ void ACMotorModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != ACMotorMessages::ACMotorModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   { ///< If there is a package exchange in progress, but a followup command was not received within the timeout
-    //if (*Debug)
+    //if (Debug)
     //{
     // logToSerials(F("Message timeout"), true, 0);
     //}
