@@ -159,9 +159,12 @@ void HempyBucket::updateState(HempyStates NewState)
 
 void HempyBucket::disable() // Takes time, do not call directly from an interrupt (ESP-link website would timeout)
 {
-  updateState(HempyStates::DISABLED);
-  Parent->addToLog(getName(getStateText(true)));
-  Parent->getSoundObject()->playOffSound();
+  if (State != HempyStates::DISABLED)
+  {
+    updateState(HempyStates::DISABLED);
+    Parent->addToLog(getName(getStateText(true)));
+    Parent->getSoundObject()->playOffSound();
+  }
 }
 
 void HempyBucket::disableRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing

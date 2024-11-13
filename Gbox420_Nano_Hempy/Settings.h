@@ -17,8 +17,8 @@ constexpr uint8_t Version = 11; ///< Increment this after changing the stucture 
 constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 constexpr uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 constexpr uint16_t MaxLongTextLength = 128; ///< Default char * buffer length for storing a long text. Memory intense!
-constexpr uint8_t QueueDepth = 6;           ///< Limits the maximum number of active modules. Memory intense!
-constexpr uint8_t MovingAverageDepth = 3;   ///< Number of previous readings to keep when calculating average. Memory intense!
+constexpr uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
+//constexpr uint8_t MovingAverageDepth = 2;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)

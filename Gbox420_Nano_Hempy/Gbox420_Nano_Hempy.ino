@@ -1,4 +1,4 @@
-/*! \file 
+/*! \file
  *  \brief     Hempy module for Nano
  *  \details   To change the default pin layout / startup settings navigate to: Settings.h
  *  \details   Runs autonomously on an Arduino RF-Nano or Arduino Nano with an nRF24L01+ wireless transceiver.
@@ -23,11 +23,11 @@
 // Global variable initialization
 bool *Debug;
 bool *Metric;
-char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
-char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
+char LongMessage[MaxLongTextLength] = "";     // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+char ShortMessage[MaxShotTextLength] = "";    // Temp storage for assembling short messages (Log entries, Error messages)
+char CurrentTime[MaxWordLength] = "";         // Buffer for storing current time in text format
 uint8_t ReceivedMessage[WirelessPayloadSize]; // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
-uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
+uint32_t ReceivedMessageTimestamp = millis(); // Stores the timestamp when the last wireless package was received
 
 ///< Component initialization
 HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
@@ -53,36 +53,28 @@ void setup()
   struct HempyModuleCommand BlankCommand = {HempyMessages::HempyModuleCommand1};
   memcpy(ReceivedMessage, &BlankCommand, sizeof(struct HempyModuleCommand)); ///< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
   setSyncProvider(updateTime);
-  setSyncInterval(3600); //Sync time every hour with the main module
-
-  ///< Loading settings from EEPROM
-  ModuleSettings = loadSettings();
+  setSyncInterval(3600);           // Sync time every hour with the main module
+  ModuleSettings = loadSettings(); ///< Loading settings from EEPROM
   Debug = &ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
-
-  ///< Setting up wireless module
-  InitializeWireless();
-
-  ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
-  OneSecThread.setInterval(1000); ///< 1000ms
+  InitializeWireless();           ///< Setting up wireless module
+  OneSecThread.setInterval(1000); ///< 1000ms - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
   FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(run1min);
-
-  ///< Create the Hempy bucket object
-  HempyMod1 = new HempyModule(F("Hempy1"), ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-
-  //logToSerials(F("Setup ready, starting loops:"), true, 0);
+  HempyMod1 = new HempyModule(F("Hempy1"), ModuleSettings->Hemp1); ///< This Module contains the watering logic, weight sensors, pump controllers
+  getFreeMemory();
+  logToSerials(F("Setup ready, starting loops:"), true, 0);  
 }
 
 void InitializeWireless()
 {
-  //if (*Debug)
-  //{
-  // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
-  //}
+  if (*Debug)
+  {
+    logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  }
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -100,10 +92,10 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  //if (*Debug)
-  //{
-  //logToSerials(F("done"), true, 3);
-  //}
+  if (*Debug)
+  {
+    logToSerials(F("done"), true, 3);
+  }
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 

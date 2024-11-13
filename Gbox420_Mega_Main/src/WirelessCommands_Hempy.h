@@ -111,7 +111,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response
 {
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
    WaterPumpStates PumpState = WaterPumpStates::DISABLED;
    bool ConfirmDisable = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
@@ -119,7 +119,6 @@ struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless resp
    bool ConfirmStopWatering = false;
    bool ConfirmTareWeightB = false;
    bool ConfirmTareWeightDW = false;
-   bool ConfirmTareWeightWR = false;
    float WeightB = 0.0;
    float WeightWR = 0.0;
    float DryWeight = 0.0;
