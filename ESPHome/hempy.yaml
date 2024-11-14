@@ -319,6 +319,9 @@ number:
     optimistic: true
     restore_value: false # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
     initial_value: 0.4 # Set default value if no value is stored
+    on_value:
+      - lambda: |-
+          id(bucket1).update_evaportation_target(id(bucket1_evaporation_target_weight).state);
   # Bucket2
   - platform: template
     id: bucket2_start_watering_weight # When the bucket weight drops below this -> Start the watering process
@@ -400,6 +403,9 @@ number:
     optimistic: true
     restore_value: false # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
     initial_value: 0.4 # Set default value if no value is stored
+    on_value:
+      - lambda: |-
+          id(bucket2).update_evaportation_target(id(bucket2_evaporation_target_weight).state);
 
 hempy:
   buckets:
