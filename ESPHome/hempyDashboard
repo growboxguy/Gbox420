@@ -8,7 +8,7 @@ views:
             type: sensor
             entity: sensor.hempy_bucket1_weight
             detail: 2
-            hours_to_show: 168
+            hours_to_show: 72
             name: Bucket 1 Weight
           - type: entities
             entities:

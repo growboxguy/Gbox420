@@ -28,7 +28,7 @@ external_components:
       ref: master
       path: ESPHome/components
     components: [hempy]
-    refresh: 60s
+    refresh: 1d
 
 text_sensor:
   - platform: debug
