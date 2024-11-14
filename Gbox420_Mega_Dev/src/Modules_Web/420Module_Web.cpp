@@ -231,11 +231,11 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt(F("Debug"), Debug);
   WebServer.setArgInt(F("Metric"), Metric);
-  WebServer.setArgInt(F("Date"), SerialReportDate);
-  WebServer.setArgInt(F("Mem"), SerialReportMemory);
-  WebServer.setArgInt(F("JSON"), SerialReportJSON);
-  WebServer.setArgInt(F("JSONF"), SerialReportJSONFriendly);
-  WebServer.setArgInt(F("Wire"), SerialReportWireless);
+  WebServer.setArgInt(F("Date"), *SerialReportDate);
+  WebServer.setArgInt(F("Mem"), *SerialReportMemory);
+  WebServer.setArgInt(F("JSON"), *SerialReportJSON);
+  WebServer.setArgInt(F("JSONF"), *SerialReportJSONFriendly);
+  WebServer.setArgInt(F("Wire"), *SerialReportWireless);
   WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
   WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
   WebServer.setArgString(F("Relay"), PushingBoxLogRelayID);
