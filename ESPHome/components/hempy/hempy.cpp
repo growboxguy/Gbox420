@@ -191,10 +191,10 @@ namespace esphome
       {        
         DryWeight = 0; // Reset dry weight calculated from a previous watering
         float CalculatedNextWateringWeight = WetWeight - EvaporationTarget;
-        if (StartWateringWeight < CalculatedNextWateringWeight) //If the next watering weight is larger then StartWateringWeight
+        if (StartWateringWeight->get_state() < CalculatedNextWateringWeight) //If the next watering weight is larger then StartWateringWeight
           NextWateringWeight->publish_state(CalculatedNextWateringWeight);  //use the new calculated watering weight
         else
-          NextWateringWeight->publish_state(StartWateringWeight);  //use the Start Weight from the UI
+          NextWateringWeight->publish_state(StartWateringWeight->get_state());  //use the Start Weight from the UI
 
         ESP_LOGI("hempy", "%s Next watering weight: %.2f", Name.c_str(), CalculatedNextWateringWeight);
       }
