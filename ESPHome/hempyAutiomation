@@ -30,7 +30,7 @@ actions:
                 actions:
                   - action: DISMISS_NOTIFICATION
                     title: Dismiss
-            action: notify.mobile_app_bitone
+            action: notify.mobile_app_MOBILENAME  #Update MOBILENAME to the device name that has HA Companion app installed
       - conditions:
           - condition: template
             value_template: "{{ new_state != 'DISABLED' }}"

@@ -172,7 +172,7 @@ namespace esphome
       if (State != HempyStates::WATERING && State != HempyStates::DRAINING) // If watering is not in progress: start watering
         update_state(HempyStates::WATERING, true);
       else
-        update_state(HempyStates::IDLE); // If watering is in progress: stop it (second click stops watering)
+        update_state(HempyStates::IDLE,true); // If watering is in progress: stop it (second click stops watering)
     }
 
     void HempyBucket::update_next_watering_weight(float NewWateringWeight) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
