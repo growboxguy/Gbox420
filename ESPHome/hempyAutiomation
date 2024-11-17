@@ -1,65 +1,41 @@
-alias: Gbox420 Hempy Bucket DISABLED Notification
+alias: Gbox420 Hempy Bucket State Notification
 description: Notify and manage persistent notification for Hempy bucket state changes
 triggers:
   - entity_id:
       - sensor.hempy_bucket1_state
       - sensor.hempy_bucket2_state
-    to: DISABLED
-    trigger: state
-  - entity_id:
-      - sensor.hempy_bucket1_state
-      - sensor.hempy_bucket2_state
-    from: DISABLED
     trigger: state
 conditions: []
 actions:
+  - variables:
+      bucket_number: "{{ trigger.entity_id.split('_')[-2][-1] }}"
+      new_state: >-
+        {{ (trigger.to_state.state if trigger.to_state is defined else 'UNKNOWN').strip()  }}
   - choose:
       - conditions:
-          - condition: state
-            entity_id: sensor.hempy_bucket1_state
-            state: DISABLED
+          - condition: template
+            value_template: "{{ new_state == 'DISABLED' }}"
         sequence:
           - data:
-              message: Hempy bucket1 DISABLED
+              notification_id: hempy_bucket{{ bucket_number }}_disabled
               title: Gbox420
-            action: notify.mobile_app_YOUR_PHONE
-          - data:
-              message: Hempy bucket1 DISABLED
-              title: Gbox420
-              notification_id: hempy_bucket1_disabled
+              message: |
+                Hempy bucket {{ bucket_number }} is {{ new_state }}            
             action: persistent_notification.create
-      - conditions:
-          - condition: state
-            entity_id: sensor.hempy_bucket2_state
-            state: DISABLED
-        sequence:
           - data:
-              message: Hempy bucket2 DISABLED
               title: Gbox420
-            action: notify.mobile_app_YOUR_PHONE
-          - data:
-              message: Hempy bucket2 DISABLED
-              title: Gbox420
-              notification_id: hempy_bucket2_disabled
-            action: persistent_notification.create
+              message: |
+                Hempy bucket {{ bucket_number }} is {{ new_state }}
+              data:
+                actions:
+                  - action: DISMISS_NOTIFICATION
+                    title: Dismiss
+            action: notify.mobile_app_bitone
       - conditions:
-          - condition: not
-            conditions:
-              - condition: state
-                entity_id: sensor.hempy_bucket1_state
-                state: DISABLED
+          - condition: template
+            value_template: "{{ new_state != 'DISABLED' }}"
         sequence:
           - data:
-              notification_id: hempy_bucket1_disabled
-            action: persistent_notification.dismiss
-      - conditions:
-          - condition: not
-            conditions:
-              - condition: state
-                entity_id: sensor.hempy_bucket2_state
-                state: DISABLED
-        sequence:
-          - data:
-              notification_id: hempy_bucket2_disabled
+              notification_id: hempy_bucket{{ bucket_number }}_disabled
             action: persistent_notification.dismiss
 mode: single
