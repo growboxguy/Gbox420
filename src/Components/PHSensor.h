@@ -1,6 +1,5 @@
 #pragma once
 
-#include "movingAvg.h"
 #include "420Common.h"
 #include "420Module.h"
 
@@ -17,8 +16,7 @@ private:
 protected:
   Module *Parent;
   uint8_t &Pin;
-  float PH;
-  movingAvg *AveragePH;
+  float PH = 0.0;
   float &Intercept;
   float &Slope;
   void updatePH(bool ShowRaw);

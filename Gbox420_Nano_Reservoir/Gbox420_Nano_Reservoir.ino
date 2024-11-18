@@ -125,7 +125,7 @@ void run1min()
 {
   wdt_reset();
   ReservoirMod1->run1min();
-  getWirelessStatus();
+  //getWirelessStatus();   //USES TOO MUCH MEMORY!
 }
 
 // Wireless communication

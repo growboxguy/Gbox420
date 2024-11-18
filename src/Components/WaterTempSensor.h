@@ -14,7 +14,7 @@ public:
   void readSensor();
   float getTemp();
   char *getTempText(bool FriendlyFormat = false);
-  float Temp;
+  float Temp = 0.0;
 
 private:
   OneWire *TempSensorWire;

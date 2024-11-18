@@ -8,8 +8,6 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
       Slope(DefaultSettings->Slope)          ///< Reference initialization
 {
   pinMode(Pin, INPUT);
-  AveragePH = new movingAvg(MovingAverageDepth);
-  AveragePH->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PHSensor ready"), true, 3);
@@ -41,16 +39,16 @@ void PHSensor::updatePH(bool ShowRaw)
     strcat(LongMessage, toText(PHRaw));
     Parent->addToLog(LongMessage);
   }
-  PH = (Slope) * PHRaw + (Intercept);
-  AveragePH->reading(PH * 100);
+  PH = (Slope)*PHRaw + (Intercept);
+  if (PH > 9.99)
+    PH = 9.99; // Maximum limit for positive values
+  else if (PH < -9.99)
+    PH = -9.99; // Maximum limit for negative values
 }
 
 float PHSensor::getPH(bool ReturnAverage)
 {
-  if (ReturnAverage)
-    return AveragePH->getAvg() / 100.0;
-  else
-    return PH;
+  return PH;
 }
 
 char *PHSensor::getPHText(bool ReturnAverage)
@@ -61,7 +59,6 @@ char *PHSensor::getPHText(bool ReturnAverage)
 void PHSensor::setSlope(float Value)
 {
   Slope = Value;
-  AveragePH->reset();
   Parent->addToLog(getName(F("slope updated")));
   Parent->addToLog(ShortMessage);
 }
@@ -69,7 +66,6 @@ void PHSensor::setSlope(float Value)
 void PHSensor::setIntercept(float Value)
 {
   Intercept = Value;
-  AveragePH->reset();
   Parent->addToLog(getName(F("intercept updated")));
   Parent->addToLog(ShortMessage);
 }

@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 10; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 11; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///< NOT SAVED TO EEPROM
 
@@ -18,7 +18,6 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
-static const uint8_t MovingAverageDepth = 10;  ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -102,7 +101,7 @@ typedef struct
     float Scale;    ///< Scale factor
   };
   struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 246106, .Scale = -22716.50};    ///< Update the calibration values here for the Weight Sensor
-  struct WeightSensorSettings WeightWR = {.DTPin = A2, .SCKPin = A3, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+  struct WeightSensorSettings WeightWR = {.DTPin = A3, .SCKPin = A4, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
 
   uint8_t CompatibilityVersion = Version; ///< Version should always be the last value stored in the struct
 } Settings;

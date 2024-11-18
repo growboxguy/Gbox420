@@ -59,7 +59,11 @@ void TDSSensor::updateTDS(bool ShowRaw)
       Voltage = Voltage / (1.0 + 0.02 * ((WaterTempSensor1->getTemp() - 32) * 0.55555 - 25.0)); // Compensate TDS reading with temperature
     }
   }
-  TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
+  TDS = (int)((133.42 * Voltage * Voltage * Voltage - 255.86 * Voltage * Voltage + 857.39 * Voltage) * 50 + 0.5) / 100.0;
+  if (TDS > 9999.99)
+    TDS = 9999.99; // Maximum limit for positive values
+  else if (TDS < -9999.99)
+    TDS = -9999.99; // Maximum limit for negative values
   digitalWrite(PowerPin, LOW); // Turn off power
 }
 

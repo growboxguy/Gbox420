@@ -3,8 +3,7 @@
 WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name), Parent(Parent)
 { 
   ///< pinMode(Pin, INPUT);
-  Temp = 0.0;
-  TempSensorWire = new OneWire(*(&DefaultSettings->Pin)); ///< Reservoir waterproof temperature sensor (DS18B20)
+  TempSensorWire = new OneWire(DefaultSettings->Pin); ///< Reservoir waterproof temperature sensor (DS18B20)
   TempSensor = new DallasTemperature(TempSensorWire);     ///< Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
   Parent->addToReportQueue(this);

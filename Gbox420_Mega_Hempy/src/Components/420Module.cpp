@@ -18,11 +18,11 @@ Module::Module(const __FlashStringHelper *Name) : Common(Name)
 void Module::runAll()
 {
   wdt_reset();
+  run1min();
+  wdt_reset();
   run1sec();
   wdt_reset();
-  run5sec();
-  wdt_reset();
-  run1min();
+  run5sec();  
   wdt_reset();
 }
 

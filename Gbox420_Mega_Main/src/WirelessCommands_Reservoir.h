@@ -88,17 +88,17 @@ struct ReservoirCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sen
    bool TareWeightWR = false;
 };
 
-struct ReservoirResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module
+struct ReservoirResponse : ReservoirCommonTemplate
 {
-   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool ConfirmTareWeight, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float PH, __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WeightWR, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
-   bool ConfirmTareWeight = false;   
-   bool ConfirmTareWeightWR = false;
-   float PH = 0.0;
-   float TDS = 0.0;
-   float Weight = 0.0;
-   float WeightWR = 0.0;
-   float WaterTemperature = 0.0;
-   float AirTemperature = 0.0;
-   float Humidity = 0.0;
+    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
+    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool ConfirmTareWeight, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float PH, __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WeightWR, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
+    float PH = 0.0;
+    float TDS = 0.0;
+    float Weight = 0.0;
+    float WeightWR = 0.0;
+    float WaterTemperature = 0.0;
+    float AirTemperature = 0.0;
+    float Humidity = 0.0;
+    bool ConfirmTareWeight = false;   
+    bool ConfirmTareWeightWR = false;
 };

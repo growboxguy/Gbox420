@@ -12,9 +12,9 @@ public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
-  float readWeight(bool ReturnAverage = true);
-  float getWeight(bool ReturnAverage = true);
-  char *getWeightText(bool ReturnAverage = true, bool FriendlyFormat = false);
+  float readWeight();
+  float getWeight();
+  char *getWeightText(bool FriendlyFormat = false);
   void tareRequest();
   void triggerCalibration(float KnownWeight);
   void setScale(float Scale);
@@ -31,7 +31,7 @@ protected:
   void tare();
   void calibrate();
 
-  float KnownWeight;
+  float KnownWeight = 1.0;
   bool TareRequested = false;
   bool CalibrateRequested = false;
 };
