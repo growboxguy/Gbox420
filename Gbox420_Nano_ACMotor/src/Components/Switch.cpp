@@ -21,10 +21,6 @@ void Switch::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-Switch::Switch(const __FlashStringHelper *Name) : Common(Name)
-{
-}
-
 void Switch::flip()
 {
   if (State)

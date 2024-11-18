@@ -10,7 +10,7 @@ class Switch : public Common
 {
 public:
   Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic = false, uint16_t FlipDelay = 0);
-  Switch(const __FlashStringHelper *Name);
+  //Switch(const __FlashStringHelper *Name);
   void report(bool FriendlyFormat = false);
   void turnOn(); ///< Turn the switch on: Sends the signal, but does not wait for the switch to flip over physically
   void turnOn_Wait(); ///< Turn the switch on and wait for the switch to flip over physically. USES Delay() !!!

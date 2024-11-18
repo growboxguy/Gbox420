@@ -88,13 +88,7 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
     break;
   case WaterPumpStates::RUNNING:
     PumpSwitch->turnOn();
-    PumpEnabled = true;
-    if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
-    {
-      RunTime = 0;
-      logToSerials(getName(F("finished")), true, 3);
-      updateState(WaterPumpStates::IDLE);
-    }
+    PumpEnabled = true;   
     if (millis() - StateTimer > ((uint32_t)PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       Parent->addToLog(getName(F("timeout")));
