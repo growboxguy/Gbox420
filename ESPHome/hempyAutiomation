@@ -38,4 +38,4 @@ actions:
           - data:
               notification_id: hempy_bucket{{ bucket_number }}_disabled
             action: persistent_notification.dismiss
-mode: single
+mode: parallel
