@@ -1,7 +1,7 @@
 #include "Switch_PWM.h"
 
-Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool &NegativeLogic)
-    : Switch(Name),
+Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t &Pin, uint8_t &DutyCycle, uint8_t &DutyCycleLowLimit, uint8_t &DutyCycleHighLimit, bool &NegativeLogic)
+    : Switch(Name,Pin,NegativeLogic,0),
       DutyCycle(DutyCycle),
       DutyCycleLowLimit(DutyCycleLowLimit),
       DutyCycleHighLimit(DutyCycleHighLimit),

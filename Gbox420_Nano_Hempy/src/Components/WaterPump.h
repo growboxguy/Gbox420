@@ -42,6 +42,5 @@ protected:
   Switch_PWM *PumpSwitch;
   bool &PumpEnabled;     ///< Enable/disable pump. false= Block running the pump
   uint8_t &Speed;        ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
-  int RunTime = 0;       ///< Max pump run time in seconds
   uint16_t &PumpTimeOut; ///< Max pump run time in seconds
 };

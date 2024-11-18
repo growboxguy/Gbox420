@@ -2,8 +2,8 @@
 //Sketch for testing: Transistor DC relay
 
 //Pins
-const byte Pin = 3;                //Transistor relay Port S
-const byte DutyCycleLowLimit = 20; //Limit the lowest speed to 20%, below this point the motor might not turn
+const byte Pin = 5;                //Transistor relay Port S
+const byte DutyCycleLowLimit = 30; //Limit the lowest speed to 20%, below this point the motor might not turn
 byte DutyCycle = 0;                //Speed between 0 and 100%
 bool isGettingHigh = true;         //Direction to increase or decrease speed during the test
 
