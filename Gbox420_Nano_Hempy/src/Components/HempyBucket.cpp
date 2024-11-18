@@ -84,7 +84,7 @@ void HempyBucket::updateState(HempyStates NewState)
     logToSerials(&LongMessage, true, 3);
   }
 
-  BucketWeightSensor.readWeight(false); ///< Force Bucket weight update
+  BucketWeightSensor.readWeight(); ///< Force Bucket weight update
 
   switch (NewState)
   {
@@ -114,7 +114,7 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       BucketPump.startPump(true);
     }
-    if (BucketWeightSensor.getWeight(false) >= StateWeight + WateringIncrements && BucketWeightSensor.getWeight(false) >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrements && BucketWeightSensor.getWeight() >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
     {
       WateringTime += millis() - PumpOnTimer;
       updateState(HempyStates::DRAINING);
@@ -130,11 +130,11 @@ void HempyBucket::updateState(HempyStates NewState)
     BucketPump.stopPump();
     if (State != NewState)
     {
-      StateWeight = BucketWeightSensor.getWeight(false);
+      StateWeight = BucketWeightSensor.getWeight();
     }
     if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
-      DrainProgress += StateWeight - BucketWeightSensor.getWeight(false); ///<  Calculate how much water has drained
+      DrainProgress += StateWeight - BucketWeightSensor.getWeight(); ///<  Calculate how much water has drained
       if (DrainProgress >= DrainTargetWeight)                             // Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor.getWeight(); // Measure wet weight

@@ -64,12 +64,12 @@ void HempyModule::updateResponse()
 {
   HempyBucket1ResponseToSend.HempyState = Bucket1->getState();
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
-  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
+  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight();
   HempyBucket1ResponseToSend.DryWeight = Bucket1->getDryWeight();
   HempyBucket1ResponseToSend.WetWeight = Bucket1->getWetWeight();
   HempyBucket2ResponseToSend.HempyState = Bucket2->getState();
   HempyBucket2ResponseToSend.PumpState = Pump2->getState();
-  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight(false);
+  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight();
   HempyBucket2ResponseToSend.DryWeight = Bucket2->getDryWeight();
   HempyBucket2ResponseToSend.WetWeight = Bucket2->getWetWeight();
 }

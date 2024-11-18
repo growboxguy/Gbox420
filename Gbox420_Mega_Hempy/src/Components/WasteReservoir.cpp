@@ -40,7 +40,7 @@ void WasteReservoir::checkFull()
 
 bool WasteReservoir::checkTarget(float DrainTargetWeight)
 {
-  if (WasteWeightSensor->readWeight(false) - StartWeight >= DrainTargetWeight || State == WasteReservoirStates::FULL) ///< When the overflow target is reached or the reservoir is full: Signal back the target is reached
+  if (WasteWeightSensor->readWeight() - StartWeight >= DrainTargetWeight || State == WasteReservoirStates::FULL) ///< When the overflow target is reached or the reservoir is full: Signal back the target is reached
   {
     return true;
   }
@@ -125,5 +125,5 @@ char *WasteReservoir::getWasteLimitText(bool FriendlyFormat)
 
 float WasteReservoir::getWeightIncrease()
 {
-  return WasteWeightSensor->getWeight(false) - StartWeight;
+  return WasteWeightSensor->getWeight() - StartWeight;
 }
