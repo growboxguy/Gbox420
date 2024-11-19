@@ -50,12 +50,12 @@ void HempyModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.DryWeight) : toText(HempyBucketResponse1Received.DryWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WW1\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.WetWeight) : toText(HempyBucketResponse1Received.WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MW1\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.MaxWeight) : toText(HempyBucketCommand1ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET1\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.EvaporationTarget) : toText(HempyBucketCommand1ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F("\",\"OT1\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.DrainTargetWeight) : toText(HempyBucketCommand1ToSend.DrainTargetWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"MW1\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.MaxWeight) : toText(HempyBucketCommand1ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"H2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_hempyState(HempyBucketResponse2Received.HempyState) : toText((int)HempyBucketResponse2Received.HempyState));
   strcat_P(LongMessage, (PGM_P)F("\",\"P2\":\""));
@@ -72,12 +72,12 @@ void HempyModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.DryWeight) : toText(HempyBucketResponse2Received.DryWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WW2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.WetWeight) : toText(HempyBucketResponse2Received.WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MW2\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.MaxWeight) : toText(HempyBucketCommand2ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.EvaporationTarget) : toText(HempyBucketCommand2ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F("\",\"OT2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.DrainTargetWeight) : toText(HempyBucketCommand2ToSend.DrainTargetWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WL2\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.MaxWeight) : toText(HempyBucketCommand2ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
