@@ -15,7 +15,7 @@ function RunFakeReport() {
   ActiveSpreadsheetApp.getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
   ImportResultRange.setValue("Processing...");
   LogToConsole("Loading fake report data...", true, 0);
-  var FakeBoxData = ActiveSpreadsheetApp.getRangeByName("LastReportJSON").getDisplayValue();
+  var FakeBoxData = ActiveSpreadsheetApp.getRangeByName("LastReportJSON_Simulate").getDisplayValue();
   //Browser.msgBox(FakeReportData);
   LogToConsole("Parsing fake BoxData: ", false, 1);
   try {
