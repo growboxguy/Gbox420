@@ -3,25 +3,24 @@ views:
   - panel: true
     title: Grafana
     path: Grafana
-    icon: 'mdi:chart-histogram'
-    badges: []
+    icon: mdi:chart-histogram
     cards:
       - type: iframe
         url: >-
-          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk=tv&from=now-7d&to=now
-        aspect_ratio: 100%
+          https://bitmuki.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/d/x84g-i9Gz/gbox420?orgId=1&refresh=5s&from=now-7d&to=now&kiosk=tv&theme=dark
+    type: panel
   - title: Node-RED
     path: NodeRED
     panel: true
-    icon: 'mdi:sitemap'
+    icon: mdi:sitemap
     badges: []
     cards:
       - type: iframe
-        url: 'https://growboxguy.duckdns.org:1880/endpoint/ui'
+        url: https://bitmuki.duckdns.org:14100/endpoint/ui
         aspect_ratio: 100%
   - path: HomeAssistant
     title: Home Assistant
-    icon: 'mdi:home-assistant'
+    icon: mdi:home-assistant
     badges: []
     cards:
       - type: entities
@@ -162,7 +161,7 @@ views:
   - title: Google Sheets
     path: GoogleSheets
     panel: true
-    icon: 'mdi:google-spreadsheet'
+    icon: mdi:google-spreadsheet
     badges: []
     cards:
       - type: iframe
