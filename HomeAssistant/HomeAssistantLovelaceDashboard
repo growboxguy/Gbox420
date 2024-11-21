@@ -7,7 +7,7 @@ views:
     cards:
       - type: iframe
         url: >-
-          https://bitmuki.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/d/x84g-i9Gz/gbox420?orgId=1&refresh=5s&from=now-7d&to=now&kiosk=tv&theme=dark
+          https://growboxguy.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/d/x84g-i9Gz/gbox420?orgId=1&refresh=5s&from=now-7d&to=now&kiosk=tv&theme=dark
     type: panel
   - title: Node-RED
     path: NodeRED
@@ -16,7 +16,8 @@ views:
     badges: []
     cards:
       - type: iframe
-        url: https://bitmuki.duckdns.org:14100/endpoint/ui
+        url: >-
+          https://growboxguy.duckdns.org:15100/endpoint/ui/#!/0?socketid=hYSsEJsXHOmIbdONAAAn
         aspect_ratio: 100%
   - path: HomeAssistant
     title: Home Assistant
