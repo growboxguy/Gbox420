@@ -23,7 +23,7 @@ This guide was made for indoor gardeners would like to build an Arduino based au
 <h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/files.html </h2>
 </div>
 
-![Logical overview](https://docs.google.com/drawings/d/e/2PACX-1vQsxO7OZ90bM3eCMFq2eOzFzVyCqzIKtckicU_njHFmHmpo_ga3UDpZ9YaGFs83qkIe2RCCsTgEfDv6/pub?w=1018&h=614)
+![Logical overview](https://lh4.googleusercontent.com/yKvurO5OYZZDn4KCjSgZ_eu5ZRNGPeNtEbIN9y5UZXHDyDGwjdc9B46p8uSqmFc2AoO3FJpRdCKKK07QfDhEzgxFqcNeKqhk0ANRIPZm92S4Zwag5oh2NxND2a6qE3EMNw=w1280)
 
 <b>Gbox420 user interface</b>: The ESP-link firmware's built in webserver hosts the control interface for the grow box. This is available on the local WiFi from a mobile, tablet or desktop PC.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3c-2j05-O9FE06BzfPP4TTC43UszOYteR3BX9x--eIgj4tKfLv5644zgGQKqnPrwW5-We4JG8LeEcxlS0f5Qtcsk1gxCsro-M2Rjb2eQisdS9UC6X39Kk1rIY10MSCHQdlWemWFNJNV7nkhgG0ROlZD=w898-h1092-no?authuser=0)
@@ -47,7 +47,7 @@ Placed outside the grow box.<br>
 
 <b>[Reservoir module](https://sites.google.com/site/growboxguy/modules/reservoir-module)</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.<br>
 ![Reservoir module](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
-![Reservoir module circuit](https://docs.google.com/drawings/d/e/2PACX-1vTHcfBM6HR6hO9NSg53OPTgEhFS1ThZj5WV94_R20Qx79G963nKIyb6I_g4LDoUJ32dz28IAxgxa_tW/pub?w=1135&h=894)
+![Reservoir module circuit](https://lh3.googleusercontent.com/yacAbv4RG-mqsheCAHywdeZGKYz4hTj4VXb2HCI2JHPIBgRujJqN-q3BeniX6eyi84s4lxpO9HbK2uEN_u6DVoU=w1280)
 
 <b>[Hempy module](https://sites.google.com/site/growboxguy/modules/hempy-module)</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
 ![Hempy module](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
