@@ -22,5 +22,5 @@ protected:
   void EE();  
   bool PlayEE = false;
   const PROGMEM static int melody[];
-  const PROGMEM static uint8_t noteDurations[];
+  const PROGMEM static uint8_t tempo[];
 };
