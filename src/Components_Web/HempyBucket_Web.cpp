@@ -71,10 +71,15 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       setDrainWaitTime(toInt(Data));
       Parent->addToLog(F("Drain wait updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("DW")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SW")) == 0)
     {
-      setDryWeight(toFloat(Data));
-      Parent->addToLog(F("Dry weight updated"), false);
+      setStartWeight(toFloat(Data));
+      Parent->addToLog(F("Start weight updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("WI")) == 0)
+    {
+      setWateringIncrement(toFloat(Data));
+      Parent->addToLog(F("Watering increment updated"), false);
     }
    
     return true; //Match found

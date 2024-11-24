@@ -31,9 +31,11 @@ public:
   char *getDrainWaitTimeText(bool FriendlyFormat = false);
   float getDryWeight();
   char *getDryWeightText(bool FriendlyFormat = false);
-  void setDryWeight(float Weight);
+  void setStartWeight(float Weight);
   float getWetWeight();
   char *getWetWeightText(bool FriendlyFormat = false);
+  float getWateringIncrements();
+  char *getWateringIncrementsText(bool FriendlyFormat = false);
   void tareDryWetWeight();
 
 private:
@@ -47,9 +49,9 @@ private:
   float &EvaporationTarget;            ///< Reference to the evaporation target
   float &DrainTargetWeight;            ///< Reference to the overflow target
   float &WateringIncrements;           ///< Reference to the overflow target
-  float &InitialDryWeight;             ///< Reference to the initial dry weight
+  float &StartWeight;             ///< Reference to the initial dry weight
   uint16_t &DrainWaitTime;             ///< Reference to the drain wait time
-  float DrainProgress;                 ///< Tracks how much water have drained away during the WATERING-DRAINING cycles
+  float DrainProgress = 0.0;                 ///< Tracks how much water have drained away during the WATERING-DRAINING cycles
   float DryWeight = 0.0;               ///< Bucket dry weight
   float WetWeight = 0.0;               ///< Bucket wet weight
 

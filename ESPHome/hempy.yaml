@@ -255,7 +255,7 @@ number:
           id(bucket1).update_next_watering_weight(id(bucket1_start_watering_weight).state);
   - platform: template
     id: bucket1_watering_increments # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
-    name: "Bucket1 Watering increments"
+    name: "Bucket1 Watering increment"
     unit_of_measurement: "kg"
     icon: "mdi:water-plus"
     min_value: 0
@@ -339,7 +339,7 @@ number:
           id(bucket2).update_next_watering_weight(id(bucket2_start_watering_weight).state);
   - platform: template
     id: bucket2_watering_increments
-    name: "Bucket2 Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    name: "Bucket2 Watering increment" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     unit_of_measurement: "kg"
     icon: "mdi:water-plus"
     min_value: 0

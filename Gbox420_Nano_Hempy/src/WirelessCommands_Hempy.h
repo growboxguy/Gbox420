@@ -88,26 +88,25 @@ struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless resp
 
 struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless command
 {
-   HempyBucketCommand(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketCommand(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}   
+   uint8_t PumpSpeed = 0;
+   uint16_t PumpTimeOut = 0;
+   float StartWeight = 0.0;
+   float WateringIncrement = 0.0;
+   float EvaporationTarget = 0.0;
+   float DrainTargetWeight = 0.0;   
+   float MaxWeight = 0.0;  
+   uint16_t DrainWaitTime = 0;
    bool Disable = false; ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
    bool StopWatering = false;
    bool TareWeightB = false;  ///< Flag to signal a request to Tare bucket weight scale
    bool TareWeightDW = false; ///< Flag to signal a request to Tare dry/wet weight
-   uint8_t PumpSpeed = 0;
-   uint16_t PumpTimeOut = 0;
-   float DryWeight = 0.0;
-   float MaxWeight = 0.0;
-   float EvaporationTarget = 0.0;
-   float DrainTargetWeight = 0.0;
-   
-   uint16_t DrainWaitTime = 0;
 };
 
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response
 {
-   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) float WeightB, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketResponse(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
    WaterPumpStates PumpState = WaterPumpStates::DISABLED;
    bool ConfirmDisable = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
