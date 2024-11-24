@@ -63,8 +63,7 @@ struct DevCommonTemplate ///< Devponics wireless template - Shared between Comma
 
 struct DevModuleCommand : DevCommonTemplate ///< Devponics wireless module commands
 {
-   DevModuleCommand(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
-   DevModuleCommand(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric,__attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : DevCommonTemplate(SequenceID) {}
+   DevModuleCommand(DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
@@ -77,15 +76,13 @@ struct DevModuleCommand : DevCommonTemplate ///< Devponics wireless module comma
 
 struct DevModuleResponse : DevCommonTemplate ///< Devponics wireless module response
 {
-   DevModuleResponse(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
-   DevModuleResponse(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) bool Status) : DevCommonTemplate(SequenceID) {}
+   DevModuleResponse(DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
    bool Status = false;
 };
 
 struct DevCommand_P1 : DevCommonTemplate ///< Devponics wireless commands - Part1
 {
-   DevCommand_P1(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
-   DevCommand_P1(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) float Duration, __attribute__((unused)) int DayInterval, __attribute__((unused)) int NightInterval, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : DevCommonTemplate(SequenceID) {}
+   DevCommand_P1(DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
    bool DayMode = true;
    bool SprayEnabled = false;
    bool SprayDisabled = false;
@@ -100,9 +97,7 @@ struct DevCommand_P1 : DevCommonTemplate ///< Devponics wireless commands - Part
 
 struct DevCommand_P2 : DevCommonTemplate ///< Devponics wireless commands - Part2
 {
-   DevCommand_P2(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
-   DevCommand_P2(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut) : DevCommonTemplate(SequenceID) {}
-
+   DevCommand_P2(DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
    bool PumpOn = false;
    bool PumpOff = false;
    bool PumpDisable = false;

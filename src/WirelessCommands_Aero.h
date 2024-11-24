@@ -72,8 +72,7 @@ struct AeroCommonTemplate ///< Aeroponics wireless template - Shared between Com
 
 struct AeroModuleCommand : AeroCommonTemplate ///< Aeroponics wireless module commands
 {
-   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : AeroCommonTemplate(SequenceID) {}
+   AeroModuleCommand(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
@@ -86,15 +85,13 @@ struct AeroModuleCommand : AeroCommonTemplate ///< Aeroponics wireless module co
 
 struct AeroModuleResponse : AeroCommonTemplate ///< Aeroponics wireless module response
 {
-   AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool Status) : AeroCommonTemplate(SequenceID) {}
+   AeroModuleResponse(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    bool Status = false;
 };
 
 struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - Part1
 {
-   AeroCommand_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) float Duration, __attribute__((unused)) int DayInterval, __attribute__((unused)) int NightInterval, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID) {}
+   AeroCommand_P1(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    bool DayMode = true;
    bool SprayEnabled = false;
    bool SprayDisabled = false;
@@ -109,8 +106,7 @@ struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 
 struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - Part1
 {
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmSprayEnabled, __attribute__((unused)) bool ConfirmSprayDisabled, __attribute__((unused)) bool ConfirmSprayNow, __attribute__((unused)) bool ConfirmSprayOff, __attribute__((unused)) int AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P1(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    bool ConfirmSprayEnabled = false;
    bool ConfirmSprayDisabled = false;
    bool ConfirmSprayNow = false;
@@ -126,9 +122,7 @@ struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - 
 
 struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - Part2
 {
-   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut) : AeroCommonTemplate(SequenceID) {}
-
+   AeroCommand_P2(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    bool PumpOn = false;
    bool PumpOff = false;
    bool PumpDisable = false;
@@ -143,8 +137,7 @@ struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 
 struct AeroResponse_P2 : AeroCommonTemplate ///< Aeroponics wireless response - Part2
 {
-   AeroResponse_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmPumpOn, __attribute__((unused)) bool ConfirmPumpOff, __attribute__((unused)) bool ConfirmPumpDisable, __attribute__((unused)) bool ConfirmMixReservoir, __attribute__((unused)) bool ConfirmRefillPressureTank, __attribute__((unused)) bool ConfirmDrainPressureTank, __attribute__((unused)) bool ConfirmTareWeight) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P2(AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    bool ConfirmPumpOn = false;
    bool ConfirmPumpOff = false;
    bool ConfirmPumpDisable = false;

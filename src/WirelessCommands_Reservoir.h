@@ -23,7 +23,7 @@ enum ReservoirMessages
    ReservoirCommand1,
    ReservoirResponse1,
    ReservoirReset /// Special command sent at the start and end of a multi-message exchange.
-};                ///< ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+}; ///< ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_reservoirSequenceID(uint8_t SequenceID)
 {
@@ -61,8 +61,7 @@ struct ReservoirCommonTemplate ///< Shared between Command and Respone packages
 
 struct ReservoirModuleCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sent by the Main module
 {
-   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirModuleCommand(ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
@@ -75,30 +74,27 @@ struct ReservoirModuleCommand : ReservoirCommonTemplate ///< Max 32 bytes. Comma
 
 struct ReservoirModuleResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module
 {
-   ReservoirModuleResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirModuleResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool Status) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirModuleResponse(ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
    bool Status = false;
 };
 
 struct ReservoirCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sent by the Main module
 {
-   ReservoirCommand(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool TareWeight, __attribute__((unused)) bool TareWeightWR) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirCommand(ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
    bool TareWeight = false;
    bool TareWeightWR = false;
 };
 
 struct ReservoirResponse : ReservoirCommonTemplate
 {
-    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool ConfirmTareWeight, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float PH, __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WeightWR, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
-    float PH = 0.0;
-    float TDS = 0.0;
-    float Weight = 0.0;
-    float WeightWR = 0.0;
-    float WaterTemperature = 0.0;
-    float AirTemperature = 0.0;
-    float Humidity = 0.0;
-    bool ConfirmTareWeight = false;   
-    bool ConfirmTareWeightWR = false;
+   ReservoirResponse(ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
+   float PH = 0.0;
+   float TDS = 0.0;
+   float Weight = 0.0;
+   float WeightWR = 0.0;
+   float WaterTemperature = 0.0;
+   float AirTemperature = 0.0;
+   float Humidity = 0.0;
+   bool ConfirmTareWeight = false;
+   bool ConfirmTareWeightWR = false;
 };
