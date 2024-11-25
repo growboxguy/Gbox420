@@ -251,7 +251,7 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2SW")) == 0)
     {
-      HempyBucketCommand2ToSend.StartWatering = toFloat(Data);
+      HempyBucketCommand2ToSend.StartWeight = toFloat(Data);
       Parent->addToLog(F("B2 start weight updated"), false);
     }
     else

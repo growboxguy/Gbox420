@@ -303,7 +303,7 @@ void HempyBucket::setStartWeight(float Weight)
 {
   if (!isnan(Weight) && StartWeight != Weight)
   {
-    DryWeight = Weight;   // Set dry weight
+    DryWeight = Weight;   // Reset dry weight - next watering will re-calculate it (WetWeight-EvaporationTarget)
     StartWeight = Weight; // Store the value in EEPROM
     Parent->getSoundObject()->playOnSound();
   }
