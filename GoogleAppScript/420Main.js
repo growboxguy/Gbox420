@@ -100,7 +100,7 @@ function ProcessBoxData(JSONBoxData) {
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page   
       UpdateCharts();  //Rebuild all Charts (Overview + Charts tab)  
-      CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert          
+      checkAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert          
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);
