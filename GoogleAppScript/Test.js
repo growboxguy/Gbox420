@@ -31,9 +31,9 @@ function RunFakeReport() {
 }
 
 /*
-function Test_MainModule_CheckAlerts() {
+function Test_MainModule_checkAlerts() {
 FakeJSONData = JSON.parse(ActiveSpreadsheetApp.getRangeByName("LastReportJSON").getDisplayValue());
-CheckAlerts(FakeJSONData.Log);
+checkAlerts(FakeJSONData.Log);
 }
 */
 function Test_LightSensor1_ProcessBoxData() {
