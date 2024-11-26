@@ -19,12 +19,11 @@ jobs:
         sudo apt-get install -y doxygen graphviz
 
     - name: Generate Doxygen documentation
-      run: doxygen Doxyfile  # Run doxygen with your updated Doxyfile
+      run: doxygen Doxyfile  # Run doxygen with your configuration file
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        branch: gh-pages  # Branch to deploy to
+        branch: Doxygen  # Branch to deploy to
         folder: html      # Folder containing generated HTML files
         token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
-
