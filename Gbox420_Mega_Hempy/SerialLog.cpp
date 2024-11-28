@@ -14,7 +14,7 @@ void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, uint8_t In
   ESPSerial.print(ToPrint);
   if (BreakLine)
   {
-    ArduinoSerial.println(ToPrint);
-    ESPSerial.println(ToPrint);
+    ArduinoSerial.println();
+    ESPSerial.println();
   }
 }
