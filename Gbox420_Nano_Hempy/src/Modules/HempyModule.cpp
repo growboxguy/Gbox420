@@ -11,8 +11,8 @@
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = HempyMessages::HempyModuleResponse1;
 struct HempyModuleResponse HempyModuleResponse1ToSend = {HempyMessages::HempyModuleResponse1};
-struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucketResponse1};
-struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
+struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucket1Response1};
+struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucket2Response1};
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings &DefaultSettings) : Common(Name), Module(Name)
@@ -87,7 +87,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     logToSerials(F("; Data:"), false, 1);
   }
   bool LastMessageReached = false;
-  if (ReceivedSequenceID == HempyMessages::HempyBucketCommand2 && NextSequenceID == HempyMessages::HempyBucketResponse2) ///< Last real command-response exchange reached
+  if (ReceivedSequenceID == HempyMessages::HempyBucket2Command1 && NextSequenceID == HempyMessages::HempyBucket2Response1) ///< Last real command-response exchange reached
   {
     LastMessageReached = true;
   }
@@ -95,7 +95,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   switch (ReceivedSequenceID)
   {
   case HempyMessages::HempyModuleCommand1:
-    updateAckData(HempyMessages::HempyBucketResponse1); // update the next Message that will be copied to the buffer
+    updateAckData(HempyMessages::HempyBucket1Response1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -115,8 +115,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
-  case HempyMessages::HempyBucketCommand1:
-    updateAckData(HempyMessages::HempyBucketResponse2); // update the next Message that will be copied to the buffer
+  case HempyMessages::HempyBucket1Command1:
+    updateAckData(HempyMessages::HempyBucket2Response1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
@@ -176,7 +176,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     break;
-  case HempyMessages::HempyBucketCommand2:
+  case HempyMessages::HempyBucket2Command1:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
@@ -276,10 +276,10 @@ void HempyModule::updateAckData(HempyMessages NewSequenceID)
   case HempyMessages::HempyModuleResponse1:
     Wireless.writeAckPayload(1, &HempyModuleResponse1ToSend, WirelessPayloadSize);
     break;
-  case HempyMessages::HempyBucketResponse1:
+  case HempyMessages::HempyBucket1Response1:
     Wireless.writeAckPayload(1, &HempyBucket1ResponseToSend, WirelessPayloadSize);
     break;
-  case HempyMessages::HempyBucketResponse2:
+  case HempyMessages::HempyBucket2Response1:
     Wireless.writeAckPayload(1, &HempyBucket2ResponseToSend, WirelessPayloadSize);
     break;
   case HempyMessages::HempyReset: ///< HempyReset should always be the last element in the enum: Signals to stop the message exchange
