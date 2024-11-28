@@ -93,7 +93,7 @@ void HempyModule_Web::report(bool FriendlyFormat)
 
 void HempyModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  //Bucket1
+  // Bucket1
   WebServer.setArgString(getName(F("B1SW"), true), toText(HempyBucket1Command1ToSend.StartWeight));
   WebServer.setArgString(getName(F("B1WI"), true), toText(HempyBucket1Command1ToSend.WateringIncrement));
   WebServer.setArgString(getName(F("B1ET"), true), toText(HempyBucket1Command1ToSend.EvaporationTarget));
@@ -103,7 +103,7 @@ void HempyModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgInt(getName(F("B1T"), true), HempyBucket1Command1ToSend.PumpTimeOut);
   WebServer.setArgInt(getName(F("B1D"), true), HempyBucket1Command1ToSend.DrainWaitTime);
   WebServer.setArgString(getName(F("B1DW"), true), toText(HempyBucket1Response1Received.DryWeight));
-  //Bucket2
+  // Bucket2
   WebServer.setArgString(getName(F("B2SW"), true), toText(HempyBucket2Command1ToSend.StartWeight));
   WebServer.setArgString(getName(F("B2WI"), true), toText(HempyBucket2Command1ToSend.WateringIncrement));
   WebServer.setArgString(getName(F("B2ET"), true), toText(HempyBucket2Command1ToSend.EvaporationTarget));
@@ -455,7 +455,7 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.SerialReportJSONFriendly = Parent->SerialReportJSONFriendly;
   HempyModuleCommand1ToSend.SerialReportJSON = Parent->SerialReportJSON;
   HempyModuleCommand1ToSend.SerialReportWireless = Parent->SerialReportWireless;
-  //Bucket1
+  // Bucket1
   HempyBucket1Command1ToSend.WateringIncrement = DefaultSettings->WateringIncrement_B1;
   HempyBucket1Command1ToSend.StartWeight = DefaultSettings->StartWeight_B1;
   HempyBucket1Command1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B1;
@@ -464,7 +464,7 @@ void HempyModule_Web::updateCommands()
   HempyBucket1Command1ToSend.DrainWaitTime = DefaultSettings->DrainWaitTime_B1;
   HempyBucket1Command1ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B1;
   HempyBucket1Command1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut_B1;
- //Bucket2
+  // Bucket2
   HempyBucket2Command1ToSend.WateringIncrement = DefaultSettings->WateringIncrement_B2;
   HempyBucket2Command1ToSend.StartWeight = DefaultSettings->StartWeight_B2;
   HempyBucket2Command1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B2;

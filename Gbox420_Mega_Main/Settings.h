@@ -152,7 +152,7 @@ typedef struct
     uint16_t PumpTimeOut_B2;    ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B2;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 16, .WateringIncrement_B1 = 0.3, .EvaporationTarget_B1 = 2.0, .DrainTargetWeight_B1 = 0.1, .MaxWeight_B1 = 20, .PumpSpeed_B1 = 35, .PumpTimeOut_B1 = 60, .DrainWaitTime_B1 = 300, .StartWeight_B2 = 16,  .WateringIncrement_B2 = 0.3, .EvaporationTarget_B2 = 2.0, .DrainTargetWeight_B2 = 0.1, .MaxWeight_B2 = 20.0, .PumpSpeed_B2 = 35, .PumpTimeOut_B2 = 60, .DrainWaitTime_B2 = 300};
+  struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 16, .WateringIncrement_B1 = 0.3, .EvaporationTarget_B1 = 2.0, .DrainTargetWeight_B1 = 0.1, .MaxWeight_B1 = 20, .PumpSpeed_B1 = 35, .PumpTimeOut_B1 = 60, .DrainWaitTime_B1 = 300, .StartWeight_B2 = 16, .WateringIncrement_B2 = 0.3, .EvaporationTarget_B2 = 2.0, .DrainTargetWeight_B2 = 0.1, .MaxWeight_B2 = 20.0, .PumpSpeed_B2 = 35, .PumpTimeOut_B2 = 60, .DrainWaitTime_B2 = 300};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

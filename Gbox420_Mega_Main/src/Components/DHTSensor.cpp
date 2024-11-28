@@ -1,6 +1,6 @@
 #include "DHTSensor.h"
 
-/*! 
+/*!
  *  @brief  Class for the Digital Humidity and Temperature sensor
  */
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), Parent(Parent)
@@ -13,8 +13,8 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void DHTSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{

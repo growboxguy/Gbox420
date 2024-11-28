@@ -23,7 +23,7 @@ enum ACMotorMessages
    ACMotorCommand1,
    ACMotorResponse1,
    ACMotorReset /// Special command sent at the start and end of a multi-message exchange.
-};              ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_ACMotorSequenceID(uint8_t SequenceID)
 {
@@ -95,7 +95,7 @@ struct ACMotorResponse : ACMotorCommonTemplate ///< ACMotor  wireless response
    ACMotorResponse(__attribute__((unused)) ACMotorMessages SequenceID) : ACMotorCommonTemplate(SequenceID) {}
    ACMotorResponse(__attribute__((unused)) ACMotorMessages SequenceID, __attribute__((unused)) ACMotorStates ACMotorState, __attribute__((unused)) bool ConfirmForward, __attribute__((unused)) bool ConfirmBackward, __attribute__((unused)) bool ConfirmStop, __attribute__((unused)) float RPM) : ACMotorCommonTemplate(SequenceID) {}
    ACMotorStates ACMotorState = ACMotorStates::IDLE;
-   bool ConfirmForward = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
+   bool ConfirmForward = false; // Feedback to the Main module that the command was processed and it can turn off the request flag.
    bool ConfirmBackward = false;
    bool ConfirmStop = false;
    float RPM = 0.0; /// RPM reading from the motor

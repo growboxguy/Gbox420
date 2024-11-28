@@ -11,8 +11,8 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic,
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Switch::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
