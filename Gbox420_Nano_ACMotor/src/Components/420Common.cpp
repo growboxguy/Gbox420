@@ -29,7 +29,7 @@ void Common::refresh_Sec()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 sec)" to the console
+    logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME - 1sec" to the console
   }
 }
 
@@ -38,7 +38,7 @@ void Common::refresh_FiveSec()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (5 sec)" to the console
+    logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME - 5sec" to the console
   }
 }
 
@@ -47,7 +47,7 @@ void Common::refresh_Minute()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
+    logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME - 1min" to the console
   }
 }
 

@@ -34,8 +34,8 @@ public:
   void setStartWeight(float Weight);
   float getWetWeight();
   char *getWetWeightText(bool FriendlyFormat = false);
-  float getWateringIncrements();
-  char *getWateringIncrementsText(bool FriendlyFormat = false);
+  float getWateringIncrement();
+  char *getWateringIncrementText(bool FriendlyFormat = false);
   void tareDryWetWeight();
 
 private:
@@ -48,7 +48,7 @@ private:
   bool StopWateringRequested = false;  ///< Signals to stop watering
   float &EvaporationTarget;            ///< Reference to the evaporation target
   float &DrainTargetWeight;            ///< Reference to the overflow target
-  float &WateringIncrements;           ///< Reference to the overflow target
+  float &WateringIncrement;           ///< Reference to the overflow target
   float &StartWeight;             ///< Reference to the initial dry weight
   uint16_t &DrainWaitTime;             ///< Reference to the drain wait time
   float DrainProgress = 0.0;                 ///< Tracks how much water have drained away during the WATERING-DRAINING cycles

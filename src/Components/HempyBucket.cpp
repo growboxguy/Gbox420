@@ -7,7 +7,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
       BucketPump(BucketPump),
       EvaporationTarget(DefaultSettings.EvaporationTarget),
       DrainTargetWeight(DefaultSettings.DrainTargetWeight),
-      WateringIncrements(DefaultSettings.WateringIncrements),
+      WateringIncrement(DefaultSettings.WateringIncrement),
       StartWeight(DefaultSettings.StartWeight),
       DrainWaitTime(DefaultSettings.DrainWaitTime)
 {
@@ -31,7 +31,7 @@ void HempyBucket::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
   strcat(LongMessage, getWetWeightText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"WI\":\""));
-  strcat(LongMessage, getWateringIncrementsText(FriendlyFormat));
+  strcat(LongMessage, getWateringIncrementText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
   strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"DTW\":\""));
@@ -115,7 +115,7 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       BucketPump.startPump(true);
     }
-    if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrements && BucketWeightSensor.getWeight() >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement && BucketWeightSensor.getWeight() >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
     {
       WateringTime += millis() - PumpOnTimer;
       updateState(HempyStates::DRAINING);
@@ -343,20 +343,20 @@ char *HempyBucket::getWetWeightText(bool FriendlyFormat)
   }
 }
 
-float HempyBucket::getWateringIncrements()
+float HempyBucket::getWateringIncrement()
 {
-  return WateringIncrements;
+  return WateringIncrement;
 }
 
-char *HempyBucket::getWateringIncrementsText(bool FriendlyFormat)
+char *HempyBucket::getWateringIncrementText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_weight(WateringIncrements);
+    return toText_weight(WateringIncrement);
   }
   else
   {
-    return toText(WateringIncrements);
+    return toText(WateringIncrement);
   }
 }
 

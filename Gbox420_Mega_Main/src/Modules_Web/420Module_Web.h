@@ -43,7 +43,7 @@ public:
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
   //void relayToHomeAssistant(char (*JSONData)[MaxLongTextLength]);                                        ///< Home Assistant reporting - Send a JSON formatted report via REST API to the HomeAssistanServer (from Setting.h)
   //void reportToHomeAssistantTrigger(bool ForceRun = false);                                              ///< Home Assistant reporting - Handles custom reporting frequencies
-  void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
+  void relayToGoogleSheets(const char *JSONData);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
   void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
