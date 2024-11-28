@@ -386,7 +386,7 @@ void Module_Web::relayToGoogleSheets(const char *JSONData)
   if (Debug)
   {
     logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
-    logToSerials(JSONData, true, 0);
+    logToSerials(&JSONData, true, 0);
   }
   PushingBoxRestAPI.get(JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
