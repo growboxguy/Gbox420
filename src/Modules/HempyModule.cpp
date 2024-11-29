@@ -126,10 +126,11 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);
-      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight, false, 1);      
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);          
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->WateringIncrement, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight, false, 1);  
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
     if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket1Response1ToSend.ConfirmDisable)
@@ -171,7 +172,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Pump1->setSpeed(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed);
     Pump1->setTimeOut(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut);
     Bucket1->setStartWeight(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight);
-    Bucket1->setMaxWeight(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight);
+    Bucket1->setMaxWeight(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight);    
+    Bucket1->setWateringIncrement(((HempyBucketCommand1 *)ReceivedCommand)->WateringIncrement);
     Bucket1->setEvaporationTarget(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setDrainTargetWeight(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight);
     Bucket1->setDrainWaitTime(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime);
@@ -187,10 +189,11 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);      
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight, false, 1);      
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->WateringIncrement, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight, false, 1);
-      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
     if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket2Response1ToSend.ConfirmDisable)
@@ -242,6 +245,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Pump2->setSpeed(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed);
     Bucket2->setStartWeight(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight);
     Bucket2->setMaxWeight(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight);
+    Bucket2->setWateringIncrement(((HempyBucketCommand1 *)ReceivedCommand)->WateringIncrement);
     Bucket2->setEvaporationTarget(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget);
     Bucket2->setDrainTargetWeight(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight);
     Bucket2->setDrainWaitTime(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime);
