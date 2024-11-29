@@ -31,8 +31,8 @@ char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling shor
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
-HardwareSerial &ArduinoSerial = Serial;      ///< Reference to the Arduino Serial output
-HardwareSerial &ESPSerial = Serial3;         ///< Reference to the ESP Link Serial output
+HardwareSerial &ArduinoSerial = Serial;      ///< Reference to the Arduino Serial output : Mega 2560 Rev3	Serial:0(RX) 1(TX) also showed on USB, Serial1:19(RX1) 18(TX1), Serial2:17(RX2), 16(TX2), Serial4:15(RX3) 14(TX3)
+HardwareSerial &ESPSerial = Serial3;         ///< Reference to the ESP Link Serial output : Mega 2560 Rev3	Serial:0(RX) 1(TX), Serial1:19(RX1) 18(TX1), Serial2:17(RX2), 16(TX2), Serial4:15(RX3) 14(TX3)
 ELClient ESPLink(&ESPSerial);                ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink);       ///< ESP-link - WebServer API
 ELClientCmd ESPCmd(&ESPLink);                ///< ESP-link - Helps getting the current time from the internet using NTP
@@ -40,8 +40,8 @@ ELClientRest PushingBoxRestAPI(&ESPLink);    ///< ESP-link - REST API for Pushin
 ELClientRest HomeAssistantRestAPI(&ESPLink); ///< ESP-link - REST API for HomeAssistant
 ELClientMqtt MqttAPI(&ESPLink);              ///< ESP-link - MQTT protocol for sending and receiving messages
 Settings *ModuleSettings;                    ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool &Debug = *new bool;                                    ///< True - Turns on extra debug messages on the Serial Output
-bool &Metric = *new bool;                                ///< True - Use metric units, False - Use imperial units
+bool &Debug = *new bool;                     ///< True - Turns on extra debug messages on the Serial Output
+bool &Metric = *new bool;                    ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;                  ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
 MainModule *Main1;                           ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
 
@@ -178,7 +178,7 @@ void resetWebServer()
     logToSerials(F("PushingBox RestAPI ready"), true, 2);
   }
   else
-    logToSerials(F("PushingBox RestAPI failed"), true, 2);                                   ///< If begin returns a negative number the initialization failed
+    logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   /*
   if (HomeAssistantRestAPI.begin(HomeAssistantServerIP, HomeAssistantServerPort, true) == 0) ///< Pre-setup RestAPI with Home Assistant (Not actual connection)
   {

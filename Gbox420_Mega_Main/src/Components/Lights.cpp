@@ -1,23 +1,23 @@
 #include "Lights.h"
 #include "Sound.h"
 
-Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings) 
-  : Common(Name),
-    Parent(Parent),
-    RelayPin(DefaultSettings->RelayPin),
-    DimmingPin(DefaultSettings->DimmingPin),
-    DimmingLimit(DefaultSettings->DimmingLimit), 
-    DimmingDuration(DefaultSettings->DimmingDuration),
-    Status(DefaultSettings->Status),
-    Brightness(DefaultSettings->Brightness),
-    FadingEnabled(DefaultSettings->FadingEnabled),
-    FadingInterval(DefaultSettings->FadingInterval),
-    FadingIncrements(DefaultSettings->FadingIncrements),
-    TimerEnabled(DefaultSettings->TimerEnabled),
-    OnHour(DefaultSettings->OnHour),
-    OnMinute(DefaultSettings->OnMinute),
-    OffHour(DefaultSettings->OffHour),
-    OffMinute(DefaultSettings->OffMinute)
+Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings)
+    : Common(Name),
+      Parent(Parent),
+      RelayPin(DefaultSettings->RelayPin),
+      DimmingPin(DefaultSettings->DimmingPin),
+      DimmingLimit(DefaultSettings->DimmingLimit),
+      DimmingDuration(DefaultSettings->DimmingDuration),
+      Status(DefaultSettings->Status),
+      Brightness(DefaultSettings->Brightness),
+      FadingEnabled(DefaultSettings->FadingEnabled),
+      FadingInterval(DefaultSettings->FadingInterval),
+      FadingIncrements(DefaultSettings->FadingIncrements),
+      TimerEnabled(DefaultSettings->TimerEnabled),
+      OnHour(DefaultSettings->OnHour),
+      OnMinute(DefaultSettings->OnMinute),
+      OffHour(DefaultSettings->OffHour),
+      OffMinute(DefaultSettings->OffMinute)
 {
   pinMode(RelayPin, OUTPUT);
   digitalWrite(RelayPin, HIGH); ///< Turn relay off initially
@@ -29,7 +29,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   else
   {
     CurrentBrightness = Brightness; ///< instantly jump to target Brightness
-  }  
+  }
   setBrightness(CurrentBrightness, false, false); ///< Set initial brightness
   setLightOnOff(Status, false);
   checkRelay();
@@ -53,8 +53,8 @@ void Lights::refresh_Minute()
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Lights::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -109,7 +109,7 @@ void Lights::checkDimming()
   {
     if (millis() - FadingTimer >= FadingInterval * 1000)
     {
-      CurrentBrightness = CurrentBrightness + FadingIncrements; //Increase current brightness
+      CurrentBrightness = CurrentBrightness + FadingIncrements; // Increase current brightness
       if (CurrentBrightness >= Brightness)                      ///< Check if the target brightness is reached
       {
         CurrentBrightness = Brightness;
@@ -123,8 +123,8 @@ void Lights::checkDimming()
   {
     if (millis() - FadingTimer >= FadingInterval * 1000)
     {
-      CurrentBrightness = CurrentBrightness - FadingIncrements; //Decrease current brightness
-      if (CurrentBrightness <= 0)                                ///< Check if zero brightness is reached
+      CurrentBrightness = CurrentBrightness - FadingIncrements; // Decrease current brightness
+      if (CurrentBrightness <= 0)                               ///< Check if zero brightness is reached
       {
         CurrentBrightness = 0;
         CurrentStatus = LightStates::TURNEDOFF;
@@ -147,7 +147,7 @@ void Lights::checkTimer()
 {
   if (TimerEnabled)
   {
-    time_t Now = now();                             // Get the current time from TimeLib
+    time_t Now = now();                           // Get the current time from TimeLib
     int CombinedOnTime = OnHour * 100 + OnMinute; // convert time to number, Example: 8:10=810, 20:10=2010
     int CombinedOffTime = OffHour * 100 + OffMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
@@ -238,8 +238,8 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     if (FadingEnabled && CurrentStatus != LightStates::TURNEDOFF && CurrentStatus != LightStates::FADEOUT)
     {
       CurrentStatus = LightStates::FADEOUT;
-      //CurrentBrightness = Brightness; // Start fading out from the target brightness
-      //setBrightness(CurrentBrightness, false, false);
+      // CurrentBrightness = Brightness; // Start fading out from the target brightness
+      // setBrightness(CurrentBrightness, false, false);
     }
     else
     {
@@ -284,7 +284,7 @@ char *Lights::getCurrentBrightnessText(bool FriendlyFormat)
   {
     itoa(CurrentBrightness, ShortMessage, 10);
   }
-  else if (!Status) //When the light is off
+  else if (!Status) // When the light is off
   {
     itoa(0, ShortMessage, 10);
   }
@@ -339,9 +339,9 @@ void Lights::setTimerOnOff(bool TimerState)
 
 void Lights::setOnTime(char *OnTime)
 {
-  if (strlen(OnTime) == 4) //strlen does not include the null terminator in the size like sizeof() does
+  if (strlen(OnTime) == 4) // strlen does not include the null terminator in the size like sizeof() does
   {
-    char Hour[3]; //null terminator included
+    char Hour[3]; // null terminator included
     memcpy(Hour, &OnTime[0], 2);
     Hour[2] = '\0';
     setOnHour(toInt(Hour));
@@ -367,9 +367,9 @@ void Lights::setOnMinute(uint8_t OnMinute)
 
 void Lights::setOffTime(char *OffTime)
 {
-  if (strlen(OffTime) == 4) //strlen does not include the null terminator in the size like sizeof() does
+  if (strlen(OffTime) == 4) // strlen does not include the null terminator in the size like sizeof() does
   {
-    char Hour[3]; //null terminator included
+    char Hour[3]; // null terminator included
     memcpy(Hour, &OffTime[0], 2);
     Hour[2] = '\0';
     setOffHour(toInt(Hour));

@@ -13,17 +13,17 @@ void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgString(getName(F("OF"), true), getDrainTargetWeightText());
   WebServer.setArgInt(getName(F("D"), true), getDrainWaitTime());
   WebServer.setArgString(getName(F("DW"), true), getDryWeightText());
-  //WebServer.setArgInt(getName(F("PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
-  //WebServer.setArgInt(getName(F("T"),true), HempyBucketCommand1ToSend.PumpTimeOut);
+  //WebServer.setArgInt(getName(F("PS"),true), HempyBucket1Command1ToSend.PumpSpeed);
+  //WebServer.setArgInt(getName(F("T"),true), HempyBucket1Command1ToSend.PumpTimeOut);
 }
 
 void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   //WebServer.setArgFloat(getName(F("W"),true), BucketWeightSensor->getWeightText());
-  //WebServer.setArgString(getName(F("W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
+  //WebServer.setArgString(getName(F("W"),true), toText_weight(HempyBucket1Response1Received.WeightB));
   WebServer.setArgString(getName(F("DWW"), true), toText(getDryWeight(), "/", getWetWeight()));
   WebServer.setArgString(getName(F("S"), true), getStateText(true));
-  //WebServer.setArgString(getName(F("P"),true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
+  //WebServer.setArgString(getName(F("P"),true), toText_waterPumpState(HempyBucket1Response1Received.PumpState));
   //WebServer.setArgString(getName(F("OS"),true), toText(*BucketWeightSensor->Offset));
   //WebServer.setArgString(getName(F("SC"),true), toText(*BucketWeightSensor->Scale));
 }
@@ -71,10 +71,15 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       setDrainWaitTime(toInt(Data));
       Parent->addToLog(F("Drain wait updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("DW")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SW")) == 0)
     {
-      setDryWeight(toFloat(Data));
-      Parent->addToLog(F("Dry weight updated"), false);
+      setStartWeight(toFloat(Data));
+      Parent->addToLog(F("Start weight updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("WI")) == 0)
+    {
+      setWateringIncrement(toFloat(Data));
+      Parent->addToLog(F("Watering increment updated"), false);
     }
    
     return true; //Match found

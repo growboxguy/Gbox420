@@ -2,13 +2,13 @@
 
 struct ACMotorModuleCommand ACMotorModuleCommand1ToSend = {ACMotorMessages::ACMotorModuleCommand1};      ///< Command to send will be stored here
 struct ACMotorModuleResponse ACMotorModuleResponse1Received = {ACMotorMessages::ACMotorModuleResponse1}; ///< Response will be stored here
-struct ACMotorCommand ACMotorCommand1ToSend = {ACMotorMessages::ACMotorCommand1};      ///< Command to send will be stored here
-struct ACMotorResponse ACMotorResponse1Received = {ACMotorMessages::ACMotorResponse1}; ///< Response will be stored here
+struct ACMotorCommand ACMotorCommand1ToSend = {ACMotorMessages::ACMotorCommand1};                        ///< Command to send will be stored here
+struct ACMotorResponse ACMotorResponse1Received = {ACMotorMessages::ACMotorResponse1};                   ///< Response will be stored here
 struct ACMotorCommonTemplate ACMotorResetToSend = {ACMotorMessages::ACMotorReset};                       ///< Special command to fetch the next Response from the Receiver
 
 /**
-* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
-*/
+ * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+ */
 ACMotorModule_Web::ACMotorModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ACMotorModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
 {
   this->DefaultSettings = DefaultSettings;
@@ -25,8 +25,8 @@ ACMotorModule_Web::ACMotorModule_Web(const __FlashStringHelper *Name, MainModule
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void ACMotorModule_Web::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -37,13 +37,13 @@ void ACMotorModule_Web::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\",\"R\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_rpm(ACMotorResponse1Received.RPM) : toText((int)ACMotorResponse1Received.RPM));
   strcat_P(LongMessage, (PGM_P)F("\",\"S\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_percentage(ACMotorCommand1ToSend.Speed) : toText(ACMotorCommand1ToSend.Speed));  
+  strcat(LongMessage, FriendlyFormat ? toText_percentage(ACMotorCommand1ToSend.Speed) : toText(ACMotorCommand1ToSend.Speed));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void ACMotorModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgInt(getName(F("Sp"), true), ACMotorCommand1ToSend.Speed); 
+  WebServer.setArgInt(getName(F("Sp"), true), ACMotorCommand1ToSend.Speed);
 }
 
 void ACMotorModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
@@ -75,18 +75,18 @@ bool ACMotorModule_Web::commandEvent(char *Command, char *Data)
     {
       ACMotorCommand1ToSend.Stop = true;
       Parent->addToLog(F("Motor stop"), false);
-    }  
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sp")) == 0)
     {
       DefaultSettings->Speed = toInt(Data);
       Parent->addToLog(F("Speed updated"), false);
-    }  
+    }
     else
     {
       return false;
     }
     SyncRequested = true;
-    return true;    
+    return true;
   }
 }
 
@@ -96,7 +96,7 @@ void ACMotorModule_Web::refresh_Sec()
   if (SyncRequested)
   {
     SyncRequested = false;
-    //syncModule(WirelessChannel,&Command,&Response);
+    // syncModule(WirelessChannel,&Command,&Response);
     sendMessages();
   }
 }
@@ -104,7 +104,7 @@ void ACMotorModule_Web::refresh_Sec()
 void ACMotorModule_Web::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  //syncModule(WirelessChannel,&Command,&Response);
+  // syncModule(WirelessChannel,&Command,&Response);
   sendMessages();
 }
 
@@ -118,7 +118,7 @@ void ACMotorModule_Web::sendMessages()
   updateCommands();
   sendCommand(&ACMotorResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ACMotorModuleCommand1ToSend); ///< Command - Response exchange
-  sendCommand(&ACMotorCommand1ToSend); ///< Command - Response exchange
+  sendCommand(&ACMotorCommand1ToSend);       ///< Command - Response exchange
   if (Parent->SerialReportWireless && Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);
@@ -172,7 +172,7 @@ ACMotorMessages ACMotorModule_Web::sendCommand(void *CommandToSend)
           SyncRequested = true; ///< Force a second packet to actualize the response
         }
         if (ACMotorResponse1Received.ConfirmForward)
-          ACMotorCommand1ToSend.Forward = false; //Turn off the Flag once the Receiver confirms processing it
+          ACMotorCommand1ToSend.Forward = false; // Turn off the Flag once the Receiver confirms processing it
         if (ACMotorResponse1Received.ConfirmBackward)
           ACMotorCommand1ToSend.Backward = false;
         if (ACMotorResponse1Received.ConfirmStop)

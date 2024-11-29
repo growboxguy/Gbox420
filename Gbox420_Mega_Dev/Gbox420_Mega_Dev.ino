@@ -1,9 +1,9 @@
-/*! \file 
+/*! \file
  *  \brief     Dev module for Arduino Mega2560 - Grow tent monitoring and controlling sketch.
  *  \details   To change the default pin layout / startup settings navigate to: Settings.h
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
- * 
+ *
  *  \todo Proper doxygen documentation
  */
 
@@ -39,8 +39,8 @@ ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the curr
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
 ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool &Debug = *new bool;                                 ///< True - Turns on extra debug messages on the Serial Output
-bool &Metric = *new bool;                             ///< True - Use metric units, False - Use imperial units
+bool &Debug = *new bool;                  ///< True - Turns on extra debug messages on the Serial Output
+bool &Metric = *new bool;                 ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
 DevModule_Web *DevModule_Web1;            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
@@ -76,7 +76,7 @@ void setup()
   setSyncInterval(86400);            ///< Sync time every day
   if ((ModuleSettings->DevModule_Web1).ReportToMqtt)
   {
-    setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+    setupMqtt(); // MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
@@ -95,7 +95,7 @@ void setup()
   Timer3.start();
   logToSerials(F("done"), true, 3);
 
-  //Initialize wireless communication with remote Modules
+  // Initialize wireless communication with remote Modules
   logToSerials(F("Setting up wireless transceiver"), false, 0);
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
@@ -149,7 +149,7 @@ void run1min()
 }
 
 /**
-  \brief Turns the integrated LED on the Arduino board ON/OFF 
+  \brief Turns the integrated LED on the Arduino board ON/OFF
 */
 void heartBeat()
 {
@@ -181,7 +181,7 @@ void resetWebServer()
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
-  //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
+  // URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
   GrowBoxHandler->loadCb.attach(&loadCallback);        ///< GrowBox tab - Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&refreshCallback);  ///< GrowBox tab - Called periodically to refresh website content
   GrowBoxHandler->buttonCb.attach(&buttonCallback);    ///< GrowBox tab - Called when a button is pressed on the website
@@ -190,10 +190,10 @@ void resetWebServer()
   SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
-  //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
-  //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
-  //TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
-  //TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
+  // TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
+  // TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
+  // TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
+  // TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -208,7 +208,7 @@ void setupMqtt()
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
 
-  memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
+  memset(&ShortMessage[0], 0, MaxShotTextLength); // reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
@@ -218,23 +218,23 @@ void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   MqttConnected = true;
-  //if(Debug) logToSerials(F("MQTT connected"), true);
+  // if(Debug) logToSerials(F("MQTT connected"), true);
 }
 
 void mqttDisconnected(__attribute__((unused)) void *response)
 {
   MqttConnected = false;
-  //if(Debug) logToSerials(F("MQTT disconnected"), true);
+  // if(Debug) logToSerials(F("MQTT disconnected"), true);
 }
 
 void mqttPublished(__attribute__((unused)) void *response)
 {
-  //if(Debug) logToSerials(F("MQTT published"), true);
+  // if(Debug) logToSerials(F("MQTT published"), true);
 }
 
 void mqttReceived(void *response)
 {
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; // Get length of the command topic
   static char command[MaxShotTextLength];
   static char data[MaxShotTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
@@ -242,11 +242,11 @@ void mqttReceived(void *response)
   String mqttData = (*res).popString();
   logToSerials(F("MQTT"), false, 0);
   logToSerials(&mqttTopic, false, 1);
-  mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
+  mqttTopic.remove(0, MqttSubTopicLength); // Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   DevModule_Web1->commandEventTrigger(command, data);
-  DevModule_Web1->reportToMqttTrigger(true); //send out a fresh report
+  DevModule_Web1->reportToMqttTrigger(true); // send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -267,7 +267,7 @@ time_t getNtpTime()
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
       logToSerials(F("."), false, 0);
-      wdt_reset(); ///reset watchdog timeout
+      wdt_reset(); /// reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
@@ -286,7 +286,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  DevModule_Web1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
+  DevModule_Web1->websiteLoadEventTrigger(Url); // Runs through all components that are subscribed to this event
 }
 
 /**
@@ -332,7 +332,7 @@ void fieldCallback(char *Field)
 */
 void settingsLoadCallback(__attribute__((unused)) char *Url)
 {
-  DevModule_Web1->settingsEvent_Load(Url); //Runs through all components that are subscribed to this event
+  DevModule_Web1->settingsEvent_Load(Url); // Runs through all components that are subscribed to this event
 }
 
 /**

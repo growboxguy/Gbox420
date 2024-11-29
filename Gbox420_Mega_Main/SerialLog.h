@@ -1,6 +1,6 @@
 #pragma once
 
-/*! 
+/*!
  *  \brief     Printing serial messages to the Arduino Serial output and the esp-link Microcontroller Console (uC Console)
  *  \details   Uses templating to handle logging multiple variable types (int,float,char,bool..)
  *  \details   Functions implemented in header file due to: https://stackoverflow.com/questions/10632251/undefined-reference-to-template-function
@@ -21,15 +21,12 @@ void logToSerials(logLine *ToPrint, bool BreakLine = true, uint8_t Indent = 3)
     ESPSerial.print(F(" "));
     Indent--;
   }
+  ArduinoSerial.print((*ToPrint));
+  ESPSerial.print((*ToPrint));
   if (BreakLine)
   {
-    ArduinoSerial.println((*ToPrint));
-    ESPSerial.println((*ToPrint));
-  }
-  else
-  {
-    ArduinoSerial.print((*ToPrint));
-    ESPSerial.print((*ToPrint));
+    ArduinoSerial.println();
+    ESPSerial.println();
   }
 }
 
@@ -42,14 +39,11 @@ void logToSerials(logLine &ToPrint, bool BreakLine = true, uint8_t Indent = 3)
     ESPSerial.print(F(" "));
     Indent--;
   }
+  ArduinoSerial.print(ToPrint);
+  ESPSerial.print(ToPrint);
   if (BreakLine)
   {
-    ArduinoSerial.println(ToPrint);
-    ESPSerial.println(ToPrint);
-  }
-  else
-  {
-    ArduinoSerial.print(ToPrint);
-    ESPSerial.print(ToPrint);
+    ArduinoSerial.println();
+    ESPSerial.println();
   }
 }

@@ -7,8 +7,8 @@ struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::Reserv
 struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset};                       ///< Special command to fetch the next Response from the Receiver
 
 /**
-* @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
-*/
+ * @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+ */
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
 {
   this->DefaultSettings = DefaultSettings;
@@ -23,8 +23,8 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainMo
 }
 
 /**
-* @brief Report the current state to the serial console
-*/
+ * @brief Report the current state to the serial console
+ */
 void ReservoirModule_Web::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -60,8 +60,8 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url
 }
 
 /**
-* @brief Process commands received from MQTT subscription or from the ESP-link website
-*/
+ * @brief Process commands received from MQTT subscription or from the ESP-link website
+ */
 bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
@@ -83,7 +83,7 @@ bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __
     else
     {
       return false;
-    }    
+    }
     SyncRequested = true;
     return true;
   }
@@ -106,8 +106,8 @@ void ReservoirModule_Web::refresh_FiveSec()
 }
 
 /**
-* @brief Exchange messages with the Reservoir module
-*/
+ * @brief Exchange messages with the Reservoir module
+ */
 void ReservoirModule_Web::sendMessages()
 {
   updateCommands();
@@ -121,8 +121,8 @@ void ReservoirModule_Web::sendMessages()
 }
 
 /**
-* @brief Send a single command and process the Response received in the Acknowledgement package
-*/
+ * @brief Send a single command and process the Response received in the Acknowledgement package
+ */
 ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
@@ -165,7 +165,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.ConfirmTareWeight, false, 1);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
-          logToSerials(ReservoirResponse1Received.Weight, false, 1);          
+          logToSerials(ReservoirResponse1Received.Weight, false, 1);
           logToSerials(ReservoirResponse1Received.ConfirmTareWeightWR, false, 1);
           logToSerials(ReservoirResponse1Received.WaterTemperature, false, 1);
           logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
@@ -176,7 +176,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
         if (ReservoirResponse1Received.ConfirmTareWeight)
-          ReservoirCommand1ToSend.TareWeight = false; //Turn off the Flag once the Receiver confirms processing it
+          ReservoirCommand1ToSend.TareWeight = false; // Turn off the Flag once the Receiver confirms processing it
         if (ReservoirResponse1Received.ConfirmTareWeightWR)
           ReservoirCommand1ToSend.TareWeightWR = false;
         break;
@@ -215,7 +215,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 
 /**
  * @brief Updates the command sent to the remote Reservoir Module wirelessly
-*/
+ */
 void ReservoirModule_Web::updateCommands()
 {
   ReservoirModuleCommand1ToSend.Time = now();

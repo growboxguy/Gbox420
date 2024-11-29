@@ -1,7 +1,7 @@
 #include "PowerSensorV3.h"
 
-PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name),Parent(Parent)
-{  
+PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : Common(Name), Parent(Parent)
+{
   Sensor = new PZEM004Tv30(SerialPort);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -20,8 +20,8 @@ void PowerSensorV3::refresh_FiveSec()
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void PowerSensorV3::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end

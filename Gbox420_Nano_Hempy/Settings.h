@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 13; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 15; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -18,7 +18,6 @@ constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length fo
 constexpr uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 constexpr uint16_t MaxLongTextLength = 168; ///< Default char * buffer length for storing a long text. Memory intense!
 constexpr uint8_t QueueDepth = 6;           ///< Limits the maximum number of active modules. Memory intense!
-//constexpr uint8_t MovingAverageDepth = 2;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -56,13 +55,13 @@ typedef struct
   {
     float EvaporationTarget;  //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float MaxWeight;         ///< Waste reservoir full weight -> Pump gets disabled if reached
-    float InitialDryWeight;   ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
-    float WateringIncrements; ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    float StartWeight;   ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
+    float WateringIncrement; ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     float DrainTargetWeight;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     uint16_t DrainWaitTime;   ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .InitialDryWeight = 18.0, .WateringIncrements = 0.3, .DrainTargetWeight = 0.2, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {

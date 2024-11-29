@@ -3,13 +3,13 @@
 
 ///< AirPump controller (2 speed)
 
-AirPump::AirPump(const __FlashStringHelper *Name, 
-                 Module *Parent, 
-                 Settings::AirPumpSettings *DefaultSettings)  ///< Original constructor
-  : Common(Name), 
-    Parent(Parent),   ///< Initialize Parent in the constructor
-    State(DefaultSettings->State),   ///< Initialize reference to DefaultSettings->State
-    Pin(DefaultSettings->Pin)         ///< Initialize reference to DefaultSettings->Pin
+AirPump::AirPump(const __FlashStringHelper *Name,
+                 Module *Parent,
+                 Settings::AirPumpSettings *DefaultSettings) ///< Original constructor
+    : Common(Name),
+      Parent(Parent),                ///< Initialize Parent in the constructor
+      State(DefaultSettings->State), ///< Initialize reference to DefaultSettings->State
+      Pin(DefaultSettings->Pin)      ///< Initialize reference to DefaultSettings->Pin
 {
   pinMode(Pin, OUTPUT);
   digitalWrite(Pin, HIGH);
@@ -19,8 +19,8 @@ AirPump::AirPump(const __FlashStringHelper *Name,
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void AirPump::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Appends "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end

@@ -25,14 +25,14 @@ public:
   char *getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator = false);
   char *getName(char *AppendToEnd, bool UnderscoreSeparator = false);
   void appendName(bool ClearBuffer = true);                                                                               //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
-  virtual void report(__attribute__((unused)) bool FriendlyFormat = false) = 0;                                           //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
+  virtual void report(__attribute__((unused)) bool FriendlyFormat = false) = 0;                                           // Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
   virtual void refresh_Sec();                                                                                             ///< Called every second
   virtual void refresh_FiveSec();                                                                                         ///< Called every five seconds
   virtual void refresh_Minute();                                                                                          ///< Called every minute
-  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) { return false; }; //Called then an external command arrives (From MQTT or User Interface)
+  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) { return false; }; // Called then an external command arrives (From MQTT or User Interface)
 
 private:
 protected:
   Common(const __FlashStringHelper *Name); ///< Constructor
-  //Common();
+  // Common();
 };

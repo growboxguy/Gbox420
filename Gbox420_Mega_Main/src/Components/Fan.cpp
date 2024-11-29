@@ -3,15 +3,15 @@
 
 ///< Fan controller (2 speed)
 
-Fan::Fan(const __FlashStringHelper *Name, 
-         Module *Parent, 
-         Settings::FanSettings *DefaultSettings)  ///< Original constructor
-  : Common(Name), 
-    Parent(Parent),     ///< Initialize Parent in the constructor
-    State(DefaultSettings->State),   ///< Initialize reference to DefaultSettings->State
-    HighSpeed(DefaultSettings->HighSpeed), ///< Initialize reference to DefaultSettings->HighSpeed
-    OnOffPin(DefaultSettings->OnOffPin),   ///< Initialize reference to DefaultSettings->OnOffPin
-    SpeedPin(DefaultSettings->SpeedPin)    ///< Initialize reference to DefaultSettings->SpeedPin
+Fan::Fan(const __FlashStringHelper *Name,
+         Module *Parent,
+         Settings::FanSettings *DefaultSettings) ///< Original constructor
+    : Common(Name),
+      Parent(Parent),                        ///< Initialize Parent in the constructor
+      State(DefaultSettings->State),         ///< Initialize reference to DefaultSettings->State
+      HighSpeed(DefaultSettings->HighSpeed), ///< Initialize reference to DefaultSettings->HighSpeed
+      OnOffPin(DefaultSettings->OnOffPin),   ///< Initialize reference to DefaultSettings->OnOffPin
+      SpeedPin(DefaultSettings->SpeedPin)    ///< Initialize reference to DefaultSettings->SpeedPin
 {
   pinMode(OnOffPin, OUTPUT);
   digitalWrite(OnOffPin, HIGH); ///< Turn relay off initially
@@ -29,8 +29,8 @@ void Fan::refresh_Minute()
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Fan::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end

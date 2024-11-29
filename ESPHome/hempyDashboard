@@ -34,7 +34,7 @@ views:
                   - entity: number.hempy_bucket1_start_watering_weight
                     name: Start watering
                   - entity: number.hempy_bucket1_watering_increments
-                    name: Watering increments
+                    name: Watering increment
                   - entity: number.hempy_bucket1_max_watering_weight
                     name: Max weight
                   - entity: number.hempy_bucket1_max_watering_time
@@ -77,7 +77,7 @@ views:
                   - entity: number.hempy_bucket2_start_watering_weight
                     name: Start watering
                   - entity: number.hempy_bucket2_watering_increments
-                    name: Watering increments
+                    name: Watering increment
                   - entity: number.hempy_bucket2_max_watering_weight
                     name: Max weight
                   - entity: number.hempy_bucket2_max_watering_time

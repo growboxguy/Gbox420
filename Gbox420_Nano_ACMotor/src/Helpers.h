@@ -1,4 +1,4 @@
-/*! \file 
+/*! \file
  *  \brief     Set of common functions any class can use
  *  \details   During conversion the result is always copied into the ShortMessage global char array
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
@@ -21,14 +21,14 @@ enum class ACMotorStates
   IDLE,
   FORWARD,
   BACKWARD,
-  STOPPING  
+  STOPPING
 };
 
 enum class WasteReservoirStates
 {
   FULL,
   IDLE,
-  RESERVED  
+  RESERVED
 };
 
 enum class WaterPumpStates

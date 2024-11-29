@@ -4,7 +4,7 @@
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 
 void saveSettings(Settings *ToSave)
@@ -39,7 +39,7 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
 }
 
 /**
-  \brief Load sketch default settings into EEPROM 
+  \brief Load sketch default settings into EEPROM
   \attention Restarts the Arduino sketch!
 */
 void restoreDefaults()

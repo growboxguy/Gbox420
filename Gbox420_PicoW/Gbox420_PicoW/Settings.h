@@ -66,11 +66,11 @@ typedef struct
   {
     float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float DrainTargetWeight;    //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float InitialDryWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
+    float StartWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
     uint16_t DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .DrainTargetWeight = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .DrainTargetWeight = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .DrainTargetWeight = 0.3, .StartWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .DrainTargetWeight = 0.3, .StartWeight = 18.0, .DrainWaitTime = 180};
 
   struct MqttClientSettings ///< MQTT client settings
   {

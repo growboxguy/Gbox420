@@ -22,7 +22,7 @@ void Module::runAll()
   wdt_reset();
   run1sec();
   wdt_reset();
-  run5sec();  
+  run5sec();
   wdt_reset();
 }
 
@@ -43,20 +43,20 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   {
     getFreeMemory();
   }
-/*
-  if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    logToSerials(ReportQueueItemCount, false, 0);  ///< Prints the number of items that will report
-    logToSerials(F("reporting:"), true, 1);
-    for (int i = 0; i < ReportQueueItemCount; i++)
+  /*
+    if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
     {
-      ReportQueue[i]->report(false);
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+      logToSerials(ReportQueueItemCount, false, 0);  ///< Prints the number of items that will report
+      logToSerials(F("reporting:"), true, 1);
+      for (int i = 0; i < ReportQueueItemCount; i++)
+      {
+        ReportQueue[i]->report(false);
+      }
+      logToSerials(&LongMessage, true, 0);
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
-    logToSerials(&LongMessage, true, 0);
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  }
-  */
+    */
   if (SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)

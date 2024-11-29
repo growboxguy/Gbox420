@@ -11,8 +11,8 @@
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = HempyMessages::HempyModuleResponse1;
 struct HempyModuleResponse HempyModuleResponse1ToSend = {HempyMessages::HempyModuleResponse1};
-struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucketResponse1};
-struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
+struct HempyBucketResponse1 HempyBucket1Response1ToSend = {HempyMessages::HempyBucket1Response1};
+struct HempyBucketResponse1 HempyBucket2Response1ToSend = {HempyMessages::HempyBucket2Response1};
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings &DefaultSettings) : Common(Name), Module(Name)
@@ -62,16 +62,16 @@ void HempyModule::refresh_FiveSec()
 
 void HempyModule::updateResponse()
 {
-  HempyBucket1ResponseToSend.HempyState = Bucket1->getState();
-  HempyBucket1ResponseToSend.PumpState = Pump1->getState();
-  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight();
-  HempyBucket1ResponseToSend.DryWeight = Bucket1->getDryWeight();
-  HempyBucket1ResponseToSend.WetWeight = Bucket1->getWetWeight();
-  HempyBucket2ResponseToSend.HempyState = Bucket2->getState();
-  HempyBucket2ResponseToSend.PumpState = Pump2->getState();
-  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight();
-  HempyBucket2ResponseToSend.DryWeight = Bucket2->getDryWeight();
-  HempyBucket2ResponseToSend.WetWeight = Bucket2->getWetWeight();
+  HempyBucket1Response1ToSend.HempyState = Bucket1->getState();
+  HempyBucket1Response1ToSend.PumpState = Pump1->getState();
+  HempyBucket1Response1ToSend.WeightB = WeightB1->getWeight();
+  HempyBucket1Response1ToSend.DryWeight = Bucket1->getDryWeight();
+  HempyBucket1Response1ToSend.WetWeight = Bucket1->getWetWeight();
+  HempyBucket2Response1ToSend.HempyState = Bucket2->getState();
+  HempyBucket2Response1ToSend.PumpState = Pump2->getState();
+  HempyBucket2Response1ToSend.WeightB = WeightB2->getWeight();
+  HempyBucket2Response1ToSend.DryWeight = Bucket2->getDryWeight();
+  HempyBucket2Response1ToSend.WetWeight = Bucket2->getWetWeight();
 }
 
 bool HempyModule::processCommand(void *ReceivedCommand)
@@ -87,7 +87,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     logToSerials(F("; Data:"), false, 1);
   }
   bool LastMessageReached = false;
-  if (ReceivedSequenceID == HempyMessages::HempyBucketCommand2 && NextSequenceID == HempyMessages::HempyBucketResponse2) ///< Last real command-response exchange reached
+  if (ReceivedSequenceID == HempyMessages::HempyBucket2Command1 && NextSequenceID == HempyMessages::HempyBucket2Response1) ///< Last real command-response exchange reached
   {
     LastMessageReached = true;
   }
@@ -95,7 +95,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   switch (ReceivedSequenceID)
   {
   case HempyMessages::HempyModuleCommand1:
-    updateAckData(HempyMessages::HempyBucketResponse1); // update the next Message that will be copied to the buffer
+    updateAckData(HempyMessages::HempyBucket1Response1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -115,136 +115,136 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
-  case HempyMessages::HempyBucketCommand1:
-    updateAckData(HempyMessages::HempyBucketResponse2); // update the next Message that will be copied to the buffer
+  case HempyMessages::HempyBucket1Command1:
+    updateAckData(HempyMessages::HempyBucket2Response1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);      
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->MaxWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->Disable, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWatering, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StopWatering, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightB, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight, false, 1);      
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket1ResponseToSend.ConfirmDisable)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket1Response1ToSend.ConfirmDisable)
     {
       Bucket1->disable();
-      HempyBucket1ResponseToSend.ConfirmDisable = true;
+      HempyBucket1Response1ToSend.ConfirmDisable = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmDisable = false;
-    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering && !HempyBucket1ResponseToSend.ConfirmStartWatering)
+      HempyBucket1Response1ToSend.ConfirmDisable = false;
+    if (((HempyBucketCommand1 *)ReceivedCommand)->StartWatering && !HempyBucket1Response1ToSend.ConfirmStartWatering)
     {
       Bucket1->startWatering();
-      HempyBucket1ResponseToSend.ConfirmStartWatering = true;
+      HempyBucket1Response1ToSend.ConfirmStartWatering = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmStartWatering = false;
-    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering && !HempyBucket1ResponseToSend.ConfirmStopWatering)
+      HempyBucket1Response1ToSend.ConfirmStartWatering = false;
+    if (((HempyBucketCommand1 *)ReceivedCommand)->StopWatering && !HempyBucket1Response1ToSend.ConfirmStopWatering)
     {
       Bucket1->stopWatering();
-      HempyBucket1ResponseToSend.ConfirmStopWatering = true;
+      HempyBucket1Response1ToSend.ConfirmStopWatering = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmStopWatering = false;
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB && !HempyBucket1ResponseToSend.ConfirmTareWeightB)
+      HempyBucket1Response1ToSend.ConfirmStopWatering = false;
+    if (((HempyBucketCommand1 *)ReceivedCommand)->TareWeightB && !HempyBucket1Response1ToSend.ConfirmTareWeightB)
     {
       WeightB1->tareRequest();
-      HempyBucket1ResponseToSend.ConfirmTareWeightB = true;
+      HempyBucket1Response1ToSend.ConfirmTareWeightB = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmTareWeightB = false;
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightDW && !HempyBucket1ResponseToSend.ConfirmTareWeightDW)
+      HempyBucket1Response1ToSend.ConfirmTareWeightB = false;
+    if (((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW && !HempyBucket1Response1ToSend.ConfirmTareWeightDW)
     {
       Bucket1->tareDryWetWeight();
-      HempyBucket1ResponseToSend.ConfirmTareWeightDW = true;
+      HempyBucket1Response1ToSend.ConfirmTareWeightDW = true;
     }
     else
-      HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;    
+      HempyBucket1Response1ToSend.ConfirmTareWeightDW = false;    
 
-    Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Pump1->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
-    Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
-    Bucket1->setMaxWeight(((HempyBucketCommand *)ReceivedCommand)->MaxWeight);
-    Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
-    Bucket1->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
-    Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    Pump1->setSpeed(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed);
+    Pump1->setTimeOut(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut);
+    Bucket1->setStartWeight(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight);
+    Bucket1->setMaxWeight(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight);
+    Bucket1->setEvaporationTarget(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget);
+    Bucket1->setDrainTargetWeight(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight);
+    Bucket1->setDrainWaitTime(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime);
     break;
-  case HempyMessages::HempyBucketCommand2:
+  case HempyMessages::HempyBucket2Command1:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
     if (SerialReportWireless)
     {
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->MaxWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->Disable, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWatering, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StopWatering, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightB, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight, false, 1);
+      logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket2ResponseToSend.ConfirmDisable)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket2Response1ToSend.ConfirmDisable)
     {
       Bucket2->disable();
-      HempyBucket2ResponseToSend.ConfirmDisable = true;
+      HempyBucket2Response1ToSend.ConfirmDisable = true;
     }
     else
     {
-      HempyBucket2ResponseToSend.ConfirmDisable = false;
+      HempyBucket2Response1ToSend.ConfirmDisable = false;
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering && !HempyBucket2ResponseToSend.ConfirmStartWatering)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->StartWatering && !HempyBucket2Response1ToSend.ConfirmStartWatering)
     {
       Bucket2->startWatering();
-      HempyBucket2ResponseToSend.ConfirmStartWatering = true;
+      HempyBucket2Response1ToSend.ConfirmStartWatering = true;
     }
     else
     {
-      HempyBucket2ResponseToSend.ConfirmStartWatering = false;
+      HempyBucket2Response1ToSend.ConfirmStartWatering = false;
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering && !HempyBucket2ResponseToSend.ConfirmStopWatering)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->StopWatering && !HempyBucket2Response1ToSend.ConfirmStopWatering)
     {
       Bucket2->stopWatering();
-      HempyBucket2ResponseToSend.ConfirmStopWatering = true;
+      HempyBucket2Response1ToSend.ConfirmStopWatering = true;
     }
     else
     {
-      HempyBucket2ResponseToSend.ConfirmStopWatering = false;
+      HempyBucket2Response1ToSend.ConfirmStopWatering = false;
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB && !HempyBucket2ResponseToSend.ConfirmTareWeightB)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->TareWeightB && !HempyBucket2Response1ToSend.ConfirmTareWeightB)
     {
       WeightB2->tareRequest();
-      HempyBucket2ResponseToSend.ConfirmTareWeightB = true;
+      HempyBucket2Response1ToSend.ConfirmTareWeightB = true;
     }
     else
     {
-      HempyBucket2ResponseToSend.ConfirmTareWeightB = false;
+      HempyBucket2Response1ToSend.ConfirmTareWeightB = false;
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightDW && !HempyBucket2ResponseToSend.ConfirmTareWeightDW)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->TareWeightDW && !HempyBucket2Response1ToSend.ConfirmTareWeightDW)
     {
       Bucket2->tareDryWetWeight();
-      HempyBucket2ResponseToSend.ConfirmTareWeightDW = true;
+      HempyBucket2Response1ToSend.ConfirmTareWeightDW = true;
     }
     else
     {
-      HempyBucket2ResponseToSend.ConfirmTareWeightDW = false;
+      HempyBucket2Response1ToSend.ConfirmTareWeightDW = false;
     }
-    Pump2->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
-    Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
-    Bucket2->setMaxWeight(((HempyBucketCommand *)ReceivedCommand)->MaxWeight);
-    Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
-    Bucket2->setDrainTargetWeight(((HempyBucketCommand *)ReceivedCommand)->DrainTargetWeight);
-    Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    Pump2->setTimeOut(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut);
+    Pump2->setSpeed(((HempyBucketCommand1 *)ReceivedCommand)->PumpSpeed);
+    Bucket2->setStartWeight(((HempyBucketCommand1 *)ReceivedCommand)->StartWeight);
+    Bucket2->setMaxWeight(((HempyBucketCommand1 *)ReceivedCommand)->MaxWeight);
+    Bucket2->setEvaporationTarget(((HempyBucketCommand1 *)ReceivedCommand)->EvaporationTarget);
+    Bucket2->setDrainTargetWeight(((HempyBucketCommand1 *)ReceivedCommand)->DrainTargetWeight);
+    Bucket2->setDrainWaitTime(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime);
     break;
   case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(HempyMessages::HempyModuleResponse1); ///< Load the first response for the next message exchange
@@ -276,11 +276,11 @@ void HempyModule::updateAckData(HempyMessages NewSequenceID)
   case HempyMessages::HempyModuleResponse1:
     Wireless.writeAckPayload(1, &HempyModuleResponse1ToSend, WirelessPayloadSize);
     break;
-  case HempyMessages::HempyBucketResponse1:
-    Wireless.writeAckPayload(1, &HempyBucket1ResponseToSend, WirelessPayloadSize);
+  case HempyMessages::HempyBucket1Response1:
+    Wireless.writeAckPayload(1, &HempyBucket1Response1ToSend, WirelessPayloadSize);
     break;
-  case HempyMessages::HempyBucketResponse2:
-    Wireless.writeAckPayload(1, &HempyBucket2ResponseToSend, WirelessPayloadSize);
+  case HempyMessages::HempyBucket2Response1:
+    Wireless.writeAckPayload(1, &HempyBucket2Response1ToSend, WirelessPayloadSize);
     break;
   case HempyMessages::HempyReset: ///< HempyReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &HempyResetToSend, WirelessPayloadSize);

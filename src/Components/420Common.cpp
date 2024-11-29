@@ -15,8 +15,8 @@ Common::Common()
 */
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON
+ */
 void Common::report(__attribute__((unused)) bool FriendlyFormat)
 {
   strcat_P(LongMessage, (PGM_P)F("\""));
@@ -29,7 +29,7 @@ void Common::refresh_Sec()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 sec)" to the console
+    logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME - 1sec" to the console
   }
 }
 
@@ -38,7 +38,7 @@ void Common::refresh_FiveSec()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (5 sec)" to the console
+    logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME - 5sec" to the console
   }
 }
 
@@ -47,7 +47,7 @@ void Common::refresh_Minute()
   if (Debug)
   {
     logToSerials(Name, false, 2);
-    logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
+    logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME - 1min" to the console
   }
 }
 
@@ -59,7 +59,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
   ///< Serial.println(Name);
 
   char *ReturnChar = ShortMessage; ///< return text will be loaded into a global temp buffer
-  uint8_t CharacterCount = 0;      //Tracks which character is currently getting compared
+  uint8_t CharacterCount = 0;      // Tracks which character is currently getting compared
   char FlashCurrentChar;           // Character read back from the Flash storage (Name is stored in flash)
   char RAMCurrentChar;             // Character read back from the RAM (lookupName is stored in RAM)
 
@@ -84,7 +84,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
     ///< Serial.print("Inside second check: ");
     while (1)
     {
-      RAMCurrentChar = lookupName[CharacterCount++]; ///<read the next lookName character from RAM
+      RAMCurrentChar = lookupName[CharacterCount++]; ///< read the next lookName character from RAM
       ///< Serial.print(RAMCurrentChar);
       *ReturnChar++ = RAMCurrentChar;
       if (RAMCurrentChar == '\0')
@@ -109,7 +109,7 @@ void Common::appendName(bool ClearBuffer)
 {
   if (ClearBuffer)
   {
-    memset(&ShortMessage[0], 0, MaxShotTextLength); //blank out the ShortMessage global buffer
+    memset(&ShortMessage[0], 0, MaxShotTextLength); // blank out the ShortMessage global buffer
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
   strcat_P(ShortMessage, (PGM_P)F(" "));

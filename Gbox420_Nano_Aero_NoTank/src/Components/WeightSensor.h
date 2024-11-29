@@ -1,6 +1,6 @@
 #pragma once
 #include "HX711.h"
-//#include "movingAvg.h"
+// #include "movingAvg.h"
 #include "420Common.h"
 #include "420Module.h"
 #include "Sound.h"
@@ -27,7 +27,7 @@ protected:
   HX711 *Sensor;
 
   float Weight = 0.0;
-  //movingAvg *AverageWeight;
+  // movingAvg *AverageWeight;
   void tare();
   void calibrate();
 

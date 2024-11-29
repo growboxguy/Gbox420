@@ -63,7 +63,6 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
   {
-    AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
     float Duration;           ///< Spray length in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
@@ -78,14 +77,12 @@ typedef struct
 
   struct ACMotorModuleSettings ///< AeroModule default settings
   {
-    ACMotorModuleSettings(uint8_t Speed = 0) : Speed(Speed) {}
     uint8_t Speed; ///< PWM duty cycle to adjust motor speed
   };
   struct ACMotorModuleSettings ACMotor1 = {.Speed = 50};
 
   struct AirPumpSettings ///< AirPump default settings
   {
-    AirPumpSettings(uint8_t Pin = 0, bool State = false) : Pin(Pin), State(State) {}
     uint8_t Pin; ///< Relay pin controlling AC power to the air pump
     bool State;  ///< true - ON, false - OFF
   };
@@ -93,7 +90,6 @@ typedef struct
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {
-    DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
     uint8_t Pin;  ///< DAT pin of the DHT sensor
     uint8_t Type; ///< Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
@@ -101,67 +97,65 @@ typedef struct
 
   struct FanSettings ///< Fan default settings
   {
-    FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
-    uint8_t OnOffPin;       ///< Relay pin controlling AC power
-    uint8_t SpeedPin;       ///< Relay pin for speed selection
-    bool State = true;      ///< true - ON, false - OFF
-    bool HighSpeed = false; ///< true - High speed, false - Low speed
+    uint8_t OnOffPin; ///< Relay pin controlling AC power
+    uint8_t SpeedPin; ///< Relay pin for speed selection
+    bool State;       ///< true - ON, false - OFF
+    bool HighSpeed;   ///< true - High speed, false - Low speed
   };
-  struct FanSettings FanI = {.OnOffPin = 25, .SpeedPin = 26};
-  struct FanSettings FanE = {.OnOffPin = 27, .SpeedPin = 28};
+  struct FanSettings FanI = {.OnOffPin = 25, .SpeedPin = 26, .State = true, .HighSpeed = true};
+  struct FanSettings FanE = {.OnOffPin = 27, .SpeedPin = 28, .State = true, .HighSpeed = true};
 
   /*
   // PWM adjusted AC signal - Need to move this to a dedicated module, Mega already uses interrupts to talk to ESP-link and it messes with counting the phase zero crossings
   struct Fan_PWMSettings ///< Fan default settings
   {
-    Fan_PWMSettings(uint8_t ZeroCrossingPin = 0, uint8_t PWMPin = 0, bool State = false, uint8_t MinSpeed = 0, uint8_t Speed = 0) : ZeroCrossingPin(ZeroCrossingPin), PWMPin(PWMPin), State(State), MinSpeed(MinSpeed), Speed(Speed) {}
     uint8_t ZeroCrossingPin; ///< On Arduino Mega2560 and Nano this has to be D2 pin
     uint8_t PWMPin;          ///< PWM capable digital pin
-    bool State = true;       //ON or OFF
-    uint8_t MinSpeed;        //Limit the lowest output (%)
-    uint8_t Speed;           //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
+    bool State;              ///< ON or OFF
+    uint8_t MinSpeed;        ///< Limit the lowest output (%)
+    uint8_t Speed;           ///< Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
   };
-  struct Fan_PWMSettings FanI = {.ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
-  struct Fan_PWMSettings FanE = {.ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
+  struct Fan_PWMSettings FanI = {.Status = true, .ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
+  struct Fan_PWMSettings FanE = {.Status = true, .ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
   */
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMqtt = false, uint16_t MQTTReportFrequency = 0) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMqtt(ReportToMqtt), MQTTReportFrequency(MQTTReportFrequency) {}
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
     bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
     bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
-    //bool ReportToHomeAssistant;        ///< Enable/disable reporting sensor readings to Home Assistant
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
-  struct MainModuleSettings Main1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
+  struct MainModuleSettings Main1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = false, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
 
   struct HempyModuleSettings ///< Hempy default settings
   {
-    HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float DrainTargetWeight_B1 = 0.0, float MaxWeight_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float DrainTargetWeight_B2 = 0.0, float MaxWeight_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), DrainTargetWeight_B1(DrainTargetWeight_B1), MaxWeight_B1(MaxWeight_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), EvaporationTarget_B2(EvaporationTarget_B2), DrainTargetWeight_B2(DrainTargetWeight_B2), MaxWeight_B2(MaxWeight_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2) {}
+    float StartWeight_B1;       ///< Target weight for watering: Turn on pump below this weight
+    float WateringIncrement_B1; ///< (kg/lbs) Amount of water that should be pumped at each watering cycle
     float EvaporationTarget_B1; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float DrainTargetWeight_B1;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float MaxWeight_B1;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float DrainTargetWeight_B1; ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float MaxWeight_B1;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint8_t PumpSpeed_B1;       ///< Pump duty cycle to adjust motor speed
     uint16_t PumpTimeOut_B1;    ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B1;  ///< (sec) How long to wait after watering for the water to drain
+    float StartWeight_B2;       ///< Target weight for watering: Turn on pump below this weight
+    float WateringIncrement_B2; ///< (kg/lbs) Amount of water that should be pumped at each watering cycle
     float EvaporationTarget_B2; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float DrainTargetWeight_B2;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float MaxWeight_B2;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float DrainTargetWeight_B2; ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float MaxWeight_B2;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint8_t PumpSpeed_B2;       ///< Pump duty cycle to adjust motor speed
     uint16_t PumpTimeOut_B2;    ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B2;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .DrainTargetWeight_B1 = 0.2, .MaxWeight_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 300, .EvaporationTarget_B2 = 2.0, .DrainTargetWeight_B2 = 0.2, .MaxWeight_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 300};
+  struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 16, .WateringIncrement_B1 = 0.3, .EvaporationTarget_B1 = 2.0, .DrainTargetWeight_B1 = 0.1, .MaxWeight_B1 = 20, .PumpSpeed_B1 = 35, .PumpTimeOut_B1 = 60, .DrainWaitTime_B1 = 300, .StartWeight_B2 = 16, .WateringIncrement_B2 = 0.3, .EvaporationTarget_B2 = 2.0, .DrainTargetWeight_B2 = 0.1, .MaxWeight_B2 = 20.0, .PumpSpeed_B2 = 35, .PumpTimeOut_B2 = 60, .DrainWaitTime_B2 = 300};
 
   struct LightSensorSettings ///< LightSensor default settings
   {
-    LightSensorSettings(uint8_t DigitalPin = 0, uint8_t AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
     uint8_t DigitalPin; ///< Light sensor D0 pin
     uint8_t AnalogPin;  ///< Light sensor A0 pin
   };
@@ -169,12 +163,11 @@ typedef struct
 
   struct LightsSettings ///< Lights default settings
   {
-    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t DimmingDuration = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0, uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), DimmingDuration(DimmingDuration), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OffHour), OffMinute(OffMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
+    bool Status;              ///< Startup status for lights: True-ON / False-OFF
     uint8_t RelayPin;         ///< Relay port controlling AC power to LED driver
     uint8_t DimmingPin;       ///< PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     uint8_t DimmingLimit;     ///< Sets the LED dimming limit (Usually around 5%)
     uint8_t DimmingDuration;  ///< Temporary dimming duration in Seconds
-    bool Status = false;      ///< Startup status for lights: True-ON / False-OFF
     uint8_t Brightness;       ///< Light intensity: 0 - 100 range for controlling led driver output
     bool TimerEnabled;        ///< Enable/Disable timer controlling lights
     uint8_t OnHour;           ///< Light ON time - hour
@@ -185,8 +178,8 @@ typedef struct
     uint16_t FadingInterval;  ///< (Sec) How often should the brightness change during a fade in/out <Not exposed to Web interface>
     uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage <Not exposed to Web interface>
   };
-  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt1 = {.Status = false, .RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt2 = {.Status = false, .RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
 
   struct ReservoirModuleSettings ///< ReservoirModule default settings
   {
@@ -196,8 +189,7 @@ typedef struct
 
   struct SoundSettings ///< Sound default settings
   {
-    SoundSettings(uint8_t Pin = 0, bool Enabled = true) : Pin(Pin), Enabled(Enabled) {}
-    uint8_t Pin;         ///< Piezo Buzzer red(+) cable
+    uint8_t Pin;  ///< Piezo Buzzer red(+) cable
     bool Enabled; ///< Enable/Disable sound
   };
   struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};

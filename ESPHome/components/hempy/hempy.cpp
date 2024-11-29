@@ -16,7 +16,7 @@ namespace esphome
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
       ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
-               Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight, WetWeight);
+               Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight, WetWeight);
     }
 
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
@@ -79,7 +79,7 @@ namespace esphome
           }
           WaterPump->turn_on();
         }
-        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= StateWeight + WateringIncrements->state && WeightSensor->state >= WetWeight)) // Max weight reached OR (WateringIncrements's worth of water was added AND WetWeight is reached), wait for it to drain
+        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= StateWeight + WateringIncrement->state && WeightSensor->state >= WetWeight)) // Max weight reached OR (WateringIncrement's worth of water was added AND WetWeight is reached), wait for it to drain
         {
           WateringTimer += CurrentTime - PumpOnTimer;
           update_state(HempyStates::DRAINING, true);
@@ -172,7 +172,7 @@ namespace esphome
       if (State != HempyStates::WATERING && State != HempyStates::DRAINING) // If watering is not in progress: start watering
         update_state(HempyStates::WATERING, true);
       else
-        update_state(HempyStates::IDLE,true); // If watering is in progress: stop it (second click stops watering)
+        update_state(HempyStates::IDLE, true); // If watering is in progress: stop it (second click stops watering)
     }
 
     void HempyBucket::update_next_watering_weight(float NewWateringWeight) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
