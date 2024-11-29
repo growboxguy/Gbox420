@@ -633,17 +633,17 @@
 					<p>
 						<label style=" padding-left: 0em;text-align: left;"><b>Watering Logic</b>
 							<button class="setButton" onclick="hempyWateringInfo()">?</button>
-							Start weight</label>
-						<input style="width: 57px;" name="Hemp1_B1SW" type="number" value='0' step='0.1' min='0'
-							title="Start watering weight, trigger watering below this weight" />
+							Increment</label>
+						<input style="width: 57px;" name="Hemp1_B1WI" type="number" value='0' step='0.1' min='0'
+							title="How much water to add before starting to wait for it to drain" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: left;">Increment</label>
-						<input style="width: 57px;" name="Hemp1_B1WI" type="number" value='0' step='0.1' min='0'
-							title="How much water to add before starting to wait for it to drain" />
+						<label style=" padding-left: 0.5em;text-align: left;">Start weight</label>
+						<input style="width: 57px;" name="Hemp1_B1SW" type="number" value='0' step='0.1' min='0'
+							title="Start watering weight, trigger watering below this weight" />
 						<label style="text-align: right;">Max weight</label>
 						<input style="width: 57px;" name="Hemp1_B1MW" type="number" value='0' step='0.1' min='0'
 							title="Disable pump if weight is over a limit, 0-do not disable" />
@@ -652,7 +652,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em; width: 2.2em;text-align: left;">Overflow</label>
+						<label style="padding-left: 0.5em; width: 2.2em;text-align: left;">DrainTarget</label>
 						<input style="width: 50px;" name="Hemp1_B1DT" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should drain into the Waste reservoir before stopping watering" />
 						<label style="text-align: right;">Evaporation</label>
@@ -726,17 +726,17 @@
 					<p>
 						<label style=" padding-left: 0em;text-align: left;"><b>Watering Logic</b>
 							<button class="setButton" onclick="hempyWateringInfo()">?</button>
-							Start weight</label>
-						<input style="width: 57px;" name="Hemp1_B2SW" type="number" value='0' step='0.1' min='0'
-							title="Start watering weight, trigger watering below this weight" />
+							Increment</label>
+						<input style="width: 57px;" name="Hemp1_B2WI" type="number" value='0' step='0.1' min='0'
+							title="How much water to add before starting to wait for it to drain" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Increment</label>
-						<input style="width: 57px;" name="Hemp1_B2WI" type="number" value='0' step='0.1' min='0'
-							title="How much water to add before starting to wait for it to drain" />
+						<label style=" padding-left: 0.5em;text-align: right;">Start weight</label>
+						<input style="width: 57px;" name="Hemp1_B2SW" type="number" value='0' step='0.1' min='0'
+							title="Start watering weight, trigger watering below this weight" />
 						<label style="text-align: right;">Max weight</label>
 						<input style="width: 57px;" name="Hemp1_B2MW" type="number" value='0' step='0.1' min='0'
 							title="Disable pump if weight is over a limit, 0-do not disable" />
@@ -745,7 +745,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
+						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">DrainTarget</label>
 						<input style="width: 50px;" name="Hemp1_B2DT" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should drain into the Waste reservoir before stopping watering" />
 						<label style="text-align: right;">Evaporation</label>

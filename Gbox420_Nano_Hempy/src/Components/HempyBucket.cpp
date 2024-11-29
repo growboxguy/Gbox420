@@ -27,17 +27,19 @@ void HempyBucket::report(bool FriendlyFormat)
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStateText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, getDryWeightText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
   strcat(LongMessage, getWetWeightText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"M\":\""));
+  strcat(LongMessage, getMaxWeightText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"WI\":\""));
   strcat(LongMessage, getWateringIncrementText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
   strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DTW\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
   strcat(LongMessage, getDrainTargetWeightText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DWT\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
   strcat(LongMessage, getDrainWaitTimeText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -347,6 +349,18 @@ char *HempyBucket::getWetWeightText(bool FriendlyFormat)
   else
   {
     return toText(WetWeight);
+  }
+}
+
+char *HempyBucket::getMaxWeightText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(MaxWeight);
+  }
+  else
+  {
+    return toText(MaxWeight);
   }
 }
 
