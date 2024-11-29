@@ -48,15 +48,15 @@ float WeightSensor::readWeight()
   {
     Weight = Sensor->get_units();
     if (Weight > 999.99)
-        Weight = 999.99; // Maximum limit for positive values
+      Weight = 999.99; // Maximum limit for positive values
     else if (Weight < -999.99)
-        Weight = -999.99; // Maximum limit for negative values
+      Weight = -999.99; // Maximum limit for negative values
   }
   return Weight;
 }
 
 float WeightSensor::getWeight()
-{  
+{
   return Weight;
 }
 

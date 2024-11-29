@@ -4,16 +4,16 @@
 
 LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource)
     : Common(Name),
-      Parent(Parent),              // Dereferencing Parent to use reference
-      LightSource(LightSource),    // Dereferencing LightSource to use reference
-      DigitalPin(DefaultSettings->DigitalPin),   // Using DefaultSettings pointer but passing values as references
+      Parent(Parent),                          // Dereferencing Parent to use reference
+      LightSource(LightSource),                // Dereferencing LightSource to use reference
+      DigitalPin(DefaultSettings->DigitalPin), // Using DefaultSettings pointer but passing values as references
       AnalogPin(DefaultSettings->AnalogPin)
 {
   pinMode(DigitalPin, INPUT);
   pinMode(AnalogPin, INPUT);
   // calibrate(false);  // Uncomment to calibrate when needed
-  Parent->addToReportQueue(this);  // Using pointer notation here for consistency
-  Parent->addToRefreshQueue_FiveSec(this);  // Using pointer notation here for consistency
+  Parent->addToReportQueue(this);          // Using pointer notation here for consistency
+  Parent->addToRefreshQueue_FiveSec(this); // Using pointer notation here for consistency
   logToSerials(F("LightSensor ready"), true, 3);
 }
 
@@ -53,10 +53,10 @@ void LightSensor::calibrate(bool AddToLog)
   CalibrateRequested = false;
   bool LastStatus = LightSource->getStatus(); ///< TODO: This should be more generic and support different Lights objects passed as a parameter
   uint8_t LastBrightness = LightSource->getBrightness();
-  LightSource->setLightOnOff(false, false);    ///< turn off light, without adding a log entry
-  delay(DelaySec);                             ///< wait for light output change
+  LightSource->setLightOnOff(false, false);   ///< turn off light, without adding a log entry
+  delay(DelaySec);                            ///< wait for light output change
   Readings[0] = 1023 - analogRead(AnalogPin); ///< store the reading in darkness to the first element of the Readings[10] array
-  LightSource->setLightOnOff(true, false);     ///< turn on light, without adding a log entry
+  LightSource->setLightOnOff(true, false);    ///< turn on light, without adding a log entry
   for (uint8_t ReadingCounter = 0; ReadingCounter < (ReadingArrayDepth - 1);)
   {                                                                  ///< This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
     LightSource->setBrightness(ReadingCounter++ * 10, false, false); ///< Increment ReadingCounter AFTER reading its value

@@ -7,8 +7,8 @@
 class AirPump : virtual public Common
 {
 public:
-  AirPump(const __FlashStringHelper *Name, 
-          Module *Parent, 
+  AirPump(const __FlashStringHelper *Name,
+          Module *Parent,
           Settings::AirPumpSettings *DefaultSettings); ///< Keep original constructor signature
 
   void refresh_Minute();

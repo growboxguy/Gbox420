@@ -456,7 +456,7 @@ char *toText_lightState(LightStates State)
   }
 }
 
-///Converting text to value
+/// Converting text to value
 
 bool toBool(char *Boolean)
 {
@@ -481,7 +481,7 @@ float toFloat(char *Float)
   return atof(Float);
 }
 
-///Rounding numbers
+/// Rounding numbers
 
 int roundToTenth(int Number)
 {

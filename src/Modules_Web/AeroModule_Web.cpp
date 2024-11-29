@@ -9,10 +9,10 @@ struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};   
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///< Special command to fetch the next Response from the Receiver
 
 /**
-* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
-*/
+ * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+ */
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Parent(Parent)
-{ 
+{
   this->DefaultSettings = DefaultSettings;
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
@@ -27,8 +27,8 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Pare
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void AeroModule_Web::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
@@ -74,8 +74,8 @@ void AeroModule_Web::report(bool FriendlyFormat)
 }
 
 /**
-* @brief Set values on the ESP-link website when it loads
-*/
+ * @brief Set values on the ESP-link website when it loads
+ */
 void AeroModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgBoolean(getName(F("Tank"), true), AeroResponse1Received.PressureTankPresent);
@@ -90,8 +90,8 @@ void AeroModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 }
 
 /**
-* @brief Set values on the ESP-link website when it refreshes
-*/
+ * @brief Set values on the ESP-link website when it refreshes
+ */
 void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
@@ -111,8 +111,8 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///
 }
 
 /**
-* @brief Process commands received from MQTT subscription or from the ESP-link website
-*/
+ * @brief Process commands received from MQTT subscription or from the ESP-link website
+ */
 bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
@@ -146,7 +146,7 @@ bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attri
       AeroCommand2ToSend.PumpOn = true;
       Parent->addToLog(F("Aero pump ON"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0) //Sending a turn OFF command re-enables the pump and resets its status to IDLE
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0) // Sending a turn OFF command re-enables the pump and resets its status to IDLE
     {
       AeroCommand2ToSend.PumpOff = true;
       Parent->addToLog(F("Aero pump IDLE"), false);
@@ -233,13 +233,13 @@ bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attri
       return false;
     }
     SyncRequested = true;
-    return true;    
+    return true;
   }
 }
 
 /**
-* @brief Refresh state, Called every second
-*/
+ * @brief Refresh state, Called every second
+ */
 void AeroModule_Web::refresh_Sec()
 {
   Common::refresh_Sec();
@@ -251,8 +251,8 @@ void AeroModule_Web::refresh_Sec()
 }
 
 /**
-* @brief Refresh state, Called every five seconds
-*/
+ * @brief Refresh state, Called every five seconds
+ */
 void AeroModule_Web::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
@@ -260,16 +260,16 @@ void AeroModule_Web::refresh_FiveSec()
 }
 
 /**
-* @brief Refresh state, Called every minute
-*/
+ * @brief Refresh state, Called every minute
+ */
 void AeroModule_Web::refresh_Minute()
 {
   Common::refresh_Minute();
 }
 
 /**
-* @brief Exchange messages with the wireless Aeroponics module
-*/
+ * @brief Exchange messages with the wireless Aeroponics module
+ */
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
@@ -284,8 +284,8 @@ void AeroModule_Web::sendMessages()
 }
 
 /**
-* @brief Send a command message and process the response message
-*/
+ * @brief Send a command message and process the response message
+ */
 AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
@@ -342,7 +342,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
         if (AeroResponse1Received.ConfirmSprayEnabled)
-          AeroCommand1ToSend.SprayEnabled = false; //Turn off the Flag once the Receiver confirms processing it
+          AeroCommand1ToSend.SprayEnabled = false; // Turn off the Flag once the Receiver confirms processing it
         if (AeroResponse1Received.ConfirmSprayDisabled)
           AeroCommand1ToSend.SprayDisabled = false;
         if (AeroResponse1Received.ConfirmSprayNow)
@@ -367,7 +367,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
         if (AeroResponse2Received.ConfirmPumpOn)
-          AeroCommand2ToSend.PumpOn = false; //Turn off the Flag once the Receiver confirms processing it
+          AeroCommand2ToSend.PumpOn = false; // Turn off the Flag once the Receiver confirms processing it
         if (AeroResponse2Received.ConfirmPumpOff)
           AeroCommand2ToSend.PumpOff = false;
         if (AeroResponse2Received.ConfirmPumpDisable)
@@ -412,8 +412,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 }
 
 /**
-* @brief Update the wireless command content
-*/
+ * @brief Update the wireless command content
+ */
 void AeroModule_Web::updateCommands()
 {
   AeroModuleCommand1ToSend.Time = now();

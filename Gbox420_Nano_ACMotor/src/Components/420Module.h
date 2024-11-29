@@ -11,7 +11,7 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(const __FlashStringHelper *Name); ///< constructor
+  Module(const __FlashStringHelper *Name);                                                                        ///< constructor
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
   void runAll();
   void run1sec();
@@ -26,11 +26,11 @@ public:
   char *getFormattedTime(bool PrintToSerials);
   Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
-  bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
-  bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *SerialReportJSONFriendly;    ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *SerialReportJSON;            ///< Enable/disable sending JSON formatted reports to the Serial output
-  bool *SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
+  bool *SerialReportDate;         ///< Enable/disable reporting the current time to the Serial output
+  bool *SerialReportMemory;       ///< Enable/disable reporting the remaining free memory to the Serial output
+  bool *SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
+  bool *SerialReportJSON;         ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool *SerialReportWireless;     ///< Enable/disable sending wireless package exchange reports to the Serial output
 
 private:
 protected:

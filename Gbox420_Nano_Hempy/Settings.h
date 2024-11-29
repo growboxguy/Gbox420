@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 14; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 15; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
