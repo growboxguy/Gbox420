@@ -35,6 +35,7 @@ public:
   float getWetWeight();
   char *getWetWeightText(bool FriendlyFormat = false);
   char *getMaxWeightText(bool FriendlyFormat = false);
+  void setWateringIncrement(float Weight);
   float getWateringIncrement();
   char *getWateringIncrementText(bool FriendlyFormat = false);
   void tareDryWetWeight();

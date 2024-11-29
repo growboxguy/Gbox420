@@ -364,6 +364,15 @@ char *HempyBucket::getMaxWeightText(bool FriendlyFormat)
   }
 }
 
+void HempyBucket::setWateringIncrement(float Weight)
+{
+  if (WateringIncrement != Weight)
+  {
+    WateringIncrement = Weight;
+    Parent->getSoundObject()->playOnSound();
+  }
+}
+
 float HempyBucket::getWateringIncrement()
 {
   return WateringIncrement;
