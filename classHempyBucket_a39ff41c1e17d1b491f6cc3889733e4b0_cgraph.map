@@ -1,0 +1,12 @@
+<map id="HempyBucket::disable" name="HempyBucket::disable">
+<area shape="rect" id="node1" title="Disable watering logic &#45; Takes time to apply." alt="" coords="5,132,173,159"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="253,5,392,32"/>
+<area shape="rect" id="node4" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="248,56,397,83"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="232,107,413,133"/>
+<area shape="rect" id="node6" href="$classHempyBucket.html#aeb28545519935678272ade94b87ff61c" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="221,157,424,184"/>
+<area shape="rect" id="node9" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="244,208,401,235"/>
+<area shape="rect" id="node10" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title=" " alt="" coords="223,259,423,285"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="496,5,596,32"/>
+<area shape="rect" id="node7" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="515,132,577,159"/>
+<area shape="rect" id="node8" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title=" " alt="" coords="472,183,620,209"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="AT91F_PWMC_IsInterruptMasked" name="AT91F_PWMC_IsInterruptMasked">
+<area shape="rect" id="node1" title="Test if PWM Interrupt is Masked." alt="" coords="5,13,240,39"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a7d84de19f45a17a1aa49eefae5917133" title="Return PWM Interrupt Mask Status." alt="" coords="288,5,520,47"/>
+</map>

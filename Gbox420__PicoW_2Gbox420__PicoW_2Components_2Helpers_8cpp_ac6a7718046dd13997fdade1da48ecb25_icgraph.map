@@ -1,0 +1,22 @@
+<map id="toText_percentage" name="toText_percentage">
+<area shape="rect" id="node1" title=" " alt="" coords="832,376,975,403"/>
+<area shape="rect" id="node2" href="$classSwitch__PWM.html#a18bd1ec7d12bb825f62231a3dfbdae3c" title=" " alt="" coords="556,56,784,83"/>
+<area shape="rect" id="node5" href="$classDHTSensor.html#a3d44cdb1654561fe1744d2d5a7ea9bd7" title=" " alt="" coords="565,165,775,192"/>
+<area shape="rect" id="node8" href="$classFan__PWM.html#a21f72bf9c4a9c5f6b844366092d7d842" title=" " alt="" coords="580,300,760,327"/>
+<area shape="rect" id="node15" href="$classACMotor.html#a233efeed9e252f5c3ff28c867279c688" title=" " alt="" coords="583,351,757,377"/>
+<area shape="rect" id="node17" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="579,401,761,428"/>
+<area shape="rect" id="node18" href="$classHempyModule__Web.html#a6121d9ffc6982b154e1793fae1e73dd6" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="571,452,769,479"/>
+<area shape="rect" id="node19" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console." alt="" coords="587,503,753,545"/>
+<area shape="rect" id="node20" href="$classReservoirModule__Web.html#a1436039e2ad07079c50f124e7e69dbfd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="583,569,757,610"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#aca0a2598b74c69b2566c098e0e3201c7" title=" " alt="" coords="299,5,492,32"/>
+<area shape="rect" id="node4" href="$classSwitch__PWM.html#a79f80436a34d96a17a1fee6af452d9fb" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="319,56,471,83"/>
+<area shape="rect" id="node6" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="325,107,466,133"/>
+<area shape="rect" id="node7" href="$classDHTSensor__Web.html#a6c513b8a53d86dcc559c150966f21673" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="283,158,508,199"/>
+<area shape="rect" id="node9" href="$classFan__PWM.html#a0ca7f7195744494309bb8d8e3ad8b965" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="330,224,461,251"/>
+<area shape="rect" id="node10" href="$classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb" title=" " alt="" coords="319,275,471,301"/>
+<area shape="rect" id="node12" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title=" " alt="" coords="327,325,464,352"/>
+<area shape="rect" id="node13" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title=" " alt="" coords="327,376,463,403"/>
+<area shape="rect" id="node14" href="$classFan__PWM__Web.html#ab40de18bdb4022ab91c1ad541dc96acd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="288,427,503,469"/>
+<area shape="rect" id="node11" href="$classFan__PWM__Web.html#a6c82e9aedb2cb8b80077240bdbf4b877" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,325,235,352"/>
+<area shape="rect" id="node16" href="$classACMotor.html#ad735619c5b13100612e1aff28d6e127f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="333,493,458,520"/>
+</map>

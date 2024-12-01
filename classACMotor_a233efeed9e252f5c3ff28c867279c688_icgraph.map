@@ -1,0 +1,4 @@
+<map id="ACMotor::getSpeedText" name="ACMotor::getSpeedText">
+<area shape="rect" id="node1" title=" " alt="" coords="179,5,353,32"/>
+<area shape="rect" id="node2" href="$classACMotor.html#ad735619c5b13100612e1aff28d6e127f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,131,32"/>
+</map>

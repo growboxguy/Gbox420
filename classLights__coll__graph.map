@@ -1,0 +1,7 @@
+<map id="Lights" name="Lights">
+<area shape="rect" id="node1" title=" " alt="" coords="5,409,67,436"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="118,5,199,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="94,305,165,332"/>
+<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="332,149,423,175"/>
+<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="453,409,515,436"/>
+</map>

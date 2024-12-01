@@ -1,0 +1,4 @@
+<map id="AT91F_MC_EFC_GetStatus" name="AT91F_MC_EFC_GetStatus">
+<area shape="rect" id="node1" title="Return MC EFC Status." alt="" coords="271,5,464,32"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a8f3bc88e25b69f552524455d0f60be6c" title="Test if EFC MC Interrupt is Set." alt="" coords="5,5,223,32"/>
+</map>

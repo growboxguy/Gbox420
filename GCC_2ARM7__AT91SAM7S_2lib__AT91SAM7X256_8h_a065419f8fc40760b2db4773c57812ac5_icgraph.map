@@ -1,0 +1,5 @@
+<map id="AT91F_PDC_DisableRx" name="AT91F_PDC_DisableRx">
+<area shape="rect" id="node1" title="Disable receive." alt="" coords="192,31,361,57"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#ae7a00663d9b586d0060d83e4c3e1921f" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="5,5,144,32"/>
+<area shape="rect" id="node3" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="6,56,143,83"/>
+</map>

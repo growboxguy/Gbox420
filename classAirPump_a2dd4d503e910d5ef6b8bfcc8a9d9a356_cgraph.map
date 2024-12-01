@@ -1,0 +1,7 @@
+<map id="AirPump::report" name="AirPump::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,129,83"/>
+<area shape="rect" id="node2" href="$classAirPump.html#a07c11ea564dd9cfe02bda7db8516e5f1" title=" " alt="" coords="177,31,344,57"/>
+<area shape="rect" id="node5" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="197,81,325,108"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="413,5,475,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="392,56,496,83"/>
+</map>

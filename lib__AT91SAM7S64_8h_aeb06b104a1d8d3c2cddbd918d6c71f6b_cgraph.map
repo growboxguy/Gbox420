@@ -1,0 +1,4 @@
+<map id="AT91F_PWMC_IsStatusSet" name="AT91F_PWMC_IsStatusSet">
+<area shape="rect" id="node1" title="Test if PWM Interrupt is Set." alt="" coords="5,5,196,32"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#acc670391b5e1be52b9717c21953a8d6c" title="Return PWM Interrupt Status." alt="" coords="244,5,427,32"/>
+</map>

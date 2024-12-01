@@ -1,0 +1,20 @@
+<map id="HempyBucket_Web::commandEvent" name="HempyBucket_Web::commandEvent">
+<area shape="rect" id="node1" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,334,227,375"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a979458d974de49fed6cef1e7512a1231" title="Add a Log entry that is displayed on the web interface." alt="" coords="307,5,482,32"/>
+<area shape="rect" id="node3" href="$classHempyBucket.html#a6cdcb99b1017b5bd0bad37df094124d7" title="Signals to disable the watering logic at the next refresh &#45; Runs fast." alt="" coords="284,56,505,83"/>
+<area shape="rect" id="node4" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="315,107,474,133"/>
+<area shape="rect" id="node5" href="$classHempyBucket.html#a90b68e1e894382483fb49d01a080abd5" title=" " alt="" coords="287,158,503,199"/>
+<area shape="rect" id="node8" href="$classHempyBucket.html#a1eb8d7ee5c0a5c2a1a68fde9bbdc54c2" title=" " alt="" coords="275,224,514,251"/>
+<area shape="rect" id="node9" href="$classHempyBucket.html#aa3d22228d09b06555e14f2ce499116b5" title="Weight decrease between waterings." alt="" coords="285,275,504,317"/>
+<area shape="rect" id="node10" href="$classHempyBucket.html#af4c3814f1f9b37509c8ab6ea783df11f" title=" " alt="" coords="286,341,503,368"/>
+<area shape="rect" id="node11" href="$classHempyBucket.html#affc45e03e77e67374b70acfd283a2542" title=" " alt="" coords="295,393,494,434"/>
+<area shape="rect" id="node12" href="$classHempyBucket.html#a7dfc581e11d6be381cce8712f60ee150" title="Turn on water pump, run until StopWeight is reached &#45; Runs fast." alt="" coords="290,510,499,551"/>
+<area shape="rect" id="node13" href="$classHempyBucket.html#abdac6603e4f47a4162c5733276d4c097" title="Turn off water pump &#45; Runs fast." alt="" coords="291,575,498,617"/>
+<area shape="rect" id="node14" href="$classHempyBucket.html#ae69e961b538f1f33875c57638717ae6c" title=" " alt="" coords="275,459,515,485"/>
+<area shape="rect" id="node17" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad6e1f2a94295d83d0a2f52d149c82a51" title=" " alt="" coords="361,641,429,668"/>
+<area shape="rect" id="node18" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaee73d482f433a830544f005207ba6c9" title=" " alt="" coords="369,692,421,719"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="563,285,744,312"/>
+<area shape="rect" id="node7" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="575,340,731,367"/>
+<area shape="rect" id="node15" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="579,433,728,460"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="603,484,703,511"/>
+</map>

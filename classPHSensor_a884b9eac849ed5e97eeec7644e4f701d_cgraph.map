@@ -1,0 +1,7 @@
+<map id="PHSensor::report" name="PHSensor::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,136,83"/>
+<area shape="rect" id="node2" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title=" " alt="" coords="184,31,343,57"/>
+<area shape="rect" id="node5" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="199,81,327,108"/>
+<area shape="rect" id="node3" href="$classPHSensor.html#ad277a03459aff975ad61039dfe22635d" title=" " alt="" coords="391,5,521,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="425,56,487,83"/>
+</map>

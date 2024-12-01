@@ -1,0 +1,5 @@
+<map id="TDSSensor::getTDSText" name="TDSSensor::getTDSText">
+<area shape="rect" id="node1" title=" " alt="" coords="276,35,451,61"/>
+<area shape="rect" id="node2" href="$classTDSSensor.html#a9ff422338c274ee68de3fba929a6b01f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,186,32"/>
+<area shape="rect" id="node3" href="$classTDSSensor__Web.html#a384b05a18e84443c0d5bc509a14c752f" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,228,98"/>
+</map>

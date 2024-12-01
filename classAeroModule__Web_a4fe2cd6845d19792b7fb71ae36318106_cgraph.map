@@ -1,0 +1,7 @@
+<map id="AeroModule_Web::commandEvent" name="AeroModule_Web::commandEvent">
+<area shape="rect" id="node1" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,81,251,108"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a979458d974de49fed6cef1e7512a1231" title="Add a Log entry that is displayed on the web interface." alt="" coords="299,5,473,32"/>
+<area shape="rect" id="node3" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="307,56,465,83"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad6e1f2a94295d83d0a2f52d149c82a51" title=" " alt="" coords="352,107,420,133"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaee73d482f433a830544f005207ba6c9" title=" " alt="" coords="360,157,412,184"/>
+</map>

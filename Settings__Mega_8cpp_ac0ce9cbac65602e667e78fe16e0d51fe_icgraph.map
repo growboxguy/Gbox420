@@ -1,0 +1,5 @@
+<map id="saveSettings" name="saveSettings">
+<area shape="rect" id="node1" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="327,5,433,32"/>
+<area shape="rect" id="node2" href="$Settings__Mega_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="176,5,279,32"/>
+<area shape="rect" id="node3" href="$Settings__Mega_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="5,5,128,32"/>
+</map>

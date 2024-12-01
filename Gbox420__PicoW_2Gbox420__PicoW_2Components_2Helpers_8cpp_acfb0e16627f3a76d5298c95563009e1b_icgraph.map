@@ -1,0 +1,5 @@
+<map id="toText_floatDecimals" name="toText_floatDecimals">
+<area shape="rect" id="node1" title=" " alt="" coords="307,35,465,61"/>
+<area shape="rect" id="node2" href="$classPHSensor__Web.html#a559af852abd667adc2b54b3ae478dd67" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,5,259,32"/>
+<area shape="rect" id="node3" href="$classPressureSensor__Web.html#a0656c26e55308bd09ea8206f423b1911" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="53,57,211,98"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="refreshCallback" name="refreshCallback">
+<area shape="rect" id="node1" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="5,13,129,39"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a37a2e69937816a8160998d08103c4092" title="Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was ..." alt="" coords="177,5,392,47"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#ab5123ec5cf200424a5cb5460594573df" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="440,5,652,47"/>
+</map>

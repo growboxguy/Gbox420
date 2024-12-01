@@ -1,0 +1,6 @@
+<map id="Lights::dimLightsOnOff" name="Lights::dimLightsOnOff">
+<area shape="rect" id="node1" title="Temporary dim the lights while working on the plants." alt="" coords="453,5,624,32"/>
+<area shape="rect" id="node2" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title=" " alt="" coords="219,5,385,32"/>
+<area shape="rect" id="node4" href="$classLights__Web.html#ae64b3376392d07b955baa708988873ad" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="199,56,405,83"/>
+<area shape="rect" id="node3" href="$classLights.html#a7bf4d024918477d52eea78c94209fc66" title="Called every second." alt="" coords="5,5,151,32"/>
+</map>

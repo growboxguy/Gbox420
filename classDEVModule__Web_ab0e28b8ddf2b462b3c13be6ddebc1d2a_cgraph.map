@@ -1,0 +1,12 @@
+<map id="DEVModule_Web::refresh_Minute" name="DEVModule_Web::refresh_Minute">
+<area shape="rect" id="node1" title="Called every minute." alt="" coords="5,43,192,85"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a97169ba209fbea53f770e3f39f751d34" title="Called every minute." alt="" coords="240,43,399,85"/>
+<area shape="rect" id="node3" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Called every minute." alt="" coords="459,5,646,32"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#a65eaec141ce37cfc4061088548a86c63" title="Google Sheets reporting &#45; Handles custom reporting frequencies." alt="" coords="447,73,659,114"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="982,40,1082,67"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a3bbe46c867c2d15f62ee6aa582b0bd56" title="Google Sheets reporting &#45; Set PushingBox relay ID." alt="" coords="707,39,920,81"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a52ae82df785beda3c84f994a0f3b0454" title="Google Sheets reporting &#45; Send a JSON formatted report via REST API to the PushingBox relay." alt="" coords="710,105,917,146"/>
+<area shape="rect" id="node8" href="$classModule.html#a68387358b8cb0aa1e94a8d088d7b2197" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="742,171,885,197"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad5a3ae6e579485aeadf31d026ab20a6e" title="&lt; Debug" alt="" coords="970,141,1094,168"/>
+<area shape="rect" id="node10" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="968,192,1096,219"/>
+</map>

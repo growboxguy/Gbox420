@@ -1,0 +1,4 @@
+<map id="Module::websiteLoadEventTrigger" name="Module::websiteLoadEventTrigger">
+<area shape="rect" id="node1" title="Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was ope..." alt="" coords="5,5,203,47"/>
+<area shape="rect" id="node2" href="$classCommon.html#a9dd4403bf3708ecc0b5d287460f328eb" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="251,13,465,39"/>
+</map>

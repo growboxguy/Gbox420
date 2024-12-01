@@ -1,0 +1,15 @@
+<map id="AT91F_US_Configure" name="AT91F_US_Configure">
+<area shape="rect" id="node1" title="Configure USART." alt="" coords="5,335,161,361"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="233,208,371,235"/>
+<area shape="rect" id="node11" href="$lib__AT91SAM7S64_8h.html#ac5b5adb5f1acc709829449baa731045f" title="Set the baudrate according to the CPU clock." alt="" coords="215,335,389,361"/>
+<area shape="rect" id="node13" href="$lib__AT91SAM7S64_8h.html#a3dfb2db746ba127d6b6f7f5f85909323" title="Set USART timeguard." alt="" coords="209,385,395,412"/>
+<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a065419f8fc40760b2db4773c57812ac5" title="Disable receive." alt="" coords="444,5,613,32"/>
+<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#a232c924087e392d02daf17acf4b9be52" title="Disable transmit." alt="" coords="445,56,613,83"/>
+<area shape="rect" id="node5" href="$lib__AT91SAM7S64_8h.html#aa8532ddcc7f440a628adc6f75e1a00e2" title="Enable receive." alt="" coords="447,107,611,133"/>
+<area shape="rect" id="node6" href="$lib__AT91SAM7S64_8h.html#a5ac6178dea9c718b3236651a9c33ceb6" title="Enable transmit." alt="" coords="447,157,610,184"/>
+<area shape="rect" id="node7" href="$lib__AT91SAM7S64_8h.html#a90529726eb41ee44d45f3bb99923b2ef" title="Set the next receive transfer descriptor." alt="" coords="443,208,615,235"/>
+<area shape="rect" id="node8" href="$lib__AT91SAM7S64_8h.html#aa0b8b8b33d4b6514714851b653a011eb" title="Set the next transmit transfer descriptor." alt="" coords="443,259,614,285"/>
+<area shape="rect" id="node9" href="$lib__AT91SAM7S64_8h.html#af3a2086c959ae5ea3b73fcfc09bb46fb" title="Set the receive transfer descriptor." alt="" coords="458,309,599,336"/>
+<area shape="rect" id="node10" href="$lib__AT91SAM7S64_8h.html#ad32f369ef9e9f0f395e577e1ed1652df" title="Set the transmit transfer descriptor." alt="" coords="459,360,599,387"/>
+<area shape="rect" id="node12" href="$lib__AT91SAM7S64_8h.html#aafb45f22b05851b84133c43e975989ad" title="Calculate baud_value according to the main clock and the baud rate." alt="" coords="452,411,605,437"/>
+</map>

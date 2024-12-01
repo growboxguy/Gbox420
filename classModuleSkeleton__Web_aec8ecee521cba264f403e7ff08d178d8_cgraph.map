@@ -1,0 +1,11 @@
+<map id="ModuleSkeleton_Web::ModuleSkeleton_Web" name="ModuleSkeleton_Web::ModuleSkeleton_Web">
+<area shape="rect" id="node1" title="constructor" alt="" coords="5,195,175,236"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a844f31842785533417e9e35607362516" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="233,5,451,47"/>
+<area shape="rect" id="node4" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method." alt="" coords="238,71,446,112"/>
+<area shape="rect" id="node5" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="238,136,446,177"/>
+<area shape="rect" id="node6" href="$classModule.html#a08595d2a2bd347eec39c47a3b9e770fb" title="Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method." alt="" coords="223,202,461,229"/>
+<area shape="rect" id="node7" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="241,253,443,279"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#a732e9ff3962bf4c4af4006bf43670645" title="Calls the websiteEvent_Load() method of the Subscriber when an ESP&#45;link website is loaded." alt="" coords="241,304,443,345"/>
+<area shape="rect" id="node9" href="$classModule__Web.html#a054dbad7ecba4834b7a589c29748c422" title="Calls the websiteEvent_Refresh() method of the Subscriber when an ESP&#45;link website is refreshing." alt="" coords="241,369,443,411"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="509,173,609,199"/>
+</map>

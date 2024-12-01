@@ -1,0 +1,6 @@
+<map id="Fan_Web" name="Fan_Web">
+<area shape="rect" id="node1" title="&lt; Fan controller (2 speed) &#45; website component" alt="" coords="76,155,155,181"/>
+<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="5,80,121,107"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="75,5,156,32"/>
+<area shape="rect" id="node4" href="$classFan.html" title="&lt; Fan controller (2 speed)" alt="" coords="145,80,189,107"/>
+</map>

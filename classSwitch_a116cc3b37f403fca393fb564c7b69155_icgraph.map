@@ -1,0 +1,4 @@
+<map id="Switch::getStateText" name="Switch::getStateText">
+<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="165,5,320,32"/>
+<area shape="rect" id="node2" href="$classSwitch.html#abdf3b7f5c7f779c430b3932abad6e9bf" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,117,32"/>
+</map>

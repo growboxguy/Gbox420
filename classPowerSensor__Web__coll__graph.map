@@ -1,0 +1,11 @@
+<map id="PowerSensor_Web" name="PowerSensor_Web">
+<area shape="rect" id="node1" title="&lt; PZEM004T power sensor &#45; website component" alt="" coords="203,681,344,708"/>
+<area shape="rect" id="node2" href="$classPowerSensor.html" title="&lt; PZEM004T power sensor" alt="" coords="5,409,112,436"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="159,5,241,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="55,305,126,332"/>
+<area shape="rect" id="node5" href="$classMqttClient.html" title=" " alt="" coords="264,149,355,175"/>
+<area shape="rect" id="node6" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="313,409,375,436"/>
+<area shape="rect" id="node7" href="$classCommon__Web.html" title=" " alt="" coords="418,409,534,436"/>
+<area shape="rect" id="node8" href="$classModule__Web.html" title=" " alt="" coords="221,592,326,619"/>
+<area shape="rect" id="node9" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="285,494,382,521"/>
+</map>

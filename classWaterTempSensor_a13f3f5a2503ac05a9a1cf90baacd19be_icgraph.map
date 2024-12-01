@@ -1,0 +1,4 @@
+<map id="WaterTempSensor::readSensor" name="WaterTempSensor::readSensor">
+<area shape="rect" id="node1" title=" " alt="" coords="247,13,467,39"/>
+<area shape="rect" id="node2" href="$classWaterTempSensor.html#ad4acc0a440922117b3de371046d483a5" title="Called every five seconds." alt="" coords="5,5,199,47"/>
+</map>

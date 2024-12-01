@@ -1,0 +1,26 @@
+var ThirdParty_2GCC_2Xtensa__ESP32_2port_8c =
+[
+    [ "STACK_WATCH_AREA_SIZE", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a5f94db16c6f51a777d284103e2962f45", null ],
+    [ "STACK_WATCH_POINT_NUMBER", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#afcfaa13baa9b2f76ca6dbbba4d1db568", null ],
+    [ "_Static_assert", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#afb78d3153949daa81a4c93171df1f39d", null ],
+    [ "_xt_coproc_init", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a3d96ea7532f08fcad740d813eed0ecae", null ],
+    [ "_xt_user_exit", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#af05e6fd1516ecc374e4599910c687cb5", null ],
+    [ "esp_startup_start_app", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a21ae412a3f8e9a58f76651cc0f1f4d98", null ],
+    [ "esp_startup_start_app_common", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a765536cb3658e8044320544315adbf32", null ],
+    [ "pxPortInitialiseStack", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a474fbbb58ea661a1557f05adc41120c1", null ],
+    [ "vPortAssertIfInISR", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#aa38afdaafc5cae2f07ca2b6198b6bee8", null ],
+    [ "vPortCPUAcquireMutex", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a17c88e213d32e67d3fca43e627397154", null ],
+    [ "vPortCPUAcquireMutexTimeout", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a418add7f2fda447134047a41fb83ac92", null ],
+    [ "vPortCPUInitializeMutex", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a4793b62a11bbe763374a0eca87bd6351", null ],
+    [ "vPortCPUReleaseMutex", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a515ba399b7ed27c5e4464ad41ac58db4", null ],
+    [ "vPortEndScheduler", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#af76f3c0b44c5b5c06fc046a4ee1a6423", null ],
+    [ "vPortEvaluateYieldFromISR", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a8e999b46e542f17cbccc12d10e29c0e2", null ],
+    [ "vPortSetStackWatchpoint", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a9b6e7b82f316d0b3560f04dbd2b21c83", null ],
+    [ "vPortYieldOtherCore", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a875b1abb7b60f82558b9af02bddebd9c", null ],
+    [ "xPortGetTickRateHz", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#af671860d458e8d885299b85db2b3ddc7", null ],
+    [ "xPortInIsrContext", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#aa70417906047bc0c96b84ed59031929e", null ],
+    [ "xPortInterruptedFromISRContext", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a82a4d01ffb198da22adff74d2391eb46", null ],
+    [ "xPortStartScheduler", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#ade5a8c6666e7413a0355cc252029c5c6", null ],
+    [ "port_interruptNesting", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a78e796fddbe189a894cb7262490ecf4a", null ],
+    [ "port_xSchedulerRunning", "ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#aba355329d1f37d32fd6c5dc0500cc53c", null ]
+];

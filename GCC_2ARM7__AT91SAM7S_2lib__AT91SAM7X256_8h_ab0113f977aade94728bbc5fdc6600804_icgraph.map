@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_Get_AB_RegisterStatus" name="AT91F_PIO_Get_AB_RegisterStatus">
+<area shape="rect" id="node1" title="Return PIO Interrupt Status." alt="" coords="263,5,469,47"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a23d7b5758f3981cff03041ae4bed681c" title="Test if PIO AB Register is Set." alt="" coords="5,13,215,39"/>
+</map>

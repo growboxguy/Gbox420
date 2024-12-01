@@ -1,0 +1,5 @@
+<map id="AT91F_PDC_Close" name="AT91F_PDC_Close">
+<area shape="rect" id="node1" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="185,31,324,57"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a1d538178f15852104ef39cbb837504c3" title="Close SPI: disable IT disable transfert, close PDC." alt="" coords="5,5,137,32"/>
+<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a7b4bbc35e32ebaa01d042c344ff4ded0" title="Close USART: disable IT disable receiver and transmitter, close PDC." alt="" coords="6,56,137,83"/>
+</map>

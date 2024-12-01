@@ -1,0 +1,8 @@
+<map id="PressureSensor::report" name="PressureSensor::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,175,108"/>
+<area shape="rect" id="node2" href="$classPressureSensor.html#a6e1896fefa9311a854b20552fdd6f023" title=" " alt="" coords="223,56,457,83"/>
+<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="276,107,404,133"/>
+<area shape="rect" id="node3" href="$classPressureSensor.html#a39f2f08252640aeb9cf9c094ac796ed6" title=" " alt="" coords="505,5,712,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="577,56,640,83"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a50e0796918ffab51d100465832e5cb1a" title=" " alt="" coords="546,107,671,133"/>
+</map>

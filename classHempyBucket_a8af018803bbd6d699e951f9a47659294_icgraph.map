@@ -1,0 +1,6 @@
+<map id="HempyBucket::getWetWeight" name="HempyBucket::getWetWeight">
+<area shape="rect" id="node1" title=" " alt="" coords="505,42,717,69"/>
+<area shape="rect" id="node2" href="$classHempyModule.html#ab3ad970864a457c1d4cc11ef7a28a310" title=" " alt="" coords="224,13,457,39"/>
+<area shape="rect" id="node4" href="$classHempyBucket__Web.html#a5130885c662bff5c2a2285daf5164f9e" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="237,64,444,105"/>
+<area shape="rect" id="node3" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="Called every five seconds." alt="" coords="5,5,176,47"/>
+</map>

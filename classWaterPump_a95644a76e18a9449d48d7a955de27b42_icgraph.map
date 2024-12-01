@@ -1,0 +1,4 @@
+<map id="WaterPump::disablePump" name="WaterPump::disablePump">
+<area shape="rect" id="node1" title="Disable the pump." alt="" coords="235,5,424,32"/>
+<area shape="rect" id="node2" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="Called every second." alt="" coords="5,5,187,32"/>
+</map>

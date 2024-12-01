@@ -1,0 +1,5 @@
+<map id="MqttClient::mqttDNSResolvedCallback" name="MqttClient::mqttDNSResolvedCallback">
+<area shape="rect" id="node1" title="Callback when IP of the MQTT server is found." alt="" coords="5,5,223,47"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#a6c0a91af5c408441549297d1b560b415" title="Actually connect to the MQTT server." alt="" coords="271,13,453,39"/>
+<area shape="rect" id="node3" href="$classMqttClient.html#aeba49314a345fffee0198d7cdc68688c" title="Callback with the connection result." alt="" coords="501,5,684,47"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="WasteReservoir::report" name="WasteReservoir::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,85,176,112"/>
+<area shape="rect" id="node2" href="$classWasteReservoir.html#a28f27db6a4589ed8a87b63e6b856d51e" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="224,27,439,53"/>
+<area shape="rect" id="node5" href="$classWasteReservoir.html#a8de8ab1ee9e2b544826a56312c2e7666" title=" " alt="" coords="235,78,428,119"/>
+<area shape="rect" id="node7" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="267,144,395,171"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="561,56,623,83"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a663c2dc5bf1b8e1670e1bf28f7790ebb" title=" " alt="" coords="487,5,697,32"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title=" " alt="" coords="535,107,649,133"/>
+</map>

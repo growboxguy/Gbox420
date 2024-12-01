@@ -1,0 +1,52 @@
+<map id="Common::report" name="Common::report">
+<area shape="rect" id="node1" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="979,908,1107,935"/>
+<area shape="rect" id="node2" href="$classModuleSkeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title=" " alt="" coords="745,5,918,32"/>
+<area shape="rect" id="node3" href="$classWaterLevelSensor.html#af9082a30fbe3af588c2bd3c82acfaf8e" title=" " alt="" coords="738,56,925,83"/>
+<area shape="rect" id="node4" href="$classHempyModule.html#a0d01fb272cca5ef22bc91aaffb2bf71a" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="749,107,913,133"/>
+<area shape="rect" id="node5" href="$classMqttClient.html#a71ea59675a2865fcfeb74bfc6cefb2e5" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="763,157,900,184"/>
+<area shape="rect" id="node6" href="$classSound.html#a4e1368a08c24cea45a490416e5412bce" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="777,208,886,235"/>
+<area shape="rect" id="node7" href="$classGboxModule.html#a80a402b1908f351eea53be9a5cce1d35" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="756,259,907,285"/>
+<area shape="rect" id="node8" href="$classACMotor.html#ad735619c5b13100612e1aff28d6e127f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="769,309,894,336"/>
+<area shape="rect" id="node9" href="$classAeroponics__NoTank.html#a073c3d9b4469335c54cfc4f5115c13ca" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="753,361,910,402"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html#ad9c67a7486448620ccfa511c9085ace4" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="742,427,921,453"/>
+<area shape="rect" id="node11" href="$classAirPump.html#a2dd4d503e910d5ef6b8bfcc8a9d9a356" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="769,477,893,504"/>
+<area shape="rect" id="node12" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="761,528,902,555"/>
+<area shape="rect" id="node13" href="$classDistanceSensor.html#a5837fee9eae2a7e0254b0bb9677f3b43" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="746,579,917,605"/>
+<area shape="rect" id="node14" href="$classFan.html#a325b203fc67d2cc61c40c253afad9417" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="786,629,877,656"/>
+<area shape="rect" id="node15" href="$classFan__PWM.html#a0ca7f7195744494309bb8d8e3ad8b965" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="766,680,897,707"/>
+<area shape="rect" id="node16" href="$classHempyBucket.html#aa2814754c5caf1aeda6646c84167b252" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="751,731,911,757"/>
+<area shape="rect" id="node17" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="777,781,885,808"/>
+<area shape="rect" id="node18" href="$classLightSensor.html#a6bef06ab77b470b44c45b35de30b1336" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="759,832,904,859"/>
+<area shape="rect" id="node19" href="$classPHSensor.html#a884b9eac849ed5e97eeec7644e4f701d" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="766,883,897,909"/>
+<area shape="rect" id="node20" href="$classPowerSensor.html#ae4766a342c58ae21d20e978d350b3062" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="755,933,908,960"/>
+<area shape="rect" id="node21" href="$classPowerSensorV3.html#ace47eb07dc51e859f620a1dd9ab39dbf" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="746,984,917,1011"/>
+<area shape="rect" id="node22" href="$classPressurePump.html#aaeba6ce8e078a4002d8de467d3685419" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="750,1035,913,1061"/>
+<area shape="rect" id="node23" href="$classPressureSensor.html#a771fbb8dad84d4cb63d8198ed7bf76dd" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="747,1085,916,1112"/>
+<area shape="rect" id="node24" href="$classSwitch.html#abdf3b7f5c7f779c430b3932abad6e9bf" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="775,1136,887,1163"/>
+<area shape="rect" id="node25" href="$classSwitch__PWM.html#a79f80436a34d96a17a1fee6af452d9fb" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="755,1187,907,1213"/>
+<area shape="rect" id="node26" href="$classTDSSensor.html#a9ff422338c274ee68de3fba929a6b01f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="762,1237,901,1264"/>
+<area shape="rect" id="node27" href="$classWasteReservoir.html#a5686e86c4d3b11d342c2ba21412eb363" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="746,1288,917,1315"/>
+<area shape="rect" id="node28" href="$classWaterPump.html#a1eacc6674b04fa3c5c04396af4c36138" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="759,1339,903,1365"/>
+<area shape="rect" id="node29" href="$classWaterTempSensor.html#a29f7cf690de3d59c0bdb2b070af11d7a" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="738,1389,925,1416"/>
+<area shape="rect" id="node30" href="$classWeightSensor.html#ade7b856a3d2942d024a76dae009b7140" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="752,1440,911,1467"/>
+<area shape="rect" id="node31" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="740,1491,923,1517"/>
+<area shape="rect" id="node32" href="$classDevModule__Web.html#adef29c3cd5145a7a404959468f0bd5e1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="742,1541,921,1568"/>
+<area shape="rect" id="node33" href="$classHempy__Standalone.html#adc9f95aec673a77c6ca42c9f3f3e43df" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="733,1592,929,1619"/>
+<area shape="rect" id="node34" href="$classHempyModule__Web.html#a6121d9ffc6982b154e1793fae1e73dd6" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="732,1643,931,1669"/>
+<area shape="rect" id="node35" href="$classMainModule.html#a6ef990657642d81352cf8dbe99e91205" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="757,1693,906,1720"/>
+<area shape="rect" id="node36" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console." alt="" coords="748,1745,915,1786"/>
+<area shape="rect" id="node37" href="$classModule.html#a68387358b8cb0aa1e94a8d088d7b2197" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="760,1811,903,1837"/>
+<area shape="rect" id="node38" href="$classACMotorModule.html#a724904e360e5b76971da30f27af3051e" title="Called every five seconds." alt="" coords="483,1519,663,1561"/>
+<area shape="rect" id="node39" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="Called every five seconds." alt="" coords="496,1585,651,1626"/>
+<area shape="rect" id="node40" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="Called every five seconds." alt="" coords="488,1650,659,1691"/>
+<area shape="rect" id="node41" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="Called every five seconds." alt="" coords="480,1715,667,1757"/>
+<area shape="rect" id="node42" href="$classModule__Web.html#a8cd6772406ccf13d496d4173825e3476" title="Called every five seconds." alt="" coords="256,1898,415,1939"/>
+<area shape="rect" id="node46" href="$classModule.html#a158d773d50454333ae118f05528ab3e1" title="Google Sheets reporting &#45; Handles custom reporting frequencies." alt="" coords="463,1833,684,1874"/>
+<area shape="rect" id="node47" href="$classModule__Web.html#a65eaec141ce37cfc4061088548a86c63" title="Google Sheets reporting &#45; Handles custom reporting frequencies." alt="" coords="467,1898,679,1939"/>
+<area shape="rect" id="node48" href="$classModule.html#a2cbfb604efbddf9888271872e53a5184" title="MQTT reporting &#45; Handles custom reporting frequencies." alt="" coords="471,2029,676,2056"/>
+<area shape="rect" id="node49" href="$classModule.html#a6d4e40d35b2dcffcff7c767b5f37b15a" title="Called every 5 seconds." alt="" coords="271,2055,400,2081"/>
+<area shape="rect" id="node50" href="$classModule__Web.html#ad39c6edcd619b1851fc07e8e8409de94" title="MQTT reporting &#45; Handles custom reporting frequencies." alt="" coords="475,1963,671,2005"/>
+<area shape="rect" id="node43" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="Called every five seconds." alt="" coords="14,1833,199,1874"/>
+<area shape="rect" id="node44" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="Called every five seconds." alt="" coords="13,1898,200,1939"/>
+<area shape="rect" id="node45" href="$classHempy__Standalone.html#ad55317d1ee4287df98807aea010e49bd" title="Called every five seconds." alt="" coords="5,1963,208,2005"/>
+</map>

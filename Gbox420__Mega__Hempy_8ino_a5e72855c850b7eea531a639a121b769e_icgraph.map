@@ -1,0 +1,4 @@
+<map id="mqttPublished" name="mqttPublished">
+<area shape="rect" id="node1" title="Called after an MQTT message is sent out &#45; Not used." alt="" coords="141,5,257,32"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Hempy_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in ..." alt="" coords="5,5,93,32"/>
+</map>

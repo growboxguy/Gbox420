@@ -1,0 +1,5 @@
+<map id="WaterPump" name="WaterPump">
+<area shape="rect" id="node1" title="&lt; Diaphragm pump controller" alt="" coords="23,80,120,107"/>
+<area shape="rect" id="node3" href="$classWaterPump__Web.html" title="&lt; Hempy bucket &#45; website component" alt="" coords="5,155,137,181"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="31,5,112,32"/>
+</map>

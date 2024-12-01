@@ -1,0 +1,18 @@
+<map id="Fan_PWM_Web::commandEvent" name="Fan_PWM_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,132,235,159"/>
+<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="283,56,441,83"/>
+<area shape="rect" id="node3" href="$classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb" title=" " alt="" coords="286,107,438,133"/>
+<area shape="rect" id="node13" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title=" " alt="" coords="293,208,431,235"/>
+<area shape="rect" id="node16" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title=" " alt="" coords="294,157,430,184"/>
+<area shape="rect" id="node4" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="511,157,649,184"/>
+<area shape="rect" id="node6" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="505,56,655,83"/>
+<area shape="rect" id="node7" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="489,107,671,133"/>
+<area shape="rect" id="node8" href="$classFan__PWM.html#a21f72bf9c4a9c5f6b844366092d7d842" title=" " alt="" coords="490,208,670,235"/>
+<area shape="rect" id="node12" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="502,5,658,32"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="740,132,840,159"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="759,284,821,311"/>
+<area shape="rect" id="node10" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="738,183,842,209"/>
+<area shape="rect" id="node11" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title=" " alt="" coords="719,233,861,260"/>
+<area shape="rect" id="node14" href="$classFan__PWM.html#a0c11aa694b037f8962ce36206a2048c1" title=" " alt="" coords="498,259,662,285"/>
+<area shape="rect" id="node15" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="501,309,659,336"/>
+</map>

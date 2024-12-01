@@ -1,0 +1,6 @@
+<map id="MqttClient::mqttSubscribe" name="MqttClient::mqttSubscribe">
+<area shape="rect" id="node1" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="5,78,197,105"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#a3b1ad387963a44be02ffef78770e0fa3" title="Callback when a new message is received on a subscribed topic: Gets the payload." alt="" coords="247,5,436,47"/>
+<area shape="rect" id="node3" href="$classMqttClient.html#a271f5325f97db35342f13e48c67fce0a" title="Callback when a new message is received on a subscribed topic: Gets the topic." alt="" coords="247,71,436,112"/>
+<area shape="rect" id="node4" href="$classMqttClient.html#a0ca2a0af19e4ed9c0aa044fd3ec2b2e9" title="Callback with the subscription result: 0: Success." alt="" coords="245,136,437,177"/>
+</map>

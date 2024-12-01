@@ -1,0 +1,6 @@
+<map id="getRTC" name="getRTC">
+<area shape="rect" id="node1" title="Prints the current time to stdout." alt="" coords="224,31,291,57"/>
+<area shape="rect" id="node2" href="$RealTimeClock_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="115,5,169,32"/>
+<area shape="rect" id="node3" href="$RealTimeClock-NTPWithLWIP_8cpp.html#af0464cdcda80baf76828b9cbea328793" title="Use NTP to update the Real Time Clock." alt="" coords="108,56,176,83"/>
+<area shape="rect" id="node4" href="$RealTimeClock-NTPWithLWIP_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,56,60,83"/>
+</map>

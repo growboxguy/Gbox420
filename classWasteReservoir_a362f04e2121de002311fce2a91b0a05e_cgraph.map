@@ -1,0 +1,5 @@
+<map id="WasteReservoir::setReserved" name="WasteReservoir::setReserved">
+<area shape="rect" id="node1" title="Returns true if the reservation is successful, false means the Waste Reservoir is busy measuring the ..." alt="" coords="5,31,219,57"/>
+<area shape="rect" id="node2" href="$classWeightSensor.html#a00d85fab4422a569a3f475d0586af926" title=" " alt="" coords="279,5,465,32"/>
+<area shape="rect" id="node3" href="$classWasteReservoir.html#aeebbc47dc6d2f33e6a4179b8d54f1ea6" title=" " alt="" coords="267,56,477,83"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="AT91F_PDC_SetRx" name="AT91F_PDC_SetRx">
+<area shape="rect" id="node1" title="Set the receive transfer descriptor." alt="" coords="492,132,633,159"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#ae7a00663d9b586d0060d83e4c3e1921f" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="277,56,415,83"/>
+<area shape="rect" id="node5" href="$lib__AT91SAM7S64_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="277,132,415,159"/>
+<area shape="rect" id="node8" href="$lib__AT91SAM7S64_8h.html#aafc2ac73bfe8e6584b59dfa99dcc734d" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="248,233,444,260"/>
+<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a1d538178f15852104ef39cbb837504c3" title="Close SPI: disable IT disable transfert, close PDC." alt="" coords="37,5,169,32"/>
+<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#a7b4bbc35e32ebaa01d042c344ff4ded0" title="Close USART: disable IT disable receiver and transmitter, close PDC." alt="" coords="37,56,168,83"/>
+<area shape="rect" id="node6" href="$lib__AT91SAM7S64_8h.html#aa9745e47a0642596e61432ffbc890080" title="Configure SSC." alt="" coords="21,107,184,133"/>
+<area shape="rect" id="node7" href="$lib__AT91SAM7S64_8h.html#acbbed25fcf0256823175db5f1a8f1f39" title="Configure USART." alt="" coords="25,157,181,184"/>
+<area shape="rect" id="node9" href="$lib__AT91SAM7S64_8h.html#a3fd88379fedca045387ceabc79da98f6" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="8,208,197,235"/>
+<area shape="rect" id="node10" href="$lib__AT91SAM7S64_8h.html#ae2e9978885885118d9106fb029b40b8a" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="5,259,200,285"/>
+<area shape="rect" id="node11" href="$lib__AT91SAM7S64_8h.html#a413427ce949ec0321bf321a4c1b91cd1" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="9,309,196,336"/>
+</map>

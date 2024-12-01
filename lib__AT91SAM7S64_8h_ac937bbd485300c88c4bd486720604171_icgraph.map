@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_GetCfgPullup" name="AT91F_PIO_GetCfgPullup">
+<area shape="rect" id="node1" title="Return PIO Configuration Pullup." alt="" coords="287,5,469,32"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#abf8e0633c6c2ccf43062254cdc88bf17" title="Test if PIO Configuration Pullup Status is Set." alt="" coords="5,5,239,32"/>
+</map>

@@ -1,0 +1,4 @@
+var dir_b2bba4a92007e50a1c0deb7bfb544a23 =
+[
+    [ "freertos_risc_v_chip_specific_extensions.h", "IAR_2RISC-V_2chip__specific__extensions_2RV32I__CLINT__no__extensions_2freertos__risc__v__chip__specific__extensions_8h.html", "IAR_2RISC-V_2chip__specific__extensions_2RV32I__CLINT__no__extensions_2freertos__risc__v__chip__specific__extensions_8h" ]
+];

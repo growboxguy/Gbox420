@@ -1,0 +1,6 @@
+<map id="Wireless" name="Wireless">
+<area shape="rect" id="node1" title="Wireless communication with Modules over nRF24L01+." alt="" coords="424,31,503,57"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="Prints the nRF24L01+ wireless transceiver&#39;s status to the Serial log." alt="" coords="236,5,376,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,31,64,57"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="112,5,188,32"/>
+</map>

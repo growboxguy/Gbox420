@@ -1,0 +1,4 @@
+<map id="AT91F_TWI_CfgPMC" name="AT91F_TWI_CfgPMC">
+<area shape="rect" id="node1" title="Enable Peripheral clock in PMC for TWI." alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a49f8f2fa3016c1c078f12156ef45d139" title="Enable peripheral clock." alt="" coords="205,5,432,32"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_GetMultiDriverStatus" name="AT91F_PIO_GetMultiDriverStatus">
+<area shape="rect" id="node1" title="Return PIO Multi Driver Status." alt="" coords="256,5,451,47"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a2bb63fd2ca295965051fbf7e85ce560e" title="Test if PIO MultiDriver is Set." alt="" coords="5,13,208,39"/>
+</map>

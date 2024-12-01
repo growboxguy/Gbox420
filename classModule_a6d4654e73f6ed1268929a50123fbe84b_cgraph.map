@@ -1,0 +1,19 @@
+<map id="Module::settingsEvent_Command" name="Module::settingsEvent_Command">
+<area shape="rect" id="node1" title="Gets called a button is clicked or a field is submitted on the /Settings.html page." alt="" coords="5,342,172,383"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="552,148,691,175"/>
+<area shape="rect" id="node4" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="531,349,712,376"/>
+<area shape="rect" id="node5" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="543,89,699,116"/>
+<area shape="rect" id="node6" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title=" " alt="" coords="281,207,421,233"/>
+<area shape="rect" id="node8" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title=" " alt="" coords="282,89,421,116"/>
+<area shape="rect" id="node9" href="$classModule.html#a58c519c3102d120deae618aba6b62ee5" title="Enable/disable reporting the current time to the Serial output." alt="" coords="247,527,456,553"/>
+<area shape="rect" id="node10" href="$classModule.html#ab71609e8b31d66336f8c22f0abe20cd7" title="Enable/disable sending JSON formatted reports to the Serial output." alt="" coords="246,577,457,604"/>
+<area shape="rect" id="node11" href="$classModule.html#a7c9d28b0e40ac3c2aa4e773a21790de9" title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial." alt="" coords="220,375,483,401"/>
+<area shape="rect" id="node12" href="$classModule.html#acb15da911f5673d2ffb152e9ffae1c06" title="Enable/disable reporting the remaining free memory to the Serial output." alt="" coords="235,425,467,452"/>
+<area shape="rect" id="node13" href="$classModule.html#a51b0bb25e26589592ad6f866cfdd34a8" title="Enable/disable sending wireless package exchange reports to the Serial output." alt="" coords="234,476,469,503"/>
+<area shape="rect" id="node14" href="$classModule.html#a86bcb6a14090e70a5d485db88fba1bc4" title=" " alt="" coords="249,141,454,182"/>
+<area shape="rect" id="node15" href="$classModule.html#a58a096d9c10ecba0931b492fe1953dcf" title=" " alt="" coords="249,258,454,299"/>
+<area shape="rect" id="node16" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#af9592cbcbc78ca4594b6bcf3ad41a400" title="Converting text." alt="" coords="319,628,383,655"/>
+<area shape="rect" id="node17" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaee73d482f433a830544f005207ba6c9" title=" " alt="" coords="325,679,377,705"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="760,148,860,175"/>
+<area shape="rect" id="node7" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="534,425,709,452"/>
+</map>

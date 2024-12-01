@@ -1,0 +1,4 @@
+<map id="Module_Web::settingsEvent_Load" name="Module_Web::settingsEvent_Load">
+<area shape="rect" id="node1" title="Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settin..." alt="" coords="215,5,455,32"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#a82f70b21f331170e00323241a08bc24b" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="5,5,167,32"/>
+</map>

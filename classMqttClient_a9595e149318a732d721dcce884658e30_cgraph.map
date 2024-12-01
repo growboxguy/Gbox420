@@ -1,0 +1,4 @@
+<map id="MqttClient::mqttSubscribe_Unsubscribe" name="MqttClient::mqttSubscribe_Unsubscribe">
+<area shape="rect" id="node1" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="5,5,197,47"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#a0ca2a0af19e4ed9c0aa044fd3ec2b2e9" title="Callback with the subscription result: 0: Success." alt="" coords="245,5,437,47"/>
+</map>

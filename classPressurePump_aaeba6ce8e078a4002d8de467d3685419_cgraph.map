@@ -1,0 +1,10 @@
+<map id="PressurePump::report" name="PressurePump::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,93,168,120"/>
+<area shape="rect" id="node2" href="$classPressurePump.html#ad40df00cf3061dd56479286e685c750e" title=" " alt="" coords="232,57,427,98"/>
+<area shape="rect" id="node5" href="$classPressurePump.html#a0f3526af1d0b800cb1a1a43e9edf064c" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="227,5,432,32"/>
+<area shape="rect" id="node7" href="$classPressurePump.html#a908885248531904fe3801542c1faa635" title=" " alt="" coords="216,123,443,149"/>
+<area shape="rect" id="node8" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="265,173,393,200"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="557,64,620,91"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title=" " alt="" coords="531,119,646,145"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad8aa64fccaa28ab3a26b3ec086958e2b" title=" " alt="" coords="491,5,687,32"/>
+</map>

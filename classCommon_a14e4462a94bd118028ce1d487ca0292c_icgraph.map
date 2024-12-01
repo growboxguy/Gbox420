@@ -1,0 +1,17 @@
+<map id="Common::refresh_Minute" name="Common::refresh_Minute">
+<area shape="rect" id="node1" title="Called every minute." alt="" coords="511,253,697,279"/>
+<area shape="rect" id="node2" href="$classWaterLevelSensor.html#a575a909c40dbdfbf43831875abfd5927" title="Called every five seconds." alt="" coords="263,5,456,47"/>
+<area shape="rect" id="node3" href="$classAirPump.html#a01551d165fc6ac14a4e625961fbf584b" title="Called every minute." alt="" coords="268,71,451,98"/>
+<area shape="rect" id="node4" href="$classFan.html#ad4605196f9611585e9416bcce3d84723" title="Called every minute." alt="" coords="284,122,435,149"/>
+<area shape="rect" id="node5" href="$classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710" title="Called every minute." alt="" coords="264,173,455,199"/>
+<area shape="rect" id="node6" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Called every minute." alt="" coords="276,223,443,250"/>
+<area shape="rect" id="node7" href="$classModuleSkeleton.html#ada46fe93dc55850a1ccfb80d2a4ee5dd" title="Called every minute." alt="" coords="269,275,449,316"/>
+<area shape="rect" id="node8" href="$classTDSSensor.html#a8c800135641affc55ae05c10a707f9a1" title="Called every minute." alt="" coords="286,340,433,381"/>
+<area shape="rect" id="node9" href="$classModule__Web.html#a97169ba209fbea53f770e3f39f751d34" title="Called every minute." alt="" coords="280,405,439,447"/>
+<area shape="rect" id="node14" href="$classAeroModule__Web.html#a9c4e85d145ef163d8eb734af4df6d25c" title="Refresh state, Called every minute." alt="" coords="265,471,454,512"/>
+<area shape="rect" id="node15" href="$classHempyModule__Web.html#af66340c49108c31842e58d2624e51e6d" title="Called every minute." alt="" coords="256,536,463,577"/>
+<area shape="rect" id="node10" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Called every minute." alt="" coords="14,307,199,348"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Called every minute." alt="" coords="13,372,200,413"/>
+<area shape="rect" id="node12" href="$classHempy__Standalone.html#a3c1e92c73b2662d7816347947e519c9b" title="Called every minute." alt="" coords="5,437,208,479"/>
+<area shape="rect" id="node13" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="Called every minute." alt="" coords="29,503,185,544"/>
+</map>

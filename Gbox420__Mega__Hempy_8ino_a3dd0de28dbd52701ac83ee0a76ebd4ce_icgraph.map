@@ -1,0 +1,4 @@
+<map id="processTimeCriticalStuff" name="processTimeCriticalStuff">
+<area shape="rect" id="node1" title="Interrupt calls this every 0.5 sec to process any request coming from the ESP&#45;link hosted webpage...." alt="" coords="112,5,293,32"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Hempy_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,32"/>
+</map>

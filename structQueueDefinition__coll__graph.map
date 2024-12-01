@@ -1,0 +1,8 @@
+<map id="QueueDefinition" name="QueueDefinition">
+<area shape="rect" id="node1" title=" " alt="" coords="147,293,274,320"/>
+<area shape="rect" id="node2" href="$structSemaphoreData.html" title=" " alt="" coords="31,203,158,229"/>
+<area shape="rect" id="node3" href="$structtskTaskControlBlock.html" title=" " alt="" coords="5,112,160,139"/>
+<area shape="rect" id="node4" href="$structxLIST__ITEM.html" title=" " alt="" coords="167,7,263,33"/>
+<area shape="rect" id="node5" href="$structxLIST.html" title=" " alt="" coords="186,112,243,139"/>
+<area shape="rect" id="node6" href="$structQueuePointers.html" title=" " alt="" coords="399,203,516,229"/>
+</map>

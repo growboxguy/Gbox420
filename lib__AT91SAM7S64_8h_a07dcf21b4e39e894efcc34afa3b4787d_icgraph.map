@@ -1,0 +1,7 @@
+<map id="AT91F_PDC_IsTxEmpty" name="AT91F_PDC_IsTxEmpty">
+<area shape="rect" id="node1" title="Test if the current transfer descriptor has been sent." alt="" coords="452,56,624,83"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a69b0e9baa0272a3febd549034aad1fcb" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="228,56,404,83"/>
+<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a9cf180ac507975a8259e99352d233732" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="8,5,177,32"/>
+<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#ad69b884ddf6875c1e37a7a2bdcb624a4" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="5,56,180,83"/>
+<area shape="rect" id="node5" href="$lib__AT91SAM7S64_8h.html#abf1fd25f710588e80351fba226751bdf" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="9,107,176,133"/>
+</map>

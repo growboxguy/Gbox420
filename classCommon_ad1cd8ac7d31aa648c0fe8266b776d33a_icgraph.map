@@ -1,0 +1,4 @@
+<map id="Common::websiteEvent_Refresh" name="Common::websiteEvent_Refresh">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="269,5,447,47"/>
+<area shape="rect" id="node2" href="$classModule.html#af8360dea381fef4ede8fe14322773d95" title="Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was ..." alt="" coords="5,5,221,47"/>
+</map>

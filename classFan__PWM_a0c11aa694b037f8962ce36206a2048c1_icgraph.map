@@ -1,0 +1,8 @@
+<map id="Fan_PWM::checkState" name="Fan_PWM::checkState">
+<area shape="rect" id="node1" title=" " alt="" coords="521,81,685,108"/>
+<area shape="rect" id="node2" href="$classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection" alt="" coords="301,5,455,32"/>
+<area shape="rect" id="node3" href="$classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710" title="Called every minute." alt="" coords="283,56,473,83"/>
+<area shape="rect" id="node4" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title=" " alt="" coords="309,107,447,133"/>
+<area shape="rect" id="node6" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title=" " alt="" coords="310,157,446,184"/>
+<area shape="rect" id="node5" href="$classFan__PWM__Web.html#a6c82e9aedb2cb8b80077240bdbf4b877" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,132,235,159"/>
+</map>

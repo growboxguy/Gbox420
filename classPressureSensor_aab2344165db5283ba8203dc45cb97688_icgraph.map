@@ -1,0 +1,4 @@
+<map id="PressureSensor::readPressure" name="PressureSensor::readPressure">
+<area shape="rect" id="node1" title=" " alt="" coords="229,13,444,39"/>
+<area shape="rect" id="node2" href="$classPressureSensor.html#a9948098b4c429144f4a2d865a3bf520e" title="Called every five seconds." alt="" coords="5,5,181,47"/>
+</map>

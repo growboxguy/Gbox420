@@ -1,0 +1,6 @@
+<map id="ACMotor::ACMotor" name="ACMotor::ACMotor">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,148,83"/>
+<area shape="rect" id="node2" href="$classModule.html#a08595d2a2bd347eec39c47a3b9e770fb" title="Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method." alt="" coords="196,5,435,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="483,31,583,57"/>
+<area shape="rect" id="node4" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="215,107,416,133"/>
+</map>

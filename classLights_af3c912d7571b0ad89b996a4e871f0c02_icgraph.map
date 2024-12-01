@@ -1,0 +1,10 @@
+<map id="Lights::getStatusText" name="Lights::getStatusText">
+<area shape="rect" id="node1" title=" " alt="" coords="875,81,1033,108"/>
+<area shape="rect" id="node2" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="693,56,801,83"/>
+<area shape="rect" id="node3" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title=" " alt="" coords="668,107,827,133"/>
+<area shape="rect" id="node4" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title=" " alt="" coords="475,56,620,83"/>
+<area shape="rect" id="node7" href="$classLights__Web.html#ae64b3376392d07b955baa708988873ad" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,81,212,108"/>
+<area shape="rect" id="node8" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor" alt="" coords="493,157,601,184"/>
+<area shape="rect" id="node5" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Called every minute." alt="" coords="260,5,427,32"/>
+<area shape="rect" id="node6" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title=" " alt="" coords="261,56,425,83"/>
+</map>

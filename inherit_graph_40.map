@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structHempyCommonTemplate.html" title="&lt; Hempy wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,81,193,108"/>
+<area shape="rect" id="node2" href="$structHempyBucketCommand1.html" title="&lt; Hempy bucket wireless command" alt="" coords="241,5,429,32"/>
+<area shape="rect" id="node3" href="$structHempyBucketResponse1.html" title="&lt; Hempy bucket wireless response" alt="" coords="243,56,427,83"/>
+<area shape="rect" id="node4" href="$structHempyModuleCommand.html" title="&lt; Hempy module wireless command" alt="" coords="243,107,427,133"/>
+<area shape="rect" id="node5" href="$structHempyModuleResponse.html" title="&lt; Hempy module wireless response" alt="" coords="245,157,425,184"/>
+</map>

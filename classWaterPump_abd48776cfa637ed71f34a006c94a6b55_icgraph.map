@@ -1,0 +1,7 @@
+<map id="WaterPump::updateState" name="WaterPump::updateState">
+<area shape="rect" id="node1" title=" " alt="" coords="472,81,656,108"/>
+<area shape="rect" id="node2" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump." alt="" coords="235,5,424,32"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="Called every second." alt="" coords="5,81,187,108"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON." alt="" coords="243,107,415,133"/>
+<area shape="rect" id="node5" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF." alt="" coords="244,157,415,184"/>
+</map>

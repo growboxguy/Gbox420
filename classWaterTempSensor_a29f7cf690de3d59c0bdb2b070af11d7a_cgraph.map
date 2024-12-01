@@ -1,0 +1,7 @@
+<map id="WaterTempSensor::report" name="WaterTempSensor::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,192,83"/>
+<area shape="rect" id="node2" href="$classWaterTempSensor.html#a6a677b61b2c00852ac9439f57caeb866" title=" " alt="" coords="240,31,471,57"/>
+<area shape="rect" id="node5" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="291,81,419,108"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="539,5,601,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title=" " alt="" coords="519,56,621,83"/>
+</map>

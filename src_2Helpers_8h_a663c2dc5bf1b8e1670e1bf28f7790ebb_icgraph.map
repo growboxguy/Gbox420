@@ -1,0 +1,6 @@
+<map id="toText_wasteReservoirStates" name="toText_wasteReservoirStates">
+<area shape="rect" id="node1" title=" " alt="" coords="491,35,701,61"/>
+<area shape="rect" id="node2" href="$classWasteReservoir.html#a28f27db6a4589ed8a87b63e6b856d51e" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="228,35,443,61"/>
+<area shape="rect" id="node3" href="$classWasteReservoir.html#a5686e86c4d3b11d342c2ba21412eb363" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="7,5,178,32"/>
+<area shape="rect" id="node4" href="$classWasteReservoir__Web.html#a6590fadd9518979369db052335e3073f" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,180,98"/>
+</map>

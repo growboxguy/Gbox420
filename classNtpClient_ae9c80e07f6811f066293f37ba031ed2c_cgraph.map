@@ -1,0 +1,12 @@
+<map id="NtpClient::rtcUpdateTrigger" name="NtpClient::rtcUpdateTrigger">
+<area shape="rect" id="node1" title=" " alt="" coords="5,136,204,163"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a991d1372b160f7e8f0765fcba2d8a229" title="Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer..." alt="" coords="303,5,397,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a8e6d55730d00316c3d91e695ff9edfea" title="Lookup a DNS name in the background, result will be copied to ResultIP." alt="" coords="281,56,419,83"/>
+<area shape="rect" id="node6" href="$classNtpClient.html#ad4fbe2f887938e07906e90485df04064" title="Called with the NTP results, updates the Real Time Clock." alt="" coords="730,111,883,137"/>
+<area shape="rect" id="node7" href="$classNtpClient.html#a1e0477d1021ae3931a8786b76a11b8c2" title="Callback when IP of NTP server is resolved by DNS." alt="" coords="252,158,448,199"/>
+<area shape="rect" id="node8" href="$classNtpClient.html#a546f8fb51bbb69da4133e75a39dc9243" title=" " alt="" coords="509,165,663,192"/>
+<area shape="rect" id="node10" href="$Paradigm_2Tern__EE_2small_2portmacro_8h.html#a14d32f8130d3c0b212cfc751730b5b49" title=" " alt="" coords="325,275,375,301"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a387f09f64a276fd5a732b5a93e0d863e" title="Callback when DNS lookup is finished." alt="" coords="519,5,653,32"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ae6ed48070e7b97bc68878ed6954f3815" title="Conversions." alt="" coords="496,56,676,83"/>
+<area shape="rect" id="node9" href="$classNtpClient.html#a2eeea8c53f97e5699671203af4583825" title="Make an NTP request." alt="" coords="724,165,889,192"/>
+</map>

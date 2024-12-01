@@ -1,0 +1,4 @@
+<map id="AT91F_ADC_IsInterruptMasked" name="AT91F_ADC_IsInterruptMasked">
+<area shape="rect" id="node1" title="Test if ADC Interrupt is Masked." alt="" coords="5,13,227,39"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#aae4457c45ec7067c96363388c0b514cf" title="Return ADC Interrupt Mask Status." alt="" coords="275,5,493,47"/>
+</map>

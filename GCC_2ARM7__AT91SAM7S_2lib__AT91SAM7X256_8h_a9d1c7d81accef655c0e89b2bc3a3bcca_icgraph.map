@@ -1,0 +1,4 @@
+<map id="AT91F_PDC_IsRxEmpty" name="AT91F_PDC_IsRxEmpty">
+<area shape="rect" id="node1" title="Test if the current transfer descriptor has been filled." alt="" coords="249,5,423,32"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#aafc2ac73bfe8e6584b59dfa99dcc734d" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="5,5,201,32"/>
+</map>

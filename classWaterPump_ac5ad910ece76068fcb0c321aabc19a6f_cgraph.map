@@ -1,0 +1,8 @@
+<map id="WaterPump::startPump" name="WaterPump::startPump">
+<area shape="rect" id="node1" title="Turn the pump ON." alt="" coords="5,107,177,133"/>
+<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="243,5,392,32"/>
+<area shape="rect" id="node3" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="227,56,408,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="267,107,367,133"/>
+<area shape="rect" id="node5" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="239,157,395,184"/>
+<area shape="rect" id="node6" href="$classWaterPump.html#abd48776cfa637ed71f34a006c94a6b55" title=" " alt="" coords="225,208,409,235"/>
+</map>

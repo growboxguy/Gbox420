@@ -1,0 +1,6 @@
+<map id="run1min" name="run1min">
+<area shape="rect" id="node1" title="This function gets called infinitely every minute." alt="" coords="5,56,81,83"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_8cpp.html#a5268f782bf6b88ed210883b2387def30" title="Blink built&#45;in LED on Pico W &#45; Requires running cyw43_arch_init() before calling it!" alt="" coords="151,5,239,32"/>
+<area shape="rect" id="node3" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="309,81,452,108"/>
+<area shape="rect" id="node4" href="$classModule.html#a4919fab3f319c503da8423c144d30b43" title="Called every minute." alt="" coords="129,107,261,133"/>
+</map>

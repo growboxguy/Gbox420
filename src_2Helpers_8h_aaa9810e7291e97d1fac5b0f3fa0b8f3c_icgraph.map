@@ -1,0 +1,8 @@
+<map id="toText_waterPumpState" name="toText_waterPumpState">
+<area shape="rect" id="node1" title=" " alt="" coords="540,85,717,112"/>
+<area shape="rect" id="node2" href="$classWaterPump.html#a1b21ae284e50f44976a56b11103f13fb" title="Text representation of the current state: DISABLED/IDLE/RUNNING.." alt="" coords="293,35,480,61"/>
+<area shape="rect" id="node5" href="$classHempyModule__Web.html#a6121d9ffc6982b154e1793fae1e73dd6" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="287,85,486,112"/>
+<area shape="rect" id="node6" href="$classHempyModule__Web.html#ace9b597331679ad88a53543b25d42d8d" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="281,137,492,178"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#a1eacc6674b04fa3c5c04396af4c36138" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,191,32"/>
+<area shape="rect" id="node4" href="$classWaterPump__Web.html#a516bff0024a8990f544899f17fc287d1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,233,98"/>
+</map>

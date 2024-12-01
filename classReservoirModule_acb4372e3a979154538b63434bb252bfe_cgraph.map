@@ -1,0 +1,18 @@
+<map id="ReservoirModule::processCommand" name="ReservoirModule::processCommand">
+<area shape="rect" id="node1" title=" " alt="" coords="5,263,196,305"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="784,68,884,95"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="322,473,429,500"/>
+<area shape="rect" id="node4" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title=" " alt="" coords="305,169,445,196"/>
+<area shape="rect" id="node8" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title=" " alt="" coords="306,68,445,95"/>
+<area shape="rect" id="node10" href="$classModule.html#a58c519c3102d120deae618aba6b62ee5" title="Enable/disable reporting the current time to the Serial output." alt="" coords="271,372,480,399"/>
+<area shape="rect" id="node11" href="$classModule.html#ab71609e8b31d66336f8c22f0abe20cd7" title="Enable/disable sending JSON formatted reports to the Serial output." alt="" coords="270,423,481,449"/>
+<area shape="rect" id="node12" href="$classModule.html#a7c9d28b0e40ac3c2aa4e773a21790de9" title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial." alt="" coords="244,220,507,247"/>
+<area shape="rect" id="node13" href="$classModule.html#acb15da911f5673d2ffb152e9ffae1c06" title="Enable/disable reporting the remaining free memory to the Serial output." alt="" coords="259,271,491,297"/>
+<area shape="rect" id="node14" href="$classModule.html#a51b0bb25e26589592ad6f866cfdd34a8" title="Enable/disable sending wireless package exchange reports to the Serial output." alt="" coords="258,321,493,348"/>
+<area shape="rect" id="node15" href="$classWeightSensor.html#a537ea2f1d9b8c6fe99dd8f731584c6a5" title=" " alt="" coords="276,119,475,145"/>
+<area shape="rect" id="node16" href="$classReservoirModule.html#adfb2a142a73a552075f0eeabbac5fda2" title=" " alt="" coords="255,524,495,551"/>
+<area shape="rect" id="node5" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="576,119,715,145"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="555,220,736,247"/>
+<area shape="rect" id="node7" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="558,296,733,323"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="567,68,723,95"/>
+</map>

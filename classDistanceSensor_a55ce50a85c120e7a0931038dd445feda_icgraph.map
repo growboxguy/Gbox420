@@ -1,0 +1,5 @@
+<map id="DistanceSensor::getDistanceText" name="DistanceSensor::getDistanceText">
+<area shape="rect" id="node1" title=" " alt="" coords="228,35,464,61"/>
+<area shape="rect" id="node2" href="$classDistanceSensor.html#a5837fee9eae2a7e0254b0bb9677f3b43" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="7,5,178,32"/>
+<area shape="rect" id="node3" href="$classDistanceSensor__Web.html#af5655dfe650c276fb3dfd9fe278c16c1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,180,98"/>
+</map>

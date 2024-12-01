@@ -1,0 +1,5 @@
+<map id="HempyBucket::getEvaporationTargetText" name="HempyBucket::getEvaporationTargetText">
+<area shape="rect" id="node1" title=" " alt="" coords="260,27,480,69"/>
+<area shape="rect" id="node2" href="$classHempyBucket.html#aa2814754c5caf1aeda6646c84167b252" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="29,5,189,32"/>
+<area shape="rect" id="node3" href="$classHempyBucket__Web.html#a7b9a54d114cb8349542c752ccd130d27" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,57,212,98"/>
+</map>

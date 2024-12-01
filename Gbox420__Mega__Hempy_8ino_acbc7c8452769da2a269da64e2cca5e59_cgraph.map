@@ -1,0 +1,5 @@
+<map id="loadCallback" name="loadCallback">
+<area shape="rect" id="node1" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="5,13,112,39"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a8b31f72c52bd2e2e8e18a9eb6fe78bb3" title="Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was ope..." alt="" coords="160,5,392,47"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#a0947e2367d9d65fcca7c12aeb5dd4c28" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="440,13,691,39"/>
+</map>

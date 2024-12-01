@@ -1,0 +1,52 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,933,60,960"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad8d0a588e6932069b6e287987de4daf7" title="Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Rea..." alt="" coords="120,385,251,412"/>
+<area shape="rect" id="node30" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="134,781,237,808"/>
+<area shape="rect" id="node33" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad26859b669bd243e9131ca995b8e5695" title="Initialize the Real Time Clock and set a stating date." alt="" coords="155,832,215,859"/>
+<area shape="rect" id="node34" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a97d8b160bce904ab506fae1026aba9b8" title="Runs every 30 min." alt="" coords="148,883,223,909"/>
+<area shape="rect" id="node37" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a90d6eaaa8e5d1404ea2c8e249a5c7480" title="Runs every 5 sec." alt="" coords="148,933,223,960"/>
+<area shape="rect" id="node47" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#aba7879eba22fe32d15e3a81039f1d70d" title="Runs every 30 min." alt="" coords="144,984,227,1011"/>
+<area shape="rect" id="node48" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a55fe7b2ccfb2c73ac2ab764e17377214" title="Runs every 1 min." alt="" coords="148,1035,223,1061"/>
+<area shape="rect" id="node49" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#aff744e08d80247742d7e87fe0b85ec0b" title="Process incoming command sent from the Serial Monitor Expected text command format: NAME_COMMAND ,..." alt="" coords="125,1085,245,1112"/>
+<area shape="rect" id="node50" href="$task_8h.html#aaf9dca1065c60abdeb309d56ab7293cb" title=" " alt="" coords="108,1136,263,1163"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad1c0c74a2921f31703fa197d56dd9ff8" title="Connect to a WiFi network." alt="" coords="378,461,479,488"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#aed38ad4eb47e5725f1a5972264a4b85a" title="Controls the onboard LED, slow blink (1sec): MQTT connected, rapid blink (0.25sec): MQTT disconnected..." alt="" coords="386,512,471,539"/>
+<area shape="rect" id="node5" href="$classMqttClient.html#a20417947bb527b89012addbec3b957bd" title="Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect." alt="" coords="315,693,542,720"/>
+<area shape="rect" id="node14" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a2b8862f1ec6136c43413769f01b16a2d" title="MQTT callback when a data arrives on a Subscribed topic." alt="" coords="357,81,501,108"/>
+<area shape="rect" id="node19" href="$classMqttClient.html#ab8df6a8cbb8ceae8d31ffc2c0fd13543" title="true: Connected to MQTT server, false: not connected" alt="" coords="599,259,808,285"/>
+<area shape="rect" id="node20" href="$classMqttClient.html#a78eb11e38ea5ff1379363574a29fec71" title="true: Connected to MQTT server, false: not connected" alt="" coords="311,157,547,184"/>
+<area shape="rect" id="node23" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a1b70a166511fe0fad23ca4a4fb7404d4" title="DNS client section." alt="" coords="377,208,480,235"/>
+<area shape="rect" id="node24" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a61533efe33a33f91f874a9e3ec0828d7" title="Make an NTP request." alt="" coords="381,309,477,336"/>
+<area shape="rect" id="node27" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="923,512,1021,539"/>
+<area shape="rect" id="node28" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a9222e068300b4918bbdffc137976778b" title="Network Time Protocol (NTP) section." alt="" coords="357,360,500,387"/>
+<area shape="rect" id="node29" href="$Gbox420__PicoW_2Gbox420__PicoW__FreeRTOS_2Components_2Helpers_8cpp.html#ad88aa5cb3d2f261a5c4127af31e430d2" title=" " alt="" coords="359,411,498,437"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a991d1372b160f7e8f0765fcba2d8a229" title="Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer..." alt="" coords="657,613,750,640"/>
+<area shape="rect" id="node8" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a8e6d55730d00316c3d91e695ff9edfea" title="Lookup a DNS name in the background, result will be copied to ResultIP." alt="" coords="634,832,773,859"/>
+<area shape="rect" id="node10" href="$classMqttClient.html#a6c0a91af5c408441549297d1b560b415" title="Actually connect to the MQTT server." alt="" coords="881,744,1063,771"/>
+<area shape="rect" id="node12" href="$classMqttClient.html#a7ef9b5c7a2c44b2542270f7dea433439" title="Callback when IP of the MQTT server is found." alt="" coords="595,766,812,807"/>
+<area shape="rect" id="node13" href="$Paradigm_2Tern__EE_2small_2portmacro_8h.html#a14d32f8130d3c0b212cfc751730b5b49" title=" " alt="" coords="678,664,729,691"/>
+<area shape="rect" id="node7" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a387f09f64a276fd5a732b5a93e0d863e" title="Callback when DNS lookup is finished." alt="" coords="905,613,1039,640"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ae6ed48070e7b97bc68878ed6954f3815" title="Conversions." alt="" coords="882,832,1062,859"/>
+<area shape="rect" id="node11" href="$classMqttClient.html#aeba49314a345fffee0198d7cdc68688c" title="Callback with the connection result." alt="" coords="1143,737,1326,778"/>
+<area shape="rect" id="node15" href="$Gbox420__PicoW_2Gbox420__PicoW__FreeRTOS_2Components_2420Common_8h.html#ab7e856a5279b80b7509b648462dd6c65" title="Checks if Command starts with the Name of the instance followed by _." alt="" coords="653,56,753,83"/>
+<area shape="rect" id="node16" href="$classModule.html#a1742ab8f8badf2cd2dc08b7359b6b4c3" title="MQTT data received from the Subscribed topic." alt="" coords="603,107,803,133"/>
+<area shape="rect" id="node18" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title=" " alt="" coords="614,5,793,32"/>
+<area shape="rect" id="node17" href="$classModule.html#a2127bfc287b97c496390dda88d491bb0" title="Notifies the subscribed components of an incoming command. Command: combination of the Name of the co..." alt="" coords="860,107,1084,133"/>
+<area shape="rect" id="node21" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="672,208,735,235"/>
+<area shape="rect" id="node22" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a2f0058f713e69ae9038d51e2c8f5b97c" title=" " alt="" coords="615,157,792,184"/>
+<area shape="rect" id="node25" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a023c569a8091fd491e6d23a75224202c" title="Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer..." alt="" coords="658,411,749,437"/>
+<area shape="rect" id="node26" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae09f73b656e9cb4867d331bbf68037b9" title="Callback when DNS lookup is finished." alt="" coords="906,411,1038,437"/>
+<area shape="rect" id="node31" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="379,803,479,829"/>
+<area shape="rect" id="node32" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="375,752,482,779"/>
+<area shape="rect" id="node35" href="$classModule.html#a4919fab3f319c503da8423c144d30b43" title="Called every minute." alt="" coords="906,889,1038,916"/>
+<area shape="rect" id="node36" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="1163,889,1306,916"/>
+<area shape="rect" id="node38" href="$classModule.html#aa5dcae35bb06a8147b532662c5b8ad76" title="Called every second." alt="" coords="364,933,493,960"/>
+<area shape="rect" id="node39" href="$classCommon.html#a6b9e7038ddeae57f3f62639a49450f1b" title="Called every second." alt="" coords="633,984,773,1011"/>
+<area shape="rect" id="node40" href="$classModule.html#a7ed8e04ba630f6734ac15d06c4eae999" title="Triggers all runs." alt="" coords="645,933,761,960"/>
+<area shape="rect" id="node41" href="$classModule.html#afafd4dd05388809bc15fa227edfdb2f2" title="Called every 30 minutes." alt="" coords="902,952,1042,979"/>
+<area shape="rect" id="node43" href="$classModule.html#a6d4e40d35b2dcffcff7c767b5f37b15a" title="Called every 5 seconds." alt="" coords="907,1079,1037,1105"/>
+<area shape="rect" id="node42" href="$classCommon.html#a8f4d4577c25638907f3cf80e80fd8897" title="Called every 30 minutes." alt="" coords="1159,952,1310,979"/>
+<area shape="rect" id="node44" href="$classModule.html#a2cbfb604efbddf9888271872e53a5184" title="MQTT reporting &#45; Handles custom reporting frequencies." alt="" coords="1132,1079,1337,1105"/>
+<area shape="rect" id="node45" href="$classModule.html#a68387358b8cb0aa1e94a8d088d7b2197" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="1385,1053,1528,1080"/>
+<area shape="rect" id="node46" href="$classCommon.html#aeabfb243855b2166e293267e8e431089" title="Called every 5 seconds." alt="" coords="1165,1129,1305,1156"/>
+</map>

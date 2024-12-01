@@ -1,0 +1,12 @@
+<map id="PressureSensor_Web::commandEvent" name="PressureSensor_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,74,163,115"/>
+<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="231,5,389,32"/>
+<area shape="rect" id="node3" href="$classPressureSensor.html#a9a97fa923ea86256eadff802549f0081" title=" " alt="" coords="211,157,409,184"/>
+<area shape="rect" id="node8" href="$classPressureSensor.html#af4ea57467bb0d6ae89b0f1a65c7863da" title=" " alt="" coords="215,56,405,83"/>
+<area shape="rect" id="node10" href="$classPressureSensor.html#a5c46cbf770e053a41dad7ee63549ae7e" title=" " alt="" coords="218,107,402,133"/>
+<area shape="rect" id="node4" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="476,107,615,133"/>
+<area shape="rect" id="node6" href="$classCommon.html#a47629941804df0f20505ae254421083f" title="Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the n..." alt="" coords="457,157,633,184"/>
+<area shape="rect" id="node7" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="514,208,577,235"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="681,107,781,133"/>
+<area shape="rect" id="node9" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="471,56,620,83"/>
+</map>

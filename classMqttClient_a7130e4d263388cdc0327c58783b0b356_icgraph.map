@@ -1,0 +1,4 @@
+<map id="MqttClient::mqttCheck" name="MqttClient::mqttCheck">
+<area shape="rect" id="node1" title="Check connected status &#45; Reconnect to MQTT server in the background if disconnected." alt="" coords="205,5,375,32"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#af7b061686a1e17fcbecf6c693175b521" title="Called every minute." alt="" coords="5,5,157,32"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="ModuleSkeleton" name="ModuleSkeleton">
+<area shape="rect" id="node1" title="&lt; This is a template for creating new modules" alt="" coords="5,409,132,436"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="151,5,232,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="127,305,197,332"/>
+<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="365,149,455,175"/>
+<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="485,409,548,436"/>
+</map>

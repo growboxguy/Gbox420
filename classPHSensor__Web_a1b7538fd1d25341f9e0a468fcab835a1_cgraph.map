@@ -1,0 +1,11 @@
+<map id="PHSensor_Web::commandEvent" name="PHSensor_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,81,235,108"/>
+<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="289,5,447,32"/>
+<area shape="rect" id="node3" href="$classPHSensor.html#a41bd303fbad556aaf714da2f0bf4a69c" title=" " alt="" coords="283,56,453,83"/>
+<area shape="rect" id="node7" href="$classPHSensor.html#ae9b41f458fafd9ae475d9bfbbb27f8d5" title=" " alt="" coords="294,107,442,133"/>
+<area shape="rect" id="node8" href="$classPHSensor.html#aefd9f4f73636b8827a22b8246cbc4dee" title=" " alt="" coords="291,157,445,184"/>
+<area shape="rect" id="node4" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="507,107,645,133"/>
+<area shape="rect" id="node6" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="501,56,651,83"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="699,107,799,133"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="545,157,607,184"/>
+</map>

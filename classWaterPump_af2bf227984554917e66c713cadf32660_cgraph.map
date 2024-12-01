@@ -1,0 +1,14 @@
+<map id="WaterPump::refresh_Sec" name="WaterPump::refresh_Sec">
+<area shape="rect" id="node1" title="Called every second." alt="" coords="5,157,187,184"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="260,56,399,83"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump." alt="" coords="235,157,424,184"/>
+<area shape="rect" id="node7" href="$classWaterPump.html#abd48776cfa637ed71f34a006c94a6b55" title=" " alt="" coords="472,208,656,235"/>
+<area shape="rect" id="node8" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="489,309,639,336"/>
+<area shape="rect" id="node9" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="247,5,412,32"/>
+<area shape="rect" id="node10" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON." alt="" coords="243,259,415,285"/>
+<area shape="rect" id="node12" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF." alt="" coords="244,107,415,133"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="514,56,614,83"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="473,157,655,184"/>
+<area shape="rect" id="node6" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="485,107,643,133"/>
+<area shape="rect" id="node11" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="486,259,642,285"/>
+</map>

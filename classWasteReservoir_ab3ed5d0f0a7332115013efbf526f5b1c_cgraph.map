@@ -1,0 +1,4 @@
+<map id="WasteReservoir::clearReservation" name="WasteReservoir::clearReservation">
+<area shape="rect" id="node1" title="NEEDS TO BE CALLED at the end if the watering, makes the Waste Reservoir available." alt="" coords="5,5,248,32"/>
+<area shape="rect" id="node2" href="$classWasteReservoir.html#aeebbc47dc6d2f33e6a4179b8d54f1ea6" title=" " alt="" coords="296,5,507,32"/>
+</map>

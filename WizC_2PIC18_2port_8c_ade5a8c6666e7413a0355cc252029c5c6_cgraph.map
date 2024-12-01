@@ -1,0 +1,7 @@
+<map id="xPortStartScheduler" name="xPortStartScheduler">
+<area shape="rect" id="node1" title="start the freertos scheduler, go to the first task" alt="" coords="5,81,156,108"/>
+<area shape="rect" id="node2" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#a6303e1f258cbdc1f970ce579cc015623" title="PendSV Exception handler." alt="" coords="228,5,357,32"/>
+<area shape="rect" id="node3" href="$IAR_2V850ES_2portmacro_8h.html#a716d176e9130fa97ac875a31e7453605" title=" " alt="" coords="204,56,381,83"/>
+<area shape="rect" id="node4" href="$Tick_8c.html#a97b27e7afea96574a70aab311e350ac0" title=" " alt="" coords="237,107,349,133"/>
+<area shape="rect" id="node5" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce" title="SVC Handler." alt="" coords="239,157,346,184"/>
+</map>

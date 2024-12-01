@@ -1,0 +1,11 @@
+<map id="toText_temp" name="toText_temp">
+<area shape="rect" id="node1" title=" " alt="" coords="557,152,660,179"/>
+<area shape="rect" id="node2" href="$classDHTSensor.html#a04d6ece31e3ac088bc73966dcd19fa53" title=" " alt="" coords="301,64,487,91"/>
+<area shape="rect" id="node5" href="$classWaterTempSensor.html#a6a677b61b2c00852ac9439f57caeb866" title=" " alt="" coords="279,123,509,149"/>
+<area shape="rect" id="node8" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console." alt="" coords="311,174,477,215"/>
+<area shape="rect" id="node9" href="$classReservoirModule__Web.html#a1436039e2ad07079c50f124e7e69dbfd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="307,239,481,281"/>
+<area shape="rect" id="node3" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,189,32"/>
+<area shape="rect" id="node4" href="$classDHTSensor__Web.html#a6c513b8a53d86dcc559c150966f21673" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,231,98"/>
+<area shape="rect" id="node6" href="$classWaterTempSensor.html#a29f7cf690de3d59c0bdb2b070af11d7a" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="25,123,211,149"/>
+<area shape="rect" id="node7" href="$classWaterTempSensor__Web.html#a93af34f21ac0289005b50c32e1443da4" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="31,174,205,215"/>
+</map>

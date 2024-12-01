@@ -1,0 +1,7 @@
+<map id="toText_aeroTankState" name="toText_aeroTankState">
+<area shape="rect" id="node1" title=" " alt="" coords="511,56,673,83"/>
+<area shape="rect" id="node2" href="$classAeroponics__Tank.html#aa565558ec6403ee5c90f2ed9715721ec" title=" " alt="" coords="237,5,458,32"/>
+<area shape="rect" id="node4" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="256,56,439,83"/>
+<area shape="rect" id="node5" href="$classAeroModule__Web.html#adec22b7f0e86847777d0868fda416f64" title="Set values on the ESP&#45;link website when it refreshes." alt="" coords="232,107,463,149"/>
+<area shape="rect" id="node3" href="$classAeroponics__Tank.html#ad9c67a7486448620ccfa511c9085ace4" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,184,32"/>
+</map>

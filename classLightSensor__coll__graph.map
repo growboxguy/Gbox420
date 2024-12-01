@@ -1,0 +1,7 @@
+<map id="LightSensor" name="LightSensor">
+<area shape="rect" id="node1" title="&lt; LM393 Light sensor" alt="" coords="5,409,104,436"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="137,5,218,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="113,305,183,332"/>
+<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="351,149,441,175"/>
+<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="471,409,534,436"/>
+</map>

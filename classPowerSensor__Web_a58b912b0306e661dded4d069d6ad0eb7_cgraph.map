@@ -1,0 +1,9 @@
+<map id="PowerSensor_Web::websiteEvent_Refresh" name="PowerSensor_Web::websiteEvent_Refresh">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,99,205,141"/>
+<area shape="rect" id="node2" href="$classPowerSensor.html#ab7cb032b20b3fa3b44f27ccd0eddf41f" title=" " alt="" coords="253,5,464,32"/>
+<area shape="rect" id="node4" href="$classPowerSensor.html#a73604eb01facef251ed6b5e6c2ce474d" title=" " alt="" coords="255,56,462,83"/>
+<area shape="rect" id="node5" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="284,107,433,133"/>
+<area shape="rect" id="node6" href="$classPowerSensor.html#a059f0c4355e89a0536c31f3eda652743" title=" " alt="" coords="257,157,460,184"/>
+<area shape="rect" id="node7" href="$classPowerSensor.html#a25ab8eb20467b230004bdbfb4176fb36" title=" " alt="" coords="253,208,464,235"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="512,107,575,133"/>
+</map>

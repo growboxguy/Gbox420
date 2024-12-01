@@ -1,0 +1,5 @@
+<map id="DHTSensor::getHumidityText" name="DHTSensor::getHumidityText">
+<area shape="rect" id="node1" title=" " alt="" coords="279,35,489,61"/>
+<area shape="rect" id="node2" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,189,32"/>
+<area shape="rect" id="node3" href="$classDHTSensor__Web.html#a6c513b8a53d86dcc559c150966f21673" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,231,98"/>
+</map>

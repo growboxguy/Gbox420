@@ -1,0 +1,7 @@
+<map id="Switch_PWM::report" name="Switch_PWM::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,157,83"/>
+<area shape="rect" id="node2" href="$classSwitch__PWM.html#a18bd1ec7d12bb825f62231a3dfbdae3c" title=" " alt="" coords="205,31,433,57"/>
+<area shape="rect" id="node5" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="255,81,383,108"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="521,5,584,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title=" " alt="" coords="481,56,624,83"/>
+</map>

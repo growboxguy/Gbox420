@@ -1,0 +1,4 @@
+<map id="mqttReceived" name="mqttReceived">
+<area shape="rect" id="node1" title="Called when an MQTT command is received. Extracts the command from the MQTT topic and gets the data p..." alt="" coords="141,5,255,32"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Hempy_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in ..." alt="" coords="5,5,93,32"/>
+</map>

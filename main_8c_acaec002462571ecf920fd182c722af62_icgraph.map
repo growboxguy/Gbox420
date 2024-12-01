@@ -1,0 +1,4 @@
+<map id="exampleTask" name="exampleTask">
+<area shape="rect" id="node1" title=" " alt="" coords="108,5,216,32"/>
+<area shape="rect" id="node2" href="$main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
+</map>

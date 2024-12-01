@@ -1,0 +1,14 @@
+<map id="DEVModule_Web::DEVModule_Web" name="DEVModule_Web::DEVModule_Web">
+<area shape="rect" id="node1" title="constructor" alt="" coords="5,181,256,208"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a979458d974de49fed6cef1e7512a1231" title="Add a Log entry that is displayed on the web interface." alt="" coords="321,5,495,32"/>
+<area shape="rect" id="node3" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method." alt="" coords="304,57,512,98"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="585,181,685,208"/>
+<area shape="rect" id="node5" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="304,174,512,215"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a732e9ff3962bf4c4af4006bf43670645" title="Calls the websiteEvent_Load() method of the Subscriber when an ESP&#45;link website is loaded." alt="" coords="307,239,509,281"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a054dbad7ecba4834b7a589c29748c422" title="Calls the websiteEvent_Refresh() method of the Subscriber when an ESP&#45;link website is refreshing." alt="" coords="307,305,509,346"/>
+<area shape="rect" id="node8" href="$classCommon.html#a98e68f7ec1e11922cafe3f07df95e30e" title=" " alt="" coords="345,371,471,397"/>
+<area shape="rect" id="node9" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="564,295,707,321"/>
+<area shape="rect" id="node10" href="$classCommon.html#a6b9e7038ddeae57f3f62639a49450f1b" title="Called every second." alt="" coords="565,345,705,372"/>
+<area shape="rect" id="node11" href="$classCommon.html#a8f4d4577c25638907f3cf80e80fd8897" title="Called every 30 minutes." alt="" coords="560,396,711,423"/>
+<area shape="rect" id="node12" href="$classCommon.html#aeabfb243855b2166e293267e8e431089" title="Called every 5 seconds." alt="" coords="565,447,705,473"/>
+</map>

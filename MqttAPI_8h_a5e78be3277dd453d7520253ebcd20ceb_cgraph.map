@@ -1,0 +1,5 @@
+<map id="mqttConnect_Callback" name="mqttConnect_Callback">
+<area shape="rect" id="node1" title="Callback with the connection result." alt="" coords="5,31,175,57"/>
+<area shape="rect" id="node2" href="$MqttAPI_8cpp.html#a41e3e3eb9241b4f33a34396166a9e0f4" title="Callback when a new message is received on a subscribed topic: Gets the payload." alt="" coords="224,5,431,32"/>
+<area shape="rect" id="node3" href="$MqttAPI_8cpp.html#a6d6639cd1cda857880156ef6410f832a" title="Callback when a new message is received on a subscribed topic: Gets the topic." alt="" coords="223,56,432,83"/>
+</map>

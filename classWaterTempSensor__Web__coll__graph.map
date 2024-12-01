@@ -1,0 +1,11 @@
+<map id="WaterTempSensor_Web" name="WaterTempSensor_Web">
+<area shape="rect" id="node1" title="&lt; DS18B20 water temperature sensor &#45; website component" alt="" coords="218,681,393,708"/>
+<area shape="rect" id="node2" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor" alt="" coords="5,409,144,436"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="191,5,273,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="87,305,158,332"/>
+<area shape="rect" id="node5" href="$classMqttClient.html" title=" " alt="" coords="296,149,387,175"/>
+<area shape="rect" id="node6" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="345,409,407,436"/>
+<area shape="rect" id="node7" href="$classCommon__Web.html" title=" " alt="" coords="450,409,566,436"/>
+<area shape="rect" id="node8" href="$classModule__Web.html" title=" " alt="" coords="253,592,358,619"/>
+<area shape="rect" id="node9" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="317,494,414,521"/>
+</map>

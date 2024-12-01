@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_GetOutputDataStatus" name="AT91F_PIO_GetOutputDataStatus">
+<area shape="rect" id="node1" title="Return PIO Output Data Status." alt="" coords="300,5,537,32"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#adbc91a987d3381db8fb10e88f2870349" title="Test if PIO Output Data Status is Set." alt="" coords="5,5,252,32"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="WasteReservoir_Web" name="WasteReservoir_Web">
+<area shape="rect" id="node1" title="&lt; Weight sensor load cell &#45; website component" alt="" coords="327,695,486,721"/>
+<area shape="rect" id="node2" href="$classWasteReservoir.html" title="&lt; Weight sensor load cell" alt="" coords="55,507,179,534"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="181,5,262,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="177,305,247,332"/>
+<area shape="rect" id="node5" href="$classMqttClient.html" title=" " alt="" coords="395,149,485,175"/>
+<area shape="rect" id="node6" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="422,409,485,436"/>
+<area shape="rect" id="node7" href="$classWeightSensor.html" title="&lt; Weight sensor load cell" alt="" coords="43,409,154,436"/>
+<area shape="rect" id="node8" href="$classCommon__Web.html" title=" " alt="" coords="551,409,667,436"/>
+<area shape="rect" id="node9" href="$classModule__Web.html" title=" " alt="" coords="354,605,459,632"/>
+<area shape="rect" id="node10" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="417,507,514,534"/>
+</map>

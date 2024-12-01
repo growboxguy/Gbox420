@@ -1,0 +1,13 @@
+<map id="Aeroponics_Tank_Web::websiteEvent_Refresh" name="Aeroponics_Tank_Web::websiteEvent_Refresh">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,154,180,195"/>
+<area shape="rect" id="node2" href="$classAeroponics__Tank.html#a4fb4cc25f850e430031e2ef64bc7f9ad" title=" " alt="" coords="252,95,439,137"/>
+<area shape="rect" id="node5" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="271,212,420,239"/>
+<area shape="rect" id="node6" href="$classPressureSensor.html#a6e1896fefa9311a854b20552fdd6f023" title=" " alt="" coords="228,44,463,71"/>
+<area shape="rect" id="node8" href="$classPressurePump.html#a0f3526af1d0b800cb1a1a43e9edf064c" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="243,161,448,188"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html#a0c9c9616ee380d0e4dd0ccc41d7e7a0f" title=" " alt="" coords="241,263,450,305"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="583,107,645,133"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a50e0796918ffab51d100465832e5cb1a" title=" " alt="" coords="551,56,677,83"/>
+<area shape="rect" id="node7" href="$classPressureSensor.html#a39f2f08252640aeb9cf9c094ac796ed6" title=" " alt="" coords="511,5,717,32"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad8aa64fccaa28ab3a26b3ec086958e2b" title=" " alt="" coords="516,161,712,188"/>
+<area shape="rect" id="node11" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="562,271,666,297"/>
+</map>

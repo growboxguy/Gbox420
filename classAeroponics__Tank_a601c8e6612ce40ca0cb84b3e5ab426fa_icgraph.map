@@ -1,0 +1,4 @@
+<map id="Aeroponics_Tank::setSprayOnOff" name="Aeroponics_Tank::setSprayOnOff">
+<area shape="rect" id="node1" title=" " alt="" coords="220,5,416,47"/>
+<area shape="rect" id="node2" href="$classAeroponics__Tank__Web.html#a0f1ce806b918d0660fcdfb5e7e8012cd" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,172,47"/>
+</map>

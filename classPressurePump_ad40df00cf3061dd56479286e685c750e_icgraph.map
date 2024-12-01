@@ -1,0 +1,4 @@
+<map id="PressurePump::getPrimingTimeText" name="PressurePump::getPrimingTimeText">
+<area shape="rect" id="node1" title=" " alt="" coords="216,5,411,47"/>
+<area shape="rect" id="node2" href="$classPressurePump.html#aaeba6ce8e078a4002d8de467d3685419" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,13,168,39"/>
+</map>

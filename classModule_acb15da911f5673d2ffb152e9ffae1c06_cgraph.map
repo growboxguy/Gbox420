@@ -1,0 +1,5 @@
+<map id="Module::setSerialReportMemory" name="Module::setSerialReportMemory">
+<area shape="rect" id="node1" title="Enable/disable reporting the remaining free memory to the Serial output." alt="" coords="5,31,237,57"/>
+<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="285,5,467,32"/>
+<area shape="rect" id="node3" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="289,56,463,83"/>
+</map>

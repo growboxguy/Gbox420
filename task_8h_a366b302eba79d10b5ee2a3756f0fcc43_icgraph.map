@@ -1,0 +1,14 @@
+<map id="vTaskSuspendAll" name="vTaskSuspendAll">
+<area shape="rect" id="node1" title=" " alt="" coords="484,233,615,260"/>
+<area shape="rect" id="node2" href="$GCC_2AVR32__UC3_2port_8c.html#ae3b0643b1ed2a627fda68cb6622fca54" title=" " alt="" coords="291,5,406,32"/>
+<area shape="rect" id="node3" href="$heap__1_8c.html#a0379669d07d76cc81e3028123113b271" title="Allocates memory from heap." alt="" coords="295,56,402,83"/>
+<area shape="rect" id="node4" href="$GCC_2AVR32__UC3_2port_8c.html#a61a86bc5464ae92b24595af69fd4c75f" title=" " alt="" coords="293,107,405,133"/>
+<area shape="rect" id="node5" href="$event__groups_8c.html#a6939faca89fc4ba52fa8288527042464" title=" " alt="" coords="274,157,423,184"/>
+<area shape="rect" id="node6" href="$heap__3_8c.html#a1e7cea2fd1bc894ea3b5f5e8179d259b" title="Frees the previously allocated memory." alt="" coords="307,208,391,235"/>
+<area shape="rect" id="node7" href="$portable_8h.html#abbecc6cff952357f60cce5014ecbe470" title=" " alt="" coords="275,259,422,285"/>
+<area shape="rect" id="node8" href="$event__groups_8c.html#a9ac7cd970f50e2e50a494b656e0eb239" title=" " alt="" coords="273,309,425,336"/>
+<area shape="rect" id="node10" href="$event__groups_8c.html#ac38db316f0928c7ddaacb677a75dbc03" title=" " alt="" coords="41,360,178,387"/>
+<area shape="rect" id="node11" href="$event__groups_8c.html#a379c5cca4552d3d8acd4c51e8220a6c3" title=" " alt="" coords="269,411,429,437"/>
+<area shape="rect" id="node12" href="$queue_8h.html#a124567e9fc3a37b99f7e184ae98de9f8" title=" " alt="" coords="261,461,436,488"/>
+<area shape="rect" id="node9" href="$event__groups_8c.html#ac170619df2ab2c07589dc02d8fd4b2f9" title=" " alt="" coords="5,309,213,336"/>
+</map>

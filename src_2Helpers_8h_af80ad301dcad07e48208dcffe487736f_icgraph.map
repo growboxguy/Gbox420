@@ -1,0 +1,9 @@
+<map id="toText_minute" name="toText_minute">
+<area shape="rect" id="node1" title=" " alt="" coords="543,107,657,134"/>
+<area shape="rect" id="node2" href="$classAeroponics__NoTank.html#abbf1b5840b06008b656dc693ad636de8" title=" " alt="" coords="285,5,442,47"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank.html#aa08cd458e6ed3d4fb4974fa3b949758d" title=" " alt="" coords="232,137,495,163"/>
+<area shape="rect" id="node6" href="$classAeroponics__NoTank.html#a56c21fdf4d236a8d52f76e68aa37aa64" title=" " alt="" coords="285,71,442,112"/>
+<area shape="rect" id="node7" href="$classAeroponics__Tank.html#a35cd16473930e5c7c6b5b7de1d87629d" title=" " alt="" coords="266,188,461,229"/>
+<area shape="rect" id="node3" href="$classAeroponics__NoTank.html#a073c3d9b4469335c54cfc4f5115c13ca" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="16,56,173,97"/>
+<area shape="rect" id="node5" href="$classAeroponics__Tank.html#ad9c67a7486448620ccfa511c9085ace4" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,151,184,178"/>
+</map>

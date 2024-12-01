@@ -1,0 +1,28 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node1" title=" " alt="" coords="5,157,64,184"/>
+<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="112,5,247,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="309,81,409,108"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="128,157,231,184"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="504,157,580,184"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Reservoir_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="143,259,216,285"/>
+<area shape="rect" id="node25" href="$Gbox420__Nano__Reservoir_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="505,309,579,336"/>
+<area shape="rect" id="node26" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="129,107,229,133"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="320,5,399,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="306,157,413,184"/>
+<area shape="rect" id="node8" href="$classModule.html#a4919fab3f319c503da8423c144d30b43" title="Called every minute." alt="" coords="664,183,796,209"/>
+<area shape="rect" id="node9" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="879,183,1022,209"/>
+<area shape="rect" id="node11" href="$classModule.html#aa5dcae35bb06a8147b532662c5b8ad76" title="Called every second." alt="" coords="295,259,424,285"/>
+<area shape="rect" id="node12" href="$classCommon.html#a6b9e7038ddeae57f3f62639a49450f1b" title="Called every second." alt="" coords="472,208,612,235"/>
+<area shape="rect" id="node13" href="$classModule.html#a7ed8e04ba630f6734ac15d06c4eae999" title="Triggers all runs." alt="" coords="484,259,600,285"/>
+<area shape="rect" id="node14" href="$classModule.html#afafd4dd05388809bc15fa227edfdb2f2" title="Called every 30 minutes." alt="" coords="660,245,800,272"/>
+<area shape="rect" id="node16" href="$classModule.html#a6d4e40d35b2dcffcff7c767b5f37b15a" title="Called every 5 seconds." alt="" coords="665,309,795,336"/>
+<area shape="rect" id="node15" href="$classCommon.html#a8f4d4577c25638907f3cf80e80fd8897" title="Called every 30 minutes." alt="" coords="875,233,1026,260"/>
+<area shape="rect" id="node17" href="$classModule.html#a2cbfb604efbddf9888271872e53a5184" title="MQTT reporting &#45; Handles custom reporting frequencies." alt="" coords="848,284,1053,311"/>
+<area shape="rect" id="node20" href="$classModule.html#a68387358b8cb0aa1e94a8d088d7b2197" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="1122,335,1265,361"/>
+<area shape="rect" id="node24" href="$classCommon.html#aeabfb243855b2166e293267e8e431089" title="Called every 5 seconds." alt="" coords="881,385,1021,412"/>
+<area shape="rect" id="node18" href="$classModule.html#a1b372740e9f839c26d77e1a2df7d6980" title="Creates a JSON array: [&quot;Log1&quot;,&quot;Log2&quot;,&quot;Log3&quot;,...,&quot;LogN&quot;] and loads it to LongMessage buffer." alt="" coords="1101,183,1285,209"/>
+<area shape="rect" id="node19" href="$classModule.html#a42502cfadc04ea0f24a034707f65407f" title="MQTT reporting &#45; Send a JSON formatted report to an MQTT broker." alt="" coords="1115,233,1271,260"/>
+<area shape="rect" id="node23" href="$classModule.html#a374d44fec4ba3ff136c3003ff889cab3" title="Converts the module settings into a JSON object and loads it into the LongMessage buffer." alt="" coords="1105,284,1281,311"/>
+<area shape="rect" id="node21" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad5a3ae6e579485aeadf31d026ab20a6e" title="&lt; Debug" alt="" coords="1335,309,1459,336"/>
+<area shape="rect" id="node22" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="1333,360,1461,387"/>
+</map>

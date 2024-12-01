@@ -1,0 +1,5 @@
+<map id="DnsLookup" name="DnsLookup">
+<area shape="rect" id="node1" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="228,5,321,32"/>
+<area shape="rect" id="node2" href="$RealTimeClock-FreeRTOS_8cpp.html#a9bf711e4d08e9160242b39bd9acf8617" title="Use NTP to update the Real Time Clock." alt="" coords="108,5,180,32"/>
+<area shape="rect" id="node3" href="$RealTimeClock-FreeRTOS_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
+</map>

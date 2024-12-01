@@ -1,0 +1,38 @@
+<map id="Sound::playOffSound" name="Sound::playOffSound">
+<area shape="rect" id="node1" title=" " alt="" coords="1028,528,1185,555"/>
+<area shape="rect" id="node2" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants." alt="" coords="787,31,958,57"/>
+<area shape="rect" id="node6" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="Disable watering logic &#45; Takes time to apply." alt="" coords="789,259,957,285"/>
+<area shape="rect" id="node11" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump." alt="" coords="769,477,976,504"/>
+<area shape="rect" id="node17" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump." alt="" coords="778,696,967,723"/>
+<area shape="rect" id="node19" href="$classLights.html#ac6d200fd34e102cea67cf24d4f017284" title="Enable/disable slowly fadeing in and out the lights when the Status changes." alt="" coords="795,747,951,773"/>
+<area shape="rect" id="node20" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title=" " alt="" coords="793,183,952,209"/>
+<area shape="rect" id="node25" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title=" " alt="" coords="794,361,951,402"/>
+<area shape="rect" id="node26" href="$classAeroponics__Tank.html#a601c8e6612ce40ca0cb84b3e5ab426fa" title=" " alt="" coords="775,579,971,621"/>
+<area shape="rect" id="node27" href="$classAeroponics__Tank.html#a7436a7c296a4c0899c87e5a8554b5bdc" title="Stop spraying." alt="" coords="775,528,970,555"/>
+<area shape="rect" id="node28" href="$classACMotor.html#a5d49f0694e16974be1fae61059fd3ed0" title="Stop the AC Motor &#45; Takes time to apply." alt="" coords="815,797,930,824"/>
+<area shape="rect" id="node30" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF." alt="" coords="779,427,967,453"/>
+<area shape="rect" id="node31" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF." alt="" coords="787,645,958,672"/>
+<area shape="rect" id="node32" href="$classPressurePump.html#aa550bc8aa4372ecb62a0c35b67e7d794" title=" " alt="" coords="765,309,980,336"/>
+<area shape="rect" id="node33" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title=" " alt="" coords="823,848,922,875"/>
+<area shape="rect" id="node35" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title=" " alt="" coords="804,899,941,925"/>
+<area shape="rect" id="node3" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title=" " alt="" coords="513,5,679,32"/>
+<area shape="rect" id="node5" href="$classLights__Web.html#ae64b3376392d07b955baa708988873ad" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,212,133"/>
+<area shape="rect" id="node4" href="$classLights.html#a7bf4d024918477d52eea78c94209fc66" title="Called every second." alt="" coords="271,5,416,32"/>
+<area shape="rect" id="node7" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title=" " alt="" coords="475,259,717,285"/>
+<area shape="rect" id="node10" href="$classHempyBucket.html#a9218a31e84cebe1630ab8d22c41cc48d" title="Called every second." alt="" coords="497,309,695,336"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="278,259,409,285"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="83,259,134,285"/>
+<area shape="rect" id="node12" href="$classAeroponics__NoTank__Web.html#a749978a1368f7ec3c46ec4bc0a91641c" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="504,361,688,402"/>
+<area shape="rect" id="node13" href="$classAeroponics__Tank__Web.html#a0f1ce806b918d0660fcdfb5e7e8012cd" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="513,499,679,541"/>
+<area shape="rect" id="node14" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title=" " alt="" coords="483,427,709,453"/>
+<area shape="rect" id="node15" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="278,427,409,453"/>
+<area shape="rect" id="node16" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="83,427,134,453"/>
+<area shape="rect" id="node18" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="Called every second." alt="" coords="505,671,687,697"/>
+<area shape="rect" id="node21" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title=" " alt="" coords="523,208,669,235"/>
+<area shape="rect" id="node24" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor" alt="" coords="542,157,650,184"/>
+<area shape="rect" id="node22" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Called every minute." alt="" coords="260,157,427,184"/>
+<area shape="rect" id="node23" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title=" " alt="" coords="261,208,425,235"/>
+<area shape="rect" id="node29" href="$classACMotor.html#a264d94432b7b056916c1c4d0767b21d6" title="Called every second." alt="" coords="515,797,677,824"/>
+<area shape="rect" id="node34" href="$classFan__Web.html#a69863ff95a4b9dc2e9526582c134d0b0" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="501,848,691,875"/>
+<area shape="rect" id="node36" href="$classFan__PWM__Web.html#a6c82e9aedb2cb8b80077240bdbf4b877" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="481,899,711,925"/>
+</map>

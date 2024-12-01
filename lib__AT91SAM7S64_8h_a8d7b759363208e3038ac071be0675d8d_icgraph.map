@@ -1,0 +1,4 @@
+<map id="AT91F_TC_GetInterruptMaskStatus" name="AT91F_TC_GetInterruptMaskStatus">
+<area shape="rect" id="node1" title="Return TC Interrupt Mask Status." alt="" coords="263,5,469,47"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#acff06f5a2be48e8080b5d8e0a898bb51" title="Test if TC Interrupt is Masked." alt="" coords="5,13,215,39"/>
+</map>

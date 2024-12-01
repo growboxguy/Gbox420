@@ -1,0 +1,10 @@
+<map id="Sound::refresh_Sec" name="Sound::refresh_Sec">
+<area shape="rect" id="node1" title="Called every second." alt="" coords="5,107,152,133"/>
+<area shape="rect" id="node2" href="$classSound.html#a93a63a862c3aa1dd50acb0d8eaa61d6c" title=" " alt="" coords="207,69,359,96"/>
+<area shape="rect" id="node7" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="200,132,365,159"/>
+<area shape="rect" id="node3" href="$classSound.html#a8b4af7ef38cf7e66c6dea94d10a9b229" title=" " alt="" coords="435,5,521,32"/>
+<area shape="rect" id="node5" href="$classSound.html#ab1fb7a2e72d848ca335b4721cd8540b7" title=" " alt="" coords="413,56,543,83"/>
+<area shape="rect" id="node6" href="$classSound.html#ac26eda99f623e5a839d1c408d8a591d9" title=" " alt="" coords="414,107,542,133"/>
+<area shape="rect" id="node4" href="$classSound.html#a3d0f7b044cff8851a335bb9c4fb78542" title=" " alt="" coords="591,56,691,83"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="428,157,528,184"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Module_Web::refresh_Minute" name="Module_Web::refresh_Minute">
+<area shape="rect" id="node1" title="Called every minute." alt="" coords="256,104,415,145"/>
+<area shape="rect" id="node2" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Called every minute." alt="" coords="14,5,199,47"/>
+<area shape="rect" id="node3" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Called every minute." alt="" coords="13,71,200,112"/>
+<area shape="rect" id="node4" href="$classHempy__Standalone.html#a3c1e92c73b2662d7816347947e519c9b" title="Called every minute." alt="" coords="5,136,208,177"/>
+<area shape="rect" id="node5" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="Called every minute." alt="" coords="29,201,185,243"/>
+</map>

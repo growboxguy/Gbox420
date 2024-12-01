@@ -1,0 +1,9 @@
+<map id="AT91F_PDC_Close" name="AT91F_PDC_Close">
+<area shape="rect" id="node1" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="5,132,144,159"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a065419f8fc40760b2db4773c57812ac5" title="Disable receive." alt="" coords="193,5,363,32"/>
+<area shape="rect" id="node3" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a232c924087e392d02daf17acf4b9be52" title="Disable transmit." alt="" coords="194,56,362,83"/>
+<area shape="rect" id="node4" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a90529726eb41ee44d45f3bb99923b2ef" title="Set the next receive transfer descriptor." alt="" coords="192,107,364,133"/>
+<area shape="rect" id="node5" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#aa0b8b8b33d4b6514714851b653a011eb" title="Set the next transmit transfer descriptor." alt="" coords="193,157,363,184"/>
+<area shape="rect" id="node6" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#af3a2086c959ae5ea3b73fcfc09bb46fb" title="Set the receive transfer descriptor." alt="" coords="207,208,349,235"/>
+<area shape="rect" id="node7" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#ad32f369ef9e9f0f395e577e1ed1652df" title="Set the transmit transfer descriptor." alt="" coords="208,259,348,285"/>
+</map>

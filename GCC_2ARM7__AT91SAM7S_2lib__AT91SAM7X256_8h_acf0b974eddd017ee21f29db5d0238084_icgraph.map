@@ -1,0 +1,4 @@
+<map id="AT91F_DBGU_GetInterruptMaskStatus" name="AT91F_DBGU_GetInterruptMaskStatus">
+<area shape="rect" id="node1" title="Return DBGU Interrupt Mask Status." alt="" coords="285,5,515,47"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a9770c26217736b907022264945c36741" title="Test if DBGU Interrupt is Masked." alt="" coords="5,13,237,39"/>
+</map>

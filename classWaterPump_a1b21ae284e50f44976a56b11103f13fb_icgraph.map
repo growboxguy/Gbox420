@@ -1,0 +1,5 @@
+<map id="WaterPump::getStateText" name="WaterPump::getStateText">
+<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING.." alt="" coords="281,35,468,61"/>
+<area shape="rect" id="node2" href="$classWaterPump.html#a1eacc6674b04fa3c5c04396af4c36138" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,191,32"/>
+<area shape="rect" id="node3" href="$classWaterPump__Web.html#a516bff0024a8990f544899f17fc287d1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,233,98"/>
+</map>

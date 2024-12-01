@@ -1,0 +1,9 @@
+<map id="WasteReservoir_Web::commandEvent" name="WasteReservoir_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,78,164,119"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a979458d974de49fed6cef1e7512a1231" title="Add a Log entry that is displayed on the web interface." alt="" coords="221,5,395,32"/>
+<area shape="rect" id="node3" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="229,56,387,83"/>
+<area shape="rect" id="node4" href="$classWasteReservoir.html#ab14c0cc0820cd1227ac9f96594cf33d0" title=" " alt="" coords="212,107,404,149"/>
+<area shape="rect" id="node7" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad6e1f2a94295d83d0a2f52d149c82a51" title=" " alt="" coords="274,173,342,200"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="452,89,633,116"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="465,140,621,167"/>
+</map>

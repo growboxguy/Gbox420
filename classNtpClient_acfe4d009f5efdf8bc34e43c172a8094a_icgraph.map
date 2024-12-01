@@ -1,0 +1,5 @@
+<map id="NtpClient::run30min" name="NtpClient::run30min">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="240,5,393,32"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_8cpp.html#a16c2a240fb8fd120abac45c5309eab97" title=" " alt="" coords="108,5,192,32"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
+</map>

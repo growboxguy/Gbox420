@@ -1,0 +1,4 @@
+<map id="vResetPrivilege" name="vResetPrivilege">
+<area shape="rect" id="node1" title="Lowers the privilege level by setting the bit 0 of the CONTROL register." alt="" coords="232,5,356,32"/>
+<area shape="rect" id="node2" href="$GCC_2ARM__CM3__MPU_2port_8c.html#a1559396bf151310d1c825c5239317a3b" title=" " alt="" coords="5,5,184,32"/>
+</map>

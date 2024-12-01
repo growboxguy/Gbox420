@@ -1,0 +1,5 @@
+<map id="WasteReservoir::checkFull" name="WasteReservoir::checkFull">
+<area shape="rect" id="node1" title="Compares the waste reservoir weight against the WasteLimit. Sets Full flag once the limit is reached." alt="" coords="5,31,199,57"/>
+<area shape="rect" id="node2" href="$classWeightSensor.html#a00d85fab4422a569a3f475d0586af926" title=" " alt="" coords="259,5,445,32"/>
+<area shape="rect" id="node3" href="$classWasteReservoir.html#aeebbc47dc6d2f33e6a4179b8d54f1ea6" title=" " alt="" coords="247,56,457,83"/>
+</map>

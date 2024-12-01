@@ -1,0 +1,4 @@
+<map id="DevModuleResponse" name="DevModuleResponse">
+<area shape="rect" id="node1" title="&lt; Devponics wireless module response" alt="" coords="9,80,168,107"/>
+<area shape="rect" id="node2" href="$structDevCommonTemplate.html" title="&lt; Devponics wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,5,172,32"/>
+</map>

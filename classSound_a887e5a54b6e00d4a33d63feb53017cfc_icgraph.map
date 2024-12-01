@@ -1,0 +1,5 @@
+<map id="Sound::playEE" name="Sound::playEE">
+<area shape="rect" id="node1" title=" " alt="" coords="268,31,383,57"/>
+<area shape="rect" id="node2" href="$classSound.html#a5da99a1c568b2282f5285fdb8a9d01aa" title=" " alt="" coords="27,5,199,32"/>
+<area shape="rect" id="node3" href="$classGboxModule.html#a7f29bcfe50245b1baeaea5b2ab7f51e4" title="Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee." alt="" coords="5,56,220,83"/>
+</map>

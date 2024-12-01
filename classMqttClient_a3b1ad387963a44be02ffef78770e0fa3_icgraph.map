@@ -1,0 +1,4 @@
+<map id="MqttClient::mqttIncomingData_Callback" name="MqttClient::mqttIncomingData_Callback">
+<area shape="rect" id="node1" title="Callback when a new message is received on a subscribed topic: Gets the payload." alt="" coords="245,5,435,47"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#aa4c0c4530f54a7da1dd5027fa02837fe" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="5,13,197,39"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="WasteReservoir::checkFull" name="WasteReservoir::checkFull">
+<area shape="rect" id="node1" title="Compares the waste reservoir weight against the WasteLimit. Sets Full flag once the limit is reached." alt="" coords="232,13,425,39"/>
+<area shape="rect" id="node2" href="$classWasteReservoir.html#a950b789414c4bae2a66c978a5315ad68" title="Called every five seconds." alt="" coords="5,5,184,47"/>
+</map>

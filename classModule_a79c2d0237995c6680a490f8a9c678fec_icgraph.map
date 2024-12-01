@@ -1,0 +1,13 @@
+<map id="Module::setDebug" name="Module::setDebug">
+<area shape="rect" id="node1" title=" " alt="" coords="573,85,713,112"/>
+<area shape="rect" id="node2" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title=" " alt="" coords="291,5,517,32"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title=" " alt="" coords="283,56,525,83"/>
+<area shape="rect" id="node8" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title=" " alt="" coords="309,107,499,149"/>
+<area shape="rect" id="node11" href="$classModule.html#a6d4654e73f6ed1268929a50123fbe84b" title="Gets called a button is clicked or a field is submitted on the /Settings.html page." alt="" coords="321,173,487,214"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,5,235,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="5,5,56,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,56,235,83"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="5,56,56,83"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,115,235,141"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Reservoir_8ino.html#afe461d27b9c48d5921c00d521181f12f" title=" " alt="" coords="5,115,56,141"/>
+</map>

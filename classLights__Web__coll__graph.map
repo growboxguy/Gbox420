@@ -1,0 +1,11 @@
+<map id="Lights_Web" name="Lights_Web">
+<area shape="rect" id="node1" title="&lt; Light controller with PWM dimming &#45; website component" alt="" coords="183,528,279,555"/>
+<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="377,320,493,347"/>
+<area shape="rect" id="node8" href="$classModule__Web.html" title=" " alt="" coords="298,439,403,465"/>
+<area shape="rect" id="node9" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="341,528,438,555"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="277,5,358,32"/>
+<area shape="rect" id="node4" href="$classLights.html" title=" " alt="" coords="5,439,67,465"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="282,320,353,347"/>
+<area shape="rect" id="node6" href="$classMqttClient.html" title=" " alt="" coords="576,149,667,175"/>
+<area shape="rect" id="node7" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="193,149,255,175"/>
+</map>

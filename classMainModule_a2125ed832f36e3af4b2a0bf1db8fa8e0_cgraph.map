@@ -1,0 +1,8 @@
+<map id="MainModule::getDayModeText" name="MainModule::getDayModeText">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,225,108"/>
+<area shape="rect" id="node2" href="$classMainModule.html#ae0b9ebcc9015f37993766a3a39c4e710" title="Returns true if the lights are on or daylight is detected." alt="" coords="273,31,467,57"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="339,81,401,108"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="318,132,422,159"/>
+<area shape="rect" id="node3" href="$classLightSensor.html#a06881cb787b1968daf4d1a49923617fe" title="Light sensor digital feedback: True(Dark) or False(Bright)" alt="" coords="515,5,673,32"/>
+<area shape="rect" id="node4" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title=" " alt="" coords="529,56,659,83"/>
+</map>

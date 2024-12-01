@@ -1,0 +1,9 @@
+<map id="AirPump::getStateText" name="AirPump::getStateText">
+<area shape="rect" id="node1" title=" " alt="" coords="711,56,877,83"/>
+<area shape="rect" id="node2" href="$classAirPump.html#a2dd4d503e910d5ef6b8bfcc8a9d9a356" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="497,5,621,32"/>
+<area shape="rect" id="node3" href="$classAirPump.html#a3d9afb9e4897447be51362e3dafc5089" title=" " alt="" coords="489,56,628,83"/>
+<area shape="rect" id="node7" href="$classAirPump__Web.html#ad92e83eebaa6c2f3509c519e91de4402" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="455,107,663,149"/>
+<area shape="rect" id="node4" href="$classAirPump__Web.html#ae2a2150164cac655f03a292e6503400f" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,56,228,83"/>
+<area shape="rect" id="node5" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title=" " alt="" coords="276,56,407,83"/>
+<area shape="rect" id="node6" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title=" " alt="" coords="276,107,407,133"/>
+</map>

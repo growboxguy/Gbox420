@@ -1,0 +1,12 @@
+<map id="vPortSVCHandler_C" name="vPortSVCHandler_C">
+<area shape="rect" id="node1" title=" " alt="" coords="5,183,155,209"/>
+<area shape="rect" id="node2" href="$ARMv8M_2secure_2context_2secure__context_8c.html#a1b8ed4f4b989b4d6bb4b5653da39cf37" title="Allocates a context on the secure side." alt="" coords="218,5,446,32"/>
+<area shape="rect" id="node3" href="$ARMv8M_2secure_2context_2secure__context_8c.html#ab684e3b6f1c2c2df87e2d42fc97da700" title="Frees the given context." alt="" coords="231,56,433,83"/>
+<area shape="rect" id="node4" href="$ARMv8M_2secure_2context_2secure__context_8c.html#ac55b431926ff079d997c10215472dee8" title="Initializes the secure context management system." alt="" coords="259,107,405,133"/>
+<area shape="rect" id="node5" href="$ARMv8M_2secure_2context_2secure__context_8c.html#a886132d5bc22fe26a2c8210a0ad67255" title="Loads the given context." alt="" coords="229,157,435,184"/>
+<area shape="rect" id="node7" href="$ARMv8M_2secure_2init_2secure__init_8c.html#ae0fb1c1ad66a0349c3e6bca3eec6e28f" title="De&#45;prioritizes the non&#45;secure exceptions." alt="" coords="203,208,461,235"/>
+<area shape="rect" id="node8" href="$ARMv8M_2non__secure_2port_8c.html#add01c927fb689f7ec170e42d47d27927" title="Yield the CPU." alt="" coords="288,259,376,285"/>
+<area shape="rect" id="node9" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#ac163c14f36944b1a01c8b2fe0dd4bbc8" title="Raises the privilege level by clearing the bit 0 of the CONTROL register." alt="" coords="271,309,393,336"/>
+<area shape="rect" id="node10" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#abd917e2b6cb37a9fdbecf2e0b22250a0" title="Restore the context of the first task so that the first task starts executing." alt="" coords="231,360,433,387"/>
+<area shape="rect" id="node6" href="$ARMv8M_2secure_2context_2secure__context_8c.html#af684db9a3a05f73484fa4f1728a17f9c" title=" " alt="" coords="509,157,744,184"/>
+</map>

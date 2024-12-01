@@ -1,0 +1,12 @@
+<map id="HempyModule" name="HempyModule">
+<area shape="rect" id="node1" title=" " alt="" coords="238,605,355,632"/>
+<area shape="rect" id="node2" href="$classModule.html" title=" " alt="" coords="263,305,333,332"/>
+<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="5,409,68,436"/>
+<area shape="rect" id="node6" href="$classHempyBucket.html" title=" " alt="" coords="607,500,720,527"/>
+<area shape="rect" id="node7" href="$classWeightSensor.html" title="&lt; Weight sensor load cell" alt="" coords="316,409,427,436"/>
+<area shape="rect" id="node8" href="$classWaterPump.html" title="&lt; Diaphragm pump controller" alt="" coords="744,409,841,436"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="257,5,339,32"/>
+<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="359,149,450,175"/>
+<area shape="rect" id="node10" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET" alt="" coords="804,149,869,175"/>
+<area shape="rect" id="node9" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor" alt="" coords="795,305,900,332"/>
+</map>

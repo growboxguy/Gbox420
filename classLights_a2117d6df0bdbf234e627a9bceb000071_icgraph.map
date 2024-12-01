@@ -1,0 +1,6 @@
+<map id="Lights::checkTimer" name="Lights::checkTimer">
+<area shape="rect" id="node1" title=" " alt="" coords="475,31,620,57"/>
+<area shape="rect" id="node2" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Called every minute." alt="" coords="260,5,427,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title=" " alt="" coords="261,56,425,83"/>
+<area shape="rect" id="node4" href="$classLights__Web.html#ae64b3376392d07b955baa708988873ad" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,56,212,83"/>
+</map>

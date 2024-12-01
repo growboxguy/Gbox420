@@ -1,0 +1,16 @@
+<map id="Gbox420_PicoW/ExternalLibraries/FreeRTOS&#45;Kernel&#45;main/portable/ThirdParty/XCC/Xtensa/xtensa_overlay_os_hook.c" name="Gbox420_PicoW/ExternalLibraries/FreeRTOS&#45;Kernel&#45;main/portable/ThirdParty/XCC/Xtensa/xtensa_overlay_os_hook.c">
+<area shape="rect" id="node1" title=" " alt="" coords="271,5,513,76"/>
+<area shape="rect" id="node2" href="$FreeRTOS_8h.html" title=" " alt="" coords="288,124,384,151"/>
+<area shape="rect" id="node11" href="$semphr_8h.html" title=" " alt="" coords="501,124,584,151"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,199,80,225"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,199,175,225"/>
+<area shape="rect" id="node5" title=" " alt="" coords="199,199,337,225"/>
+<area shape="rect" id="node6" href="$projdefs_8h.html" title=" " alt="" coords="361,199,447,225"/>
+<area shape="rect" id="node7" href="$portable_8h.html" title=" " alt="" coords="472,199,560,225"/>
+<area shape="rect" id="node8" href="$deprecated__definitions_8h.html" title=" " alt="" coords="187,273,370,300"/>
+<area shape="rect" id="node9" title=" " alt="" coords="395,273,496,300"/>
+<area shape="rect" id="node10" href="$mpu__wrappers_8h.html" title=" " alt="" coords="520,273,651,300"/>
+<area shape="rect" id="node12" href="$queue_8h.html" title=" " alt="" coords="627,199,701,225"/>
+<area shape="rect" id="node13" href="$task_8h.html" title=" " alt="" coords="675,273,738,300"/>
+<area shape="rect" id="node14" href="$list_8h.html" title=" " alt="" coords="679,348,734,375"/>
+</map>

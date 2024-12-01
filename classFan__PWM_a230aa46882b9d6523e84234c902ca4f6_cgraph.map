@@ -1,0 +1,7 @@
+<map id="Fan_PWM::Fan_PWM" name="Fan_PWM::Fan_PWM">
+<area shape="rect" id="node1" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection" alt="" coords="5,97,160,123"/>
+<area shape="rect" id="node2" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="208,5,416,47"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="464,42,564,69"/>
+<area shape="rect" id="node4" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="211,122,413,149"/>
+<area shape="rect" id="node5" href="$classFan__PWM.html#a0c11aa694b037f8962ce36206a2048c1" title=" " alt="" coords="230,173,394,199"/>
+</map>

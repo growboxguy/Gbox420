@@ -1,0 +1,6 @@
+<map id="DistanceSensor::DistanceSensor" name="DistanceSensor::DistanceSensor">
+<area shape="rect" id="node1" title="Class for the Ultrasonic distance sensor &#45; HC&#45;SR04 or JSN&#45;SR04T." alt="" coords="5,64,193,105"/>
+<area shape="rect" id="node2" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method." alt="" coords="241,5,449,47"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="497,42,597,69"/>
+<area shape="rect" id="node4" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="245,122,446,149"/>
+</map>

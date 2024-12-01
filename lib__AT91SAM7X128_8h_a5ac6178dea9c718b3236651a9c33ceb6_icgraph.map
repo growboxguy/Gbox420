@@ -1,0 +1,4 @@
+<map id="AT91F_PDC_EnableTx" name="AT91F_PDC_EnableTx">
+<area shape="rect" id="node1" title="Enable transmit." alt="" coords="191,5,353,32"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7X128_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="5,5,143,32"/>
+</map>

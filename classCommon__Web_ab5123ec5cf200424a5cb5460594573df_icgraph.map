@@ -1,0 +1,7 @@
+<map id="Common_Web::websiteEvent_Refresh" name="Common_Web::websiteEvent_Refresh">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="720,5,932,47"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a37a2e69937816a8160998d08103c4092" title="Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was ..." alt="" coords="457,5,672,47"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="285,13,409,39"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,13,237,39"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,13,64,39"/>
+</map>

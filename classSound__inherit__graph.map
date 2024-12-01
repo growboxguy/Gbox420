@@ -1,0 +1,5 @@
+<map id="Sound" name="Sound">
+<area shape="rect" id="node1" title="Sound feedback using a piezo buzzer." alt="" coords="23,80,85,107"/>
+<area shape="rect" id="node3" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="5,155,103,181"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="13,5,95,32"/>
+</map>

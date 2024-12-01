@@ -1,0 +1,5 @@
+<map id="MqttClient::mqttSubscribe_Unsubscribe" name="MqttClient::mqttSubscribe_Unsubscribe">
+<area shape="rect" id="node1" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="220,23,412,65"/>
+<area shape="rect" id="node2" href="$MqttTestMulti_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="61,5,116,32"/>
+<area shape="rect" id="node3" href="$classMqttClient.html#a93d8bff0ccf09514742aadf422a8e487" title=" " alt="" coords="5,56,172,83"/>
+</map>

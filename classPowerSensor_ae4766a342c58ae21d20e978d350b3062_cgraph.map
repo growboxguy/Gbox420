@@ -1,0 +1,9 @@
+<map id="PowerSensor::report" name="PowerSensor::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,107,159,133"/>
+<area shape="rect" id="node2" href="$classPowerSensor.html#ab7cb032b20b3fa3b44f27ccd0eddf41f" title=" " alt="" coords="207,5,417,32"/>
+<area shape="rect" id="node4" href="$classPowerSensor.html#a73604eb01facef251ed6b5e6c2ce474d" title=" " alt="" coords="209,56,415,83"/>
+<area shape="rect" id="node5" href="$classPowerSensor.html#a059f0c4355e89a0536c31f3eda652743" title=" " alt="" coords="211,107,413,133"/>
+<area shape="rect" id="node6" href="$classPowerSensor.html#a25ab8eb20467b230004bdbfb4176fb36" title=" " alt="" coords="207,157,417,184"/>
+<area shape="rect" id="node7" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="248,208,376,235"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="465,81,528,108"/>
+</map>

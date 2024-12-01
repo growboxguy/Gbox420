@@ -1,0 +1,5 @@
+<map id="Common::isThisForMe" name="Common::isThisForMe">
+<area shape="rect" id="node1" title="Compare the incoming command with the Name of the component. If command starts with Name followed by ..." alt="" coords="280,31,447,57"/>
+<area shape="rect" id="node2" href="$classGboxModule.html#a7f29bcfe50245b1baeaea5b2ab7f51e4" title="Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee." alt="" coords="11,5,226,32"/>
+<area shape="rect" id="node3" href="$classHempyModule.html#a77f6053ce21dbcc91393b69b8a2b7681" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,56,232,83"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="isThisForMe" name="isThisForMe">
+<area shape="rect" id="node1" title="Checks if Command starts with the Name of the instance followed by _." alt="" coords="597,81,697,108"/>
+<area shape="rect" id="node2" href="$classCommon.html#a8766af2cfb27264f172e1c8bc2af7d85" title="Compare the incoming command with the Name of the component. If command starts with Name followed by ..." alt="" coords="383,56,549,83"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a2b8862f1ec6136c43413769f01b16a2d" title="MQTT callback when a data arrives on a Subscribed topic." alt="" coords="394,107,538,133"/>
+<area shape="rect" id="node3" href="$classGboxModule.html#a7f29bcfe50245b1baeaea5b2ab7f51e4" title="Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee." alt="" coords="114,5,329,32"/>
+<area shape="rect" id="node4" href="$classHempyModule.html#a77f6053ce21dbcc91393b69b8a2b7681" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="108,56,335,83"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad8d0a588e6932069b6e287987de4daf7" title="Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Rea..." alt="" coords="156,107,287,133"/>
+<area shape="rect" id="node7" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,107,60,133"/>
+</map>

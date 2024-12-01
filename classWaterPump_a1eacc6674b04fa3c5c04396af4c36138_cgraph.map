@@ -1,0 +1,9 @@
+<map id="WaterPump::report" name="WaterPump::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,149,108"/>
+<area shape="rect" id="node2" href="$classWaterPump.html#a1b21ae284e50f44976a56b11103f13fb" title="Text representation of the current state: DISABLED/IDLE/RUNNING.." alt="" coords="209,31,395,57"/>
+<area shape="rect" id="node5" href="$classWaterPump.html#a464f06dd02bc60c9842955de48b7d844" title=" " alt="" coords="197,81,407,108"/>
+<area shape="rect" id="node7" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="238,132,366,159"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="512,56,575,83"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title=" " alt="" coords="455,5,632,32"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title=" " alt="" coords="486,107,601,133"/>
+</map>

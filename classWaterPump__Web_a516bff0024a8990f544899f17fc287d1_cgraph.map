@@ -1,0 +1,7 @@
+<map id="WaterPump_Web::websiteEvent_Refresh" name="WaterPump_Web::websiteEvent_Refresh">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,23,233,65"/>
+<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="300,5,449,32"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#a1b21ae284e50f44976a56b11103f13fb" title="Text representation of the current state: DISABLED/IDLE/RUNNING.." alt="" coords="281,56,468,83"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="573,31,636,57"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title=" " alt="" coords="516,81,693,108"/>
+</map>

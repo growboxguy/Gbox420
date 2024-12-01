@@ -1,0 +1,4 @@
+<map id="WaterPump::getSpeed" name="WaterPump::getSpeed">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" id="node2" href="$classSwitch__PWM.html#a097728cdff4a46c1de63a3f6d115510a" title=" " alt="" coords="220,5,421,32"/>
+</map>

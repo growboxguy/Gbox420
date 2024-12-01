@@ -1,0 +1,8 @@
+<map id="MqttClient::report" name="MqttClient::report">
+<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,143,108"/>
+<area shape="rect" id="node2" href="$classMqttClient.html#a78eb11e38ea5ff1379363574a29fec71" title="true: Connected to MQTT server, false: not connected" alt="" coords="191,56,427,83"/>
+<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="245,107,373,133"/>
+<area shape="rect" id="node3" href="$classMqttClient.html#ab8df6a8cbb8ceae8d31ffc2c0fd13543" title="true: Connected to MQTT server, false: not connected" alt="" coords="475,5,684,32"/>
+<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="548,56,611,83"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a2f0058f713e69ae9038d51e2c8f5b97c" title=" " alt="" coords="491,107,668,133"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Module::runReport" name="Module::runReport">
+<area shape="rect" id="node1" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="5,31,148,57"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad5a3ae6e579485aeadf31d026ab20a6e" title="&lt; Debug" alt="" coords="198,5,322,32"/>
+<area shape="rect" id="node3" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="196,56,324,83"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Lights::setFadeIncrements" name="Lights::setFadeIncrements">
+<area shape="rect" id="node1" title="Set the Percentage of change at one increment/decrement." alt="" coords="5,81,197,108"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="267,5,405,32"/>
+<area shape="rect" id="node4" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="261,56,411,83"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="245,107,427,133"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="258,157,414,184"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="475,5,575,32"/>
+</map>

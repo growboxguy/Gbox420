@@ -1,0 +1,8 @@
+<map id="Module_Web::reportToMqttTrigger" name="Module_Web::reportToMqttTrigger">
+<area shape="rect" id="node1" title="MQTT reporting &#45; Handles custom reporting frequencies." alt="" coords="463,104,659,145"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a8cd6772406ccf13d496d4173825e3476" title="Called every five seconds." alt="" coords="256,104,415,145"/>
+<area shape="rect" id="node3" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="Called every five seconds." alt="" coords="14,5,199,47"/>
+<area shape="rect" id="node4" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="Called every five seconds." alt="" coords="13,71,200,112"/>
+<area shape="rect" id="node5" href="$classHempy__Standalone.html#ad55317d1ee4287df98807aea010e49bd" title="Called every five seconds." alt="" coords="5,136,208,177"/>
+<area shape="rect" id="node6" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="Called every five seconds." alt="" coords="29,201,185,243"/>
+</map>

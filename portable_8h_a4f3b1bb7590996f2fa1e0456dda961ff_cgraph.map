@@ -1,0 +1,43 @@
+<map id="xPortStartScheduler" name="xPortStartScheduler">
+<area shape="rect" id="node1" title="start the freertos scheduler, go to the first task" alt="" coords="5,807,156,833"/>
+<area shape="rect" id="node2" href="$GCC_2NiosII_2portmacro_8h.html#a43a63aec8a4dd5165a86947c1f3563be" title=" " alt="" coords="282,5,361,32"/>
+<area shape="rect" id="node3" href="$ThirdParty_2XCC_2Xtensa_2port_8c.html#a3e243af33c76d040107af9edc95178e3" title=" " alt="" coords="245,56,398,83"/>
+<area shape="rect" id="node4" href="$ThirdParty_2GCC_2Xtensa__ESP32_2port_8c.html#a3d96ea7532f08fcad740d813eed0ecae" title=" " alt="" coords="261,107,381,133"/>
+<area shape="rect" id="node5" href="$GCC_2Xtensa__ESP32_2include_2xtensa__timer_8h.html#a698fa42e858f9941700aafc5bb68a6c9" title=" " alt="" coords="245,157,397,184"/>
+<area shape="rect" id="node6" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#a6303e1f258cbdc1f970ce579cc015623" title="PendSV Exception handler." alt="" coords="257,208,386,235"/>
+<area shape="rect" id="node7" href="$Tick_8c.html#a97b27e7afea96574a70aab311e350ac0" title=" " alt="" coords="265,259,377,285"/>
+<area shape="rect" id="node8" href="$Rowley_2MSP430F449_2port_8c.html#a397ed34de04a678dc71217c713763423" title=" " alt="" coords="234,309,409,336"/>
+<area shape="rect" id="node9" href="$IAR_2RX100_2port_8c.html#aa62e48aea4d4d2ad3426bd1243dbc72a" title=" " alt="" coords="256,360,387,387"/>
+<area shape="rect" id="node10" href="$GCC_2ARM__CRx__MPU_2port_8c.html#a813e8227aedfc6bd83c66c4a9b8e4f41" title="Default return address for tasks." alt="" coords="257,411,385,437"/>
+<area shape="rect" id="node11" href="$ARC__EM__HS_2arc__freertos__exceptions_8h.html#abedf71949c96ec41ef4bc5be14b11806" title=" " alt="" coords="264,461,379,488"/>
+<area shape="rect" id="node12" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce" title="SVC Handler." alt="" coords="268,512,375,539"/>
+<area shape="rect" id="node13" href="$MPLAB_2PIC24__dsPIC_2port_8c.html#a8b738ae962ed08676c294ff428c93fa5" title=" " alt="" coords="219,563,424,605"/>
+<area shape="rect" id="node14" href="$IAR_2RL78_2port_8c.html#af6c61ea6aaa9367ebdc5348c1b121aa7" title=" " alt="" coords="204,629,439,656"/>
+<area shape="rect" id="node15" href="$Paradigm_2Tern__EE_2small_2portmacro_8h.html#a14d32f8130d3c0b212cfc751730b5b49" title=" " alt="" coords="575,680,626,707"/>
+<area shape="rect" id="node16" href="$CCS_2ARM__CM4F_2port_8c.html#a6f5cb447f3560f9722f4f117d723184a" title=" " alt="" coords="259,781,384,808"/>
+<area shape="rect" id="node17" href="$GCC_2ARM7__AT91FR40008_2port_8c.html#ab6f659b3911405d21fe98a1c7a347d8f" title=" " alt="" coords="239,832,404,859"/>
+<area shape="rect" id="node18" href="$GCC_2ARM__AARCH64_2port_8c.html#a222aec9e4494ebf3fdbda864b5cb3a4b" title=" " alt="" coords="228,883,415,909"/>
+<area shape="rect" id="node19" href="$MSVC-MingW_2port_8c.html#a35b5d3a9b147da8e3adda2a2cc7b6cc0" title=" " alt="" coords="229,933,413,960"/>
+<area shape="rect" id="node20" href="$GCC_2IA32__flat_2port_8c.html#ab80bbff02ac9871dcfb168f77b763beb" title=" " alt="" coords="264,984,379,1011"/>
+<area shape="rect" id="node21" href="$port__systick_8h.html#aff27f87c3d302bf0a1cbf2800b8db145" title="Set up the SysTick interrupt." alt="" coords="256,1035,387,1061"/>
+<area shape="rect" id="node22" href="$ARMv8M_2non__secure_2port_8c.html#ae92322f252b096c844bafbef16b5fc3a" title="Setup the timer to generate the tick interrupts." alt="" coords="228,1085,415,1112"/>
+<area shape="rect" id="node23" href="$IAR_2ATMega323_2port_8c.html#a97998187984cbffc1cbeef4d67622ab6" title=" " alt="" coords="278,1136,365,1163"/>
+<area shape="rect" id="node24" href="$CCS_2ARM__CM3_2port_8c.html#a5cfc38319f17c8e804020ec247b6325d" title=" " alt="" coords="249,1187,393,1213"/>
+<area shape="rect" id="node25" href="$ThirdParty_2CDK_2T-HEAD__CK802_2port_8c.html#ab229eb75e166998390ea9a0d00cc4e63" title=" " alt="" coords="263,1237,379,1264"/>
+<area shape="rect" id="node26" href="$GCC_2ARM__CM0_2port_8c.html#a859e86b6143d6bc4cf96b2867f408c75" title=" " alt="" coords="255,1288,388,1315"/>
+<area shape="rect" id="node27" href="$ARMv8M_2non__secure_2port_8c.html#add01c927fb689f7ec170e42d47d27927" title="Yield the CPU." alt="" coords="277,1339,365,1365"/>
+<area shape="rect" id="node28" href="$GCC_2RX200_2port_8c.html#a05b8170f6114a4798593860395d9e8fd" title=" " alt="" coords="239,1389,403,1416"/>
+<area shape="rect" id="node29" href="$ARMv8M_2non__secure_2portable_2GCC_2ARM__CM23_2portasm_8c.html#a37c7e8404c17b21d348fe26086257684" title="Starts the first task." alt="" coords="262,1440,381,1467"/>
+<area shape="rect" id="node30" href="$IAR_2RX700v3__DPFPU_2port_8c.html#a9c86137bc3c1cbffc39fff22627cb885" title=" " alt="" coords="245,1491,398,1517"/>
+<area shape="rect" id="node31" href="$porttrap_8c.html#abb81dc2f729d6c6fe39b23aa9f61e1a5" title=" " alt="" coords="244,1541,399,1568"/>
+<area shape="rect" id="node39" href="$GCC_2ARM__CM0_2port_8c.html#a3ab2189d6599a9eb1b1f235c87e8616d" title=" " alt="" coords="243,1592,399,1619"/>
+<area shape="rect" id="node40" href="$CCS_2ARM__CM3_2port_8c.html#a78100b2d36913d0b45565be8975e5de8" title=" " alt="" coords="243,731,400,757"/>
+<area shape="rect" id="node32" href="$porttrap_8c.html#a0d55dbf825efb634259c4f5cecda97f6" title=" " alt="" coords="541,1389,660,1416"/>
+<area shape="rect" id="node33" href="$porttrap_8c.html#aafb193dbaa52093ad36ea36e60742031" title=" " alt="" coords="503,1440,698,1467"/>
+<area shape="rect" id="node34" href="$porttrap_8c.html#a51979b7d23c817291c4bec28288e37ef" title=" " alt="" coords="522,1491,679,1517"/>
+<area shape="rect" id="node35" href="$porttrap_8c.html#a5df71a2cd124792eeddc63b57ec6de08" title=" " alt="" coords="514,1541,687,1568"/>
+<area shape="rect" id="node36" href="$porttrap_8c.html#a17a5aece41bf1c8f900abc6c18e21f79" title=" " alt="" coords="555,1592,646,1619"/>
+<area shape="rect" id="node37" href="$porttrap_8c.html#ad338c056dbca06ab78a09678009a1cb2" title=" " alt="" coords="500,1643,701,1669"/>
+<area shape="rect" id="node38" href="$porttrap_8c.html#a8b44898fec32d8fa9b25be516928ff69" title=" " alt="" coords="487,1693,715,1720"/>
+<area shape="rect" id="node41" href="$task_8h.html#a978e25460ac35706f9ad30b46d9403d8" title=" " alt="" coords="525,731,677,757"/>
+</map>

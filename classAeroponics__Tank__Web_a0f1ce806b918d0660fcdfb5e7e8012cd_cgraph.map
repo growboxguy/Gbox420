@@ -1,0 +1,21 @@
+<map id="Aeroponics_Tank_Web::commandEvent" name="Aeroponics_Tank_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,302,172,343"/>
+<area shape="rect" id="node2" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump." alt="" coords="238,528,445,555"/>
+<area shape="rect" id="node6" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="262,579,421,605"/>
+<area shape="rect" id="node7" href="$classAeroponics__Tank.html#a95906ab4c83355062f26e898edbc2337" title="Recharge the pressure tank." alt="" coords="242,157,441,184"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html#a4f21269366e4bc91edaf807a0548b281" title=" " alt="" coords="220,5,463,32"/>
+<area shape="rect" id="node11" href="$classAeroponics__Tank.html#a01f44c3d9628c49804943ccc1bd8658d" title=" " alt="" coords="222,629,461,656"/>
+<area shape="rect" id="node12" href="$classPressurePump.html#a1ad00330e25daa460bf1829294146e02" title=" " alt="" coords="228,56,455,83"/>
+<area shape="rect" id="node13" href="$classAeroponics__Tank.html#a601c8e6612ce40ca0cb84b3e5ab426fa" title=" " alt="" coords="243,361,439,402"/>
+<area shape="rect" id="node14" href="$classPressurePump.html#a8f205e9be7bcd4fc537aaf27be0f511f" title=" " alt="" coords="242,107,441,133"/>
+<area shape="rect" id="node15" href="$classAeroponics__Tank.html#a5770080bacf50e9e02fa6b431016d47a" title="Start spraying." alt="" coords="239,208,443,235"/>
+<area shape="rect" id="node16" href="$classAeroponics__Tank.html#a7436a7c296a4c0899c87e5a8554b5bdc" title="Stop spraying." alt="" coords="244,427,439,453"/>
+<area shape="rect" id="node17" href="$classPressurePump.html#a5ddc97da3499cc0e6ecf374fc82b38d1" title=" " alt="" coords="243,309,440,336"/>
+<area shape="rect" id="node18" href="$classPressurePump.html#ac01f58cb89460754985a190a9f70f62c" title="Turn the pump ON." alt="" coords="246,259,437,285"/>
+<area shape="rect" id="node19" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF." alt="" coords="247,477,435,504"/>
+<area shape="rect" id="node3" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="529,259,711,285"/>
+<area shape="rect" id="node4" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="541,451,699,477"/>
+<area shape="rect" id="node5" href="$classPressurePump.html#ae54a9626d799c0b973e8b8bc7c2f694c" title=" " alt="" coords="519,396,721,423"/>
+<area shape="rect" id="node8" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="542,183,698,209"/>
+<area shape="rect" id="node9" href="$classAeroponics__Tank.html#ac70acd360b88e7bf1449eae7251af925" title=" " alt="" coords="511,344,729,371"/>
+</map>

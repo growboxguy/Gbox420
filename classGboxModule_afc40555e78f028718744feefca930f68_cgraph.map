@@ -1,0 +1,7 @@
+<map id="GboxModule::GboxModule" name="GboxModule::GboxModule">
+<area shape="rect" id="node1" title="Constructor: creates an instance of the class, loads the EEPROM stored persistent settings,..." alt="" coords="5,56,200,83"/>
+<area shape="rect" id="node2" href="$classModule.html#a6a93f23af1da71560cb910fd54a0ff2e" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="248,5,473,32"/>
+<area shape="rect" id="node3" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="291,56,430,83"/>
+<area shape="rect" id="node5" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="260,107,461,133"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="521,56,621,83"/>
+</map>

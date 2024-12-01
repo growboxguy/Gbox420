@@ -1,0 +1,8 @@
+<map id="MqttClient::mqttConnectTrigger" name="MqttClient::mqttConnectTrigger">
+<area shape="rect" id="node1" title="Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect." alt="" coords="5,85,232,112"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW__FreeRTOS_2Components_2Helpers_8h.html#a023c569a8091fd491e6d23a75224202c" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="326,56,417,83"/>
+<area shape="rect" id="node5" href="$classMqttClient.html#a6c0a91af5c408441549297d1b560b415" title="Actually connect to the MQTT server." alt="" coords="280,111,463,137"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae09f73b656e9cb4867d331bbf68037b9" title="Callback when DNS lookup is finished." alt="" coords="536,5,668,32"/>
+<area shape="rect" id="node4" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="553,56,651,83"/>
+<area shape="rect" id="node6" href="$classMqttClient.html#aeba49314a345fffee0198d7cdc68688c" title="Callback with the connection result." alt="" coords="511,107,693,149"/>
+</map>

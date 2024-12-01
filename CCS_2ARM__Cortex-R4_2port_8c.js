@@ -1,0 +1,28 @@
+var CCS_2ARM__Cortex_R4_2port_8c =
+[
+    [ "portINITIAL_FPSCR", "CCS_2ARM__Cortex-R4_2port_8c.html#ac0d88abb68188f5d7da45c60a5f78c02", null ],
+    [ "portINITIAL_SPSR", "CCS_2ARM__Cortex-R4_2port_8c.html#a153b1b0b2476d5fea865a32e6d27027d", null ],
+    [ "portINSTRUCTION_SIZE", "CCS_2ARM__Cortex-R4_2port_8c.html#a4a09bb6297fbc0a50ed78a132ff9f0fe", null ],
+    [ "portRTI_CLEARINTENA_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a7d7712951ba0e2fa947b5fa4aa8bc1b4", null ],
+    [ "portRTI_CNT0_COMP0_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#af90f6e7888f2ce9acf89e265ab89a50e", null ],
+    [ "portRTI_CNT0_CPUC0_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#aa479a6d0eb4c00f8b920df6f5eaee215", null ],
+    [ "portRTI_CNT0_FRC0_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a557a48537ec211483665269e918dc94d", null ],
+    [ "portRTI_CNT0_UC0_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#ad0e07d8351bedea2f80c1c8d70881053", null ],
+    [ "portRTI_CNT0_UDCP0_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a1ebaedc5c82c885e866a008360c7e637", null ],
+    [ "portRTI_COMPCTRL_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#ab0142058832463ac15ae49adf0fafecd", null ],
+    [ "portRTI_GCTRL_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#aff46363042cc866d0ba6df9110568cf4", null ],
+    [ "portRTI_INTFLAG_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a849f31cea7f826d98176a4e075ddd3cc", null ],
+    [ "portRTI_SETINTENA_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a82bc8ad423f54018e6c6395a464a5676", null ],
+    [ "portRTI_TBCTRL_REG", "CCS_2ARM__Cortex-R4_2port_8c.html#a4f9bc95664ed4983bb94af37e153c5f2", null ],
+    [ "portSPACE_BETWEEN_TOS_AND_PARAMETERS", "CCS_2ARM__Cortex-R4_2port_8c.html#ad668c6ef52816676d05bb8f41266b8a7", null ],
+    [ "portTHUMB_MODE_BIT", "CCS_2ARM__Cortex-R4_2port_8c.html#a156ba74bc35da2293a2482ab4195183b", null ],
+    [ "pxPortInitialiseStack", "CCS_2ARM__Cortex-R4_2port_8c.html#a474fbbb58ea661a1557f05adc41120c1", null ],
+    [ "vPortEndScheduler", "CCS_2ARM__Cortex-R4_2port_8c.html#af76f3c0b44c5b5c06fc046a4ee1a6423", null ],
+    [ "vPortEnterCritical", "CCS_2ARM__Cortex-R4_2port_8c.html#a2ed3554a3de09a3bd09d396ee081ab69", null ],
+    [ "vPortExitCritical", "CCS_2ARM__Cortex-R4_2port_8c.html#aed20ada05b957181a0de042802a82a5b", null ],
+    [ "vPortNonPreemptiveTick", "CCS_2ARM__Cortex-R4_2port_8c.html#aa3d36248da898dd1d2ae1784c76bdb9c", null ],
+    [ "vPortStartFirstTask", "CCS_2ARM__Cortex-R4_2port_8c.html#a5cfc38319f17c8e804020ec247b6325d", null ],
+    [ "xPortStartScheduler", "CCS_2ARM__Cortex-R4_2port_8c.html#ade5a8c6666e7413a0355cc252029c5c6", null ],
+    [ "ulCriticalNesting", "CCS_2ARM__Cortex-R4_2port_8c.html#abd5c4f2fdb773b389a89cf1bb14f22c8", null ],
+    [ "ulTaskHasFPUContext", "CCS_2ARM__Cortex-R4_2port_8c.html#adb618e609f6505a99aa1d2bf85f70e51", null ]
+];

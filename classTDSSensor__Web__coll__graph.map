@@ -1,0 +1,12 @@
+<map id="TDSSensor_Web" name="TDSSensor_Web">
+<area shape="rect" id="node1" title="&lt; TDS Meter V1.0 for Arduino" alt="" coords="370,695,497,721"/>
+<area shape="rect" id="node2" href="$classTDSSensor.html" title=" " alt="" coords="109,507,201,534"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="206,5,287,32"/>
+<area shape="rect" id="node4" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor" alt="" coords="43,409,181,436"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="199,305,270,332"/>
+<area shape="rect" id="node6" href="$classMqttClient.html" title=" " alt="" coords="420,149,511,175"/>
+<area shape="rect" id="node7" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="446,409,509,436"/>
+<area shape="rect" id="node8" href="$classCommon__Web.html" title=" " alt="" coords="578,409,694,436"/>
+<area shape="rect" id="node9" href="$classModule__Web.html" title=" " alt="" coords="381,605,486,632"/>
+<area shape="rect" id="node10" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="443,507,541,534"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="WaterTempSensor_Web::WaterTempSensor_Web" name="WaterTempSensor_Web::WaterTempSensor_Web">
+<area shape="rect" id="node1" title="constructor" alt="" coords="5,5,188,47"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a054dbad7ecba4834b7a589c29748c422" title="Calls the websiteEvent_Refresh() method of the Subscriber when an ESP&#45;link website is refreshing." alt="" coords="236,5,439,47"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="487,13,587,39"/>
+</map>

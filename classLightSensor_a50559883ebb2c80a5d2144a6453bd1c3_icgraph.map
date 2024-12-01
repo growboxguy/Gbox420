@@ -1,0 +1,4 @@
+<map id="LightSensor::triggerCalibration" name="LightSensor::triggerCalibration">
+<area shape="rect" id="node1" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger." alt="" coords="260,13,480,39"/>
+<area shape="rect" id="node2" href="$classLightSensor__Web.html#a1bce4d36fad68034a3468605c7050470" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,212,47"/>
+</map>

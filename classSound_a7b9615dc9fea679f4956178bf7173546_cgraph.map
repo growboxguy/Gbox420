@@ -1,0 +1,10 @@
+<map id="Sound::toggleSoundOnOff" name="Sound::toggleSoundOnOff">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,193,108"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="274,5,413,32"/>
+<area shape="rect" id="node4" href="$classSound.html#ab373ff3570a57c9df918efec87f960b9" title="EE Section, can delete everything below if you need to save space." alt="" coords="241,56,445,83"/>
+<area shape="rect" id="node7" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="269,107,418,133"/>
+<area shape="rect" id="node8" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="256,157,431,184"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="533,5,633,32"/>
+<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="551,56,614,83"/>
+<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title=" " alt="" coords="493,107,672,133"/>
+</map>

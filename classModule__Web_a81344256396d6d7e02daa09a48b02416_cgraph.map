@@ -1,0 +1,5 @@
+<map id="Module_Web::settingsEvent_Load" name="Module_Web::settingsEvent_Load">
+<area shape="rect" id="node1" title="Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settin..." alt="" coords="5,31,245,57"/>
+<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="327,5,476,32"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#ae63830a19e289db5d139417dd8f8dd1b" title=" " alt="" coords="293,56,509,83"/>
+</map>

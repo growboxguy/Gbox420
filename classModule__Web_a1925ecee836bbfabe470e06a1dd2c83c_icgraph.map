@@ -1,0 +1,11 @@
+<map id="Module_Web::setMqttSubscribeTopic" name="Module_Web::setMqttSubscribeTopic">
+<area shape="rect" id="node1" title=" " alt="" coords="967,82,1193,123"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#acafe2dfd2baec3f7872139daa037ab9b" title="Gets called a button is clicked or a field is submitted on the /Settings.html page." alt="" coords="716,82,919,123"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#ae4ed260392a05eb419546e045a7b4815" title="Notifies the subscribed components of an incoming command. Command: combination of the Name of the co..." alt="" coords="453,23,668,65"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Dev_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="474,89,647,116"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Dev_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="480,140,641,167"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="285,5,405,32"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="292,56,399,83"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,31,237,57"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,31,64,57"/>
+</map>

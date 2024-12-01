@@ -1,0 +1,5 @@
+<map id="PressureSensor_Web::websiteEvent_Load" name="PressureSensor_Web::websiteEvent_Load">
+<area shape="rect" id="node1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,23,163,65"/>
+<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="215,5,365,32"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#acfb0e16627f3a76d5298c95563009e1b" title=" " alt="" coords="211,56,369,83"/>
+</map>

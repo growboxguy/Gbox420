@@ -1,0 +1,6 @@
+<map id="xPortStartScheduler" name="xPortStartScheduler">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,156,83"/>
+<area shape="rect" id="node2" href="$ARMv8M_2non__secure_2port_8c.html#ae92322f252b096c844bafbef16b5fc3a" title="Setup the timer to generate the tick interrupts." alt="" coords="204,5,391,32"/>
+<area shape="rect" id="node3" href="$CCS_2ARM__CM3_2port_8c.html#a5cfc38319f17c8e804020ec247b6325d" title=" " alt="" coords="225,56,369,83"/>
+<area shape="rect" id="node4" href="$GCC_2ARM__CM0_2port_8c.html#a3ab2189d6599a9eb1b1f235c87e8616d" title=" " alt="" coords="219,107,375,133"/>
+</map>

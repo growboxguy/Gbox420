@@ -1,0 +1,4 @@
+<map id="AT91F_UDP_GetInterruptMaskStatus" name="AT91F_UDP_GetInterruptMaskStatus">
+<area shape="rect" id="node1" title="Return UDP Interrupt Mask Status." alt="" coords="275,5,493,47"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a1021bb7c18dd9b2940adc38d4a07110e" title="Test if UDP Interrupt is Masked." alt="" coords="5,13,227,39"/>
+</map>

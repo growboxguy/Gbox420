@@ -1,0 +1,5 @@
+<map id="Aeroponics_Tank::sprayNow" name="Aeroponics_Tank::sprayNow">
+<area shape="rect" id="node1" title="Start spraying." alt="" coords="301,35,505,61"/>
+<area shape="rect" id="node2" href="$classAeroponics__Tank.html#a778f62abebd3361eeffc7e070f30dad5" title="Reference to SpraySolenoidClosingDelay." alt="" coords="5,5,253,32"/>
+<area shape="rect" id="node3" href="$classAeroponics__Tank__Web.html#a0f1ce806b918d0660fcdfb5e7e8012cd" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="46,57,213,98"/>
+</map>

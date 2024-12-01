@@ -1,0 +1,4 @@
+<map id="AT91F_SPI_IsInterruptMasked" name="AT91F_SPI_IsInterruptMasked">
+<area shape="rect" id="node1" title="Test if SPI Interrupt is Masked." alt="" coords="5,13,219,39"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a7c279fcf5c19b88c55bac3ebf286f63b" title="Return SPI Interrupt Mask Status." alt="" coords="267,5,477,47"/>
+</map>

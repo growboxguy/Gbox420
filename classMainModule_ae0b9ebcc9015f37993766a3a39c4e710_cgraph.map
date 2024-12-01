@@ -1,0 +1,5 @@
+<map id="MainModule::getDayMode" name="MainModule::getDayMode">
+<area shape="rect" id="node1" title="Returns true if the lights are on or daylight is detected." alt="" coords="5,31,199,57"/>
+<area shape="rect" id="node2" href="$classLightSensor.html#a06881cb787b1968daf4d1a49923617fe" title="Light sensor digital feedback: True(Dark) or False(Bright)" alt="" coords="247,5,405,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title=" " alt="" coords="261,56,391,83"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="Lights::setLightOnOff" name="Lights::setLightOnOff">
+<area shape="rect" id="node1" title=" " alt="" coords="5,174,164,201"/>
+<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="447,10,585,37"/>
+<area shape="rect" id="node4" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title=" " alt="" coords="231,149,375,176"/>
+<area shape="rect" id="node5" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="441,73,591,100"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="212,200,393,226"/>
+<area shape="rect" id="node7" href="$classLights.html#af3c912d7571b0ad89b996a4e871f0c02" title=" " alt="" coords="223,250,382,277"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="224,301,381,328"/>
+<area shape="rect" id="node11" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="225,352,381,378"/>
+<area shape="rect" id="node12" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title=" " alt="" coords="223,48,382,74"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="639,10,739,37"/>
+<area shape="rect" id="node8" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="485,225,547,252"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="464,276,568,302"/>
+</map>

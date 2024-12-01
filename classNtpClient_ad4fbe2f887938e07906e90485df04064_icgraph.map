@@ -1,0 +1,7 @@
+<map id="NtpClient::ntpResult" name="NtpClient::ntpResult">
+<area shape="rect" id="node1" title="Called with the NTP results, updates the Real Time Clock." alt="" coords="899,97,1052,123"/>
+<area shape="rect" id="node2" href="$classNtpClient.html#a546f8fb51bbb69da4133e75a39dc9243" title=" " alt="" coords="696,71,851,98"/>
+<area shape="rect" id="node4" href="$classNtpClient.html#ae9c80e07f6811f066293f37ba031ed2c" title=" " alt="" coords="205,71,404,98"/>
+<area shape="rect" id="node3" href="$classNtpClient.html#a1e0477d1021ae3931a8786b76a11b8c2" title="Callback when IP of NTP server is resolved by DNS." alt="" coords="452,5,648,47"/>
+<area shape="rect" id="node5" href="$classNtpClient.html#a007f5ef7207b6b466cbf135785e9109b" title="Initialize the Real Time Clock and do an NTP update." alt="" coords="5,71,157,98"/>
+</map>

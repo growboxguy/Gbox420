@@ -1,0 +1,6 @@
+<map id="ACMotor::stop" name="ACMotor::stop">
+<area shape="rect" id="node1" title="Stop the AC Motor &#45; Takes time to apply." alt="" coords="5,56,120,83"/>
+<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="168,5,349,32"/>
+<area shape="rect" id="node3" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="180,56,337,83"/>
+<area shape="rect" id="node4" href="$classACMotor.html#ae755ac93e40c4de367258345f4f6ff27" title=" " alt="" coords="176,107,341,133"/>
+</map>

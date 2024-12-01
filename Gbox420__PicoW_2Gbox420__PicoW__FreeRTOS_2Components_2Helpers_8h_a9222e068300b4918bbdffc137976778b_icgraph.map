@@ -1,0 +1,4 @@
+<map id="rtcGetCurrentTime" name="rtcGetCurrentTime">
+<area shape="rect" id="node1" title="Query current time from local RTC." alt="" coords="221,5,364,32"/>
+<area shape="rect" id="node2" href="$classModule.html#a97618159fd73ae60eb250d6841db2cf2" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="5,5,173,32"/>
+</map>

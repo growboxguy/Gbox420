@@ -1,0 +1,14 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,259,60,285"/>
+<area shape="rect" id="node2" href="$RealTimeClock-FreeRTOS_8cpp.html#a98b770e06add1a231d94305f3a1f29ef" title="DNS client." alt="" coords="128,233,243,260"/>
+<area shape="rect" id="node4" href="$RealTimeClock-FreeRTOS_8cpp.html#a9bf711e4d08e9160242b39bd9acf8617" title="Use NTP to update the Real Time Clock." alt="" coords="149,132,221,159"/>
+<area shape="rect" id="node10" href="$task_8h.html#aaf9dca1065c60abdeb309d56ab7293cb" title=" " alt="" coords="108,284,263,311"/>
+<area shape="rect" id="node11" href="$RealTimeClock-FreeRTOS_8cpp.html#ae6751e85305856bfebf2adcf91fae6d7" title="Initialize WiFi, periodically check the connection, and reconnect if needed." alt="" coords="148,335,223,361"/>
+<area shape="rect" id="node3" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="501,233,599,260"/>
+<area shape="rect" id="node5" href="$RealTimeClock-FreeRTOS_8cpp.html#a991d1372b160f7e8f0765fcba2d8a229" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="326,5,419,32"/>
+<area shape="rect" id="node7" href="$RealTimeClock-FreeRTOS_8cpp.html#a1d0dc316e54ed2ad4eef730773fc75d9" title="Prints the current time to stdout." alt="" coords="311,56,435,83"/>
+<area shape="rect" id="node8" href="$RealTimeClock-FreeRTOS_8cpp.html#a1b70a166511fe0fad23ca4a4fb7404d4" title="Blink built&#45;in LED on Pico W &#45; Requires WiFi initialization cyw43_arch_init() , since the LED is conn..." alt="" coords="321,107,424,133"/>
+<area shape="rect" id="node9" href="$RealTimeClock-FreeRTOS_8cpp.html#a61533efe33a33f91f874a9e3ec0828d7" title="Make an NTP request." alt="" coords="325,157,421,184"/>
+<area shape="rect" id="node6" href="$RealTimeClock-FreeRTOS_8cpp.html#a387f09f64a276fd5a732b5a93e0d863e" title="Callback when DNS lookup is finished." alt="" coords="483,5,617,32"/>
+<area shape="rect" id="node12" href="$RealTimeClock-FreeRTOS_8cpp.html#a245f8a30bc52d0a44531847e633fa6ac" title="Connect to a WiFi network." alt="" coords="322,360,423,387"/>
+</map>

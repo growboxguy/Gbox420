@@ -1,0 +1,5 @@
+<map id="Lights::getCurrentBrightnessText" name="Lights::getCurrentBrightnessText">
+<area shape="rect" id="node1" title=" " alt="" coords="245,35,480,61"/>
+<area shape="rect" id="node2" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,155,32"/>
+<area shape="rect" id="node3" href="$classLights__Web.html#aa854a49d8fe447e4ab97b0b73f51b2e0" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,197,98"/>
+</map>

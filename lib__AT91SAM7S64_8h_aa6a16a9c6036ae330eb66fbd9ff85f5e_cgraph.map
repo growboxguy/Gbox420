@@ -1,0 +1,4 @@
+<map id="AT91F_SSC_IsInterruptMasked" name="AT91F_SSC_IsInterruptMasked">
+<area shape="rect" id="node1" title="Test if SSC Interrupt is Masked." alt="" coords="5,13,224,39"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a3e63b40864a1f2749742c130f88eacdd" title="Return SSC Interrupt Mask Status." alt="" coords="272,5,487,47"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_GetInputFilterStatus" name="AT91F_PIO_GetInputFilterStatus">
+<area shape="rect" id="node1" title="Return PIO Input Filter Status." alt="" coords="249,5,436,47"/>
+<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a81f6c3c13fa4a60bbb6b108245d3fc0e" title="Test if PIO Input filter is Set." alt="" coords="5,13,201,39"/>
+</map>

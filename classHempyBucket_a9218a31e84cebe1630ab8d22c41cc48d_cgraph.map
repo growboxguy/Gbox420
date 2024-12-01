@@ -1,0 +1,17 @@
+<map id="HempyBucket::refresh_Sec" name="HempyBucket::refresh_Sec">
+<area shape="rect" id="node1" title="Called every second." alt="" coords="5,259,203,285"/>
+<area shape="rect" id="node2" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="Disable watering logic &#45; Takes time to apply." alt="" coords="271,157,439,184"/>
+<area shape="rect" id="node11" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title=" " alt="" coords="509,284,709,311"/>
+<area shape="rect" id="node12" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="273,360,438,387"/>
+<area shape="rect" id="node13" href="$classHempyBucket.html#af17814ae16f2f65f0f9bb580baa55fdd" title="Turn on water pump, run until StopWeight is reached." alt="" coords="251,259,460,285"/>
+<area shape="rect" id="node15" href="$classHempyBucket.html#a973120ba0e6bd9a43762bedd8218d6a0" title="Turn off water pump." alt="" coords="252,208,459,235"/>
+<area shape="rect" id="node3" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="540,183,679,209"/>
+<area shape="rect" id="node5" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="535,233,684,260"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="519,132,700,159"/>
+<area shape="rect" id="node7" href="$classHempyBucket.html#aeb28545519935678272ade94b87ff61c" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="508,31,711,57"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="531,81,688,108"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="783,284,883,311"/>
+<area shape="rect" id="node8" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="801,56,864,83"/>
+<area shape="rect" id="node9" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title=" " alt="" coords="759,5,907,32"/>
+<area shape="rect" id="node14" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="531,335,687,361"/>
+</map>

@@ -1,0 +1,34 @@
+<map id="Common_Web" name="Common_Web">
+<area shape="rect" id="node1" title=" " alt="" coords="135,689,251,716"/>
+<area shape="rect" id="node3" href="$classAeroModule__Web.html" title=" " alt="" coords="323,5,458,32"/>
+<area shape="rect" id="node4" href="$classAeroponics__NoTank__Web.html" title="&lt; Aeroponics tote without pressure tank &#45; website component" alt="" coords="299,56,483,83"/>
+<area shape="rect" id="node5" href="$classAeroponics__Tank__Web.html" title="&lt; Aeroponics tote with pressure tank &#45; website component" alt="" coords="307,107,474,133"/>
+<area shape="rect" id="node6" href="$classAirPump__Web.html" title="&lt; AirPump controller &#45; website component" alt="" coords="335,157,447,184"/>
+<area shape="rect" id="node7" href="$classDEVModule__Web.html" title=" " alt="" coords="539,208,671,235"/>
+<area shape="rect" id="node8" href="$classDHTSensor__Web.html" title="&lt; Digital Humidity and Temperature sensor Web (DHT11 or DHT22) &#45; website component" alt="" coords="326,360,455,387"/>
+<area shape="rect" id="node9" href="$classDistanceSensor__Web.html" title="Class for the Ultrasonic distance sensor &#45; HC&#45;SR04 or JSN&#45;SR04T &#45; Website component." alt="" coords="311,411,470,437"/>
+<area shape="rect" id="node10" href="$classFan__PWM__Web.html" title="&lt; PWM AC Fan controller &#45; website component" alt="" coords="331,461,450,488"/>
+<area shape="rect" id="node11" href="$classFan__Web.html" title="&lt; Fan controller (2 speed) &#45; website component" alt="" coords="351,512,430,539"/>
+<area shape="rect" id="node12" href="$classHempyBucket__Web.html" title="&lt; Hempy bucket &#45; website component" alt="" coords="317,563,465,589"/>
+<area shape="rect" id="node13" href="$classHempyModule__Web.html" title=" " alt="" coords="315,613,467,640"/>
+<area shape="rect" id="node14" href="$classLightSensor__Web.html" title="&lt; LM393 Light sensor &#45; website component" alt="" coords="324,664,457,691"/>
+<area shape="rect" id="node15" href="$classLights__Web.html" title="&lt; Light controller with PWM dimming &#45; website component" alt="" coords="343,715,439,741"/>
+<area shape="rect" id="node16" href="$classMainModule.html" title=" " alt="" coords="554,259,657,285"/>
+<area shape="rect" id="node17" href="$classModuleSkeleton__Web.html" title="&lt; This is a template for creating new modules" alt="" coords="310,765,471,792"/>
+<area shape="rect" id="node18" href="$classModule__Web.html" title=" " alt="" coords="338,309,443,336"/>
+<area shape="rect" id="node21" href="$classPHSensor__Web.html" title="&lt; PH sensor &#45; website component" alt="" coords="331,816,450,843"/>
+<area shape="rect" id="node22" href="$classPowerSensorV3__Web.html" title=" " alt="" coords="311,867,470,893"/>
+<area shape="rect" id="node23" href="$classPowerSensor__Web.html" title="&lt; PZEM004T power sensor &#45; website component" alt="" coords="320,917,461,944"/>
+<area shape="rect" id="node24" href="$classPressureSensor__Web.html" title="&lt; Pressure sensor &#45; website component" alt="" coords="312,968,469,995"/>
+<area shape="rect" id="node25" href="$classReservoirModule__Web.html" title=" " alt="" coords="307,1019,474,1045"/>
+<area shape="rect" id="node26" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="342,1069,439,1096"/>
+<area shape="rect" id="node27" href="$classTDSSensor__Web.html" title="&lt; TDS Meter V1.0 for Arduino" alt="" coords="327,1120,454,1147"/>
+<area shape="rect" id="node28" href="$classWasteReservoir__Web.html" title="&lt; Weight sensor load cell &#45; website component" alt="" coords="311,1171,470,1197"/>
+<area shape="rect" id="node29" href="$classWaterLevelSensor__Web.html" title="&lt; Contactless water sensor array (4 levels) &#45; website component" alt="" coords="303,1221,478,1248"/>
+<area shape="rect" id="node30" href="$classWaterPump__Web.html" title="&lt; Hempy bucket &#45; website component" alt="" coords="325,1272,457,1299"/>
+<area shape="rect" id="node31" href="$classWaterTempSensor__Web.html" title="&lt; DS18B20 water temperature sensor &#45; website component" alt="" coords="303,1323,478,1349"/>
+<area shape="rect" id="node32" href="$classWeightSensor__Web.html" title="&lt; Weight sensor load cell &#45; website component" alt="" coords="317,1373,464,1400"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="5,689,87,716"/>
+<area shape="rect" id="node19" href="$classDevModule__Web.html" title=" " alt="" coords="540,309,671,336"/>
+<area shape="rect" id="node20" href="$classHempy__Standalone.html" title=" " alt="" coords="531,360,680,387"/>
+</map>

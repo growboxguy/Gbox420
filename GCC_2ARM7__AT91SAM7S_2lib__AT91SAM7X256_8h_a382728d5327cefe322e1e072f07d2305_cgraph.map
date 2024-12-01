@@ -1,0 +1,4 @@
+<map id="AT91F_PIO_IsInterruptMasked" name="AT91F_PIO_IsInterruptMasked">
+<area shape="rect" id="node1" title="Test if PIO Interrupt is Masked." alt="" coords="5,13,220,39"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#a0442d479fbf1504f0a80604eb7c30c8d" title="Return PIO Interrupt Mask Status." alt="" coords="268,5,480,47"/>
+</map>

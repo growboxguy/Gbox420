@@ -1,0 +1,4 @@
+var dir_3a1d3182509e0459cefeb7f12b5e0d76 =
+[
+    [ "freertos_risc_v_chip_specific_extensions.h", "GCC_2RISC-V_2chip__specific__extensions_2Pulpino__Vega__RV32M1RM_2freertos__risc__v__chip__specific__extensions_8h.html", "GCC_2RISC-V_2chip__specific__extensions_2Pulpino__Vega__RV32M1RM_2freertos__risc__v__chip__specific__extensions_8h" ]
+];

@@ -1,0 +1,41 @@
+<map id="getWirelessData" name="getWirelessData">
+<area shape="rect" id="node1" title=" " alt="" coords="5,411,136,438"/>
+<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="229,75,364,102"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="549,24,628,51"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title=" " alt="" coords="184,746,409,772"/>
+<area shape="rect" id="node39" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="247,796,347,823"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="1019,126,1119,152"/>
+<area shape="rect" id="node6" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump." alt="" coords="485,1364,692,1391"/>
+<area shape="rect" id="node10" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="535,1466,642,1492"/>
+<area shape="rect" id="node11" href="$classAeroponics__NoTank.html#ac899eda5f9e6ae39042918e0ff0bcfa6" title=" " alt="" coords="510,680,667,721"/>
+<area shape="rect" id="node13" href="$classAeroponics__NoTank.html#a72097bb5d81c26b7b8cce0ee4a2b2aaf" title=" " alt="" coords="510,1168,667,1209"/>
+<area shape="rect" id="node15" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title=" " alt="" coords="519,746,659,772"/>
+<area shape="rect" id="node17" href="$classAeroponics__NoTank.html#a1ceea321694c711877a6bf0e883023df" title=" " alt="" coords="510,344,667,385"/>
+<area shape="rect" id="node19" href="$classAeroponics__NoTank.html#a42b50599169ed659b9f5869a1847957b" title=" " alt="" coords="510,278,667,320"/>
+<area shape="rect" id="node20" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title=" " alt="" coords="519,410,658,436"/>
+<area shape="rect" id="node21" href="$classAeroponics__NoTank.html#ab962411a24bcaea35029f6b9936f801c" title=" " alt="" coords="510,461,667,502"/>
+<area shape="rect" id="node22" href="$classPressurePump.html#a1ad00330e25daa460bf1829294146e02" title=" " alt="" coords="475,527,702,554"/>
+<area shape="rect" id="node23" href="$classModule.html#a58c519c3102d120deae618aba6b62ee5" title="Enable/disable reporting the current time to the Serial output." alt="" coords="484,914,693,940"/>
+<area shape="rect" id="node24" href="$classModule.html#ab71609e8b31d66336f8c22f0abe20cd7" title="Enable/disable sending JSON formatted reports to the Serial output." alt="" coords="483,964,694,991"/>
+<area shape="rect" id="node25" href="$classModule.html#a7c9d28b0e40ac3c2aa4e773a21790de9" title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial." alt="" coords="457,1015,720,1042"/>
+<area shape="rect" id="node26" href="$classModule.html#acb15da911f5673d2ffb152e9ffae1c06" title="Enable/disable reporting the remaining free memory to the Serial output." alt="" coords="473,1066,705,1092"/>
+<area shape="rect" id="node27" href="$classModule.html#a51b0bb25e26589592ad6f866cfdd34a8" title="Enable/disable sending wireless package exchange reports to the Serial output." alt="" coords="471,1116,706,1143"/>
+<area shape="rect" id="node28" href="$classPressurePump.html#a9ec8ec6f90a6f262f4d0ab8af6026b84" title=" " alt="" coords="497,176,680,203"/>
+<area shape="rect" id="node30" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title=" " alt="" coords="510,1233,667,1274"/>
+<area shape="rect" id="node32" href="$classPressurePump.html#a8f205e9be7bcd4fc537aaf27be0f511f" title=" " alt="" coords="489,578,688,604"/>
+<area shape="rect" id="node33" href="$classAeroponics__NoTank.html#af7be37cf20fc3af632879e93d4a1ca15" title=" " alt="" coords="510,797,667,838"/>
+<area shape="rect" id="node34" href="$classAeroponics__NoTank.html#a37537625cd3d80d6c49adeae298d4a76" title=" " alt="" coords="510,1298,667,1340"/>
+<area shape="rect" id="node35" href="$classPressurePump.html#a5ddc97da3499cc0e6ecf374fc82b38d1" title=" " alt="" coords="490,863,687,890"/>
+<area shape="rect" id="node36" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF." alt="" coords="495,1415,683,1442"/>
+<area shape="rect" id="node37" href="$classWeightSensor.html#a537ea2f1d9b8c6fe99dd8f731584c6a5" title=" " alt="" coords="489,628,688,655"/>
+<area shape="rect" id="node38" href="$classAeroModule.html#a0957d1ad1b0602cfbdf4587e584d7c32" title=" " alt="" coords="485,227,693,254"/>
+<area shape="rect" id="node7" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="779,834,960,860"/>
+<area shape="rect" id="node8" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="791,1390,948,1416"/>
+<area shape="rect" id="node9" href="$classPressurePump.html#ae54a9626d799c0b973e8b8bc7c2f694c" title=" " alt="" coords="768,1339,971,1366"/>
+<area shape="rect" id="node12" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="791,578,947,604"/>
+<area shape="rect" id="node14" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="782,1015,957,1042"/>
+<area shape="rect" id="node16" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="800,351,939,378"/>
+<area shape="rect" id="node18" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="795,292,944,319"/>
+<area shape="rect" id="node29" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title=" " alt="" coords="769,176,969,203"/>
+<area shape="rect" id="node31" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title=" " alt="" coords="791,1233,948,1274"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Switch::getStateText" name="Switch::getStateText">
+<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="5,31,160,57"/>
+<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="229,5,291,32"/>
+<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="208,56,312,83"/>
+</map>

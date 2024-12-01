@@ -1,0 +1,5 @@
+<map id="DHTSensor::getHumidity" name="DHTSensor::getHumidity">
+<area shape="rect" id="node1" title=" " alt="" coords="536,13,719,39"/>
+<area shape="rect" id="node2" href="$classReservoirModule.html#a8f46e8f4d6a9b017752bdd11c16d0253" title=" " alt="" coords="240,13,488,39"/>
+<area shape="rect" id="node3" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="Called every five seconds." alt="" coords="5,5,192,47"/>
+</map>

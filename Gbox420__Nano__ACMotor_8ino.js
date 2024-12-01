@@ -1,0 +1,26 @@
+var Gbox420__Nano__ACMotor_8ino =
+[
+    [ "heartBeat", "Gbox420__Nano__ACMotor_8ino.html#abef6dd5b809e8a2ad491477bede9eb49", null ],
+    [ "ISR", "Gbox420__Nano__ACMotor_8ino.html#ad39420cdd896dd12c68e36313139d0a5", null ],
+    [ "ISR", "Gbox420__Nano__ACMotor_8ino.html#ab16889ae984b9b798989a0d239283cac", null ],
+    [ "loop", "Gbox420__Nano__ACMotor_8ino.html#afe461d27b9c48d5921c00d521181f12f", null ],
+    [ "processTimeCriticalStuff", "Gbox420__Nano__ACMotor_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce", null ],
+    [ "run1min", "Gbox420__Nano__ACMotor_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b", null ],
+    [ "run1sec", "Gbox420__Nano__ACMotor_8ino.html#ad9eace513773bac642ba8ed639be71fe", null ],
+    [ "run5sec", "Gbox420__Nano__ACMotor_8ino.html#a128f3b85166f7f4a7591b5f0294af58b", null ],
+    [ "setup", "Gbox420__Nano__ACMotor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d", null ],
+    [ "tachoTrigger", "Gbox420__Nano__ACMotor_8ino.html#afb34c0a60e17cb4dcf0c5393457eaff6", null ],
+    [ "zeroCrossingInterrupt", "Gbox420__Nano__ACMotor_8ino.html#ad485577b66b25362ec1aa9d18856f386", null ],
+    [ "ACMotorMod1", "Gbox420__Nano__ACMotor_8ino.html#ab0320c091b7e5b1266f8b73429049607", null ],
+    [ "ArduinoSerial", "Gbox420__Nano__ACMotor_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db", null ],
+    [ "CurrentTime", "Gbox420__Nano__ACMotor_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1", null ],
+    [ "Debug", "Gbox420__Nano__ACMotor_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23", null ],
+    [ "FiveSecThread", "Gbox420__Nano__ACMotor_8ino.html#a53a9d8bb350581bc4ffb215418731b79", null ],
+    [ "LongMessage", "Gbox420__Nano__ACMotor_8ino.html#a29e392d833e97bf88f780e9fdf22373f", null ],
+    [ "Metric", "Gbox420__Nano__ACMotor_8ino.html#ad4bc476e1eec919c51a9701a18e72918", null ],
+    [ "MinuteThread", "Gbox420__Nano__ACMotor_8ino.html#a2ddf18e39c01b0be11987f5625da3a48", null ],
+    [ "ModuleSettings", "Gbox420__Nano__ACMotor_8ino.html#aa5d20d2c57bfa8a66c233eb21b7cdf6e", null ],
+    [ "OneSecThread", "Gbox420__Nano__ACMotor_8ino.html#a86373ccecbdf8e67d4284b9cec46ff80", null ],
+    [ "ShortMessage", "Gbox420__Nano__ACMotor_8ino.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ],
+    [ "TimeCriticalThread", "Gbox420__Nano__ACMotor_8ino.html#a4e02a0d69f4487180db7505f000f591b", null ]
+];

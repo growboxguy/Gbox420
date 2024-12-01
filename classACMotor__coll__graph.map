@@ -1,0 +1,9 @@
+<map id="ACMotor" name="ACMotor">
+<area shape="rect" id="node1" title=" " alt="" coords="41,441,120,468"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="183,5,264,32"/>
+<area shape="rect" id="node3" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET" alt="" coords="53,149,119,175"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="296,321,367,348"/>
+<area shape="rect" id="node6" href="$classMqttClient.html" title=" " alt="" coords="439,149,530,175"/>
+<area shape="rect" id="node7" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="560,441,623,468"/>
+<area shape="rect" id="node4" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor" alt="" coords="167,321,272,348"/>
+</map>

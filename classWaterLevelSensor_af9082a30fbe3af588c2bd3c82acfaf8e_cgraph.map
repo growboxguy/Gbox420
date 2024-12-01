@@ -1,0 +1,4 @@
+<map id="WaterLevelSensor::report" name="WaterLevelSensor::report">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,192,32"/>
+<area shape="rect" id="node2" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="240,5,368,32"/>
+</map>

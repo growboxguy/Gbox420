@@ -1,0 +1,17 @@
+<map id="AirPump_Web::commandEvent" name="AirPump_Web::commandEvent">
+<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,228,133"/>
+<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="276,5,435,32"/>
+<area shape="rect" id="node3" href="$classAirPump.html#a3d9afb9e4897447be51362e3dafc5089" title=" " alt="" coords="483,157,621,184"/>
+<area shape="rect" id="node13" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#af9592cbcbc78ca4594b6bcf3ad41a400" title="Converting text." alt="" coords="323,208,387,235"/>
+<area shape="rect" id="node14" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title=" " alt="" coords="290,107,421,133"/>
+<area shape="rect" id="node15" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title=" " alt="" coords="290,56,421,83"/>
+<area shape="rect" id="node4" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="691,107,829,133"/>
+<area shape="rect" id="node6" href="$classAirPump.html#a1ddf4b37cff43430563de75c2c50b9cf" title=" " alt="" coords="678,56,842,83"/>
+<area shape="rect" id="node7" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="685,157,835,184"/>
+<area shape="rect" id="node8" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="669,208,851,235"/>
+<area shape="rect" id="node9" href="$classAirPump.html#a07c11ea564dd9cfe02bda7db8516e5f1" title=" " alt="" coords="677,259,843,285"/>
+<area shape="rect" id="node12" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="673,309,847,336"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="901,107,1001,133"/>
+<area shape="rect" id="node10" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="919,284,982,311"/>
+<area shape="rect" id="node11" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="899,233,1003,260"/>
+</map>

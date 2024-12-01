@@ -1,0 +1,4 @@
+<map id="GboxModule::setMetric" name="GboxModule::setMetric">
+<area shape="rect" id="node1" title="Metric or Imperial mode." alt="" coords="268,5,441,32"/>
+<area shape="rect" id="node2" href="$classGboxModule.html#a7f29bcfe50245b1baeaea5b2ab7f51e4" title="Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee." alt="" coords="5,5,220,32"/>
+</map>

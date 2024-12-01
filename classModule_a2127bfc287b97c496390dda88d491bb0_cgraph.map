@@ -1,0 +1,4 @@
+<map id="Module::commandEventTrigger" name="Module::commandEventTrigger">
+<area shape="rect" id="node1" title="Notifies the subscribed components of an incoming command. Command: combination of the Name of the co..." alt="" coords="5,5,229,32"/>
+<area shape="rect" id="node2" href="$classCommon.html#ae00c4ec620ef6f08140057ac86240895" title=" " alt="" coords="277,5,468,32"/>
+</map>

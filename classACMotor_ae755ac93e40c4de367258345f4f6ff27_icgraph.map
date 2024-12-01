@@ -1,0 +1,7 @@
+<map id="ACMotor::updateState" name="ACMotor::updateState">
+<area shape="rect" id="node1" title=" " alt="" coords="413,81,579,108"/>
+<area shape="rect" id="node2" href="$classACMotor.html#af695e0260939a1d22865fda58e3af3e8" title=" " alt="" coords="216,5,365,32"/>
+<area shape="rect" id="node3" href="$classACMotor.html#a264d94432b7b056916c1c4d0767b21d6" title="Called every second." alt="" coords="5,81,168,108"/>
+<area shape="rect" id="node4" href="$classACMotor.html#a379be19e6eaeff7afa9f9e0ab67c810f" title=" " alt="" coords="223,107,359,133"/>
+<area shape="rect" id="node5" href="$classACMotor.html#a5d49f0694e16974be1fae61059fd3ed0" title="Stop the AC Motor &#45; Takes time to apply." alt="" coords="233,157,348,184"/>
+</map>

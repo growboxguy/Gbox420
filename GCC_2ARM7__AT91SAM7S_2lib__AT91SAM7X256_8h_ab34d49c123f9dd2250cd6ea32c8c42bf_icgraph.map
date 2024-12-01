@@ -1,0 +1,4 @@
+<map id="AT91F_CKGR_GetMainClock" name="AT91F_CKGR_GetMainClock">
+<area shape="rect" id="node1" title="Return Main clock in Hz." alt="" coords="263,5,467,32"/>
+<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#adc2e8808baf7ad3939a017ce4f96422a" title="Return master clock in Hz which corresponds to processor clock for ARM7." alt="" coords="5,5,215,32"/>
+</map>
