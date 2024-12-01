@@ -1,0 +1,16 @@
+<map id="resetWebServer" name="resetWebServer">
+<area shape="rect" id="node1" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="5,370,131,396"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="209,142,329,168"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="790,91,890,118"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="605,243,711,270"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming loa/refresh event. Used when embedding another module&#39;s web interface that alrea..." alt="" coords="209,395,328,422"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="215,446,322,472"/>
+<area shape="rect" id="node10" href="$Gbox420__Mega__Main_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="207,496,331,523"/>
+<area shape="rect" id="node11" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="182,218,355,244"/>
+<area shape="rect" id="node12" href="$Gbox420__Mega__Main_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="577,344,739,371"/>
+<area shape="rect" id="node13" href="$Gbox420__Mega__Main_8ino.html#a82f70b21f331170e00323241a08bc24b" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="188,547,349,574"/>
+<area shape="rect" id="node14" href="$Gbox420__Mega__Main_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="179,598,359,624"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="407,91,529,118"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="787,243,893,270"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="607,91,709,118"/>
+</map>

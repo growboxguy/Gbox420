@@ -1,0 +1,8 @@
+<map id="setupMqtt" name="setupMqtt">
+<area shape="rect" id="node1" title="Sets up the MQTT relay." alt="" coords="5,81,93,108"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a38232ea81f36ec91ea7d13c045b82be7" title=" " alt="" coords="151,5,273,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a2820bdbff8498859dd60f983889695b8" title=" " alt="" coords="141,56,283,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a5e72855c850b7eea531a639a121b769e" title=" " alt="" coords="154,107,270,133"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title=" " alt="" coords="155,157,269,184"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="331,157,431,184"/>
+</map>

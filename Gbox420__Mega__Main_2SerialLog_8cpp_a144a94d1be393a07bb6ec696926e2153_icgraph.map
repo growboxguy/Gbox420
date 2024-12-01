@@ -1,0 +1,20 @@
+<map id="logToSerials" name="logToSerials">
+<area shape="rect" id="node1" title="&lt; Logging" alt="" coords="873,275,973,302"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="312,199,432,226"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,250,237,276"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,250,64,276"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="319,300,425,327"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="Prints the nRF24L01+ wireless transceiver&#39;s status to the Serial log." alt="" coords="685,402,825,428"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="688,503,823,530"/>
+<area shape="rect" id="node12" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="704,148,807,175"/>
+<area shape="rect" id="node13" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="511,199,633,226"/>
+<area shape="rect" id="node14" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="285,250,459,276"/>
+<area shape="rect" id="node15" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title=" " alt="" coords="699,452,812,479"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Main_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="291,47,453,74"/>
+<area shape="rect" id="node18" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="705,554,805,580"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="137,351,213,378"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="507,503,637,530"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="543,554,601,580"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="347,503,397,530"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Main_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay." alt="" coords="131,427,219,454"/>
+</map>

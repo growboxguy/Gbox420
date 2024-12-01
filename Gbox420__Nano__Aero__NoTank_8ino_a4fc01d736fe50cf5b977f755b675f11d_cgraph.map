@@ -1,0 +1,15 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node1" title=" " alt="" coords="5,183,64,209"/>
+<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="344,56,479,83"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="529,107,629,133"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="151,157,254,184"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title=" " alt="" coords="112,259,293,285"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="165,5,241,32"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="166,309,239,336"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="166,360,239,387"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="361,259,461,285"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="540,31,619,57"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="358,208,465,235"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="341,5,481,32"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Aero__NoTank_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Wireless communication." alt="" coords="368,309,455,336"/>
+</map>

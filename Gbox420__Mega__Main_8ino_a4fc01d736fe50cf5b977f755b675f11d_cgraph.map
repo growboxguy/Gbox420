@@ -1,0 +1,30 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node1" title=" " alt="" coords="5,584,64,611"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a42ab384e77148282f4730ec6c68ac2a3" title="Update the time over ESP&#45;link using NTP (Network Time Protocol)" alt="" coords="153,229,252,256"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="769,457,872,484"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="953,483,1053,509"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title=" " alt="" coords="112,508,293,535"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="140,280,265,307"/>
+<area shape="rect" id="node18" href="$Gbox420__Mega__Main_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="165,559,241,585"/>
+<area shape="rect" id="node20" href="$Gbox420__Mega__Main_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Wireless communication with Modules over nRF24L01+." alt="" coords="591,812,670,839"/>
+<area shape="rect" id="node21" href="$Gbox420__Mega__Main_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="166,609,239,636"/>
+<area shape="rect" id="node23" href="$Gbox420__Mega__Main_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="166,888,239,915"/>
+<area shape="rect" id="node24" href="$Gbox420__Mega__Main_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay." alt="" coords="159,711,247,737"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="949,255,1056,281"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="371,356,491,383"/>
+<area shape="rect" id="node10" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="767,305,874,332"/>
+<area shape="rect" id="node11" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming loa/refresh event. Used when embedding another module&#39;s web interface that alrea..." alt="" coords="372,52,491,79"/>
+<area shape="rect" id="node12" href="$Gbox420__Mega__Main_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="378,103,485,129"/>
+<area shape="rect" id="node13" href="$Gbox420__Mega__Main_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="369,153,493,180"/>
+<area shape="rect" id="node14" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="345,407,518,433"/>
+<area shape="rect" id="node15" href="$Gbox420__Mega__Main_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="740,255,901,281"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Main_8ino.html#a82f70b21f331170e00323241a08bc24b" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="351,204,512,231"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Main_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="341,255,521,281"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="569,407,692,433"/>
+<area shape="rect" id="node19" href="$Gbox420__Mega__Main_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="Prints the nRF24L01+ wireless transceiver&#39;s status to the Serial log." alt="" coords="361,559,501,585"/>
+<area shape="rect" id="node22" href="$Gbox420__Mega__Main_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Turns the integrated LED on the Arduino board ON/OFF." alt="" coords="388,609,475,636"/>
+<area shape="rect" id="node25" href="$Gbox420__Mega__Main_8ino.html#a38232ea81f36ec91ea7d13c045b82be7" title=" " alt="" coords="370,761,493,788"/>
+<area shape="rect" id="node26" href="$Gbox420__Mega__Main_8ino.html#a2820bdbff8498859dd60f983889695b8" title=" " alt="" coords="361,660,502,687"/>
+<area shape="rect" id="node27" href="$Gbox420__Mega__Main_8ino.html#a5e72855c850b7eea531a639a121b769e" title=" " alt="" coords="373,711,489,737"/>
+<area shape="rect" id="node28" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title=" " alt="" coords="574,711,687,737"/>
+</map>

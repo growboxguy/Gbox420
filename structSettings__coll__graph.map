@@ -1,0 +1,24 @@
+<map id="Settings" name="Settings">
+<area shape="rect" id="node1" title=" " alt="" coords="397,591,472,617"/>
+<area shape="rect" id="node2" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings" alt="" coords="29,26,222,67"/>
+<area shape="rect" id="node3" href="$structSettings_1_1FanSettings.html" title="&lt; Fan default settings" alt="" coords="46,92,205,119"/>
+<area shape="rect" id="node4" href="$structSettings_1_1AirPumpSettings.html" title="&lt; AirPump default settings" alt="" coords="30,143,221,169"/>
+<area shape="rect" id="node5" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings" alt="" coords="10,196,241,223"/>
+<area shape="rect" id="node6" href="$structSettings_1_1MainModuleSettings.html" title="&lt; MainModule default settings" alt="" coords="17,247,233,273"/>
+<area shape="rect" id="node7" href="$structSettings_1_1LightsSettings.html" title="&lt; Lights default settings" alt="" coords="38,300,213,327"/>
+<area shape="rect" id="node8" href="$structSettings_1_1PHSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="26,351,225,377"/>
+<area shape="rect" id="node9" href="$structSettings_1_1DHTSensorSettings.html" title="&lt; DHTSensor default settings" alt="" coords="21,401,229,428"/>
+<area shape="rect" id="node10" href="$structSettings_1_1AeroponicsSettings.html" title="&lt; Aeroponics_Tank default settings" alt="" coords="21,453,229,480"/>
+<area shape="rect" id="node11" href="$structSettings_1_1TDSSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="22,504,229,531"/>
+<area shape="rect" id="node12" href="$structSettings_1_1WeightSensorSettings.html" title="&lt; WeightSensor default settings" alt="" coords="13,589,238,616"/>
+<area shape="rect" id="node13" href="$structSettings_1_1HempyBucketSettings.html" title="&lt; HempyBucket default settings" alt="" coords="12,640,239,667"/>
+<area shape="rect" id="node14" href="$structSettings_1_1ACMotorModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="5,691,245,717"/>
+<area shape="rect" id="node15" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="18,741,233,768"/>
+<area shape="rect" id="node16" href="$structSettings_1_1PressurePumpSettings.html" title="&lt; PressurePump default settings" alt="" coords="11,792,240,819"/>
+<area shape="rect" id="node17" href="$structSettings_1_1SoundSettings.html" title="&lt; Sound default settings" alt="" coords="37,843,213,869"/>
+<area shape="rect" id="node18" href="$structSettings_1_1WaterPumpSettings.html" title="&lt; WaterPump default settings" alt="" coords="20,893,231,920"/>
+<area shape="rect" id="node19" href="$structSettings_1_1WaterTempSensorSettings.html" title="&lt; WaterTempSensor default settings" alt="" coords="25,945,225,986"/>
+<area shape="rect" id="node20" href="$structSettings_1_1PressureSensorSettings.html" title="&lt; PressureSensor default settings" alt="" coords="34,1010,217,1051"/>
+<area shape="rect" id="node21" href="$structSettings_1_1LightSensorSettings.html" title="&lt; LightSensor default settings" alt="" coords="19,1076,231,1103"/>
+<area shape="rect" id="node22" href="$structSettings_1_1AeroponicsModuleSettings.html" title=" " alt="" coords="24,1127,227,1169"/>
+</map>

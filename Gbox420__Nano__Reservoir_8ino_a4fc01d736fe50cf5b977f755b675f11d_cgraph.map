@@ -1,0 +1,12 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node1" title=" " alt="" coords="5,157,64,184"/>
+<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="112,5,247,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="298,81,398,108"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="128,309,231,336"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="141,157,217,184"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Reservoir_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="143,208,216,235"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Reservoir_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="143,259,216,285"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="129,56,229,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="309,5,387,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="295,309,401,336"/>
+</map>
