@@ -4,7 +4,6 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ master ]
   schedule:
     - cron: '18 9 * * 4'
@@ -21,40 +20,46 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python' , 'cpp']
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
-        # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+        language: [ 'javascript', 'python', 'cpp' ]
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3  # Updated to the latest version of actions/checkout
 
-    # Initializes the CodeQL tools for scanning.
+    # Initialize CodeQL tools for scanning
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3  # Updated to use v3
+      uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-        # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-    # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3  # Updated to use v3
+    # Custom build steps for Arduino
+    - name: Install Arduino CLI
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sudo bash
+        sudo apt-get install arduino-cli
 
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 https://git.io/JvXDl
+    - name: Build Arduino projects
+      run: |
+        arduino-cli core update-index
+        arduino-cli core install arduino:avr  # Install the Arduino AVR core
+        arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Mega_Main
+        arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Hempy
+        arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_Tank
+        arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_NoTank
+        arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Reservoir
 
-    # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
-    #    and modify them (or add more) to build your code if your project
-    #    uses a compiled language
+    # If you are using ESPHome (Python-based, not compiled like Arduino), you may not need to build it manually. 
+    # If you do need to analyze C++ components of ESPHome, you can add a step to install dependencies.
+    - name: Install ESPHome (if you have C++ components)
+      run: |
+        sudo pip install esphome  # Install ESPHome dependencies
+        # If you have custom C++ components in ESPHome, make sure they're built before analysis.
 
-    #- run: |
-    #   make bootstrap
-    #   make release
+    # Skip the autobuild step because it won't work for Arduino/ESPHome
+    # Remove or comment the autobuild step to avoid failures
+    # - name: Autobuild
+    #   uses: github/codeql-action/autobuild@v3
 
+    # Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3  # Updated to use v3
+      uses: github/codeql-action/analyze@v3
