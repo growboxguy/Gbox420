@@ -24,7 +24,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3  # Updated to the latest version of actions/checkout
+      uses: actions/checkout@v3
 
     # Initialize CodeQL tools for scanning
     - name: Initialize CodeQL
@@ -32,14 +32,21 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    # Install Arduino CLI and make it available in the PATH
+    # Install Arduino CLI
     - name: Install Arduino CLI
       run: |
         curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sudo bash
-        echo "$HOME/bin" >> $GITHUB_PATH  # Add the installation directory to the PATH
+        # Explicitly check where arduino-cli is installed
+        which arduino-cli
+        # Add the installation directory to the PATH
+        echo "$HOME/bin" >> $GITHUB_PATH
+        echo "Arduino CLI installed to: $(which arduino-cli)"  # Log the location for troubleshooting
 
+    # Build Arduino projects
     - name: Build Arduino projects
       run: |
+        # Check if arduino-cli is in the path
+        arduino-cli --version  # Ensure arduino-cli is available
         arduino-cli core update-index
         arduino-cli core install arduino:avr  # Install the Arduino AVR core
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Mega_Main
@@ -48,14 +55,13 @@ jobs:
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_NoTank
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Reservoir
 
-    # If you are using ESPHome (Python-based, not compiled like Arduino), you may not need to build it manually. 
+    # If you are using ESPHome (Python-based, not compiled like Arduino), you may not need to build it manually.
     # If you do need to analyze C++ components of ESPHome, you can add a step to install dependencies.
     - name: Install ESPHome (if you have C++ components)
       run: |
         sudo pip install esphome  # Install ESPHome dependencies
 
     # Skip the autobuild step because it won't work for Arduino/ESPHome
-    # Remove or comment the autobuild step to avoid failures
     # - name: Autobuild
     #   uses: github/codeql-action/autobuild@v3
 
