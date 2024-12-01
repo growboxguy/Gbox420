@@ -49,5 +49,6 @@ void restoreDefaults()
   printf("Forcing settings update at next restart\n");
   loadSettings(true);
   printf(" Reseting the sketch\n");
-  //__asm__ __volatile__("jmp 0x0000");  //TODO: Force a watchdog reboot here
+  wdt_enable(WDTO_15MS);  // Set the watchdog to reset the system after 15 milliseconds
+  while (1);  // Wait for the reset to occur
 }

@@ -4,7 +4,6 @@
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
  *
- *  \todo Proper doxygen documentation
  */
 
 #include "Arduino.h"
@@ -405,7 +404,7 @@ void getWirelessStatus()
 }
 
 /**
-  \brief Ignores the incoming loa/refresh event. Used when embedding another module's web interface that already handles the event
+  \brief Ignores the incoming load/refresh event. Used when embedding another module's web interface that already handles the event
 */
 void ignoreCallback(__attribute__((unused)) char *Url)
 {

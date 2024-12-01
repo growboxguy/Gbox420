@@ -310,7 +310,7 @@ char *HempyBucket::getStateText(bool FriendlyFormat)
 
 void HempyBucket::setStartWeight(float Weight)
 {
-  if (!isnan(Weight) && StartWeight != Weight)
+  if (StartWeight != Weight)
   {
     DryWeight = Weight;   // Reset dry weight - next watering will re-calculate it (WetWeight-EvaporationTarget)
     StartWeight = Weight; // Store the value in EEPROM

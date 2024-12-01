@@ -589,7 +589,7 @@ void Module_Web::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMqtt && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
-    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer
     mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
     mqttPublish(&LongMessage);          //< Publish the EventLog via ESP MQTT API

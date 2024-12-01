@@ -4,7 +4,6 @@
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
  *
- *  \todo Proper doxygen documentation
  */
 
 #include "Arduino.h"

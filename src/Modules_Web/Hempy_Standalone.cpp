@@ -24,8 +24,8 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   logToSerials(F(""), true, 0);                                                          //<Line break
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);                      ///< Humidity and temp sensor (not necessary)
-  B1W = new WeightSensor_Web(F("B1W"), this, &ModuleSettings->NRW);                      ///< Bucket 1 Weight sensor \TODO: Change NRW back to B1W
-  B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->NRW);                      ///< Bucket 2 Weight sensor \TODO: Change NRW back to B2W
+  B1W = new WeightSensor_Web(F("B1W"), this, &ModuleSettings->NRW);                      ///< Bucket 1 Weight sensor
+  B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->NRW);                      ///< Bucket 2 Weight sensor
   NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->NRW);                      ///< Nutrient Reservoir Weight sensor
   WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW);                      ///< Waste Reservoir Weight sensor
   WR1 = new WasteReservoir_Web(F("WR1"), this, &ModuleSettings->WR1, WRW);               ///< Waste reservoir

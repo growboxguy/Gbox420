@@ -11,7 +11,7 @@
 #include "hardware/rtc.h"                              // Real Time Clock for storing current time (Updated over NTP)
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-#include "Settings.h" // Settings for every component //TODO: Try passing these directly when creating an object?
+#include "Settings.h" // Settings for every component
 #include "Components/Helpers.h"
 #include "Components/NtpClient.h"
 #include "Components/Sound.h"
@@ -30,7 +30,7 @@ ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the curr
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
 ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 */
-Settings *GboxSettings;    ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
+Settings *GboxSettings;    ///< This object will store the settings
 NtpClient *NtpClient1;     ///< Pointer to
 HempyModule *HempyModule1; ///< Represents a Grow Box with all components (LED lights, DHT sensors, Power sensor, Hempy Buckets, Water pants..etc)
 

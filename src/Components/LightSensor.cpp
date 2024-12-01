@@ -51,7 +51,7 @@ void LightSensor::triggerCalibration()
 void LightSensor::calibrate(bool AddToLog)
 { ///< Takes ~2sec total, could trigger a watchdog reset!
   CalibrateRequested = false;
-  bool LastStatus = LightSource->getStatus(); ///< TODO: This should be more generic and support different Lights objects passed as a parameter
+  bool LastStatus = LightSource->getStatus();
   uint8_t LastBrightness = LightSource->getBrightness();
   LightSource->setLightOnOff(false, false);   ///< turn off light, without adding a log entry
   delay(DelaySec);                            ///< wait for light output change

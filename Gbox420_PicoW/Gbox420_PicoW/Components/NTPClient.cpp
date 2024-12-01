@@ -75,8 +75,12 @@ void NtpClient::rtcDNSResolvedCallback(ip_addr_t *ServerIP)
 void NtpClient::run30min()
 {
     getCurrentTime(true);
-    //TODO: add logic to sync every 24 hours
-    //TODO: run sync every time WiFi reconnects
+    static unsigned long lastSyncTime = 0;
+    if (millis() - lastSyncTime >= 86400000)
+    { // 24 hours passed?
+        rtcUpdate(false);
+        lastSyncTime = currentMillis;
+    }
 }
 
 // Make an NTP request

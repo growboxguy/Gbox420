@@ -12,13 +12,13 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name,
       Parent(Parent),
       FeedbackPressureSensor(FeedbackPressureSensor),
       Pump(Pump),
-      Duration(DefaultSettings->Duration),                                  ///< Initialize the reference
-      DayInterval(DefaultSettings->DayInterval),                            ///< Initialize the reference
-      NightInterval(DefaultSettings->NightInterval),                        ///< Initialize the reference
-      MinPressure(DefaultSettings->MinPressure),                            ///< Initialize the reference
+      Duration(DefaultSettings->Duration),                                  
+      DayInterval(DefaultSettings->DayInterval),                            
+      NightInterval(DefaultSettings->NightInterval),                   
+      MinPressure(DefaultSettings->MinPressure),                           
       MaxPressure(DefaultSettings->MaxPressure),  
-      SprayEnabled(DefaultSettings->SprayEnabled),                          ///< Initialize the reference
-      SpraySolenoidClosingDelay(DefaultSettings->SpraySolenoidClosingDelay) ///< Initialize the reference
+      SprayEnabled(DefaultSettings->SprayEnabled),                         
+      SpraySolenoidClosingDelay(DefaultSettings->SpraySolenoidClosingDelay)
 {
   logToSerials(F(""), true, 0);  // New line
   logToSerials(F(""), false, 1); // Extra indentation
