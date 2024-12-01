@@ -45,7 +45,6 @@ jobs:
     - name: Build Arduino projects
       run: |
         # Verify if arduino-cli is available in the PATH
-        arduino-cli --version  # Ensure arduino-cli is available
         arduino-cli core update-index
         arduino-cli core install arduino:avr  # Install the Arduino AVR core
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Mega_Main
