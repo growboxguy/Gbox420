@@ -806,12 +806,12 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = $(BUILD_DIR)/Gbox420_Mega_Main \
-                         $(BUILD_DIR)/Gbox420_Nano_Hempy \
-                         $(BUILD_DIR)/Gbox420_Nano_Aero_Tank \
-                         $(BUILD_DIR)/Gbox420_Nano_Aero_NoTank \
-                         $(BUILD_DIR)/Gbox420_Nano_Reservoir \
-                         $(BUILD_DIR)/ESPHome
+INPUT                  = ./Gbox420_Mega_Main \
+                         ./Gbox420_Nano_Hempy \
+                         ./Gbox420_Nano_Aero_Tank \
+                         ./Gbox420_Nano_Aero_NoTank \
+                         ./Gbox420_Nano_Reservoir \
+                         ./ESPHome
 RECURSIVE              = YES
 
 # This tag can be used to specify the character encoding of the source files
