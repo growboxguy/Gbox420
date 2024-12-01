@@ -806,9 +806,13 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = $(BUILD_DIR)
-RECURSIVE = YES
-EXCLUDE_PATTERNS = */!(Gbox420_*|ESPHome)/*
+INPUT                  = $(BUILD_DIR)/Gbox420_Mega_Main \
+                         $(BUILD_DIR)/Gbox420_Nano_Hempy \
+                         $(BUILD_DIR)/Gbox420_Nano_Aero_Tank \
+                         $(BUILD_DIR)/Gbox420_Nano_Aero_NoTank \
+                         $(BUILD_DIR)/Gbox420_Nano_Reservoir \
+                         $(BUILD_DIR)/ESPHome
+RECURSIVE              = YES
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
