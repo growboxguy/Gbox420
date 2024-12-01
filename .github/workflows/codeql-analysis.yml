@@ -36,16 +36,15 @@ jobs:
     - name: Install Arduino CLI
       run: |
         curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sudo bash
-        # Explicitly check where arduino-cli is installed
-        which arduino-cli
-        # Add the installation directory to the PATH
-        echo "$HOME/bin" >> $GITHUB_PATH
-        echo "Arduino CLI installed to: $(which arduino-cli)"  # Log the location for troubleshooting
+        # Log the install location
+        echo "Arduino CLI installed to: /home/runner/work/Gbox420/Gbox420/bin"
+        # Add the bin directory to the PATH for subsequent steps
+        echo "/home/runner/work/Gbox420/Gbox420/bin" >> $GITHUB_PATH
 
     # Build Arduino projects
     - name: Build Arduino projects
       run: |
-        # Check if arduino-cli is in the path
+        # Verify if arduino-cli is available in the PATH
         arduino-cli --version  # Ensure arduino-cli is available
         arduino-cli core update-index
         arduino-cli core install arduino:avr  # Install the Arduino AVR core
@@ -54,16 +53,6 @@ jobs:
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_Tank
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_NoTank
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Reservoir
-
-    # If you are using ESPHome (Python-based, not compiled like Arduino), you may not need to build it manually.
-    # If you do need to analyze C++ components of ESPHome, you can add a step to install dependencies.
-    - name: Install ESPHome (if you have C++ components)
-      run: |
-        sudo pip install esphome  # Install ESPHome dependencies
-
-    # Skip the autobuild step because it won't work for Arduino/ESPHome
-    # - name: Autobuild
-    #   uses: github/codeql-action/autobuild@v3
 
     # Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
