@@ -7,8 +7,7 @@ var searchData=
   ['timerenabled_209',['TimerEnabled',['../structSettings_1_1LightsSettings.html#a4ef1e968d6946baa04bceefaba3f66d3',1,'Settings::LightsSettings']]],
   ['to_5fcode_210',['to_code',['../namespacehempy.html#a738a2116a0dde5b9405edfb8059e3b15',1,'hempy']]],
   ['to_5ftext_5fstate_211',['to_text_state',['../classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32',1,'esphome::hempy::HempyBucket']]],
-  ['todo_20list_212',['Todo List',['../todo.html',1,'']]],
-  ['toggle_5fwatering_213',['toggle_watering',['../classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81',1,'esphome::hempy::HempyBucket']]],
-  ['toggle_5fwatering_5flogic_214',['toggle_watering_logic',['../classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab',1,'esphome::hempy::HempyBucket']]],
-  ['type_215',['Type',['../structSettings_1_1DHTSensorSettings.html#a422c98d50d1ff2ffa07279c2635844fc',1,'Settings::DHTSensorSettings']]]
+  ['toggle_5fwatering_212',['toggle_watering',['../classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81',1,'esphome::hempy::HempyBucket']]],
+  ['toggle_5fwatering_5flogic_213',['toggle_watering_logic',['../classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab',1,'esphome::hempy::HempyBucket']]],
+  ['type_214',['Type',['../structSettings_1_1DHTSensorSettings.html#a422c98d50d1ff2ffa07279c2635844fc',1,'Settings::DHTSensorSettings']]]
 ];

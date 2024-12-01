@@ -25,15 +25,11 @@
 var NAVTREE =
 [
   [ "Gbox", "index.html", [
-    [ "Todo List", "todo.html", null ],
-    [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
+    [ "Namespace Members", "namespacemembers.html", [
+      [ "All", "namespacemembers.html", null ],
+      [ "Functions", "namespacemembers_func.html", null ],
+      [ "Variables", "namespacemembers_vars.html", null ],
+      [ "Enumerations", "namespacemembers_enum.html", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -61,7 +57,7 @@ var NAVTREEINDEX =
 [
 "Gbox420__Mega__Main_2SerialLog_8cpp.html",
 "Gbox420__Nano__Reservoir_8ino.html",
-"structSettings_1_1PHSensorSettings.html"
+"structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

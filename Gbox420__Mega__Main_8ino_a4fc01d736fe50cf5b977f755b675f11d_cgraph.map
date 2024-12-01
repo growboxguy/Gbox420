@@ -13,7 +13,7 @@
 <area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="949,255,1056,281"/>
 <area shape="rect" id="node8" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="371,356,491,383"/>
 <area shape="rect" id="node10" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="767,305,874,332"/>
-<area shape="rect" id="node11" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming loa/refresh event. Used when embedding another module&#39;s web interface that alrea..." alt="" coords="372,52,491,79"/>
+<area shape="rect" id="node11" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming load/refresh event. Used when embedding another module&#39;s web interface that alre..." alt="" coords="372,52,491,79"/>
 <area shape="rect" id="node12" href="$Gbox420__Mega__Main_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="378,103,485,129"/>
 <area shape="rect" id="node13" href="$Gbox420__Mega__Main_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="369,153,493,180"/>
 <area shape="rect" id="node14" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="345,407,518,433"/>
