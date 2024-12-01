@@ -47,6 +47,7 @@ jobs:
         # Verify if arduino-cli is available in the PATH
         arduino-cli core update-index
         arduino-cli core install arduino:avr  # Install the Arduino AVR core
+        arduino-cli lib install "printf"
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Mega_Main
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Hempy
         arduino-cli compile --fqbn arduino:avr:uno ./Gbox420_Nano_Aero_Tank
