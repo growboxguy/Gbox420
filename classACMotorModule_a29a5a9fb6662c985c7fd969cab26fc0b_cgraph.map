@@ -1,5 +1,0 @@
-<map id="ACMotorModule::refresh_Sec" name="ACMotorModule::refresh_Sec">
-<area shape="rect" id="node1" title="Called every second." alt="" coords="5,5,216,32"/>
-<area shape="rect" id="node2" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="264,5,429,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="477,5,577,32"/>
-</map>

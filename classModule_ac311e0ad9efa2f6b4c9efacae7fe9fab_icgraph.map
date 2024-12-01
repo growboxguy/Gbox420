@@ -1,4 +1,0 @@
-<map id="Module::addToRefreshQueue_1min" name="Module::addToRefreshQueue_1min">
-<area shape="rect" id="node1" title="Subscribing to the 1 minute refresh queue: Calls the run1min() method." alt="" coords="220,5,468,32"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#ad56d828d07ed653985ebaf30472ed96f" title=" " alt="" coords="5,5,172,32"/>
-</map>

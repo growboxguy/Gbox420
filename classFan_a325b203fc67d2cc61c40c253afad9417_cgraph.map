@@ -1,5 +1,0 @@
-<map id="Fan::report" name="Fan::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,31,96,57"/>
-<area shape="rect" id="node2" href="$classFan.html#a4361bbdef00133c90ff36b5e9e772341" title=" " alt="" coords="144,5,284,32"/>
-<area shape="rect" id="node3" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="150,56,278,83"/>
-</map>

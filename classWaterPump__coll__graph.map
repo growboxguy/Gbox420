@@ -1,9 +1,0 @@
-<map id="WaterPump" name="WaterPump">
-<area shape="rect" id="node1" title="&lt; Diaphragm pump controller" alt="" coords="60,409,158,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="186,5,267,32"/>
-<area shape="rect" id="node4" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET" alt="" coords="56,149,122,175"/>
-<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="212,305,283,332"/>
-<area shape="rect" id="node6" href="$classMqttClient.html" title=" " alt="" coords="442,149,533,175"/>
-<area shape="rect" id="node7" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="563,409,626,436"/>
-<area shape="rect" id="node3" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor" alt="" coords="56,305,162,332"/>
-</map>

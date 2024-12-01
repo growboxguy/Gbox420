@@ -1,6 +1,0 @@
-<map id="ReservoirModule::refresh_Sec" name="ReservoirModule::refresh_Sec">
-<area shape="rect" id="node1" title="Called every second." alt="" coords="5,31,221,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="557,5,657,32"/>
-<area shape="rect" id="node3" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="307,31,472,57"/>
-<area shape="rect" id="node4" href="$classReservoirModule.html#adfb2a142a73a552075f0eeabbac5fda2" title=" " alt="" coords="269,81,509,108"/>
-</map>

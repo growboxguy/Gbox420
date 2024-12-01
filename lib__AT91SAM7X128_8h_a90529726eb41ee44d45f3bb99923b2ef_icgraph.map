@@ -1,6 +1,0 @@
-<map id="AT91F_PDC_SetNextRx" name="AT91F_PDC_SetNextRx">
-<area shape="rect" id="node1" title="Set the next receive transfer descriptor." alt="" coords="249,56,421,83"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7X128_8h.html#ae7a00663d9b586d0060d83e4c3e1921f" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="34,5,173,32"/>
-<area shape="rect" id="node3" href="$lib__AT91SAM7X128_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="35,56,172,83"/>
-<area shape="rect" id="node4" href="$lib__AT91SAM7X128_8h.html#aafc2ac73bfe8e6584b59dfa99dcc734d" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="5,107,201,133"/>
-</map>

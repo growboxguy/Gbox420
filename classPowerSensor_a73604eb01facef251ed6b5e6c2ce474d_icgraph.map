@@ -1,5 +1,0 @@
-<map id="PowerSensor::getEnergyText" name="PowerSensor::getEnergyText">
-<area shape="rect" id="node1" title=" " alt="" coords="253,35,460,61"/>
-<area shape="rect" id="node2" href="$classPowerSensor.html#ae4766a342c58ae21d20e978d350b3062" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="29,5,182,32"/>
-<area shape="rect" id="node3" href="$classPowerSensor__Web.html#a58b912b0306e661dded4d069d6ad0eb7" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,205,98"/>
-</map>

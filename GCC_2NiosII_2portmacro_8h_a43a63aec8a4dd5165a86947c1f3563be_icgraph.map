@@ -1,9 +1,0 @@
-<map id="__asm__" name="__asm__">
-<area shape="rect" id="node1" title=" " alt="" coords="705,56,784,83"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="521,31,643,57"/>
-<area shape="rect" id="node7" href="$ThirdParty_2GCC_2ATmega_2port_8c.html#ade5a8c6666e7413a0355cc252029c5c6" title="start the freertos scheduler, go to the first task" alt="" coords="507,81,657,108"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="312,5,432,32"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="285,56,459,83"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,5,237,32"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,32"/>
-</map>

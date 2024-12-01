@@ -1,5 +1,0 @@
-<map id="Switch_PWM::getDutyCycle" name="Switch_PWM::getDutyCycle">
-<area shape="rect" id="node1" title=" " alt="" coords="535,5,736,32"/>
-<area shape="rect" id="node2" href="$classWaterPump.html#ad32c4b7eb92a3f20765633c92dd3bfff" title=" " alt="" coords="320,5,487,32"/>
-<area shape="rect" id="node3" href="$classWaterPump__Web.html#a0431830fcf2fe02986cdb130269163de" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,5,272,32"/>
-</map>

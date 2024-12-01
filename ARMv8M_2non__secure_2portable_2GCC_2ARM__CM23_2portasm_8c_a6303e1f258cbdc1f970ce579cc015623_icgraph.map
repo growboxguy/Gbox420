@@ -1,4 +1,0 @@
-<map id="PendSV_Handler" name="PendSV_Handler">
-<area shape="rect" id="node1" title="PendSV Exception handler." alt="" coords="204,5,333,32"/>
-<area shape="rect" id="node2" href="$portable_8h.html#a4f3b1bb7590996f2fa1e0456dda961ff" title="start the freertos scheduler, go to the first task" alt="" coords="5,5,156,32"/>
-</map>

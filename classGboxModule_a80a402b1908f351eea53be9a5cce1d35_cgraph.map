@@ -1,8 +1,0 @@
-<map id="GboxModule::report" name="GboxModule::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,156,83"/>
-<area shape="rect" id="node2" href="$classGboxModule.html#a0ba7f083d32a256b1f59341f59ca6563" title=" " alt="" coords="204,56,407,83"/>
-<area shape="rect" id="node5" href="$classGboxModule.html#a10ead7c6cc98caed4e296b6be5e99cde" title="Settings." alt="" coords="205,5,406,32"/>
-<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="241,107,369,133"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="475,5,538,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="455,56,559,83"/>
-</map>

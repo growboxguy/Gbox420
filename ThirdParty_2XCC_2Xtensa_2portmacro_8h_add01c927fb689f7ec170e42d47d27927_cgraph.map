@@ -1,9 +1,0 @@
-<map id="vPortYield" name="vPortYield">
-<area shape="rect" id="node1" title="Yield the CPU." alt="" coords="5,132,93,159"/>
-<area shape="rect" id="node2" href="$ARC__EM__HS_2arc__freertos__exceptions_8h.html#a3bbf2feb28a23630cc3ade2c04337e4f" title=" " alt="" coords="191,5,269,32"/>
-<area shape="rect" id="node3" href="$oWatcom_216BitDOS_2Flsh186_2portmacro_8h.html#adff63afc268c80ed13a4db7eb576c989" title=" " alt="" coords="151,56,309,83"/>
-<area shape="rect" id="node4" href="$IAR_2V850ES_2portmacro_8h.html#a716d176e9130fa97ac875a31e7453605" title=" " alt="" coords="141,107,319,133"/>
-<area shape="rect" id="node5" href="$IAR_2V850ES_2portmacro_8h.html#ad79a8b96e1489f7f0645e8d57360337d" title=" " alt="" coords="155,157,305,184"/>
-<area shape="rect" id="node6" href="$ARMv8M_2non__secure_2port_8c.html#a2ed3554a3de09a3bd09d396ee081ab69" title="Enter critical section." alt="" coords="162,208,298,235"/>
-<area shape="rect" id="node7" href="$IAR_2RX700v3__DPFPU_2port_8c.html#a9c86137bc3c1cbffc39fff22627cb885" title=" " alt="" coords="153,259,307,285"/>
-</map>

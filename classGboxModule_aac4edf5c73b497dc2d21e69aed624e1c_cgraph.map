@@ -1,7 +1,0 @@
-<map id="GboxModule::setDebug" name="GboxModule::setDebug">
-<area shape="rect" id="node1" title="Turn debug messages printed to stdout ON or OFF." alt="" coords="5,56,180,83"/>
-<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="249,5,388,32"/>
-<area shape="rect" id="node4" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="228,56,409,83"/>
-<area shape="rect" id="node5" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="231,107,406,133"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="457,5,557,32"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="dnsLookup" name="dnsLookup">
-<area shape="rect" id="node1" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="5,31,96,57"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae09f73b656e9cb4867d331bbf68037b9" title="Callback when DNS lookup is finished." alt="" coords="144,5,276,32"/>
-<area shape="rect" id="node3" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="161,56,259,83"/>
-</map>

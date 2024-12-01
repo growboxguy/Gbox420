@@ -1,9 +1,0 @@
-<map id="loadSettings" name="loadSettings">
-<area shape="rect" id="node1" title="Load settings from EEPROM, Force loading the defaults from the sketch and overwriting the EEPROM with..." alt="" coords="677,56,780,83"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="541,5,595,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="507,56,629,83"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,81,64,108"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="312,5,432,32"/>
-<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="285,56,459,83"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,31,237,57"/>
-</map>

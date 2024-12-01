@@ -1,9 +1,0 @@
-<map id="MqttClient::mqttConnect_Callback" name="MqttClient::mqttConnect_Callback">
-<area shape="rect" id="node1" title="Callback with the connection result." alt="" coords="1057,49,1240,90"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#a6c0a91af5c408441549297d1b560b415" title="Actually connect to the MQTT server." alt="" coords="827,56,1009,83"/>
-<area shape="rect" id="node3" href="$classMqttClient.html#a93d8bff0ccf09514742aadf422a8e487" title=" " alt="" coords="587,5,753,32"/>
-<area shape="rect" id="node4" href="$classMqttClient.html#a20417947bb527b89012addbec3b957bd" title="Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect." alt="" coords="287,85,513,112"/>
-<area shape="rect" id="node7" href="$classMqttClient.html#a7ef9b5c7a2c44b2542270f7dea433439" title="Callback when IP of the MQTT server is found." alt="" coords="561,107,779,149"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad8d0a588e6932069b6e287987de4daf7" title="Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Rea..." alt="" coords="108,85,239,112"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,85,60,112"/>
-</map>

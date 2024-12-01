@@ -1,7 +1,0 @@
-<map id="WaterTempSensor" name="WaterTempSensor">
-<area shape="rect" id="node1" title="&lt; DS18B20 waterproof temperature sensor" alt="" coords="5,409,144,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="174,5,255,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="159,305,230,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="388,149,479,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="509,409,571,436"/>
-</map>

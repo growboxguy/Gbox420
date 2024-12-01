@@ -1,4 +1,0 @@
-<map id="ACMotorModuleCommand" name="ACMotorModuleCommand">
-<area shape="rect" id="node1" title="&lt; ACMotor module wireless command" alt="" coords="7,80,201,107"/>
-<area shape="rect" id="node2" href="$structACMotorCommonTemplate.html" title="&lt; ACMotor wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,5,203,32"/>
-</map>

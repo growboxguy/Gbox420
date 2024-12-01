@@ -1,7 +1,0 @@
-<map id="Aeroponics_Tank::setSprayOnOff" name="Aeroponics_Tank::setSprayOnOff">
-<area shape="rect" id="node1" title=" " alt="" coords="5,74,201,115"/>
-<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="268,5,449,32"/>
-<area shape="rect" id="node3" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="280,56,437,83"/>
-<area shape="rect" id="node4" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="281,107,437,133"/>
-<area shape="rect" id="node5" href="$classAeroponics__Tank.html#ac70acd360b88e7bf1449eae7251af925" title=" " alt="" coords="249,157,468,184"/>
-</map>

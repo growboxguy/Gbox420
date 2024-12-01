@@ -1,7 +1,0 @@
-<map id="WasteReservoir_Web::websiteEvent_Refresh" name="WasteReservoir_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,23,180,65"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="261,5,410,32"/>
-<area shape="rect" id="node3" href="$classWasteReservoir.html#a28f27db6a4589ed8a87b63e6b856d51e" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="228,56,443,83"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="565,31,627,57"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a663c2dc5bf1b8e1670e1bf28f7790ebb" title=" " alt="" coords="491,81,701,108"/>
-</map>

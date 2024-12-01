@@ -1,5 +1,0 @@
-<map id="GboxModule::setDebug" name="GboxModule::setDebug">
-<area shape="rect" id="node1" title="Turn debug messages printed to stdout ON or OFF." alt="" coords="511,5,685,32"/>
-<area shape="rect" id="node2" href="$classGboxModule.html#aa5d164dc5f70c14857e6952ebfbeb6fd" title="Invert the state of printing debug messages." alt="" coords="268,5,463,32"/>
-<area shape="rect" id="node3" href="$classGboxModule.html#a7f29bcfe50245b1baeaea5b2ab7f51e4" title="Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee." alt="" coords="5,5,220,32"/>
-</map>

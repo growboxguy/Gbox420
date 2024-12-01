@@ -1,8 +1,0 @@
-<map id="toText_TDS" name="toText_TDS">
-<area shape="rect" id="node1" title=" " alt="" coords="499,93,593,120"/>
-<area shape="rect" id="node2" href="$classTDSSensor.html#a1c6eb7d4b1b6ffb8977122fe1269816f" title=" " alt="" coords="276,35,451,61"/>
-<area shape="rect" id="node5" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console." alt="" coords="280,86,447,127"/>
-<area shape="rect" id="node6" href="$classReservoirModule__Web.html#a1436039e2ad07079c50f124e7e69dbfd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="276,151,451,193"/>
-<area shape="rect" id="node3" href="$classTDSSensor.html#a9ff422338c274ee68de3fba929a6b01f" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,186,32"/>
-<area shape="rect" id="node4" href="$classTDSSensor__Web.html#a384b05a18e84443c0d5bc509a14c752f" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,228,98"/>
-</map>

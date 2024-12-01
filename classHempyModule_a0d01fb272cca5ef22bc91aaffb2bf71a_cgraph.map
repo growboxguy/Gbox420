@@ -1,8 +1,0 @@
-<map id="HempyModule::report" name="HempyModule::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,169,83"/>
-<area shape="rect" id="node2" href="$classModule.html#afe603dd4da9683e394fbc13a97812cf7" title=" " alt="" coords="217,56,385,83"/>
-<area shape="rect" id="node5" href="$classModule.html#a9cd08ec390bba6a51c4a782e8c3c86ee" title="Google Sheets reporting." alt="" coords="218,5,385,32"/>
-<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="237,107,365,133"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="454,5,517,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="433,56,537,83"/>
-</map>

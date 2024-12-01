@@ -1,5 +1,0 @@
-<map id="Switch_PWM::getDutyCycleText" name="Switch_PWM::getDutyCycleText">
-<area shape="rect" id="node1" title=" " alt="" coords="247,31,475,57"/>
-<area shape="rect" id="node2" href="$classWaterPump.html#aca0a2598b74c69b2566c098e0e3201c7" title=" " alt="" coords="5,5,199,32"/>
-<area shape="rect" id="node3" href="$classSwitch__PWM.html#a79f80436a34d96a17a1fee6af452d9fb" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="26,56,178,83"/>
-</map>

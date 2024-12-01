@@ -1,5 +1,0 @@
-<map id="AeroModule_Web::sendCommand" name="AeroModule_Web::sendCommand">
-<area shape="rect" id="node1" title="Send a command message and process the response message." alt="" coords="5,31,247,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="295,5,395,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="313,56,376,83"/>
-</map>

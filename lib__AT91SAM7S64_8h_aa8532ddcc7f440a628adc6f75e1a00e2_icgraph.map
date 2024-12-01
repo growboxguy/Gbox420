@@ -1,6 +1,0 @@
-<map id="AT91F_PDC_EnableRx" name="AT91F_PDC_EnableRx">
-<area shape="rect" id="node1" title="Enable receive." alt="" coords="401,31,565,57"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="216,31,353,57"/>
-<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#aa9745e47a0642596e61432ffbc890080" title="Configure SSC." alt="" coords="5,5,168,32"/>
-<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#acbbed25fcf0256823175db5f1a8f1f39" title="Configure USART." alt="" coords="9,56,165,83"/>
-</map>

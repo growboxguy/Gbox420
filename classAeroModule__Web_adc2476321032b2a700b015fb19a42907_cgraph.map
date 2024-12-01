@@ -1,5 +1,0 @@
-<map id="AeroModule_Web::websiteEvent_Load" name="AeroModule_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title="Set values on the ESP&#45;link website when it loads." alt="" coords="5,31,275,57"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="323,5,472,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="366,56,429,83"/>
-</map>

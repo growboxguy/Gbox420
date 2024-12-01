@@ -1,5 +1,0 @@
-<map id="PressurePump::startPump" name="PressurePump::startPump">
-<area shape="rect" id="node1" title="Turn the pump ON." alt="" coords="237,46,428,73"/>
-<area shape="rect" id="node2" href="$classAeroponics__NoTank__Web.html#a749978a1368f7ec3c46ec4bc0a91641c" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,189,47"/>
-<area shape="rect" id="node3" href="$classAeroponics__Tank__Web.html#a0f1ce806b918d0660fcdfb5e7e8012cd" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="14,71,181,112"/>
-</map>

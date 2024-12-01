@@ -1,7 +1,0 @@
-<map id="PHSensor" name="PHSensor">
-<area shape="rect" id="node1" title=" " alt="" coords="5,409,89,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="129,5,211,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="105,305,176,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="343,149,434,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="464,409,527,436"/>
-</map>

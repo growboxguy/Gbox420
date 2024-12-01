@@ -1,7 +1,0 @@
-<map id="WasteReservoir::updateState" name="WasteReservoir::updateState">
-<area shape="rect" id="node1" title=" " alt="" coords="523,63,733,90"/>
-<area shape="rect" id="node2" href="$classWasteReservoir.html#ad676ba6af48525854046ef237a429e92" title="Compares the waste reservoir weight against the WasteLimit. Sets Full flag once the limit is reached." alt="" coords="257,13,450,39"/>
-<area shape="rect" id="node4" href="$classWasteReservoir.html#ab3ed5d0f0a7332115013efbf526f5b1c" title="NEEDS TO BE CALLED at the end if the watering, makes the Waste Reservoir available." alt="" coords="232,63,475,90"/>
-<area shape="rect" id="node5" href="$classWasteReservoir.html#a362f04e2121de002311fce2a91b0a05e" title="Returns true if the reservation is successful, false means the Waste Reservoir is busy measuring the ..." alt="" coords="247,114,460,141"/>
-<area shape="rect" id="node3" href="$classWasteReservoir.html#a950b789414c4bae2a66c978a5315ad68" title="Called every five seconds." alt="" coords="5,5,184,47"/>
-</map>

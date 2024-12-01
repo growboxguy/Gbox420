@@ -1,5 +1,0 @@
-<map id="WasteReservoir" name="WasteReservoir">
-<area shape="rect" id="node1" title="&lt; Weight sensor load cell" alt="" coords="23,80,147,107"/>
-<area shape="rect" id="node3" href="$classWasteReservoir__Web.html" title="&lt; Weight sensor load cell &#45; website component" alt="" coords="5,155,164,181"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="44,5,125,32"/>
-</map>

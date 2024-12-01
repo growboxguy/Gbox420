@@ -1,4 +1,0 @@
-<map id="AT91F_TC0_CfgPIO" name="AT91F_TC0_CfgPIO">
-<area shape="rect" id="node1" title="Configure PIO controllers to drive TC0 signals." alt="" coords="5,5,149,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a001c51be23e3a970873a930ce2466e04" title="Enable pins to be derived by peripheral." alt="" coords="197,5,359,32"/>
-</map>

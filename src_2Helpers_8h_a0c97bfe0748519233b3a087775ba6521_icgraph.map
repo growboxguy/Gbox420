@@ -1,9 +1,0 @@
-<map id="toText_onlineStatus" name="toText_onlineStatus">
-<area shape="rect" id="node1" title=" " alt="" coords="284,148,435,175"/>
-<area shape="rect" id="node2" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="29,5,212,32"/>
-<area shape="rect" id="node3" href="$classHempyModule__Web.html#a6121d9ffc6982b154e1793fae1e73dd6" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="21,56,220,83"/>
-<area shape="rect" id="node4" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console." alt="" coords="37,107,204,149"/>
-<area shape="rect" id="node5" href="$classAeroModule__Web.html#adec22b7f0e86847777d0868fda416f64" title="Set values on the ESP&#45;link website when it refreshes." alt="" coords="5,173,236,214"/>
-<area shape="rect" id="node6" href="$classHempyModule__Web.html#ace9b597331679ad88a53543b25d42d8d" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="15,238,226,279"/>
-<area shape="rect" id="node7" href="$classReservoirModule__Web.html#a1436039e2ad07079c50f124e7e69dbfd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="33,303,208,345"/>
-</map>

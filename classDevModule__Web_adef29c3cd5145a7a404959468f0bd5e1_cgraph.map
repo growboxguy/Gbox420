@@ -1,8 +1,0 @@
-<map id="DevModule_Web::report" name="DevModule_Web::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,184,83"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a646dd32dec129222b9f03c2c6f76fb77" title=" " alt="" coords="232,56,435,83"/>
-<area shape="rect" id="node5" href="$classModule__Web.html#a57fbc555c728ecdeba921bf3f3e6209d" title="Google Sheets reporting." alt="" coords="232,5,435,32"/>
-<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="269,107,397,133"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="503,5,566,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="483,56,587,83"/>
-</map>

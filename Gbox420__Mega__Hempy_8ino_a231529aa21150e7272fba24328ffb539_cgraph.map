@@ -1,7 +1,0 @@
-<map id="settingsRefreshCallback" name="settingsRefreshCallback">
-<area shape="rect" id="node1" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="5,31,185,57"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#ac85d38a1bb84a589c16251d7269b72bc" title="Gets called when the /Settings.html is refreshed." alt="" coords="233,23,436,65"/>
-<area shape="rect" id="node3" href="$classModule__Web.html#aff154e1bc1f8ec0f9f804a1af25f658d" title="Creates a JSON array: [&quot;Log1&quot;,&quot;Log2&quot;,&quot;Log3&quot;,...,&quot;LogN&quot;] and loads it to LongMessage buffer." alt="" coords="484,5,703,32"/>
-<area shape="rect" id="node4" href="$classModule.html#ab709520f109ae6a355fbc10a40f860a1" title="Settings." alt="" coords="494,56,693,83"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="751,56,851,83"/>
-</map>

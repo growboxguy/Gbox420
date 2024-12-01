@@ -1,8 +1,0 @@
-<map id="WeightSensor_Web::websiteEvent_Refresh" name="WeightSensor_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,23,211,65"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="290,5,439,32"/>
-<area shape="rect" id="node3" href="$classWeightSensor.html#a8b15de3c6cf7b5ac0eecf1ac9fdd1490" title=" " alt="" coords="259,56,471,83"/>
-<area shape="rect" id="node4" href="$classWeightSensor.html#a00d85fab4422a569a3f475d0586af926" title=" " alt="" coords="519,5,704,32"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="580,56,643,83"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title=" " alt="" coords="555,107,668,133"/>
-</map>

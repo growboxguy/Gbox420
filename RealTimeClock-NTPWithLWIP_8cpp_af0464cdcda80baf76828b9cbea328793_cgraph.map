@@ -1,8 +1,0 @@
-<map id="rtcTask" name="rtcTask">
-<area shape="rect" id="node1" title="Use NTP to update the Real Time Clock." alt="" coords="5,81,73,108"/>
-<area shape="rect" id="node2" href="$RealTimeClock-NTPWithLWIP_8cpp.html#a991d1372b160f7e8f0765fcba2d8a229" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="121,5,215,32"/>
-<area shape="rect" id="node4" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="281,56,379,83"/>
-<area shape="rect" id="node5" href="$RealTimeClock-NTPWithLWIP_8cpp.html#a17c2e7663b5c2fef8b1894800a42893a" title="Blink built&#45;in LED on Pico W &#45; Requires WiFi initialization cyw43_arch_init() , since the LED is conn..." alt="" coords="135,107,201,133"/>
-<area shape="rect" id="node6" href="$RealTimeClock-NTPWithLWIP_8cpp.html#a47de65c25e56088cf9f277c7dec15959" title="Callback for LWIP SNTP, called when the current time is retrieved from an NTP server...." alt="" coords="123,157,213,184"/>
-<area shape="rect" id="node3" href="$RealTimeClock-NTPWithLWIP_8cpp.html#a387f09f64a276fd5a732b5a93e0d863e" title="Callback when DNS lookup is finished." alt="" coords="263,5,397,32"/>
-</map>

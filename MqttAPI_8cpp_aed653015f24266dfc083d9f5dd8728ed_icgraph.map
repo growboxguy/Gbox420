@@ -1,4 +1,0 @@
-<map id="mqttPublish_Callback" name="mqttPublish_Callback">
-<area shape="rect" id="node1" title="Callback with the publish result." alt="" coords="153,5,316,32"/>
-<area shape="rect" id="node2" href="$MqttAPI_8cpp.html#a65acf39634068423e9434c0192dd16f4" title="Publish a message to the PubTopic." alt="" coords="5,5,105,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="toFloat" name="toFloat">
-<area shape="rect" id="node1" title=" " alt="" coords="299,107,367,134"/>
-<area shape="rect" id="node2" href="$classHempyBucket__Web.html#a56d1c1af072722edb161dbe5c827485f" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="17,5,239,47"/>
-<area shape="rect" id="node3" href="$classWasteReservoir__Web.html#ac8f1d2bbf170a02d0324384ba47f51fe" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="49,71,207,112"/>
-<area shape="rect" id="node4" href="$classAeroModule__Web.html#a4fe2cd6845d19792b7fb71ae36318106" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,137,251,163"/>
-<area shape="rect" id="node5" href="$classHempyModule__Web.html#a960160729760501acaaafb595930e032" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="15,188,241,229"/>
-</map>

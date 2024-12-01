@@ -1,6 +1,0 @@
-<map id="ReservoirModule_Web::sendMessages" name="ReservoirModule_Web::sendMessages">
-<area shape="rect" id="node1" title="Exchange messages with the Reservoir module." alt="" coords="5,27,172,69"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="435,5,535,32"/>
-<area shape="rect" id="node3" href="$classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222" title="Send a single command and process the Response received in the Acknowledgement package." alt="" coords="220,27,387,69"/>
-<area shape="rect" id="node4" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title="Updates the command sent to the remote Reservoir Module wirelessly." alt="" coords="220,93,387,134"/>
-</map>

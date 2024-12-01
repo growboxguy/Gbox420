@@ -1,8 +1,0 @@
-<map id="TDSSensor::report" name="TDSSensor::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,144,108"/>
-<area shape="rect" id="node2" href="$classTDSSensor.html#a1c6eb7d4b1b6ffb8977122fe1269816f" title=" " alt="" coords="192,56,367,83"/>
-<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="215,107,343,133"/>
-<area shape="rect" id="node3" href="$classTDSSensor.html#ad66ecae96b09ca7cdefa4b6c5bc42883" title=" " alt="" coords="415,5,561,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="457,56,519,83"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a8266349527dd2966a430e1f029dcce36" title=" " alt="" coords="441,107,535,133"/>
-</map>

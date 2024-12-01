@@ -1,6 +1,0 @@
-<map id="settingsLoadCallback" name="settingsLoadCallback">
-<area shape="rect" id="node1" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="5,31,167,57"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a81344256396d6d7e02daa09a48b02416" title="Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settin..." alt="" coords="215,31,455,57"/>
-<area shape="rect" id="node3" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="536,5,685,32"/>
-<area shape="rect" id="node4" href="$classModule__Web.html#ae63830a19e289db5d139417dd8f8dd1b" title=" " alt="" coords="503,56,719,83"/>
-</map>

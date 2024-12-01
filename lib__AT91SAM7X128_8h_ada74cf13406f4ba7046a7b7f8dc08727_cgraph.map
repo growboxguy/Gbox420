@@ -1,4 +1,0 @@
-<map id="AT91F_PIO_IsSet" name="AT91F_PIO_IsSet">
-<area shape="rect" id="node1" title="Test if PIO is Set." alt="" coords="5,5,136,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7X128_8h.html#a9eaaab44155f2c358ef43a62436dc657" title="Return PIO Status." alt="" coords="184,5,347,32"/>
-</map>

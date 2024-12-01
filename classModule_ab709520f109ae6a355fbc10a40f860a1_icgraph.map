@@ -1,9 +1,0 @@
-<map id="Module::getFormattedTime" name="Module::getFormattedTime">
-<area shape="rect" id="node1" title="Settings." alt="" coords="509,143,708,170"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#ac85d38a1bb84a589c16251d7269b72bc" title="Gets called when the /Settings.html is refreshed." alt="" coords="246,5,449,47"/>
-<area shape="rect" id="node4" href="$classHempy__Standalone.html#a3abdeb3a80e80b4c8df8c42a1b163989" title="Called when an ESP&#45;link website is refreshing." alt="" coords="243,71,451,112"/>
-<area shape="rect" id="node5" href="$classMainModule.html#a8adfee566ac68c3f61d203450e140d0c" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="248,136,447,177"/>
-<area shape="rect" id="node6" href="$classDevModule__Web.html#ab04290ae4382054c98059108d848d0ea" title=" " alt="" coords="234,201,461,243"/>
-<area shape="rect" id="node7" href="$classDEVModule__Web.html#af74d30aff260a37b846b9777208c9a16" title=" " alt="" coords="233,267,461,308"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="5,13,185,39"/>
-</map>

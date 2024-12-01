@@ -1,6 +1,0 @@
-<map id="PressurePump::refresh_Sec" name="PressurePump::refresh_Sec">
-<area shape="rect" id="node1" title="Called every second." alt="" coords="5,31,204,57"/>
-<area shape="rect" id="node2" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="271,5,436,32"/>
-<area shape="rect" id="node4" href="$classPressurePump.html#ae54a9626d799c0b973e8b8bc7c2f694c" title=" " alt="" coords="252,56,455,83"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="503,5,603,32"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="AT91F_SPI_SendFrame" name="AT91F_SPI_SendFrame">
-<area shape="rect" id="node1" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="5,81,175,108"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a69b0e9baa0272a3febd549034aad1fcb" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="223,81,399,108"/>
-<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a850c514a0aa55991ed5fe7c7e0989209" title="Test if the next transfer descriptor has been moved to the current td." alt="" coords="447,5,649,32"/>
-<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#a07dcf21b4e39e894efcc34afa3b4787d" title="Test if the current transfer descriptor has been sent." alt="" coords="462,56,634,83"/>
-<area shape="rect" id="node5" href="$lib__AT91SAM7S64_8h.html#aa0b8b8b33d4b6514714851b653a011eb" title="Set the next transmit transfer descriptor." alt="" coords="463,107,633,133"/>
-<area shape="rect" id="node6" href="$lib__AT91SAM7S64_8h.html#ad32f369ef9e9f0f395e577e1ed1652df" title="Set the transmit transfer descriptor." alt="" coords="478,157,618,184"/>
-</map>

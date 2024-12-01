@@ -1,6 +1,0 @@
-<map id="Module" name="Module">
-<area shape="rect" id="node1" title=" " alt="" coords="33,305,103,332"/>
-<area shape="rect" id="node4" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="362,409,425,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="137,5,218,32"/>
-<area shape="rect" id="node3" href="$classMqttClient.html" title=" " alt="" coords="241,149,332,175"/>
-</map>

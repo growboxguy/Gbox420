@@ -1,7 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structACMotorCommonTemplate.html" title="&lt; ACMotor wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,81,203,108"/>
-<area shape="rect" id="node2" href="$structACMotorCommand.html" title="&lt; ACMotor wireless command" alt="" coords="275,5,420,32"/>
-<area shape="rect" id="node3" href="$structACMotorModuleCommand.html" title="&lt; ACMotor module wireless command" alt="" coords="251,56,444,83"/>
-<area shape="rect" id="node4" href="$structACMotorModuleResponse.html" title="&lt; ACMotor module wireless response" alt="" coords="253,107,442,133"/>
-<area shape="rect" id="node5" href="$structACMotorResponse.html" title="&lt; ACMotor wireless response" alt="" coords="277,157,418,184"/>
-</map>

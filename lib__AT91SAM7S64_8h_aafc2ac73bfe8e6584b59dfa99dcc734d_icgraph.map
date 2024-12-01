@@ -1,6 +1,0 @@
-<map id="AT91F_PDC_ReceiveFrame" name="AT91F_PDC_ReceiveFrame">
-<area shape="rect" id="node1" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="248,56,444,83"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a3fd88379fedca045387ceabc79da98f6" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="8,5,197,32"/>
-<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#ae2e9978885885118d9106fb029b40b8a" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="5,56,200,83"/>
-<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#a413427ce949ec0321bf321a4c1b91cd1" title="Return 2 if PDC has been initialized with Buffer and Next Buffer, 1 if PDC has been initialized with ..." alt="" coords="9,107,196,133"/>
-</map>

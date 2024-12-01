@@ -1,6 +1,0 @@
-<map id="MqttClient::mqttIsConnectedText" name="MqttClient::mqttIsConnectedText">
-<area shape="rect" id="node1" title="true: Connected to MQTT server, false: not connected" alt="" coords="5,56,241,83"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#ab8df6a8cbb8ceae8d31ffc2c0fd13543" title="true: Connected to MQTT server, false: not connected" alt="" coords="289,5,499,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="363,56,425,83"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a2f0058f713e69ae9038d51e2c8f5b97c" title=" " alt="" coords="305,107,483,133"/>
-</map>

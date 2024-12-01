@@ -1,5 +1,0 @@
-<map id="Module::setSerialReportJSON" name="Module::setSerialReportJSON">
-<area shape="rect" id="node1" title="Enable/disable sending JSON formatted reports to the Serial output." alt="" coords="5,31,216,57"/>
-<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="264,5,445,32"/>
-<area shape="rect" id="node3" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="267,56,442,83"/>
-</map>

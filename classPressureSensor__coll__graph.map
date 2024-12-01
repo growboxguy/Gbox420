@@ -1,7 +1,0 @@
-<map id="PressureSensor" name="PressureSensor">
-<area shape="rect" id="node1" title="&lt; Pressure sensor" alt="" coords="5,409,128,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="149,5,230,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="125,305,195,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="363,149,453,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="483,409,546,436"/>
-</map>

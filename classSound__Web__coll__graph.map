@@ -1,9 +1,0 @@
-<map id="Sound_Web" name="Sound_Web">
-<area shape="rect" id="node1" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="241,329,338,355"/>
-<area shape="rect" id="node7" href="$classModule__Web.html" title=" " alt="" coords="146,427,251,453"/>
-<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="114,149,230,175"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="506,5,587,32"/>
-<area shape="rect" id="node4" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="515,149,578,175"/>
-<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="559,329,630,355"/>
-<area shape="rect" id="node6" href="$classMqttClient.html" title=" " alt="" coords="336,149,427,175"/>
-</map>

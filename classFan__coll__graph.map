@@ -1,7 +1,0 @@
-<map id="Fan" name="Fan">
-<area shape="rect" id="node1" title="&lt; Fan controller (2 speed)" alt="" coords="5,409,49,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="109,5,191,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="85,305,156,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="323,149,414,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="444,409,507,436"/>
-</map>

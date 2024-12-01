@@ -1,4 +1,0 @@
-<map id="AT91F_US0_CfgPMC" name="AT91F_US0_CfgPMC">
-<area shape="rect" id="node1" title="Enable Peripheral clock in PMC for US0." alt="" coords="5,5,159,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a49f8f2fa3016c1c078f12156ef45d139" title="Enable peripheral clock." alt="" coords="207,5,433,32"/>
-</map>

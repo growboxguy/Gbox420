@@ -1,4 +1,0 @@
-<map id="WaterLevelSensor::getLevelGauge" name="WaterLevelSensor::getLevelGauge">
-<area shape="rect" id="node1" title=" " alt="" coords="228,5,431,47"/>
-<area shape="rect" id="node2" href="$classWaterLevelSensor__Web.html#ac7e347953cb995584b06f6bc44e628e7" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,5,180,47"/>
-</map>

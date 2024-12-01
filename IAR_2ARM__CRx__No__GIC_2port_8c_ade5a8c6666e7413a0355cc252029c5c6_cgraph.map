@@ -1,6 +1,0 @@
-<map id="xPortStartScheduler" name="xPortStartScheduler">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,156,83"/>
-<area shape="rect" id="node2" href="$GCC_2ARM__CRx__MPU_2port_8c.html#a813e8227aedfc6bd83c66c4a9b8e4f41" title="Default return address for tasks." alt="" coords="233,5,361,32"/>
-<area shape="rect" id="node3" href="$Paradigm_2Tern__EE_2small_2portmacro_8h.html#a14d32f8130d3c0b212cfc751730b5b49" title=" " alt="" coords="272,56,323,83"/>
-<area shape="rect" id="node4" href="$GCC_2ARM__AARCH64_2port_8c.html#a222aec9e4494ebf3fdbda864b5cb3a4b" title=" " alt="" coords="204,107,391,133"/>
-</map>

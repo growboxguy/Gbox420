@@ -1,8 +1,0 @@
-<map id="WasteReservoir" name="WasteReservoir">
-<area shape="rect" id="node1" title="&lt; Weight sensor load cell" alt="" coords="5,499,129,525"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="144,5,225,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="185,305,256,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="401,149,491,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="521,409,584,436"/>
-<area shape="rect" id="node6" href="$classWeightSensor.html" title="&lt; Weight sensor load cell" alt="" coords="55,409,165,436"/>
-</map>

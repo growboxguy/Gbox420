@@ -1,4 +1,0 @@
-<map id="vPortExitCritical" name="vPortExitCritical">
-<area shape="rect" id="node1" title="Exit critical section." alt="" coords="5,5,132,32"/>
-<area shape="rect" id="node2" href="$ThirdParty_2GCC_2Posix_2port_8c.html#af329f3280e39011c4d9efbca3d5dd329" title="Enable interrupts." alt="" coords="180,5,343,32"/>
-</map>

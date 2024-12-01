@@ -1,4 +1,0 @@
-<map id="loadSettings" name="loadSettings">
-<area shape="rect" id="node1" title="Load settings from EEPROM." alt="" coords="176,5,279,32"/>
-<area shape="rect" id="node2" href="$Settings__Mega_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="5,5,128,32"/>
-</map>

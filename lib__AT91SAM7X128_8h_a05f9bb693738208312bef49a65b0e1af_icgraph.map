@@ -1,4 +1,0 @@
-<map id="AT91F_PMC_GetStatus" name="AT91F_PMC_GetStatus">
-<area shape="rect" id="node1" title="Return PMC Interrupt Status." alt="" coords="232,5,401,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7X128_8h.html#a95067614b28983e502b744345a8dad61" title="Test if PMC Status is Set." alt="" coords="5,5,184,32"/>
-</map>

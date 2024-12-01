@@ -1,6 +1,0 @@
-<map id="Module_Web::getMetricText" name="Module_Web::getMetricText">
-<area shape="rect" id="node1" title="Google Sheets reporting." alt="" coords="249,56,452,83"/>
-<area shape="rect" id="node2" href="$classDevModule__Web.html#adef29c3cd5145a7a404959468f0bd5e1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="14,5,193,32"/>
-<area shape="rect" id="node3" href="$classHempy__Standalone.html#adc9f95aec673a77c6ca42c9f3f3e43df" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,201,83"/>
-<area shape="rect" id="node4" href="$classMainModule.html#a6ef990657642d81352cf8dbe99e91205" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="29,107,178,133"/>
-</map>

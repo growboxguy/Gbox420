@@ -1,9 +1,0 @@
-<map id="Fan_PWM::getSpeedText" name="Fan_PWM::getSpeedText">
-<area shape="rect" id="node1" title=" " alt="" coords="545,107,725,133"/>
-<area shape="rect" id="node2" href="$classFan__PWM.html#a0ca7f7195744494309bb8d8e3ad8b965" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="325,5,455,32"/>
-<area shape="rect" id="node3" href="$classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb" title=" " alt="" coords="314,56,466,83"/>
-<area shape="rect" id="node5" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title=" " alt="" coords="321,107,459,133"/>
-<area shape="rect" id="node6" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title=" " alt="" coords="322,157,458,184"/>
-<area shape="rect" id="node7" href="$classFan__PWM__Web.html#ab40de18bdb4022ab91c1ad541dc96acd" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="283,209,497,250"/>
-<area shape="rect" id="node4" href="$classFan__PWM__Web.html#a6c82e9aedb2cb8b80077240bdbf4b877" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,235,133"/>
-</map>

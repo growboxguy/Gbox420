@@ -1,6 +1,0 @@
-<map id="vPortYield" name="vPortYield">
-<area shape="rect" id="node1" title="Yield the CPU." alt="" coords="5,56,93,83"/>
-<area shape="rect" id="node2" href="$IAR_2V850ES_2portmacro_8h.html#a716d176e9130fa97ac875a31e7453605" title=" " alt="" coords="141,5,319,32"/>
-<area shape="rect" id="node3" href="$IAR_2V850ES_2portmacro_8h.html#ad79a8b96e1489f7f0645e8d57360337d" title=" " alt="" coords="155,56,305,83"/>
-<area shape="rect" id="node4" href="$IAR_2RX700v3__DPFPU_2port_8c.html#a9c86137bc3c1cbffc39fff22627cb885" title=" " alt="" coords="153,107,307,133"/>
-</map>

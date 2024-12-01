@@ -1,4 +1,0 @@
-<map id="DnsLookup" name="DnsLookup">
-<area shape="rect" id="node1" title="Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer..." alt="" coords="5,5,99,32"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a387f09f64a276fd5a732b5a93e0d863e" title="Callback when DNS lookup is finished." alt="" coords="147,5,281,32"/>
-</map>

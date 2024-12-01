@@ -1,7 +1,0 @@
-<map id="WaterPump_Web::WaterPump_Web" name="WaterPump_Web::WaterPump_Web">
-<area shape="rect" id="node1" title=" " alt="" coords="5,78,256,105"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a844f31842785533417e9e35607362516" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="304,5,523,47"/>
-<area shape="rect" id="node4" href="$classModule__Web.html#a732e9ff3962bf4c4af4006bf43670645" title="Calls the websiteEvent_Load() method of the Subscriber when an ESP&#45;link website is loaded." alt="" coords="312,71,515,112"/>
-<area shape="rect" id="node5" href="$classModule__Web.html#a054dbad7ecba4834b7a589c29748c422" title="Calls the websiteEvent_Refresh() method of the Subscriber when an ESP&#45;link website is refreshing." alt="" coords="312,136,515,177"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="571,78,671,105"/>
-</map>

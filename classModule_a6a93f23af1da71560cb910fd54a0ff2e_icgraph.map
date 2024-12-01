@@ -1,6 +1,0 @@
-<map id="Module::addToCommandQueue" name="Module::addToCommandQueue">
-<area shape="rect" id="node1" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="273,56,499,83"/>
-<area shape="rect" id="node2" href="$classGboxModule.html#afc40555e78f028718744feefca930f68" title="Constructor: creates an instance of the class, loads the EEPROM stored persistent settings,..." alt="" coords="18,5,213,32"/>
-<area shape="rect" id="node3" href="$classHempyModule.html#a7a6ec2b5b20d01c0624bfc1c045dca8a" title="Constructor: creates an instance of the class, loads the EEPROM stored persistent settings,..." alt="" coords="5,56,225,83"/>
-<area shape="rect" id="node4" href="$classSound.html#a2f05aa27f8a9428f53718601de0fa51b" title=" " alt="" coords="60,107,171,133"/>
-</map>

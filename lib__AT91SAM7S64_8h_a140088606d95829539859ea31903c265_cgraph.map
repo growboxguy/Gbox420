@@ -1,4 +1,0 @@
-<map id="AT91F_AIC_CfgPIO" name="AT91F_AIC_CfgPIO">
-<area shape="rect" id="node1" title="Configure PIO controllers to drive AIC signals." alt="" coords="5,5,148,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a001c51be23e3a970873a930ce2466e04" title="Enable pins to be derived by peripheral." alt="" coords="196,5,357,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="restoreDefaults" name="restoreDefaults">
-<area shape="rect" id="node1" title="Load sketch default settings into EEPROM." alt="" coords="5,31,128,57"/>
-<area shape="rect" id="node2" href="$GCC_2NiosII_2portmacro_8h.html#a43a63aec8a4dd5165a86947c1f3563be" title=" " alt="" coords="188,5,267,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="176,56,279,83"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="330,31,430,57"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="327,81,433,108"/>
-</map>

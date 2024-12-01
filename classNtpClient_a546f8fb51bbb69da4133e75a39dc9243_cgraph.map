@@ -1,5 +1,0 @@
-<map id="NtpClient::rtcUpdate" name="NtpClient::rtcUpdate">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,160,57"/>
-<area shape="rect" id="node2" href="$classNtpClient.html#a2eeea8c53f97e5699671203af4583825" title="Make an NTP request." alt="" coords="208,5,373,32"/>
-<area shape="rect" id="node3" href="$classNtpClient.html#ad4fbe2f887938e07906e90485df04064" title="Called with the NTP results, updates the Real Time Clock." alt="" coords="214,56,367,83"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="HempyModule_Web::websiteEvent_Refresh" name="HempyModule_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,125,216,166"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="278,5,427,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="321,56,384,83"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title=" " alt="" coords="279,107,427,133"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title=" " alt="" coords="277,157,428,184"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title=" " alt="" coords="264,208,441,235"/>
-<area shape="rect" id="node7" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title=" " alt="" coords="296,259,409,285"/>
-</map>

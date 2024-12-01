@@ -1,5 +1,0 @@
-<map id="PressureSensor" name="PressureSensor">
-<area shape="rect" id="node1" title="&lt; Pressure sensor" alt="" coords="23,80,145,107"/>
-<area shape="rect" id="node3" href="$classPressureSensor__Web.html" title="&lt; Pressure sensor &#45; website component" alt="" coords="5,155,163,181"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="43,5,125,32"/>
-</map>

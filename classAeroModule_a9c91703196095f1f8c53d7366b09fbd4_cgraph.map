@@ -1,6 +1,0 @@
-<map id="AeroModule::refresh_Sec" name="AeroModule::refresh_Sec">
-<area shape="rect" id="node1" title="Called every second." alt="" coords="5,31,189,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="493,5,593,32"/>
-<area shape="rect" id="node3" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Called every second." alt="" coords="259,31,424,57"/>
-<area shape="rect" id="node4" href="$classAeroModule.html#a0957d1ad1b0602cfbdf4587e584d7c32" title=" " alt="" coords="237,81,445,108"/>
-</map>

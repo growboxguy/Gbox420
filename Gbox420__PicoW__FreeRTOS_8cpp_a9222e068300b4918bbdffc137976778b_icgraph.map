@@ -1,6 +1,0 @@
-<map id="rtcGetCurrentTime" name="rtcGetCurrentTime">
-<area shape="rect" id="node1" title="Network Time Protocol (NTP) section." alt="" coords="324,31,467,57"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad8d0a588e6932069b6e287987de4daf7" title="Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Rea..." alt="" coords="127,5,257,32"/>
-<area shape="rect" id="node4" href="$classModule.html#a97618159fd73ae60eb250d6841db2cf2" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="108,56,276,83"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
-</map>

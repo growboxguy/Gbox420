@@ -1,6 +1,0 @@
-<map id="AirPump::AirPump" name="AirPump::AirPump">
-<area shape="rect" id="node1" title="Keep original constructor signature." alt="" coords="5,71,145,98"/>
-<area shape="rect" id="node2" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="193,5,401,47"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="449,42,549,69"/>
-<area shape="rect" id="node4" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="197,122,398,149"/>
-</map>

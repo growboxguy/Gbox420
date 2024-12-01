@@ -1,8 +1,0 @@
-<map id="TDSSensor::updateTDS" name="TDSSensor::updateTDS">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,176,108"/>
-<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="256,5,395,32"/>
-<area shape="rect" id="node4" href="$classCommon.html#a47629941804df0f20505ae254421083f" title="Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the n..." alt="" coords="237,56,413,83"/>
-<area shape="rect" id="node5" href="$classWaterTempSensor.html#af74e4efdaf92e79bb9e92d026673c656" title=" " alt="" coords="224,107,427,133"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="294,157,357,184"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="475,5,575,32"/>
-</map>

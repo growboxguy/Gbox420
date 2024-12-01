@@ -1,8 +1,0 @@
-<map id="Lights::setOnMinute" name="Lights::setOnMinute">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,157,108"/>
-<area shape="rect" id="node2" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="227,5,365,32"/>
-<area shape="rect" id="node4" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="221,56,371,83"/>
-<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="205,107,387,133"/>
-<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="218,157,374,184"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="435,5,535,32"/>
-</map>

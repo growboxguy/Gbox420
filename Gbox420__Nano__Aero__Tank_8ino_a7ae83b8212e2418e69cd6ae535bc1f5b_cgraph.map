@@ -1,8 +1,0 @@
-<map id="run1min" name="run1min">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,81,108"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__Tank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="129,56,269,83"/>
-<area shape="rect" id="node5" href="$classModule.html#a4919fab3f319c503da8423c144d30b43" title="Called every minute." alt="" coords="133,107,265,133"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="339,5,439,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="349,56,428,83"/>
-<area shape="rect" id="node6" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="317,107,460,133"/>
-</map>

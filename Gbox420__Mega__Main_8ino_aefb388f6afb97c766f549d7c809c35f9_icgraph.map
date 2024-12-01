@@ -1,5 +1,0 @@
-<map id="getWirelessStatus" name="getWirelessStatus">
-<area shape="rect" id="node1" title="Prints the nRF24L01+ wireless transceiver&#39;s status to the Serial log." alt="" coords="236,5,376,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="112,5,188,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,32"/>
-</map>

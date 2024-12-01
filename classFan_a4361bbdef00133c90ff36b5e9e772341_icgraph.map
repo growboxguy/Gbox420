@@ -1,9 +1,0 @@
-<map id="Fan::fanSpeedText" name="Fan::fanSpeedText">
-<area shape="rect" id="node1" title=" " alt="" coords="465,107,605,133"/>
-<area shape="rect" id="node2" href="$classFan.html#a325b203fc67d2cc61c40c253afad9417" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="285,5,375,32"/>
-<area shape="rect" id="node3" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title=" " alt="" coords="259,56,401,83"/>
-<area shape="rect" id="node5" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title=" " alt="" coords="261,107,399,133"/>
-<area shape="rect" id="node6" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title=" " alt="" coords="281,157,379,184"/>
-<area shape="rect" id="node7" href="$classFan__Web.html#ac03a65d6f8616e4e496b042eff7adca1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="243,209,417,250"/>
-<area shape="rect" id="node4" href="$classFan__Web.html#a69863ff95a4b9dc2e9526582c134d0b0" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,195,133"/>
-</map>

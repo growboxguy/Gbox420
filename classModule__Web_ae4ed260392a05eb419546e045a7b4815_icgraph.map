@@ -1,7 +1,0 @@
-<map id="Module_Web::commandEventTrigger" name="Module_Web::commandEventTrigger">
-<area shape="rect" id="node1" title="Notifies the subscribed components of an incoming command. Command: combination of the Name of the co..." alt="" coords="453,23,668,65"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="285,5,405,32"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="292,56,399,83"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,31,237,57"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,31,64,57"/>
-</map>

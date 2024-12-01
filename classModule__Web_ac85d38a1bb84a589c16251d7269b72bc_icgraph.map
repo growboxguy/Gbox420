@@ -1,4 +1,0 @@
-<map id="Module_Web::settingsEvent_Refresh" name="Module_Web::settingsEvent_Refresh">
-<area shape="rect" id="node1" title="Gets called when the /Settings.html is refreshed." alt="" coords="233,5,436,47"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="5,13,185,39"/>
-</map>

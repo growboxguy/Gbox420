@@ -1,5 +1,0 @@
-<map id="NtpClient::rtcDNSResolvedCallback" name="NtpClient::rtcDNSResolvedCallback">
-<area shape="rect" id="node1" title="Callback when IP of NTP server is resolved by DNS." alt="" coords="452,5,648,47"/>
-<area shape="rect" id="node2" href="$classNtpClient.html#ae9c80e07f6811f066293f37ba031ed2c" title=" " alt="" coords="205,13,404,39"/>
-<area shape="rect" id="node3" href="$classNtpClient.html#a007f5ef7207b6b466cbf135785e9109b" title="Initialize the Real Time Clock and do an NTP update." alt="" coords="5,13,157,39"/>
-</map>

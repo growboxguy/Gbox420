@@ -1,6 +1,0 @@
-<map id="ReservoirModule_Web::sendCommand" name="ReservoirModule_Web::sendCommand">
-<area shape="rect" id="node1" title="Send a single command and process the Response received in the Acknowledgement package." alt="" coords="435,39,601,80"/>
-<area shape="rect" id="node2" href="$classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200" title="Exchange messages with the Reservoir module." alt="" coords="220,39,387,80"/>
-<area shape="rect" id="node3" href="$classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da" title="Called every five seconds." alt="" coords="5,5,172,47"/>
-<area shape="rect" id="node4" href="$classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4" title="Called every second." alt="" coords="5,71,172,112"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="AirPump" name="AirPump">
-<area shape="rect" id="node1" title="&lt; Air Pump controller" alt="" coords="5,409,83,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="126,5,207,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="102,305,173,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="340,149,431,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="461,409,523,436"/>
-</map>

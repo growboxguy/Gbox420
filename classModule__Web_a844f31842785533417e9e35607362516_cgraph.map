@@ -1,4 +1,0 @@
-<map id="Module_Web::addToCommandQueue" name="Module_Web::addToCommandQueue">
-<area shape="rect" id="node1" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="5,5,224,47"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="272,13,372,39"/>
-</map>

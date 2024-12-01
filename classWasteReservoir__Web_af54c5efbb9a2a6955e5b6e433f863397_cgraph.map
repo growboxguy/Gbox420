@@ -1,7 +1,0 @@
-<map id="WasteReservoir_Web::websiteEvent_Load" name="WasteReservoir_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,27,164,69"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="234,5,383,32"/>
-<area shape="rect" id="node3" href="$classWasteReservoir.html#a8de8ab1ee9e2b544826a56312c2e7666" title=" " alt="" coords="212,57,405,98"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="479,39,541,65"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title=" " alt="" coords="453,89,567,116"/>
-</map>

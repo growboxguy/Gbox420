@@ -1,5 +1,0 @@
-<map id="WasteReservoir::getWasteLimitText" name="WasteReservoir::getWasteLimitText">
-<area shape="rect" id="node1" title=" " alt="" coords="224,27,417,69"/>
-<area shape="rect" id="node2" href="$classWasteReservoir.html#a5686e86c4d3b11d342c2ba21412eb363" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,176,32"/>
-<area shape="rect" id="node3" href="$classWasteReservoir__Web.html#af54c5efbb9a2a6955e5b6e433f863397" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="11,57,170,98"/>
-</map>

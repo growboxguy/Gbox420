@@ -1,5 +1,0 @@
-<map id="xPortStartScheduler" name="xPortStartScheduler">
-<area shape="rect" id="node1" title="start the freertos scheduler, go to the first task" alt="" coords="5,31,156,57"/>
-<area shape="rect" id="node2" href="$GCC_2NiosII_2portmacro_8h.html#a43a63aec8a4dd5165a86947c1f3563be" title=" " alt="" coords="252,5,331,32"/>
-<area shape="rect" id="node3" href="$Rowley_2MSP430F449_2port_8c.html#a397ed34de04a678dc71217c713763423" title=" " alt="" coords="204,56,379,83"/>
-</map>

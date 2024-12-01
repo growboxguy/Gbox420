@@ -1,8 +1,0 @@
-<map id="GboxModule::toggleDebug" name="GboxModule::toggleDebug">
-<area shape="rect" id="node1" title="Invert the state of printing debug messages." alt="" coords="5,56,200,83"/>
-<area shape="rect" id="node2" href="$classGboxModule.html#aac4edf5c73b497dc2d21e69aed624e1c" title="Turn debug messages printed to stdout ON or OFF." alt="" coords="248,56,423,83"/>
-<area shape="rect" id="node3" href="$classModule.html#a61fe8576a9a2599b35c74614956840dd" title="Add a Log entry that is displayed on the web interface." alt="" coords="492,5,631,32"/>
-<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="471,56,652,83"/>
-<area shape="rect" id="node6" href="$classSound.html#a57ec4abf6dddac078b9d2d4f58567ae8" title=" " alt="" coords="474,107,649,133"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="700,5,800,32"/>
-</map>

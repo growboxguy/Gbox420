@@ -1,8 +1,0 @@
-<map id="Fan::checkFanStatus" name="Fan::checkFanStatus">
-<area shape="rect" id="node1" title=" " alt="" coords="441,81,595,108"/>
-<area shape="rect" id="node2" href="$classFan.html#ad4605196f9611585e9416bcce3d84723" title="Called every minute." alt="" coords="243,5,393,32"/>
-<area shape="rect" id="node3" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title=" " alt="" coords="247,56,389,83"/>
-<area shape="rect" id="node5" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title=" " alt="" coords="249,107,387,133"/>
-<area shape="rect" id="node6" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title=" " alt="" coords="269,157,367,184"/>
-<area shape="rect" id="node4" href="$classFan__Web.html#a69863ff95a4b9dc2e9526582c134d0b0" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,195,133"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="HempyBucket_Web::websiteEvent_Refresh" name="HempyBucket_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,99,212,141"/>
-<area shape="rect" id="node2" href="$classHempyBucket.html#a686d536219654dfe9e627f8a0150fe47" title=" " alt="" coords="261,5,471,32"/>
-<area shape="rect" id="node3" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="291,56,441,83"/>
-<area shape="rect" id="node4" href="$classHempyBucket.html#aeb28545519935678272ade94b87ff61c" title="Retuns the numerical or text state of the Hempy bucket." alt="" coords="265,157,467,184"/>
-<area shape="rect" id="node5" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="563,107,625,133"/>
-<area shape="rect" id="node7" href="$classHempyBucket.html#a8af018803bbd6d699e951f9a47659294" title=" " alt="" coords="260,208,472,235"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title=" " alt="" coords="520,157,668,184"/>
-</map>

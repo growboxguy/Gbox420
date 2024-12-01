@@ -1,5 +1,0 @@
-<map id="PHSensor::updatePH" name="PHSensor::updatePH">
-<area shape="rect" id="node1" title=" " alt="" coords="283,31,437,57"/>
-<area shape="rect" id="node2" href="$classPHSensor__Web.html#a1b7538fd1d25341f9e0a468fcab835a1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,235,32"/>
-<area shape="rect" id="node3" href="$classPHSensor.html#ae5cb84e8da2e2d09cf8e8a840693cc25" title="Called every five seconds." alt="" coords="23,56,217,83"/>
-</map>

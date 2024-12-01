@@ -1,6 +1,0 @@
-<map id="main" name="main">
-<area shape="rect" id="node1" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,24,60,50"/>
-<area shape="rect" id="node2" href="$Buzzer_8cpp.html#a86cc0a18783f68966b355b2ade655a06" title=" " alt="" coords="272,24,327,50"/>
-<area shape="rect" id="node3" href="$Buzzer_8cpp.html#a4b3c03f479780760659f6d587e11390c" title=" " alt="" coords="119,24,213,50"/>
-<area shape="rect" id="node4" href="$Buzzer_8cpp.html#af1025474743987878f02070e9ad41d6b" title=" " alt="" coords="108,74,224,101"/>
-</map>

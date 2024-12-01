@@ -1,5 +1,0 @@
-<map id="checkWiFi" name="checkWiFi">
-<area shape="rect" id="node1" title="Blink built&#45;in LED on Pico W &#45; Requires running cyw43_arch_init() before calling it!" alt="" coords="232,5,320,32"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_8cpp.html#ad663578c455c9affa4a43800fffa0ca0" title="This function gets called infinitely every minute." alt="" coords="108,5,184,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
-</map>

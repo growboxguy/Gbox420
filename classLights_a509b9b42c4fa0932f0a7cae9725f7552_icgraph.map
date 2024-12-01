@@ -1,4 +1,0 @@
-<map id="Lights::getBrightnessText" name="Lights::getBrightnessText">
-<area shape="rect" id="node1" title=" " alt="" coords="161,5,348,32"/>
-<area shape="rect" id="node2" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,113,32"/>
-</map>

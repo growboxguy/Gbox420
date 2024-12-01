@@ -1,4 +1,0 @@
-<map id="AT91F_US_SetTimeguard" name="AT91F_US_SetTimeguard">
-<area shape="rect" id="node1" title="Set USART timeguard." alt="" coords="209,5,395,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#acbbed25fcf0256823175db5f1a8f1f39" title="Configure USART." alt="" coords="5,5,161,32"/>
-</map>

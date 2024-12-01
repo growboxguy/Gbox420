@@ -1,7 +1,0 @@
-<map id="WeightSensor" name="WeightSensor">
-<area shape="rect" id="node1" title="&lt; Weight sensor load cell" alt="" coords="5,409,116,436"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="143,5,224,32"/>
-<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="119,305,189,332"/>
-<area shape="rect" id="node4" href="$classMqttClient.html" title=" " alt="" coords="357,149,447,175"/>
-<area shape="rect" id="node5" href="$classSound.html" title="Sound feedback using a piezo buzzer." alt="" coords="477,409,540,436"/>
-</map>

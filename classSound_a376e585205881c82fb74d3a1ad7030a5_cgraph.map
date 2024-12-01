@@ -1,9 +1,0 @@
-<map id="Sound::run1sec" name="Sound::run1sec">
-<area shape="rect" id="node1" title="Called every second." alt="" coords="5,81,127,108"/>
-<area shape="rect" id="node2" href="$classSound.html#a93a63a862c3aa1dd50acb0d8eaa61d6c" title=" " alt="" coords="175,56,327,83"/>
-<area shape="rect" id="node7" href="$classCommon.html#a6b9e7038ddeae57f3f62639a49450f1b" title="Called every second." alt="" coords="181,107,321,133"/>
-<area shape="rect" id="node3" href="$classSound.html#a8b4af7ef38cf7e66c6dea94d10a9b229" title=" " alt="" coords="396,5,483,32"/>
-<area shape="rect" id="node5" href="$classSound.html#ab1fb7a2e72d848ca335b4721cd8540b7" title=" " alt="" coords="375,56,504,83"/>
-<area shape="rect" id="node6" href="$classSound.html#ac26eda99f623e5a839d1c408d8a591d9" title=" " alt="" coords="375,107,503,133"/>
-<area shape="rect" id="node4" href="$classSound.html#a3d0f7b044cff8851a335bb9c4fb78542" title=" " alt="" coords="552,56,652,83"/>
-</map>

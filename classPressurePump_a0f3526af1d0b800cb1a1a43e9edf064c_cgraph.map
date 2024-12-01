@@ -1,5 +1,0 @@
-<map id="PressurePump::getStateText" name="PressurePump::getStateText">
-<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="5,31,211,57"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="325,5,388,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ad8aa64fccaa28ab3a26b3ec086958e2b" title=" " alt="" coords="259,56,455,83"/>
-</map>

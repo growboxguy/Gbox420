@@ -1,8 +1,0 @@
-<map id="WeightSensor_Web::commandEvent" name="WeightSensor_Web::commandEvent">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,49,224,90"/>
-<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="309,5,468,32"/>
-<area shape="rect" id="node3" href="$classWeightSensor.html#a537ea2f1d9b8c6fe99dd8f731584c6a5" title=" " alt="" coords="289,107,488,133"/>
-<area shape="rect" id="node6" href="$classWeightSensor.html#aa7a9798d949a1ac343b9e763ab1183be" title=" " alt="" coords="272,56,505,83"/>
-<area shape="rect" id="node4" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="553,56,735,83"/>
-<area shape="rect" id="node5" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="566,107,722,133"/>
-</map>

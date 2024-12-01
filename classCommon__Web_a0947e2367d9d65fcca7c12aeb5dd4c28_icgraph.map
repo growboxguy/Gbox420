@@ -1,7 +1,0 @@
-<map id="Common_Web::websiteEvent_Load" name="Common_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="720,13,971,39"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a8b31f72c52bd2e2e8e18a9eb6fe78bb3" title="Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was ope..." alt="" coords="440,5,672,47"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="285,13,392,39"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,13,237,39"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,13,64,39"/>
-</map>

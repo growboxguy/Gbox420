@@ -1,4 +1,0 @@
-<map id="AT91F_PIO_GetOutputWriteStatus" name="AT91F_PIO_GetOutputWriteStatus">
-<area shape="rect" id="node1" title="Return PIO Output Write Status." alt="" coords="263,5,463,47"/>
-<area shape="rect" id="node2" href="$GCC_2ARM7__AT91SAM7S_2lib__AT91SAM7X256_8h.html#ad591390d4734d3e2fc6c6c00c65c2513" title="Test if PIO OutputWrite is Set." alt="" coords="5,13,215,39"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="AT91F_PDC_DisableTx" name="AT91F_PDC_DisableTx">
-<area shape="rect" id="node1" title="Disable transmit." alt="" coords="403,81,571,108"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#ae7a00663d9b586d0060d83e4c3e1921f" title="Close PDC: disable TX and RX reset transfer descriptors." alt="" coords="216,56,355,83"/>
-<area shape="rect" id="node5" href="$lib__AT91SAM7S64_8h.html#a943bb6125d66d7956df049c6989f00f1" title="Open PDC: disable TX and RX reset transfer descriptors, re&#45;enable RX and TX." alt="" coords="217,107,354,133"/>
-<area shape="rect" id="node3" href="$lib__AT91SAM7S64_8h.html#a1d538178f15852104ef39cbb837504c3" title="Close SPI: disable IT disable transfert, close PDC." alt="" coords="21,5,153,32"/>
-<area shape="rect" id="node4" href="$lib__AT91SAM7S64_8h.html#a7b4bbc35e32ebaa01d042c344ff4ded0" title="Close USART: disable IT disable receiver and transmitter, close PDC." alt="" coords="21,56,152,83"/>
-<area shape="rect" id="node6" href="$lib__AT91SAM7S64_8h.html#aa9745e47a0642596e61432ffbc890080" title="Configure SSC." alt="" coords="5,107,168,133"/>
-<area shape="rect" id="node7" href="$lib__AT91SAM7S64_8h.html#acbbed25fcf0256823175db5f1a8f1f39" title="Configure USART." alt="" coords="9,157,165,184"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="AirPump::checkStatus" name="AirPump::checkStatus">
-<area shape="rect" id="node1" title=" " alt="" coords="685,81,849,108"/>
-<area shape="rect" id="node2" href="$classAirPump.html#a01551d165fc6ac14a4e625961fbf584b" title="Called every minute." alt="" coords="455,5,637,32"/>
-<area shape="rect" id="node3" href="$classAirPump.html#a3d9afb9e4897447be51362e3dafc5089" title=" " alt="" coords="477,107,615,133"/>
-<area shape="rect" id="node5" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title=" " alt="" coords="276,56,407,83"/>
-<area shape="rect" id="node6" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title=" " alt="" coords="276,157,407,184"/>
-<area shape="rect" id="node4" href="$classAirPump__Web.html#ae2a2150164cac655f03a292e6503400f" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,107,228,133"/>
-</map>

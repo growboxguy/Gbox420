@@ -1,8 +1,0 @@
-<map id="LightSensor::report" name="LightSensor::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,151,108"/>
-<area shape="rect" id="node2" href="$classLightSensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title=" " alt="" coords="209,31,395,57"/>
-<area shape="rect" id="node5" href="$classLightSensor.html#a0eca82938e8465c678595cfaf3fcec89" title="returns the current light sensor reading" alt="" coords="199,81,405,108"/>
-<area shape="rect" id="node6" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="238,132,366,159"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="477,5,540,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a0fa70bd2116a004bbaca24c9bd23808c" title=" " alt="" coords="453,56,564,83"/>
-</map>

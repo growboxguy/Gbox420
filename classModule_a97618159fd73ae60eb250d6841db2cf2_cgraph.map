@@ -1,4 +1,0 @@
-<map id="Module::reportToSerial" name="Module::reportToSerial">
-<area shape="rect" id="node1" title="Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer." alt="" coords="5,5,173,32"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW__FreeRTOS_2Components_2Helpers_8h.html#a9222e068300b4918bbdffc137976778b" title="Query current time from local RTC." alt="" coords="221,5,364,32"/>
-</map>

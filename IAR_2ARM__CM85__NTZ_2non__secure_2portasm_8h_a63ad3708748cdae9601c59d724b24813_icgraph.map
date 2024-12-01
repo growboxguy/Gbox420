@@ -1,4 +1,0 @@
-<map id="vRaisePrivilege" name="vRaisePrivilege">
-<area shape="rect" id="node1" title="Raises the privilege level by clearing the bit 0 of the CONTROL register." alt="" coords="203,5,325,32"/>
-<area shape="rect" id="node2" href="$ARMv8M_2non__secure_2port_8c.html#a65bf4c0ff0c46096b4213149780b6b93" title=" " alt="" coords="5,5,155,32"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="Fan_PWM_Web::websiteEvent_Load" name="Fan_PWM_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,5,259,32"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="307,5,456,32"/>
-</map>

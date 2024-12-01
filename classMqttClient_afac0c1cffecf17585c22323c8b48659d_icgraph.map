@@ -1,6 +1,0 @@
-<map id="MqttClient::mqttPublish" name="MqttClient::mqttPublish">
-<area shape="rect" id="node1" title="Publish a message to the PubTopic." alt="" coords="256,31,432,57"/>
-<area shape="rect" id="node2" href="$MqttTestMulti_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="131,5,185,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW__FreeRTOS_2Components_2420Module_8h.html#a5c32b3c71c0595292e18ff4d103e9a48" title="Publish an MQTT message to a Topic containing a JSON formatted Data Example: MQTT reporting: Gbox420/..." alt="" coords="108,56,208,83"/>
-<area shape="rect" id="node4" href="$MqttTest_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,56,60,83"/>
-</map>

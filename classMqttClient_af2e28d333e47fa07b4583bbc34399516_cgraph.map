@@ -1,5 +1,0 @@
-<map id="MqttClient::mqttPublish" name="MqttClient::mqttPublish">
-<area shape="rect" id="node1" title="Publish a message to the PubTopic." alt="" coords="5,35,181,61"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#ab8df6a8cbb8ceae8d31ffc2c0fd13543" title="true: Connected to MQTT server, false: not connected" alt="" coords="229,5,439,32"/>
-<area shape="rect" id="node3" href="$classMqttClient.html#a26cfd0c4091d45b083cc04f8c53dcfe1" title="Callback with the publish result." alt="" coords="246,57,422,98"/>
-</map>

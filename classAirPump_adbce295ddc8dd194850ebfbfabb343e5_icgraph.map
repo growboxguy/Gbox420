@@ -1,4 +1,0 @@
-<map id="AirPump::TurnOff" name="AirPump::TurnOff">
-<area shape="rect" id="node1" title=" " alt="" coords="276,5,407,32"/>
-<area shape="rect" id="node2" href="$classAirPump__Web.html#ae2a2150164cac655f03a292e6503400f" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,228,32"/>
-</map>

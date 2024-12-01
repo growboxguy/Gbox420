@@ -1,6 +1,0 @@
-<map id="WeightSensor_Web::WeightSensor_Web" name="WeightSensor_Web::WeightSensor_Web">
-<area shape="rect" id="node1" title=" " alt="" coords="5,39,204,80"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a844f31842785533417e9e35607362516" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method." alt="" coords="252,5,471,47"/>
-<area shape="rect" id="node4" href="$classModule__Web.html#a054dbad7ecba4834b7a589c29748c422" title="Calls the websiteEvent_Refresh() method of the Subscriber when an ESP&#45;link website is refreshing." alt="" coords="260,71,463,112"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="519,46,619,73"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="PressurePump::getPrimingTime" name="PressurePump::getPrimingTime">
-<area shape="rect" id="node1" title=" " alt="" coords="237,46,464,73"/>
-<area shape="rect" id="node2" href="$classAeroponics__Tank__Web.html#a229f7f8070c7f34787a5f2141db737d1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="14,5,181,47"/>
-<area shape="rect" id="node3" href="$classAeroponics__NoTank__Web.html#ae5f8f0c2e6a760c29524ed562188d47d" title=" " alt="" coords="5,71,189,112"/>
-</map>

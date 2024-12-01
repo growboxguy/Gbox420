@@ -1,4 +1,0 @@
-<map id="HempyBucket::startWateringRequest" name="HempyBucket::startWateringRequest">
-<area shape="rect" id="node1" title="Turn on water pump, run until StopWeight is reached &#45; Runs fast." alt="" coords="275,5,484,47"/>
-<area shape="rect" id="node2" href="$classHempyBucket__Web.html#a56d1c1af072722edb161dbe5c827485f" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,5,227,47"/>
-</map>

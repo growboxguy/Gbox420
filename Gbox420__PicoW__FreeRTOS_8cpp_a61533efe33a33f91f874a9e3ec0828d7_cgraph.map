@@ -1,6 +1,0 @@
-<map id="ntpRequest" name="ntpRequest">
-<area shape="rect" id="node1" title="Make an NTP request." alt="" coords="5,31,101,57"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#a023c569a8091fd491e6d23a75224202c" title="Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer..." alt="" coords="149,31,240,57"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae09f73b656e9cb4867d331bbf68037b9" title="Callback when DNS lookup is finished." alt="" coords="288,5,420,32"/>
-<area shape="rect" id="node4" href="$task_8h.html#aa154068cecd7f31446a7a84af44ab1a3" title=" " alt="" coords="305,56,403,83"/>
-</map>

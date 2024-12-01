@@ -1,4 +1,0 @@
-<map id="DnsLookup_Async" name="DnsLookup_Async">
-<area shape="rect" id="node1" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="5,5,144,32"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ae6ed48070e7b97bc68878ed6954f3815" title="Conversions." alt="" coords="192,5,372,32"/>
-</map>

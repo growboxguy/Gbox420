@@ -1,7 +1,0 @@
-<map id="HempyBucket::tareDryWetWeight" name="HempyBucket::tareDryWetWeight">
-<area shape="rect" id="node1" title=" " alt="" coords="573,42,813,69"/>
-<area shape="rect" id="node2" href="$classHempyBucket__Web.html#a56d1c1af072722edb161dbe5c827485f" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="293,5,515,47"/>
-<area shape="rect" id="node3" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title=" " alt="" coords="283,71,525,98"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,71,235,98"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="5,71,56,98"/>
-</map>

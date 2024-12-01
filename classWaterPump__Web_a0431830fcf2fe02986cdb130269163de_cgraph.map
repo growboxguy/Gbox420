@@ -1,7 +1,0 @@
-<map id="WaterPump_Web::websiteEvent_Load" name="WaterPump_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title="Called then an external command arrives (From MQTT or User Interface)" alt="" coords="5,56,272,83"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="337,5,486,32"/>
-<area shape="rect" id="node3" href="$classWaterPump.html#ad32c4b7eb92a3f20765633c92dd3bfff" title=" " alt="" coords="328,56,495,83"/>
-<area shape="rect" id="node5" href="$classWaterPump.html#acf28dda22ab36359a227f709d7c00fb2" title=" " alt="" coords="320,107,503,133"/>
-<area shape="rect" id="node4" href="$classSwitch__PWM.html#a097728cdff4a46c1de63a3f6d115510a" title=" " alt="" coords="551,56,752,83"/>
-</map>

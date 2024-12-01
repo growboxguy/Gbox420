@@ -1,8 +1,0 @@
-<map id="PHSensor::getPH" name="PHSensor::getPH">
-<area shape="rect" id="node1" title=" " alt="" coords="564,96,695,123"/>
-<area shape="rect" id="node2" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title=" " alt="" coords="313,64,471,91"/>
-<area shape="rect" id="node5" href="$classReservoirModule.html#a8f46e8f4d6a9b017752bdd11c16d0253" title=" " alt="" coords="268,121,516,148"/>
-<area shape="rect" id="node3" href="$classPHSensor.html#a884b9eac849ed5e97eeec7644e4f701d" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="47,5,178,32"/>
-<area shape="rect" id="node4" href="$classPHSensor__Web.html#a93913d92db92e21d374b7db675848399" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,57,220,98"/>
-<area shape="rect" id="node6" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="Called every five seconds." alt="" coords="19,122,206,163"/>
-</map>

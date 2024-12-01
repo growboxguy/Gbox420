@@ -1,9 +1,0 @@
-<map id="DHTSensor::report" name="DHTSensor::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,81,147,108"/>
-<area shape="rect" id="node2" href="$classDHTSensor.html#a3d44cdb1654561fe1744d2d5a7ea9bd7" title=" " alt="" coords="195,31,405,57"/>
-<area shape="rect" id="node5" href="$classDHTSensor.html#a04d6ece31e3ac088bc73966dcd19fa53" title=" " alt="" coords="207,81,393,108"/>
-<area shape="rect" id="node7" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="236,132,364,159"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="493,56,556,83"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title=" " alt="" coords="453,5,596,32"/>
-<area shape="rect" id="node6" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title=" " alt="" coords="473,107,576,133"/>
-</map>

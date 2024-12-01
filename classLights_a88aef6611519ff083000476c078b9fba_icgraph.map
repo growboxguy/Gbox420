@@ -1,4 +1,0 @@
-<map id="Lights::setDimDuration" name="Lights::setDimDuration">
-<area shape="rect" id="node1" title="Set the duration of the temporary dimming in Seconds." alt="" coords="260,5,432,32"/>
-<area shape="rect" id="node2" href="$classLights__Web.html#ae64b3376392d07b955baa708988873ad" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,212,32"/>
-</map>

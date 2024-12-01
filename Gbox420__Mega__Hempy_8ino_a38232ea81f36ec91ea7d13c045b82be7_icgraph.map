@@ -1,4 +1,0 @@
-<map id="mqttConnected" name="mqttConnected">
-<area shape="rect" id="node1" title="Called when connection to the MQTT broker is established." alt="" coords="141,5,264,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Hempy_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in ..." alt="" coords="5,5,93,32"/>
-</map>

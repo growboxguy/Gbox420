@@ -1,4 +1,0 @@
-<map id="MqttClient::mqttDisconnect" name="MqttClient::mqttDisconnect">
-<area shape="rect" id="node1" title="Disconnect from MQTT server." alt="" coords="108,5,309,32"/>
-<area shape="rect" id="node2" href="$MqttTestMulti_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
-</map>

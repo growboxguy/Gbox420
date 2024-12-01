@@ -1,5 +1,0 @@
-<map id="Switch::turnOn" name="Switch::turnOn">
-<area shape="rect" id="node1" title="Turn the switch on: Sends the signal, but does not wait for the switch to flip over physically." alt="" coords="207,31,324,57"/>
-<area shape="rect" id="node2" href="$classSwitch.html#a7783960e9e4926350b20ce0002d5c489" title="invert the current state" alt="" coords="35,5,129,32"/>
-<area shape="rect" id="node3" href="$classSwitch.html#a16bd4899a28249facdd7fc335ed4b805" title="Turn the switch on and wait for the switch to flip over physically. USES Delay() !..." alt="" coords="5,56,159,83"/>
-</map>

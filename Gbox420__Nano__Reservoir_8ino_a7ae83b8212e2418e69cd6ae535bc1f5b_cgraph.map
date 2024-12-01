@@ -1,5 +1,0 @@
-<map id="run1min" name="run1min">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,81,32"/>
-<area shape="rect" id="node2" href="$classModule.html#a4919fab3f319c503da8423c144d30b43" title="Called every minute." alt="" coords="129,5,261,32"/>
-<area shape="rect" id="node3" href="$classCommon.html#a01e38ec57836a5209119d3308d6080f7" title="Called every minute." alt="" coords="309,5,452,32"/>
-</map>

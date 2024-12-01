@@ -1,7 +1,0 @@
-<map id="dnsLookup" name="dnsLookup">
-<area shape="rect" id="node1" title="Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was succe..." alt="" coords="697,31,788,57"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#aa6e23924456acb066b5ad8bfe13cc97a" title="Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect." alt="" coords="423,31,649,57"/>
-<area shape="rect" id="node3" href="$classMqttClient.html#a7130e4d263388cdc0327c58783b0b356" title="Check connected status &#45; Reconnect to MQTT server in the background if disconnected." alt="" coords="205,5,375,32"/>
-<area shape="rect" id="node5" href="$classMqttClient.html#ad56d828d07ed653985ebaf30472ed96f" title=" " alt="" coords="207,56,373,83"/>
-<area shape="rect" id="node4" href="$classMqttClient.html#af7b061686a1e17fcbecf6c693175b521" title="Called every minute." alt="" coords="5,5,157,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="Switch::report" name="Switch::report">
-<area shape="rect" id="node1" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,56,117,83"/>
-<area shape="rect" id="node2" href="$classSwitch.html#a116cc3b37f403fca393fb564c7b69155" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="165,31,320,57"/>
-<area shape="rect" id="node5" href="$classCommon.html#a0a2975e4d028bcc4bda48a59b7269ad8" title="Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body,..." alt="" coords="179,81,307,108"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a86298138ea32297a21623d770d6674b8" title=" " alt="" coords="389,5,451,32"/>
-<area shape="rect" id="node4" href="$Gbox420__PicoW_2Gbox420__PicoW_2Components_2Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="368,56,472,83"/>
-</map>

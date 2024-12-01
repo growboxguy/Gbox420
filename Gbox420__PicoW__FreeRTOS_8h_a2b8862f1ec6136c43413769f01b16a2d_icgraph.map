@@ -1,5 +1,0 @@
-<map id="mqttDataReceived" name="mqttDataReceived">
-<area shape="rect" id="node1" title="Callback when MQTT data is received on a subscribed topic." alt="" coords="287,5,431,32"/>
-<area shape="rect" id="node2" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ad8d0a588e6932069b6e287987de4daf7" title="Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Rea..." alt="" coords="108,5,239,32"/>
-<area shape="rect" id="node3" href="$Gbox420__PicoW__FreeRTOS_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
-</map>

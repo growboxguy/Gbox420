@@ -1,6 +1,0 @@
-<map id="beep" name="beep">
-<area shape="rect" id="node1" title=" " alt="" coords="272,56,327,83"/>
-<area shape="rect" id="node2" href="$Buzzer_8cpp.html#a4b3c03f479780760659f6d587e11390c" title=" " alt="" coords="119,5,213,32"/>
-<area shape="rect" id="node3" href="$Buzzer_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,56,60,83"/>
-<area shape="rect" id="node4" href="$Buzzer_8cpp.html#af1025474743987878f02070e9ad41d6b" title=" " alt="" coords="108,107,224,133"/>
-</map>

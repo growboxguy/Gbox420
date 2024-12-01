@@ -1,5 +1,0 @@
-<map id="mqttSubscribe_Callback" name="mqttSubscribe_Callback">
-<area shape="rect" id="node1" title="Callback with the subscription result: 0: Success." alt="" coords="359,5,537,32"/>
-<area shape="rect" id="node2" href="$MqttAPI_8cpp.html#ae7310ff1be91024cd67bb9354421ab87" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="108,5,311,32"/>
-<area shape="rect" id="node3" href="$MqttTest_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="5,5,60,32"/>
-</map>

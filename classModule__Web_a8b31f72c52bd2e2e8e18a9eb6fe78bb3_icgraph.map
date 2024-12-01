@@ -1,6 +1,0 @@
-<map id="Module_Web::websiteLoadEventTrigger" name="Module_Web::websiteLoadEventTrigger">
-<area shape="rect" id="node1" title="Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was ope..." alt="" coords="440,5,672,47"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="285,13,392,39"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,13,237,39"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,13,64,39"/>
-</map>

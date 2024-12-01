@@ -1,4 +1,0 @@
-<map id="MainModule::commandEvent" name="MainModule::commandEvent">
-<area shape="rect" id="node1" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,5,217,32"/>
-<area shape="rect" id="node2" href="$classCommon.html#aa6c709edbfc56bb45f138d8d13c97e6d" title="Checks if lookupName starts with the Name of the instance followed by _." alt="" coords="265,5,424,32"/>
-</map>

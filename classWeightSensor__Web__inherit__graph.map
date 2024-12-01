@@ -1,6 +1,0 @@
-<map id="WeightSensor_Web" name="WeightSensor_Web">
-<area shape="rect" id="node1" title="&lt; Weight sensor load cell &#45; website component" alt="" coords="55,155,202,181"/>
-<area shape="rect" id="node2" href="$classWeightSensor.html" title="&lt; Weight sensor load cell" alt="" coords="5,80,116,107"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="88,5,169,32"/>
-<area shape="rect" id="node4" href="$classCommon__Web.html" title=" " alt="" coords="140,80,256,107"/>
-</map>

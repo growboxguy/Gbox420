@@ -1,4 +1,0 @@
-<map id="ModuleSkeleton_Web::websiteEvent_Refresh" name="ModuleSkeleton_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="5,5,180,47"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="228,13,377,39"/>
-</map>

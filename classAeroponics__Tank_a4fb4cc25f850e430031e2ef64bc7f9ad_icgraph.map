@@ -1,5 +1,0 @@
-<map id="Aeroponics_Tank::getLastSprayPressureText" name="Aeroponics_Tank::getLastSprayPressureText">
-<area shape="rect" id="node1" title=" " alt="" coords="232,27,419,69"/>
-<area shape="rect" id="node2" href="$classAeroponics__Tank.html#ad9c67a7486448620ccfa511c9085ace4" title="Report current state in a JSON format to the LongMessage buffer." alt="" coords="5,5,184,32"/>
-<area shape="rect" id="node3" href="$classAeroponics__Tank__Web.html#a592ae969b6b6975ea99d6cd9e24438a2" title="Called when an ESP&#45;link webpage is loading. The name of the page is passed in the URL attribute (exam..." alt="" coords="7,57,182,98"/>
-</map>

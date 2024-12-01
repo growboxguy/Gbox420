@@ -1,6 +1,0 @@
-<map id="Aeroponics_NoTank::processTimeCriticalStuff" name="Aeroponics_NoTank::processTimeCriticalStuff">
-<area shape="rect" id="node1" title="Process things that cannot wait or need precise timing." alt="" coords="627,5,808,47"/>
-<area shape="rect" id="node2" href="$classAeroModule.html#a93b9be4b1ecc4cb5dbbfb1ebced78ba1" title="Process things that cannot wait or need precise timing." alt="" coords="341,5,579,47"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title=" " alt="" coords="112,13,293,39"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,13,64,39"/>
-</map>

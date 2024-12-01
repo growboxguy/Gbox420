@@ -1,4 +1,0 @@
-<map id="WaterPump::stopPumpRequest" name="WaterPump::stopPumpRequest">
-<area shape="rect" id="node1" title=" " alt="" coords="296,5,519,32"/>
-<area shape="rect" id="node2" href="$classWaterPump__Web.html#aea7b3dd4d7a6dcd25c4bbca13a30460c" title="Process commands received from MQTT subscription or from the ESP&#45;link website." alt="" coords="5,5,248,32"/>
-</map>

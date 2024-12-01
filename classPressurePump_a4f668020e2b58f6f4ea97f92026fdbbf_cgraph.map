@@ -1,6 +1,0 @@
-<map id="PressurePump::disablePump" name="PressurePump::disablePump">
-<area shape="rect" id="node1" title="Disable the pump." alt="" coords="5,56,212,83"/>
-<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes." alt="" coords="271,5,452,32"/>
-<area shape="rect" id="node3" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="283,56,440,83"/>
-<area shape="rect" id="node4" href="$classPressurePump.html#ae54a9626d799c0b973e8b8bc7c2f694c" title=" " alt="" coords="260,107,463,133"/>
-</map>

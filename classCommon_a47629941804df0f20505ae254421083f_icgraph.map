@@ -1,7 +1,0 @@
-<map id="Common::appendName" name="Common::appendName">
-<area shape="rect" id="node1" title="Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the n..." alt="" coords="457,46,633,73"/>
-<area shape="rect" id="node2" href="$classPressureSensor.html#a9a97fa923ea86256eadff802549f0081" title=" " alt="" coords="211,17,409,43"/>
-<area shape="rect" id="node4" href="$classTDSSensor.html#ab3c3b279412f52bb666bb8560c34e967" title=" " alt="" coords="225,71,395,98"/>
-<area shape="rect" id="node3" href="$classPressureSensor__Web.html#a45cea602962767cc764d5bb35e714fa5" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,163,47"/>
-<area shape="rect" id="node5" href="$classTDSSensor.html#a8c800135641affc55ae05c10a707f9a1" title="Called every minute." alt="" coords="11,71,157,112"/>
-</map>

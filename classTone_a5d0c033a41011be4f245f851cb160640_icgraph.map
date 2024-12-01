@@ -1,5 +1,0 @@
-<map id="Tone::init" name="Tone::init">
-<area shape="rect" id="node1" title=" " alt="" coords="135,31,216,57"/>
-<area shape="rect" id="node2" href="$classTone.html#aeb08975b097263cceda248afab5eacca" title=" " alt="" coords="5,5,87,32"/>
-<area shape="rect" id="node3" href="$example_2tone__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point. Loads settings, create tasks and starts FreeRTOS scheduler." alt="" coords="19,56,73,83"/>
-</map>

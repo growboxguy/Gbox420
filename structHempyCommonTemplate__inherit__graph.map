@@ -1,7 +1,0 @@
-<map id="HempyCommonTemplate" name="HempyCommonTemplate">
-<area shape="rect" id="node1" title="&lt; Hempy wireless template &#45; Shared between Command and Respone packages" alt="" coords="320,5,508,32"/>
-<area shape="rect" id="node2" href="$structHempyBucketCommand1.html" title="&lt; Hempy bucket wireless command" alt="" coords="5,80,193,107"/>
-<area shape="rect" id="node3" href="$structHempyBucketResponse1.html" title="&lt; Hempy bucket wireless response" alt="" coords="218,80,402,107"/>
-<area shape="rect" id="node4" href="$structHempyModuleCommand.html" title="&lt; Hempy module wireless command" alt="" coords="426,80,610,107"/>
-<area shape="rect" id="node5" href="$structHempyModuleResponse.html" title="&lt; Hempy module wireless response" alt="" coords="635,80,815,107"/>
-</map>

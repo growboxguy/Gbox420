@@ -1,6 +1,0 @@
-<map id="vPortYield" name="vPortYield">
-<area shape="rect" id="node1" title="Yield the CPU." alt="" coords="204,56,292,83"/>
-<area shape="rect" id="node2" href="$ThirdParty_2GCC_2ARC__EM__HS_2port_8c.html#ab700912e4438843a86046e1be0b917ae" title=" " alt="" coords="26,5,135,32"/>
-<area shape="rect" id="node3" href="$ARMv8M_2non__secure_2port_8c.html#a65bf4c0ff0c46096b4213149780b6b93" title=" " alt="" coords="6,56,155,83"/>
-<area shape="rect" id="node4" href="$GCC_2PPC405__Xilinx_2port_8c.html#ade5a8c6666e7413a0355cc252029c5c6" title=" " alt="" coords="5,107,156,133"/>
-</map>

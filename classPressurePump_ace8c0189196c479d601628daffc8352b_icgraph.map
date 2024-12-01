@@ -1,4 +1,0 @@
-<map id="PressurePump::turnBypassOn" name="PressurePump::turnBypassOn">
-<area shape="rect" id="node1" title="KeepOpen False &#45; Opens the bypass valve for a short period to blow off pressure, KeepOpen True: Keep ..." alt="" coords="237,13,452,39"/>
-<area shape="rect" id="node2" href="$classAeroponics__NoTank__Web.html#a749978a1368f7ec3c46ec4bc0a91641c" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="5,5,189,47"/>
-</map>

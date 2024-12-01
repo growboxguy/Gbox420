@@ -1,5 +1,0 @@
-<map id="AeroModule_Web::sendMessages" name="AeroModule_Web::sendMessages">
-<area shape="rect" id="node1" title="Exchange messages with the wireless Aeroponics module." alt="" coords="272,42,511,69"/>
-<area shape="rect" id="node2" href="$classAeroModule__Web.html#a027b43fe0d9f242b23b69ea60437e765" title="Refresh state, Called every five seconds." alt="" coords="20,5,209,47"/>
-<area shape="rect" id="node3" href="$classAeroModule__Web.html#aa96bf78195a6ef1fdce4d20652656981" title="Refresh state, Called every second." alt="" coords="5,71,224,98"/>
-</map>

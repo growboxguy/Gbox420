@@ -1,5 +1,0 @@
-<map id="mqttPublish" name="mqttPublish">
-<area shape="rect" id="node1" title="Publish an MQTT message to a Topic containing a JSON formatted Data Example: MQTT reporting: Gbox420/..." alt="" coords="5,13,105,39"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#afac0c1cffecf17585c22323c8b48659d" title="Publish a message to the PubTopic." alt="" coords="153,13,329,39"/>
-<area shape="rect" id="node3" href="$classMqttClient.html#a26cfd0c4091d45b083cc04f8c53dcfe1" title="Callback with the publish result." alt="" coords="377,5,553,47"/>
-</map>

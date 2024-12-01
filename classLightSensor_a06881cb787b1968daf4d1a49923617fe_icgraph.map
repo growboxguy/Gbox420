@@ -1,5 +1,0 @@
-<map id="LightSensor::getDark" name="LightSensor::getDark">
-<area shape="rect" id="node1" title="Light sensor digital feedback: True(Dark) or False(Bright)" alt="" coords="515,5,673,32"/>
-<area shape="rect" id="node2" href="$classMainModule.html#ae0b9ebcc9015f37993766a3a39c4e710" title="Returns true if the lights are on or daylight is detected." alt="" coords="273,5,467,32"/>
-<area shape="rect" id="node3" href="$classMainModule.html#a2125ed832f36e3af4b2a0bf1db8fa8e0" title=" " alt="" coords="5,5,225,32"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="NtpClient::ntpReceived" name="NtpClient::ntpReceived">
-<area shape="rect" id="node1" title="NTP data received." alt="" coords="205,5,377,32"/>
-<area shape="rect" id="node2" href="$classNtpClient.html#a007f5ef7207b6b466cbf135785e9109b" title="Initialize the Real Time Clock and do an NTP update." alt="" coords="5,5,157,32"/>
-</map>

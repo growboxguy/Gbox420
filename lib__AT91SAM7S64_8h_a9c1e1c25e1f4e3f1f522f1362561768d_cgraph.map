@@ -1,4 +1,0 @@
-<map id="AT91F_PIO_IsInterruptSet" name="AT91F_PIO_IsInterruptSet">
-<area shape="rect" id="node1" title="Test if PIO Interrupt is Set." alt="" coords="5,5,192,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#ac88f901276400877578d71cde89216df" title="Return PIO Interrupt Status." alt="" coords="240,5,459,32"/>
-</map>

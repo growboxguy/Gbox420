@@ -1,7 +1,0 @@
-<map id="Aeroponics_NoTank::sprayOff" name="Aeroponics_NoTank::sprayOff">
-<area shape="rect" id="node1" title=" " alt="" coords="556,35,713,76"/>
-<area shape="rect" id="node2" href="$classAeroponics__NoTank__Web.html#a749978a1368f7ec3c46ec4bc0a91641c" title="Called when an ESP&#45;link webpage is refreshing (Automatic, every 5sec)" alt="" coords="303,5,487,47"/>
-<area shape="rect" id="node3" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title=" " alt="" coords="283,71,508,98"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,71,235,98"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="5,71,56,98"/>
-</map>

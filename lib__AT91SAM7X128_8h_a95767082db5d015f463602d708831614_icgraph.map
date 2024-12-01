@@ -1,4 +1,0 @@
-<map id="AT91F_PIO_GetInput" name="AT91F_PIO_GetInput">
-<area shape="rect" id="node1" title="Return PIO input value." alt="" coords="216,5,371,32"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7X128_8h.html#a2c5f6f5c10c1059ebe0313f7ee45b868" title="Test if PIO is input flag is active." alt="" coords="5,5,168,32"/>
-</map>

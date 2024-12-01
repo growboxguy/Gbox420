@@ -1,9 +1,0 @@
-<map id="MqttClient::MqttClient" name="MqttClient::MqttClient">
-<area shape="rect" id="node1" title=" " alt="" coords="5,89,172,115"/>
-<area shape="rect" id="node2" href="$classMqttClient.html#a6c0a91af5c408441549297d1b560b415" title="Actually connect to the MQTT server." alt="" coords="233,13,416,39"/>
-<area shape="rect" id="node4" href="$classMqttClient.html#aeef204b649b2ba56ef244131f47345b8" title="Called When the IP address of the MQTT server is found." alt="" coords="235,63,415,90"/>
-<area shape="rect" id="node5" href="$classMqttClient.html#ab8df6a8cbb8ceae8d31ffc2c0fd13543" title="true: Connected to MQTT server, false: not connected" alt="" coords="220,114,429,141"/>
-<area shape="rect" id="node6" href="$classMqttClient.html#a9595e149318a732d721dcce884658e30" title="bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic" alt="" coords="229,165,421,207"/>
-<area shape="rect" id="node3" href="$classMqttClient.html#aeba49314a345fffee0198d7cdc68688c" title="Callback with the connection result." alt="" coords="482,5,665,47"/>
-<area shape="rect" id="node7" href="$classMqttClient.html#a0ca2a0af19e4ed9c0aa044fd3ec2b2e9" title="Callback with the subscription result: 0: Success." alt="" coords="477,165,669,207"/>
-</map>

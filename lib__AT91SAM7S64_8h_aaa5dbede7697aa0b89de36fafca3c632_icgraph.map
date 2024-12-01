@@ -1,4 +1,0 @@
-<map id="AT91F_TWI_GetInterruptMaskStatus" name="AT91F_TWI_GetInterruptMaskStatus">
-<area shape="rect" id="node1" title="Return TWI Interrupt Mask Status." alt="" coords="272,5,487,47"/>
-<area shape="rect" id="node2" href="$lib__AT91SAM7S64_8h.html#a436322caaee9f7a3b393d3e2c09db908" title="Test if TWI Interrupt is Masked." alt="" coords="5,13,224,39"/>
-</map>

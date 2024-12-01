@@ -1,7 +1,0 @@
-<map id="WaterTempSensor::getTemp" name="WaterTempSensor::getTemp">
-<area shape="rect" id="node1" title=" " alt="" coords="536,46,739,73"/>
-<area shape="rect" id="node2" href="$classReservoirModule.html#a8f46e8f4d6a9b017752bdd11c16d0253" title=" " alt="" coords="240,17,488,43"/>
-<area shape="rect" id="node4" href="$classTDSSensor.html#ab3c3b279412f52bb666bb8560c34e967" title=" " alt="" coords="279,71,449,98"/>
-<area shape="rect" id="node3" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="Called every five seconds." alt="" coords="5,5,192,47"/>
-<area shape="rect" id="node5" href="$classTDSSensor.html#a8c800135641affc55ae05c10a707f9a1" title="Called every minute." alt="" coords="25,71,172,112"/>
-</map>

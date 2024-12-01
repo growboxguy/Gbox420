@@ -1,6 +1,0 @@
-<map id="Aeroponics_NoTank_Web::websiteEvent_Load" name="Aeroponics_NoTank_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,189,90"/>
-<area shape="rect" id="node2" href="$classCommon.html#a17470f8b143917e4f1815f7a91f726f3" title="Returns the name of the caller component." alt="" coords="276,5,425,32"/>
-<area shape="rect" id="node3" href="$classPressurePump.html#a36de51e2e9dbdbed6d0f0ec4d8b08cf5" title=" " alt="" coords="237,56,464,83"/>
-<area shape="rect" id="node4" href="$classPressurePump.html#a737f46f42b2a84f37f8993cd92350b6f" title=" " alt="" coords="251,107,451,133"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="DevCommonTemplate" name="DevCommonTemplate">
-<area shape="rect" id="node1" title="&lt; Devponics wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,132,172,159"/>
-<area shape="rect" id="node2" href="$structDevCommand__P1.html" title="&lt; Devponics wireless commands &#45; Part1" alt="" coords="232,5,371,32"/>
-<area shape="rect" id="node3" href="$structDevCommand__P2.html" title="&lt; Devponics wireless commands &#45; Part2" alt="" coords="232,56,371,83"/>
-<area shape="rect" id="node4" href="$structDevModuleCommand.html" title="&lt; Devponics wireless module commands" alt="" coords="220,107,383,133"/>
-<area shape="rect" id="node5" href="$structDevModuleResponse.html" title="&lt; Devponics wireless module response" alt="" coords="222,157,381,184"/>
-<area shape="rect" id="node6" href="$structDevResponse__P1.html" title="&lt; Devponics wireless response &#45; Part1" alt="" coords="234,208,369,235"/>
-<area shape="rect" id="node7" href="$structDevResponse__P2.html" title="&lt; Devponics wireless response &#45; Part2" alt="" coords="234,259,369,285"/>
-</map>

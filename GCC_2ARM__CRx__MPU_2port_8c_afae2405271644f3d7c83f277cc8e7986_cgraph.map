@@ -1,4 +1,0 @@
-<map id="pxPortInitialiseStack" name="pxPortInitialiseStack">
-<area shape="rect" id="node1" title="Setup a FreeRTOS task&#39;s initial context." alt="" coords="5,5,161,32"/>
-<area shape="rect" id="node2" href="$GCC_2ARM__CRx__MPU_2portmacro_8h.html#a7cde6871b0335e88c76859fad8d7767c" title="Exit from a FreeRTO System Call." alt="" coords="209,5,364,32"/>
-</map>

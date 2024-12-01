@@ -1,4 +1,0 @@
-<map id="vPortYield" name="vPortYield">
-<area shape="rect" id="node1" title="Yield the CPU." alt="" coords="5,5,93,32"/>
-<area shape="rect" id="node2" href="$ARMv8M_2non__secure_2port_8c.html#a2ed3554a3de09a3bd09d396ee081ab69" title="Enter critical section." alt="" coords="141,5,277,32"/>
-</map>
