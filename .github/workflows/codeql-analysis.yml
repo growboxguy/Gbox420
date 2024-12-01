@@ -32,11 +32,11 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    # Custom build steps for Arduino
+    # Install Arduino CLI and make it available in the PATH
     - name: Install Arduino CLI
       run: |
         curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sudo bash
-        sudo apt-get install arduino-cli
+        echo "$HOME/bin" >> $GITHUB_PATH  # Add the installation directory to the PATH
 
     - name: Build Arduino projects
       run: |
@@ -53,7 +53,6 @@ jobs:
     - name: Install ESPHome (if you have C++ components)
       run: |
         sudo pip install esphome  # Install ESPHome dependencies
-        # If you have custom C++ components in ESPHome, make sure they're built before analysis.
 
     # Skip the autobuild step because it won't work for Arduino/ESPHome
     # Remove or comment the autobuild step to avoid failures
