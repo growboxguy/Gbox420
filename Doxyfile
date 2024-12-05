@@ -45,7 +45,7 @@ PROJECT_NUMBER         = 4.20
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "Grow box automation and monitoring" 
+PROJECT_BRIEF          = "Grow box automation and monitoring - <a href='https://sites.google.com/site/growboxguy/'>https://sites.google.com/site/growboxguy/</a>" 
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55

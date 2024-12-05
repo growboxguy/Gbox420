@@ -326,7 +326,7 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   }
   else if (strcmp_P(Command, (PGM_P)F("Relay")) == 0)
   {
-    setPushingBoxLogRelayID(WebServer.getArgString());
+    setPushingBoxLogRelayID(Data);
   }
   // Settings - MQTT
   else if (strcmp_P(Command, (PGM_P)F("MQTT")) == 0)
@@ -339,19 +339,19 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   }
   else if (strcmp_P(Command, (PGM_P)F("MPT")) == 0)
   {
-    setMqttPublishTopic(WebServer.getArgString());
+    setMqttPublishTopic(Data);
   }
   else if (strcmp_P(Command, (PGM_P)F("MST")) == 0)
   {
-    setMqttSubscribeTopic(WebServer.getArgString());
+    setMqttSubscribeTopic(Data);
   }
   else if (strcmp_P(Command, (PGM_P)F("MLT")) == 0)
   {
-    setMQTTLWTTopic(WebServer.getArgString());
+    setMQTTLWTTopic(Data);
   }
   else if (strcmp_P(Command, (PGM_P)F("MLM")) == 0)
   {
-    setMQTTLWTMessage(WebServer.getArgString());
+    setMQTTLWTMessage(Data);
   }
   else if (strcmp(Command, getSoundObject()->getName(F("E"), true)) == 0)
   {

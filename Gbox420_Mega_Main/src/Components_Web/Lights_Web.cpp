@@ -65,39 +65,47 @@ bool Lights_Web::commandEvent(__attribute__((unused)) char *Command, __attribute
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0)
     {
-      setBrightness(WebServer.getArgInt(), true, true);
+      setBrightness(toInt(Data), true, true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OnH")) == 0)
     {
-      setOnHour(WebServer.getArgInt());
+      setOnHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OnM")) == 0)
     {
-      setOnMinute(WebServer.getArgInt());
+      setOnMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OnT")) == 0)
+    {
+      setOnTime(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OfH")) == 0)
     {
-      setOffHour(WebServer.getArgInt());
+      setOffHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OfM")) == 0)
     {
-      setOffMinute(WebServer.getArgInt());
+      setOffMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OfT")) == 0)
+    {
+      setOffTime(Data);
     }
     // else if (strcmp_P(ShortMessage, (PGM_P)F("F")) == 0)
     // {
-    //   setFadeOnOff(WebServer.getArgBoolean());
+    //   setFadeOnOff(toBool(Data));
     // }
     // else if (strcmp_P(ShortMessage, (PGM_P)F("FInc")) == 0)
     // {
-    //   setFadeIncrements(WebServer.getArgInt());
+    //   setFadeIncrements(toInt(Data);
     // }
     // else if (strcmp_P(ShortMessage, (PGM_P)F("FInt")) == 0)
     // {
-    //   setFadeInterval(WebServer.getArgInt());
+    //   setFadeInterval(toInt(Data);
     // }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DD")) == 0)
     {
-      setDimDuration(WebServer.getArgInt());
+      setDimDuration(toInt(Data));
     }
     return true;
   }

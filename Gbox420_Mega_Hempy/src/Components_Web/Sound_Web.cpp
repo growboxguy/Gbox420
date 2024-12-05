@@ -32,7 +32,7 @@ bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute_
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("E")) == 0)
     {
-      setSoundOnOff(WebServer.getArgBoolean());
+      setSoundOnOff(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Ee")) == 0)
     {
