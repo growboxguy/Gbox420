@@ -1170,6 +1170,92 @@
         "type": "influxdb",
         "uid": "dRUNv-3Gz"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeAsSystem"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 39,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dRUNv-3Gz"
+          },
+          "groupBy": [],
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "Last Report",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "timestamp"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id::tag",
+              "operator": "=",
+              "value": "gbox420_internal_fan"
+            }
+          ]
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dRUNv-3Gz"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1269,7 +1355,7 @@
         "h": 7,
         "w": 2,
         "x": 22,
-        "y": 0
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -4194,7 +4280,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 7
+        "y": 8
       },
       "hideTimeOverride": true,
       "id": 7,
@@ -5144,7 +5230,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 15
+        "y": 16
       },
       "hideTimeOverride": true,
       "id": 20,
@@ -5312,96 +5398,6 @@
       "title": "Reservoir",
       "transparent": true,
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "dRUNv-3Gz"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-purple",
-                "value": null
-              }
-            ]
-          },
-          "unit": "dateTimeAsSystem"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 19,
-        "y": 24
-      },
-      "id": 39,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {},
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "dRUNv-3Gz"
-          },
-          "groupBy": [],
-          "measurement": "state",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Last Report",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_lastreport"
-            }
-          ]
-        }
-      ],
-      "title": "",
-      "transparent": true,
-      "type": "stat"
     }
   ],
   "preload": false,
@@ -5421,6 +5417,6 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 14,
+  "version": 17,
   "weekStart": ""
 }
