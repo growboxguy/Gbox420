@@ -188,9 +188,12 @@ void HempyBucket::disableRequest() // Stores the request only, will apply the ne
 
 void HempyBucket::startWatering()
 {
-  Parent->addToLog(getName(F("watering")));
-  updateState(HempyStates::WATERING);
-  Parent->getSoundObject()->playOnSound();
+  if (State != HempyStates::WATERING && State != HempyStates::DRAINING)
+  {
+    Parent->addToLog(getName(F("watering")));
+    updateState(HempyStates::WATERING);
+    Parent->getSoundObject()->playOnSound();
+  }
 }
 
 void HempyBucket::startWateringRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
@@ -200,9 +203,12 @@ void HempyBucket::startWateringRequest() // Stores the request only, will apply 
 
 void HempyBucket::stopWatering()
 {
-  updateState(HempyStates::IDLE);
-  Parent->addToLog(getName(F("stopped")));
-  Parent->getSoundObject()->playOnSound();
+  if (State != HempyStates::IDLE)
+  {
+    updateState(HempyStates::IDLE);
+    Parent->addToLog(getName(F("stopped")));
+    Parent->getSoundObject()->playOnSound();
+  }
 }
 
 void HempyBucket::stopWateringRequest() // Stores the request only, will apply the next time the Hempy Bucket is refreshing
