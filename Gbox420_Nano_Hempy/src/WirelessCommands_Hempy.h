@@ -22,13 +22,13 @@ enum HempyMessages
    HempyModuleResponse1,
    HempyBucket1Command1,
    HempyBucket1Response1,
-   // HempyBucket1Command2,
-   // HempyBucket1Response2,
+   HempyBucket1Command2,
+   HempyBucket1Response2,
    HempyBucket2Command1,
    HempyBucket2Response1,
-   // HempyBucket2Command2,
-   // HempyBucket2Response2,
-   HempyReset /// Special command sent at the start and end of a multi-message exchange.
+   HempyBucket2Command2,
+   HempyBucket2Response2,
+   HempyReset /// Special command sent at the start and end of a multi-message exchange. Should always be the last
 }; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)
@@ -47,24 +47,24 @@ __attribute__((unused)) static const __FlashStringHelper *toText_hempySequenceID
    case HempyMessages::HempyBucket1Response1:
       return F("H1R1");
       break;
-      // case HempyMessages::HempyBucket1Command2:
-      //  return F("H1C2");
-      //  break;
-      // case HempyMessages::HempyBucket1Response2:
-      //  return F("H1R2");
-      //  break;
+   case HempyMessages::HempyBucket1Command2:
+      return F("H1C2");
+      break;
+   case HempyMessages::HempyBucket1Response2:
+      return F("H1R2");
+      break;
    case HempyMessages::HempyBucket2Command1:
       return F("H2C1");
       break;
    case HempyMessages::HempyBucket2Response1:
       return F("H2R1");
       break;
-   // case HempyMessages::HempyBucket2Command2:
-   //  return F("H2C2");
-   //  break;
-   // case HempyMessages::HempyBucket2Response2:
-   //  return F("H2R2");
-   //  break;
+   case HempyMessages::HempyBucket2Command2:
+      return F("H2C2");
+      break;
+   case HempyMessages::HempyBucket2Response2:
+      return F("H2R2");
+      break;
    case HempyMessages::HempyReset:
       return F("HR");
       break;
@@ -73,7 +73,7 @@ __attribute__((unused)) static const __FlashStringHelper *toText_hempySequenceID
       break;
    }
 }
-///< HempyReset should always be the last element
+
 struct HempyCommonTemplate ///< Hempy wireless template - Shared between Command and Respone packages
 {
    HempyMessages SequenceID; ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
@@ -107,11 +107,6 @@ struct HempyBucketCommand1 : HempyCommonTemplate ///< Hempy bucket wireless comm
    HempyBucketCommand1(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    uint8_t PumpSpeed = 0;
    uint16_t PumpTimeOut = 0;
-   float StartWeight = 0.0;
-   float WateringIncrement = 0.0;
-   float EvaporationTarget = 0.0;
-   float DrainTargetWeight = 0.0;
-   float MaxWeight = 0.0;
    uint16_t DrainWaitTime = 0;
    bool Disable = false; ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
@@ -135,11 +130,14 @@ struct HempyBucketResponse1 : HempyCommonTemplate ///< Hempy bucket wireless res
    float WetWeight = 0.0;
 };
 
-/*
 struct HempyBucketCommand2 : HempyCommonTemplate ///< Hempy bucket wireless command - Part2 since did not fit within HempyBucketCommand1 (max 32byte)
 {
    HempyBucketCommand2(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-
+   float StartWeight = 0.0;
+   float WateringIncrement = 0.0;
+   float EvaporationTarget = 0.0;
+   float DrainTargetWeight = 0.0;
+   float MaxWeight = 0.0;
 };
 
 struct HempyBucketResponse2 : HempyCommonTemplate ///< Hempy bucket wireless response
@@ -147,4 +145,3 @@ struct HempyBucketResponse2 : HempyCommonTemplate ///< Hempy bucket wireless res
    HempyBucketResponse2(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    // Nothing to report back since everything fit to HempyBucketResponse1
 };
-*/
