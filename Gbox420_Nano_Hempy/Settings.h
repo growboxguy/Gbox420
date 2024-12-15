@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 15; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 16; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -90,8 +90,8 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -176647, .Scale = -20810.75};  ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 387148, .Scale = -22333.25};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -176962, .Scale = -22654.00};  ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 377473, .Scale = -21506.86};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
