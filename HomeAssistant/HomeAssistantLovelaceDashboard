@@ -29,7 +29,7 @@ views:
         entities:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_power1_current
-            secondary_info: last-changed
+            secondary_info: last-updated
             name: Power Sensor
             state_header: Current
             unit: A
@@ -45,33 +45,6 @@ views:
                 name: Voltage
                 unit: V
       - type: entities
-        entities:
-          - entity: switch.gbox420_light1_state
-          - entity: sensor.gbox420_light1_brightness
-          - entity: switch.gbox420_light1_timer
-          - entity: sensor.gbox420_light1_ontime
-          - entity: sensor.gbox420_light1_offtime
-          - entity: sensor.gbox420_lightsensor1_reading
-          - entity: sensor.gbox420_lightsensor1_darklight
-        title: Gbox420 Light1
-        state_color: true
-        footer:
-          type: graph
-          entity: sensor.gbox420_lightsensor1_reading
-          hours_to_show: 24
-          detail: 2
-        show_header_toggle: false
-      - type: entities
-        entities:
-          - entity: switch.gbox420_light2_state
-          - entity: sensor.gbox420_light2_brightness
-          - entity: switch.gbox420_light2_timer
-          - entity: sensor.gbox420_light2_ontime
-          - entity: sensor.gbox420_light2_offtime
-        title: Gbox420 Light2
-        show_header_toggle: false
-        state_color: true
-      - type: entities
         title: Ventilation
         state_color: true
         show_header_toggle: false
@@ -79,6 +52,7 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_external_humidity
             name: Temp&Humidity
+            secondary_info: last-updated
             state_header: External
             unit: '%'
             entities:
@@ -91,7 +65,6 @@ views:
               - entity: sensor.gbox420_external_temp
                 name: External
                 unit: °C
-            secondary_info: last-changed
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_internal_fan
             name: Internal Fan
@@ -152,6 +125,67 @@ views:
                   service_data:
                     topic: Gbox420CMD/FanE_H
                     payload: HIGH
+      - type: entities
+        entities:
+          - entity: switch.gbox420_light1_state
+            name: State
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_light1_timer
+            name: Timer
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_light1_ontime
+                name: 'On'
+              - entity: sensor.gbox420_light1_offtime
+                name: 'Off'
+          - entity: number.gbox420_light1_brightness
+            name: Brightness
+            type: custom:slider-entity-row
+            min: 0
+            max: 100
+            step: 1
+            icon: mdi:brightness-7
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_lightsensor1_reading
+            name: Light sensor
+            icon: mdi:theme-light-dark
+            state_header: Reading analog
+            entities:
+              - entity: sensor.gbox420_lightsensor1_darklight
+                name: Reading digital
+        footer:
+          type: graph
+          entity: sensor.gbox420_lightsensor1_reading
+          hours_to_show: 24
+          detail: 2
+        title: Light1
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: switch.gbox420_light2_state
+            name: State
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_light2_timer
+            name: Timer schedule
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_light2_ontime
+                name: 'On'
+              - entity: sensor.gbox420_light2_offtime
+                name: 'Off'
+          - entity: number.gbox420_light2_brightness
+            name: Brightness
+            type: custom:slider-entity-row
+            min: 0
+            max: 100
+            step: 1
+            icon: mdi:brightness-7
+            toggle: false
+            grow: true
+        title: Light2
+        show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - entity: sensor.gbox420_reservoir_modulestate
