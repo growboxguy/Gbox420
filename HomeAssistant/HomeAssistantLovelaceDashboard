@@ -7,7 +7,7 @@ views:
     cards:
       - type: iframe
         url: >-
-          https://growboxguy.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
+          https://bigrowboxguymuki.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
     type: panel
   - title: Node-RED
     path: NodeRED
@@ -68,7 +68,6 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_internal_fan
             name: Internal Fan
-            secondary_info: last-changed
             state_header: State
             entities:
               - icon: mdi:fan-off
@@ -98,7 +97,6 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_exhaust_fan
             name: Exhaust Fan
-            secondary_info: last-changed
             state_header: State
             entities:
               - icon: mdi:fan-off
@@ -149,10 +147,10 @@ views:
             entity: sensor.gbox420_lightsensor1_reading
             name: Light sensor
             icon: mdi:theme-light-dark
-            state_header: Reading analog
+            state_header: Analog reading
             entities:
-              - entity: sensor.gbox420_lightsensor1_darklight
-                name: Reading digital
+              - entity: sensor.gbox420_lightsensor1_darkbright
+                name: Digital reading
         footer:
           type: graph
           entity: sensor.gbox420_lightsensor1_reading
@@ -203,22 +201,57 @@ views:
         show_header_toggle: false
       - type: entities
         entities:
-          - entity: sensor.gbox420_hempy_modulestate
-          - entity: sensor.gbox420_bucket1_state
-          - entity: sensor.gbox420_bucket1_weight
-          - entity: sensor.gbox420_bucket1_dryweight
-          - entity: sensor.gbox420_bucket1_wetweight
-          - entity: sensor.gbox420_bucket1_nextwatering
-          - entity: sensor.gbox420_bucket1_evaporationtarget
-          - entity: sensor.gbox420_bucket1_overflowtarget
-          - entity: sensor.gbox420_bucket1_pumpstate
-          - entity: sensor.gbox420_bucket1_pumpspeed
-          - entity: sensor.gbox420_bucket1_pumptimeout
-          - entity: sensor.gbox420_bucket1_draintime
-          - entity: sensor.gbox420_bucket1_wasteweight
-          - entity: sensor.gbox420_bucket1_wastelimit
-          - entity: sensor.gbox420_bucket1_wasteremaining
-        title: Hempy bucket 1
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_bucket1_pumpstate
+            name: Hempy bucket1
+            secondary_info: last-updated
+            icon: mdi:bucket
+            state_header: Pump
+            styles:
+              white-space: nowrap
+            entities:
+              - entity: sensor.gbox420_hempy_modulestate
+                name: Module
+              - entity: sensor.gbox420_bucket1_state
+                name: Watering
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_bucket1_nextwatering
+            name: false
+            icon: 'no'
+            state_header: Next
+            styles:
+              white-space: nowrap
+            entities:
+              - entity: sensor.gbox420_bucket1_weight
+                name: Weight
+                styles:
+                  white-space: nowrap
+              - entity: sensor.gbox420_bucket1_dryweight
+                name: Dry
+                styles:
+                  white-space: nowrap
+              - entity: sensor.gbox420_bucket1_wetweight
+                name: Wet
+                styles:
+                  white-space: nowrap
+          - type: custom:fold-entity-row
+            open: true
+            head:
+              type: section
+              label: Settings
+            entities:
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_evaporationtarget
+                name: Evaporation target
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_draintarget
+                name: Drain target
+              - entity: number.gbox420_bucket1_draintime
+                name: Drain time
+              - entity: number.gbox420_bucket1_pumpspeed
+                name: Pump speed
+              - entity: number.gbox420_bucket1_pumptimeout
+                name: Pump timeout
         footer:
           type: graph
           entity: sensor.gbox420_bucket1_weight
@@ -227,28 +260,63 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: sensor.gbox420_hempy_modulestate
-          - entity: sensor.gbox420_bucket2_state
-          - entity: sensor.gbox420_bucket2_weight
-          - entity: sensor.gbox420_bucket2_dryweight
-          - entity: sensor.gbox420_bucket2_wetweight
-          - entity: sensor.gbox420_bucket2_nextwatering
-          - entity: sensor.gbox420_bucket2_evaporationtarget
-          - entity: sensor.gbox420_bucket2_overflowtarget
-          - entity: sensor.gbox420_bucket2_pumpstate
-          - entity: sensor.gbox420_bucket2_pumpspeed
-          - entity: sensor.gbox420_bucket2_pumptimeout
-          - entity: sensor.gbox420_bucket2_draintime
-          - entity: sensor.gbox420_bucket2_wasteweight
-          - entity: sensor.gbox420_bucket2_wastelimit
-          - entity: sensor.gbox420_bucket2_wasteremaining
-        title: Hempy bucket 2
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_bucket2_pumpstate
+            name: Hempy bucket2
+            secondary_info: last-updated
+            icon: mdi:bucket
+            state_header: Pump
+            styles:
+              white-space: nowrap
+            entities:
+              - entity: sensor.gbox420_hempy_modulestate
+                name: Module
+              - entity: sensor.gbox420_bucket2_state
+                name: Watering
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_bucket2_nextwatering
+            name: false
+            icon: 'no'
+            state_header: Next
+            styles:
+              white-space: nowrap
+            entities:
+              - entity: sensor.gbox420_bucket2_weight
+                name: Weight
+                styles:
+                  white-space: nowrap
+              - entity: sensor.gbox420_bucket2_dryweight
+                name: Dry
+                styles:
+                  white-space: nowrap
+              - entity: sensor.gbox420_bucket2_wetweight
+                name: Wet
+                styles:
+                  white-space: nowrap
+          - type: custom:fold-entity-row
+            open: true
+            head:
+              type: section
+              label: Settings
+            entities:
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_evaporationtarget
+                name: Evaporation target
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_draintarget
+                name: Drain target
+              - entity: number.gbox420_bucket2_draintime
+                name: Drain time
+              - entity: number.gbox420_bucket2_pumpspeed
+                name: Pump speed
+              - entity: number.gbox420_bucket2_pumptimeout
+                name: Pump timeout
         footer:
           type: graph
           entity: sensor.gbox420_bucket2_weight
           hours_to_show: 168
-        state_color: true
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - entity: sensor.gbox420_aero1_modulestate
