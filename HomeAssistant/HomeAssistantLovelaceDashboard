@@ -186,12 +186,25 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: sensor.gbox420_reservoir_modulestate
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_reservoir_tds
+            name: Reservoir
+            secondary_info: last-updated
+            icon: mdi:bucket
+            state_header: TDS
+            styles:
+              white-space: nowrap
+            entities:
+              - entity: sensor.gbox420_reservoir_modulestate
+                name: Module
+              - entity: sensor.gbox420_reservoir_weight
+                name: Weight
+              - entity: sensor.gbox420_reservoir_watertemp
+                name: Temp
+              - entity: sensor.gbox420_reservoir_ph
+                name: pH
           - entity: switch.gbox420_airpump
-          - entity: sensor.gbox420_reservoir_weight
-          - entity: sensor.gbox420_reservoir_watertemp
-          - entity: sensor.gbox420_reservoir_ph
-          - entity: sensor.gbox420_reservoir_tds
+            name: Air pump
         title: Reservoir
         footer:
           type: graph
@@ -258,7 +271,7 @@ views:
                 styles:
                   white-space: nowrap
           - type: custom:fold-entity-row
-            open: true
+            open: false
             head:
               type: section
               label: Settings
@@ -348,7 +361,7 @@ views:
                 styles:
                   white-space: nowrap
           - type: custom:fold-entity-row
-            open: true
+            open: false
             head:
               type: section
               label: Settings
