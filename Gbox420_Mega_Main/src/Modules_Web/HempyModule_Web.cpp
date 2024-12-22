@@ -58,6 +58,8 @@ void HempyModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket1Response1Received.WetWeight) : toText(HempyBucket1Response1Received.WetWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WI1\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket1Command2ToSend.WateringIncrement) : toText(HempyBucket1Command2ToSend.WateringIncrement));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SW1\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket1Command2ToSend.StartWeight) : toText(HempyBucket1Command2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"MW1\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket1Command2ToSend.MaxWeight) : toText(HempyBucket1Command2ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET1\":\""));
@@ -82,6 +84,8 @@ void HempyModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket2Response1Received.WetWeight) : toText(HempyBucket2Response1Received.WetWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WI2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket2Command2ToSend.WateringIncrement) : toText(HempyBucket2Command2ToSend.WateringIncrement));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SW2\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket2Command2ToSend.StartWeight) : toText(HempyBucket2Command2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"MW2\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucket2Command2ToSend.MaxWeight) : toText(HempyBucket2Command2ToSend.MaxWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET2\":\""));

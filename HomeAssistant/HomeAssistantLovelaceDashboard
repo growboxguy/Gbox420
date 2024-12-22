@@ -7,7 +7,7 @@ views:
     cards:
       - type: iframe
         url: >-
-          https://bigrowboxguymuki.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
+          https://growboxguy.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
     type: panel
   - title: Node-RED
     path: NodeRED
@@ -222,6 +222,29 @@ views:
             styles:
               white-space: nowrap
             entities:
+              - icon: mdi:watering-can
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B1On
+              - icon: mdi:watering-can-outline
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B1Off
+              - icon: mdi:water-off
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B1Dis
+                styles:
+                  margin-right: 30px
               - entity: sensor.gbox420_bucket1_weight
                 name: Weight
                 styles:
@@ -241,13 +264,21 @@ views:
               label: Settings
             entities:
               - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_startweight
+                name: Start weight
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_wateringincrement
+                name: Increment
+              - entity: number.gbox420_bucket1_maxweight
+                name: Max weight
+              - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_evaporationtarget
                 name: Evaporation target
+              - entity: number.gbox420_bucket1_draintime
+                name: Drain time
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_draintarget
                 name: Drain target
-              - entity: number.gbox420_bucket1_draintime
-                name: Drain time
               - entity: number.gbox420_bucket1_pumpspeed
                 name: Pump speed
               - entity: number.gbox420_bucket1_pumptimeout
@@ -281,6 +312,29 @@ views:
             styles:
               white-space: nowrap
             entities:
+              - icon: mdi:watering-can
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B2On
+              - icon: mdi:watering-can-outline
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B2Off
+              - icon: mdi:water-off
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: mqtt.publish
+                  service_data:
+                    topic: Gbox420CMD/Hemp1_B2Dis
+                styles:
+                  margin-right: 50px
               - entity: sensor.gbox420_bucket2_weight
                 name: Weight
                 styles:
@@ -300,13 +354,21 @@ views:
               label: Settings
             entities:
               - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_startweight
+                name: Start weight
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_wateringincrement
+                name: Increment
+              - entity: number.gbox420_bucket2_maxweight
+                name: Max weight
+              - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_evaporationtarget
                 name: Evaporation target
+              - entity: number.gbox420_bucket2_draintime
+                name: Drain time
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_draintarget
                 name: Drain target
-              - entity: number.gbox420_bucket2_draintime
-                name: Drain time
               - entity: number.gbox420_bucket2_pumpspeed
                 name: Pump speed
               - entity: number.gbox420_bucket2_pumptimeout
