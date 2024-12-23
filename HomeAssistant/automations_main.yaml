@@ -1,0 +1,171 @@
+#Include this file inside configuration.yaml as:
+#  automation: 
+#  - !include automations.yaml
+#  - !include automations_main.yaml
+
+#Light1
+- alias: "Send Light1 Brightness via MQTT"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_light1_brightness
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Lt1_B
+        payload: "{{ trigger.to_state.state | int }}"
+#Light2
+- alias: "Send Light2 Brightness via MQTT"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_light2_brightness
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Lt2_B
+        payload: "{{ trigger.to_state.state | int }}"
+#Hempy bucket1    
+- alias: "Send Hempy bucket1 StartWeight"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_startweight
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1SW
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket1 WateringIncrement"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_wateringincrement
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1WI
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket1 MaxWeight"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_maxweight
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1MW
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket1 EvaporationTarget"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_evaporationtarget
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1ET
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket1 DrainTarget"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_draintarget
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1DT
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket1 DrainTime"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_draintime
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1D
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Hempy bucket1 PumpSpeed"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_pumpspeed
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1PS
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Hempy bucket1 PumpTimeout"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket1_pumptimeout
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B1T
+        payload: "{{ trigger.to_state.state | int }}"
+#Hempy bucket2    
+- alias: "Send Hempy bucket2 StartWeight"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_startweight
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2SW
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket2 WateringIncrement"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_wateringincrement
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2WI
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket2 MaxWeight"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_maxweight
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2MW
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket2 EvaporationTarget"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_evaporationtarget
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2ET
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket2 DrainTarget"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_draintarget
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2DT
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Hempy bucket2 DrainTime"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_draintime
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2D
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Hempy bucket2 PumpSpeed"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_pumpspeed
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2PS
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Hempy bucket2 PumpTimeout"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_bucket2_pumptimeout
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Hemp1_B2T
+        payload: "{{ trigger.to_state.state | int }}"
