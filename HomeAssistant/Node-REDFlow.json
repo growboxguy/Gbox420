@@ -1927,7 +1927,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:scale"
+                "value": "mdi:water-minus"
             },
             {
                 "property": "entity_picture",
@@ -1939,7 +1939,7 @@
             },
             {
                 "property": "device_class",
-                "value": ""
+                "value": "weight"
             },
             {
                 "property": "unit_of_measurement",
@@ -1947,7 +1947,7 @@
             },
             {
                 "property": "min_value",
-                "value": ""
+                "value": 0
             },
             {
                 "property": "max_value",
@@ -1955,7 +1955,7 @@
             },
             {
                 "property": "step_value",
-                "value": ""
+                "value": 0.05
             },
             {
                 "property": "mode",
@@ -2400,9 +2400,9 @@
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 MinPressure",
+        "name": "Gbox420 Aero1 MinPressure",
         "version": "6",
-        "entityType": "sensor",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
@@ -2410,7 +2410,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:gauge"
+                "value": "mdi:gauge-empty"
             },
             {
                 "property": "entity_picture",
@@ -2429,8 +2429,20 @@
                 "value": "bar"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 8
+            },
+            {
+                "property": "step_value",
+                "value": 0.1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
         "resend": true,
@@ -2441,81 +2453,115 @@
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 MaxPressure",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 MaxPressure",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 MaxPressure"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
+                "property": "icon",
+                "value": "mdi:gauge-full"
             },
             {
-                "property": "icon",
-                "value": "mdi:gauge"
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "bar"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 8
+            },
+            {
+                "property": "step_value",
+                "value": 0.1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "9424c4af.d7d638",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 SprayDuration",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 SprayDuration",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 SprayDuration"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
+                "property": "icon",
+                "value": "mdi:timer-star-outline"
             },
             {
-                "property": "icon",
-                "value": "mdi:timer-sand"
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "sec"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 10
+            },
+            {
+                "property": "step_value",
+                "value": 0.1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "10b5dbe5.de83a4",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 DayInterval",
+        "name": "Gbox420 Aero1 DayInterval",
         "version": "6",
-        "entityType": "sensor",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
@@ -2523,7 +2569,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:timer-outline"
+                "value": "mdi:clock-alert"
             },
             {
                 "property": "entity_picture",
@@ -2542,8 +2588,20 @@
                 "value": "min"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 1
+            },
+            {
+                "property": "max_value",
+                "value": 15
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
         "resend": true,
@@ -2554,144 +2612,212 @@
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 NightInterval",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 NightInterval",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 NightInterval"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
+                "property": "icon",
+                "value": "mdi:clock-alert-outline"
             },
             {
-                "property": "icon",
-                "value": "mdi:timer-outline"
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "min"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 1
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 15
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "23cb8b95.a5f934",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 PumpSpeed",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 PumpSpeed",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 PumpSpeed"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:speedometer"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "%"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 100
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "slider"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "5ca8ab0d.966d54",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 PumpTimeout",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 PumpTimeout",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 PumpTimeout"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
+                "property": "icon",
+                "value": "mdi:timer-alert"
             },
             {
-                "property": "icon",
-                "value": "mdi:car-cruise-control"
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "sec"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 600
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "slider"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "b9876e79.e57e7",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
         "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 PumpPrimingTime",
-        "version": 6,
-        "entityType": "sensor",
+        "name": "Gbox420 Aero1 PumpPrimingTime",
+        "version": "6",
+        "entityType": "number",
         "haConfig": [
             {
                 "property": "name",
                 "value": "Gbox420 Aero1 PumpPrimingTime"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
+                "property": "icon",
+                "value": "mdi:timer-sync-outline"
             },
             {
-                "property": "icon",
-                "value": "mdi:car-cruise-control"
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
                 "value": "sec"
             },
             {
-                "property": "state_class",
-                "value": ""
+                "property": "min_value",
+                "value": 0
             },
             {
-                "property": "last_reset",
-                "value": ""
+                "property": "max_value",
+                "value": 60
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "7ac0f53d.882f2c",
@@ -3633,7 +3759,7 @@
             },
             {
                 "property": "unit_of_measurement",
-                "value": ""
+                "value": "kg"
             },
             {
                 "property": "min_value",
@@ -3699,59 +3825,6 @@
             {
                 "property": "step_value",
                 "value": 0.05
-            },
-            {
-                "property": "mode",
-                "value": "auto"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "be8f11f19611f2cb",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "Gbox420 Bucket2 DrainTarget",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 DrainTarget"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:water-minus"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "kg"
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 1
-            },
-            {
-                "property": "step_value",
-                "value": 0.1
             },
             {
                 "property": "mode",
@@ -3898,7 +3971,7 @@
             },
             {
                 "property": "unit_of_measurement",
-                "value": ""
+                "value": "kg"
             },
             {
                 "property": "min_value",
@@ -6624,7 +6697,7 @@
         "wires": [
             [
                 "939bcc60.7c886",
-                "f4e9c971.6c38c8"
+                "9dacb2ab5f815815"
             ]
         ]
     },
@@ -8432,6 +8505,11 @@
         "topic": "Gbox420CMD/Aero1_SprayDis",
         "qos": "0",
         "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 2710,
         "y": 4690,
@@ -9078,6 +9156,11 @@
         "topic": "Gbox420CMD/Aero1_PumpOff",
         "qos": "0",
         "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 2330,
         "y": 4540,
@@ -9091,6 +9174,11 @@
         "topic": "Gbox420CMD/Aero1_PumpOn",
         "qos": "0",
         "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 2010,
         "y": 4540,
@@ -13195,7 +13283,7 @@
         "y": 4140,
         "wires": [
             [
-                "b41198a75f28acc7"
+                "6c1576766562ba77"
             ]
         ]
     },
@@ -13219,7 +13307,7 @@
         "y": 4190,
         "wires": [
             [
-                "126a90e3e59652c2"
+                "fc6055b8f60918d0"
             ]
         ]
     },
@@ -13243,7 +13331,7 @@
         "y": 4240,
         "wires": [
             [
-                "232c8b205312e80d"
+                "0c8182a1943cc7bf"
             ]
         ]
     },
@@ -13267,7 +13355,7 @@
         "y": 4290,
         "wires": [
             [
-                "5e8c407b58c43a06"
+                "4bfbadbe7d4334df"
             ]
         ]
     },
@@ -13291,7 +13379,7 @@
         "y": 4340,
         "wires": [
             [
-                "475c6f359cbe6923"
+                "34867d2da08b3b20"
             ]
         ]
     },
@@ -13315,7 +13403,7 @@
         "y": 4390,
         "wires": [
             [
-                "a5194f5d3a53a42e"
+                "80ad6589684da930"
             ]
         ]
     },
@@ -13339,7 +13427,7 @@
         "y": 4440,
         "wires": [
             [
-                "b5c707f10b572dfd"
+                "b32f3a322d08dbb7"
             ]
         ]
     },
@@ -13363,7 +13451,7 @@
         "y": 4490,
         "wires": [
             [
-                "0d818d7d775dd923"
+                "9dacb2ab5f815815"
             ]
         ]
     },
@@ -14479,200 +14567,8 @@
         ],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1610,
-        "y": 3940,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b41198a75f28acc7",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 MinPressure",
-        "entityConfig": "b577aa34.eb39c8",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
         "x": 1600,
-        "y": 4140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "126a90e3e59652c2",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 MaxPressure",
-        "entityConfig": "76e6f2cd.17794c",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1610,
-        "y": 4190,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "232c8b205312e80d",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 SprayDuration",
-        "entityConfig": "9424c4af.d7d638",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1620,
-        "y": 4240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5e8c407b58c43a06",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 DayInterval",
-        "entityConfig": "10b5dbe5.de83a4",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1611,
-        "y": 4290,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "475c6f359cbe6923",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 NightInterval",
-        "entityConfig": "f91ac6fb.1e1d28",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1610,
-        "y": 4340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a5194f5d3a53a42e",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 PumpSpeed",
-        "entityConfig": "23cb8b95.a5f934",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1611,
-        "y": 4390,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b5c707f10b572dfd",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 PumpTimeout",
-        "entityConfig": "5ca8ab0d.966d54",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1620,
-        "y": 4440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0d818d7d775dd923",
-        "type": "ha-sensor",
-        "z": "84ee583e.53d868",
-        "name": "Gbox420 Aero1 PumpPrimingTime",
-        "entityConfig": "b9876e79.e57e7",
-        "version": 0,
-        "state": "payload",
-        "stateType": "msg",
-        "attributes": [
-            {
-                "property": "timestamp",
-                "value": "",
-                "valueType": "date"
-            }
-        ],
-        "inputOverride": "merge",
-        "outputProperties": [],
-        "x": 1631,
-        "y": 4490,
+        "y": 3940,
         "wires": [
             []
         ]
@@ -16223,7 +16119,7 @@
         "debugenabled": false,
         "inputs": 1,
         "outputs": 1,
-        "entityConfig": "be8f11f19611f2cb",
+        "entityConfig": "3a437979.c90796",
         "exposeAsEntityConfig": "",
         "mode": "set",
         "value": "payload",
@@ -16709,5 +16605,279 @@
         "x": 2250.4168090820312,
         "y": 2508.183349609375,
         "wires": []
+    },
+    {
+        "id": "6c1576766562ba77",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 MinPressure",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "b577aa34.eb39c8",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fc6055b8f60918d0",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 MaxPressure",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "76e6f2cd.17794c",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4190,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0c8182a1943cc7bf",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 SprayDuration",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "9424c4af.d7d638",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1620,
+        "y": 4240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bfbadbe7d4334df",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 DayInterval",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "10b5dbe5.de83a4",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4290,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "34867d2da08b3b20",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 NightInterval",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "f91ac6fb.1e1d28",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80ad6589684da930",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 PumpSpeed",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "23cb8b95.a5f934",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4390,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b32f3a322d08dbb7",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 PumpTimeout",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "5ca8ab0d.966d54",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1610,
+        "y": 4440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9dacb2ab5f815815",
+        "type": "ha-number",
+        "z": "84ee583e.53d868",
+        "name": "Gbox420 Aero1 PumpPrimingTime",
+        "version": 1,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 1,
+        "entityConfig": "b9876e79.e57e7",
+        "exposeAsEntityConfig": "",
+        "mode": "set",
+        "value": "payload",
+        "valueType": "msg",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "value"
+            },
+            {
+                "property": "previousValue",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "previousValue"
+            }
+        ],
+        "x": 1630,
+        "y": 4490,
+        "wires": [
+            [
+                "f4e9c971.6c38c8"
+            ]
+        ]
     }
 ]
