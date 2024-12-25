@@ -169,3 +169,76 @@
       data:
         topic: Gbox420CMD/Hemp1_B2T
         payload: "{{ trigger.to_state.state | int }}"
+#Aeroponics
+- alias: "Send Aeroponics MinPressure"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_minpressure
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_PMn
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Aeroponics MaxPressure"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_maxpressure
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_PMx
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Aeroponics DayInterval"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_dayinterval
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_DInt
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Aeroponics NightInterval"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_nightinterval
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_NInt
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Aeroponics SprayDuration"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_sprayduration
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_Dur
+        payload: "{{ trigger.to_state.state | float }}"
+- alias: "Send Aeroponics PumpSpeed"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_pumpspeed
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_PS
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Aeroponics PumpPrimingTime"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_pumpprimingtime
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_PPT
+        payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Aeroponics PumpTimeout"
+  trigger:
+    - platform: state
+      entity_id: number.gbox420_aero1_pumptimeout
+  action:
+    - service: mqtt.publish
+      data:
+        topic: Gbox420CMD/Aero1_PT
+        payload: "{{ trigger.to_state.state | int }}"

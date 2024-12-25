@@ -122,6 +122,11 @@ views:
                   service_data:
                     topic: Gbox420CMD/FanE_H
                     payload: HIGH
+        card_mod:
+          style: |
+            ha-card {
+              white-space: nowrap;
+            }
       - type: entities
         entities:
           - entity: switch.gbox420_light1_state
@@ -158,6 +163,11 @@ views:
           detail: 2
         state_color: true
         show_header_toggle: false
+        card_mod:
+          style: |
+            ha-card {
+              white-space: nowrap;
+            }
       - type: entities
         entities:
           - entity: switch.gbox420_light2_state
@@ -175,11 +185,6 @@ views:
           - entity: number.gbox420_light2_brightness
             name: Brightness
             type: custom:slider-entity-row
-            min: 0
-            max: 100
-            step: 1
-            icon: mdi:brightness-7
-            toggle: false
             grow: true
         show_header_toggle: false
         state_color: true
@@ -216,8 +221,6 @@ views:
             secondary_info: last-updated
             icon: mdi:bucket
             state_header: Pump
-            styles:
-              white-space: nowrap
             entities:
               - entity: sensor.gbox420_hempy_modulestate
                 name: Module
@@ -228,8 +231,6 @@ views:
             name: false
             icon: 'no'
             state_header: Next
-            styles:
-              white-space: nowrap
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -260,16 +261,10 @@ views:
                     topic: Gbox420CMD/Hemp1_B1Dis
               - entity: sensor.gbox420_bucket1_weight
                 name: Weight
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_bucket1_dryweight
                 name: Dry
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_bucket1_wetweight
                 name: Wet
-                styles:
-                  white-space: nowrap
           - type: custom:fold-entity-row
             open: false
             head:
@@ -302,6 +297,11 @@ views:
           hours_to_show: 168
         show_header_toggle: false
         state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              white-space: nowrap;
+            }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
@@ -310,8 +310,6 @@ views:
             secondary_info: last-updated
             icon: mdi:bucket
             state_header: Pump
-            styles:
-              white-space: nowrap
             entities:
               - entity: sensor.gbox420_hempy_modulestate
                 name: Module
@@ -322,8 +320,6 @@ views:
             name: false
             icon: 'no'
             state_header: Next
-            styles:
-              white-space: nowrap
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -354,16 +350,10 @@ views:
                     topic: Gbox420CMD/Hemp1_B2Dis
               - entity: sensor.gbox420_bucket2_weight
                 name: Weight
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_bucket2_dryweight
                 name: Dry
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_bucket2_wetweight
                 name: Wet
-                styles:
-                  white-space: nowrap
           - type: custom:fold-entity-row
             open: false
             head:
@@ -396,6 +386,11 @@ views:
           hours_to_show: 48
         show_header_toggle: false
         state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              white-space: nowrap;
+            }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
@@ -441,18 +436,12 @@ views:
                     topic: Gbox420CMD/Aero1_SprayDis
               - entity: sensor.gbox420_aero1_pressure
                 name: Pressure
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_aero1_lastspray
                 name: Last spray
-                styles:
-                  white-space: nowrap
               - entity: sensor.gbox420_aero1_weight
                 name: Weight
-                styles:
-                  white-space: nowrap
           - type: custom:fold-entity-row
-            open: true
+            open: false
             head:
               type: section
               label: Settings
