@@ -129,25 +129,6 @@ views:
             }
       - type: entities
         entities:
-          - entity: switch.gbox420_light1_state
-            name: Light 1 State
-            secondary_info: last-updated
-          - type: custom:multiple-entity-row
-            entity: switch.gbox420_light1_timer
-            name: Timer
-            toggle: true
-            entities:
-              - entity: sensor.gbox420_light1_ontime
-                name: 'On'
-              - entity: sensor.gbox420_light1_offtime
-                name: 'Off'
-          - entity: number.gbox420_light1_brightness
-            name: Brightness
-            type: custom:slider-entity-row
-            min: 0
-            max: 100
-            step: 1
-            icon: mdi:brightness-7
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_lightsensor1_reading
             name: Light sensor
@@ -159,8 +140,8 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_lightsensor1_reading
-          hours_to_show: 24
           detail: 2
+          hours_to_show: 48
         state_color: true
         show_header_toggle: false
         card_mod:
@@ -170,9 +151,82 @@ views:
             }
       - type: entities
         entities:
-          - entity: switch.gbox420_light2_state
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_light1_state
+            name: Light 1 State
+            secondary_info: last-updated
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_light1_currentbrightness
+                name: Current brightness
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_light1_timer
+            name: Timer schedule
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_light1_ontime
+                name: 'On'
+              - entity: sensor.gbox420_light1_offtime
+                name: 'Off'
+          - type: custom:fold-entity-row
+            open: false
+            head:
+              type: section
+              label: Settings
+            entities:
+              - entity: number.gbox420_light1_brightness
+                name: Brightness
+                type: custom:slider-entity-row
+                grow: true
+              - type: custom:stack-in-card
+                mode: horizontal
+                cards:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light1_ontimehour
+                    name: 'On'
+                    delay: 5000
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light1_ontimeminute
+                    name: ':'
+                    icon: false
+                    delay: 5000
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                      border: none;
+                    }
+              - type: custom:stack-in-card
+                mode: horizontal
+                border: false
+                cards:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light1_offtimehour
+                    name: 'Off'
+                    delay: 5000
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light1_offtimeminute
+                    name: ':'
+                    icon: false
+                    delay: 5000
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                      border: none;
+                    }
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_light2_state
             name: Light 2 State
             secondary_info: last-updated
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_light2_currentbrightness
+                name: Current brightness
           - type: custom:multiple-entity-row
             entity: switch.gbox420_light2_timer
             name: Timer schedule
@@ -182,10 +236,53 @@ views:
                 name: 'On'
               - entity: sensor.gbox420_light2_offtime
                 name: 'Off'
-          - entity: number.gbox420_light2_brightness
-            name: Brightness
-            type: custom:slider-entity-row
-            grow: true
+          - type: custom:fold-entity-row
+            open: false
+            head:
+              type: section
+              label: Settings
+            entities:
+              - entity: number.gbox420_light2_brightness
+                name: Brightness
+                type: custom:slider-entity-row
+                grow: true
+              - type: custom:stack-in-card
+                mode: horizontal
+                cards:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light2_ontimehour
+                    name: 'On'
+                    delay: 5000
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light2_ontimeminute
+                    name: ':'
+                    icon: false
+                    delay: 5000
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                      border: none;
+                    }
+              - type: custom:stack-in-card
+                mode: horizontal
+                border: false
+                cards:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light2_offtimehour
+                    name: 'Off'
+                    delay: 5000
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_light2_offtimeminute
+                    name: ':'
+                    icon: false
+                    delay: 5000
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                      border: none;
+                    }
         show_header_toggle: false
         state_color: true
       - type: entities
@@ -210,7 +307,7 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_reservoir_weight
-          hours_to_show: 168
+          hours_to_show: 48
         state_color: true
         show_header_toggle: false
       - type: entities
@@ -294,7 +391,7 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_bucket1_weight
-          hours_to_show: 168
+          hours_to_show: 48
         show_header_toggle: false
         state_color: true
         card_mod:
@@ -523,7 +620,7 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_aero1_weight
-          hours_to_show: 168
+          hours_to_show: 48
         show_header_toggle: false
         state_color: true
         card_mod:

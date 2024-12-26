@@ -1,7 +1,6 @@
-#Include this file inside configuration.yaml as:
-#  automation: 
-#  - !include automations.yaml
-#  - !include automations_main.yaml
+#Include this file inside configuration.yaml:
+#automation: !include automations.yaml
+#automation second: !include automations_main.yaml
 
 #Light1
 - alias: "Send Light1 Brightness via MQTT"
@@ -13,8 +12,40 @@
       data:
         topic: Gbox420CMD/Lt1_B
         payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send Light1 OnTime via MQTT"
+  mode: single  # Prevent concurrent runs
+  trigger:
+    - platform: state
+      entity_id:
+        - number.gbox420_light1_ontimehour
+        - number.gbox420_light1_ontimeminute
+  action:
+    - delay: "00:00:03"  # Short delay to ensure both entities are updated
+    - service: mqtt.publish
+      data:
+        topic: "Gbox420CMD/Lt1_OnT"
+        payload: >
+          {% set hour = states('number.gbox420_light1_ontimehour') | int %}
+          {% set minute = states('number.gbox420_light1_ontimeminute') | int %}
+          {{ "%02d%02d" | format(hour, minute) }}
+- alias: "Send Light1 OffTime via MQTT"
+  mode: single  # Prevent concurrent runs
+  trigger:
+    - platform: state
+      entity_id:
+        - number.gbox420_light1_offtimehour
+        - number.gbox420_light1_offtimeminute
+  action:
+    - delay: "00:00:03"  # Short delay to ensure both entities are updated
+    - service: mqtt.publish
+      data:
+        topic: "Gbox420CMD/Lt1_OfT"
+        payload: >
+          {% set hour = states('number.gbox420_light1_offtimehour') | int %}
+          {% set minute = states('number.gbox420_light1_offtimeminute') | int %}
+          {{ "%02d%02d" | format(hour, minute) }}
 #Light2
-- alias: "Send Light2 Brightness via MQTT"
+- alias: "Send Light2 OnTime via MQTT"
   trigger:
     - platform: state
       entity_id: number.gbox420_light2_brightness
@@ -23,6 +54,38 @@
       data:
         topic: Gbox420CMD/Lt2_B
         payload: "{{ trigger.to_state.state | int }}"
+- alias: "Send MQTT when Light2 OnTime Changes"
+  mode: single  # Prevent concurrent runs
+  trigger:
+    - platform: state
+      entity_id:
+        - number.gbox420_light2_ontimehour
+        - number.gbox420_light2_ontimeminute
+  action:
+    - delay: "00:00:03"  # Short delay to ensure both entities are updated
+    - service: mqtt.publish
+      data:
+        topic: "Gbox420CMD/Lt2_OnT"
+        payload: >
+          {% set hour = states('number.gbox420_light2_ontimehour') | int %}
+          {% set minute = states('number.gbox420_light2_ontimeminute') | int %}
+          {{ "%02d%02d" | format(hour, minute) }}
+- alias: "Send Light2 OffTime via MQTT"
+  mode: single  # Prevent concurrent runs
+  trigger:
+    - platform: state
+      entity_id:
+        - number.gbox420_light2_offtimehour
+        - number.gbox420_light2_offtimeminute
+  action:
+    - delay: "00:00:03"  # Short delay to ensure both entities are updated
+    - service: mqtt.publish
+      data:
+        topic: "Gbox420CMD/Lt2_OfT"
+        payload: >
+          {% set hour = states('number.gbox420_light2_offtimehour') | int %}
+          {% set minute = states('number.gbox420_light2_offtimeminute') | int %}
+          {{ "%02d%02d" | format(hour, minute) }}
 #Hempy bucket1    
 - alias: "Send Hempy bucket1 StartWeight"
   trigger:
