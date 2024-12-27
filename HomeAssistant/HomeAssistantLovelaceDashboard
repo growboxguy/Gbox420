@@ -24,6 +24,9 @@ views:
     icon: mdi:home-assistant
     badges: []
     cards:
+      - type: markdown
+        content: |
+          {{ states('text.gbox420_eventlog') | safe }}
       - type: entities
         title: null
         entities:
