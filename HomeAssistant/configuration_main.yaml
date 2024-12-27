@@ -1,0 +1,9 @@
+#Add  to  HA configuration.yaml:
+
+recorder
+  commit_interval 300  # Save to database every 5 minutes
+  purge_keep_days 31  # Keep 1 month of data
+  auto_purge true  # Purge old data automatically
+  include
+    entity_globs
+      - gbox420_  # Only include entities starting with gbox420_
