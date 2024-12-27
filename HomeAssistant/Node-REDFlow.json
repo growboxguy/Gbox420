@@ -350,9 +350,9 @@
         "id": "c7d379e3.8f4ae8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Light1 State",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 State",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -360,35 +360,32 @@
                 "value": "Gbox420 Light1 State"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:lightbulb"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "26721c58.a09604",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Light1 OnTime",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OnTime",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -396,116 +393,8 @@
                 "value": "Gbox420 Light1 OnTime"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:clock-time-three-outline"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
-    },
-    {
-        "id": "b3cf86a5.295808",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Light1 OffTime",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 OffTime"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-nine"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
-    },
-    {
-        "id": "1a67fd37.9bb093",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 LightSensor1 Reading",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 LightSensor1 Reading"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:brightness-7"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
-    },
-    {
-        "id": "fae007a4.eed318",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 Brightness",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 Brightness"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:brightness-6"
             },
             {
                 "property": "entity_picture",
@@ -521,23 +410,93 @@
             },
             {
                 "property": "unit_of_measurement",
-                "value": "%"
+                "value": ""
             },
             {
-                "property": "min_value",
-                "value": 0
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": true,
+        "debugEnabled": false
+    },
+    {
+        "id": "b3cf86a5.295808",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OffTime",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 OffTime"
             },
             {
-                "property": "max_value",
-                "value": 100
+                "property": "icon",
+                "value": "mdi:clock-time-nine"
             },
             {
-                "property": "step_value",
-                "value": 1
+                "property": "entity_picture",
+                "value": ""
             },
             {
-                "property": "mode",
-                "value": "auto"
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": true,
+        "debugEnabled": false
+    },
+    {
+        "id": "1a67fd37.9bb093",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 LightSensor1 Reading",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 LightSensor1 Reading"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:brightness-7"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "state_class",
+                "value": ""
             }
         ],
         "resend": true,
@@ -547,9 +506,9 @@
         "id": "e600e40d.28dcd8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Light2 State",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 State",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -557,35 +516,32 @@
                 "value": "Gbox420 Light2 State"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:lightbulb"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "17007e18.aa2762",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Light2 OnTime",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OnTime",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -593,12 +549,20 @@
                 "value": "Gbox420 Light2 OnTime"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:clock-time-three-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -607,21 +571,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "3ae8b798.95c158",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Light2 OffTime",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OffTime",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -629,12 +590,20 @@
                 "value": "Gbox420 Light2 OffTime"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:clock-time-nine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -643,21 +612,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "cecb11c6.78d26",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Power1 Power",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Power1 Power",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -665,12 +631,20 @@
                 "value": "Gbox420 Power1 Power"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:lightning-bolt"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -679,21 +653,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "72cdf90e.697cf8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Power1 Energy",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Power1 Energy",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -701,12 +672,20 @@
                 "value": "Gbox420 Power1 Energy"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:chart-areaspline-variant"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -715,21 +694,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "29d0d72c.82f318",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Power1 Voltage",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Power1 Voltage",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -737,12 +713,20 @@
                 "value": "Gbox420 Power1 Voltage"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:lightning-bolt-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -751,21 +735,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "e8acb567.7ac0c8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Power1 Current",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Power1 Current",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -773,12 +754,20 @@
                 "value": "Gbox420 Power1 Current"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:current-ac"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -787,21 +776,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "72d8b167.d68ea",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Internal Temp",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Internal Temp",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -809,12 +795,20 @@
                 "value": "Gbox420 Internal Temp"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:thermometer"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -823,20 +817,17 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "7d6f53ce.b8c67c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Internal Humidity",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Internal Humidity",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -876,9 +867,9 @@
         "id": "9ce8bd27.21c7d",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 External Temp",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 External Temp",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -886,12 +877,20 @@
                 "value": "Gbox420 External Temp"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:thermometer"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -900,21 +899,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "eb940814.3b9828",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 External Humidity",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 External Humidity",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -922,12 +918,20 @@
                 "value": "Gbox420 External Humidity"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:water-percent"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -936,21 +940,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "43c2ac6a.388304",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Internal Fan",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Internal Fan",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -958,12 +959,20 @@
                 "value": "Gbox420 Internal Fan"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:fan"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -972,21 +981,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "f45a40b8.2507b",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Exhaust Fan",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Exhaust Fan",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -994,12 +1000,20 @@
                 "value": "Gbox420 Exhaust Fan"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:fan"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1008,21 +1022,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "39cf251d.75554a",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Reservoir AirPump",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir AirPump",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -1030,35 +1041,32 @@
                 "value": "Gbox420 AirPump"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:chart-bubble"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "45dc9d11.4d6044",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Reservoir pH",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir pH",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1066,12 +1074,20 @@
                 "value": "Gbox420 Reservoir pH"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:cup-water"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1080,21 +1096,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "10701cd9.b6c573",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Reservoir WaterTemp",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir WaterTemp",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1102,12 +1115,20 @@
                 "value": "Gbox420 Reservoir WaterTemp"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:coolant-temperature"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1116,21 +1137,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "8d26abb.f4b0d58",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Reservoir Weight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir Weight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1138,12 +1156,20 @@
                 "value": "Gbox420 Reservoir Weight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1152,21 +1178,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "3ba52046.d30fc",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Reservoir TDS",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir TDS",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1174,12 +1197,20 @@
                 "value": "Gbox420 Reservoir TDS"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:bottle-tonic-plus"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1188,21 +1219,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "4e5bfefb.0aff6",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 Weight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 Weight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1210,12 +1238,20 @@
                 "value": "Gbox420 Bucket1 Weight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1224,21 +1260,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "c05f5590.554f08",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 WetWeight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 WetWeight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1246,12 +1279,20 @@
                 "value": "Gbox420 Bucket1 WetWeight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1260,21 +1301,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "c2a2348a.241288",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 DryWeight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 DryWeight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1282,12 +1320,20 @@
                 "value": "Gbox420 Bucket1 DryWeight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1296,21 +1342,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "34cfbe6d.30ecb2",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 WasteLimit",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 WasteLimit",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1318,12 +1361,20 @@
                 "value": "Gbox420 Bucket1 WasteLimit"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1332,20 +1383,17 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "1810f5dd.e1f70a",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "number config for Gbox420 Bucket1 OverflowTarget",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 OverflowTarget",
         "version": "6",
         "entityType": "number",
         "haConfig": [
@@ -1397,8 +1445,8 @@
         "id": "a7b8ef17.27aca",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 EvaporationTarget",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 EvaporationTarget",
         "version": "6",
         "entityType": "number",
         "haConfig": [
@@ -1450,7 +1498,7 @@
         "id": "4ca5e3e6.cea7bc",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 PumpSpeed",
         "version": "6",
         "entityType": "number",
@@ -1503,7 +1551,7 @@
         "id": "c4ec8a60.1ef9d8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 PumpTimeout",
         "version": "6",
         "entityType": "number",
@@ -1556,7 +1604,7 @@
         "id": "80960212.3dc97",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 DrainTime",
         "version": "6",
         "entityType": "number",
@@ -1567,7 +1615,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:car-cruise-control"
+                "value": "mdi:timer-pause"
             },
             {
                 "property": "entity_picture",
@@ -1609,9 +1657,9 @@
         "id": "6ef16255.a89e9c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 State",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 State",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1619,12 +1667,20 @@
                 "value": "Gbox420 Bucket1 State"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1633,21 +1689,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "335587bb.31cc18",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 PumpState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 PumpState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1655,12 +1708,20 @@
                 "value": "Gbox420 Bucket1 PumpState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1669,21 +1730,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "eeca6f66.ee7e3",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 NextWatering",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 NextWatering",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1691,12 +1749,20 @@
                 "value": "Gbox420 Bucket1 NextWatering"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1705,57 +1771,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
-    },
-    {
-        "id": "66587578.298e3c",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket1 WasteRemaining",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket1 WasteRemaining"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:scale"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "4641979e.615218",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 WetWeight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 WetWeight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1763,12 +1790,20 @@
                 "value": "Gbox420 Bucket2 WetWeight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1777,57 +1812,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
-    },
-    {
-        "id": "8bcb4758.199ff8",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 WasteWeight",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 WasteWeight"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:scale"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "kg"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "2516a9d2.132946",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 Weight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 Weight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1835,12 +1831,20 @@
                 "value": "Gbox420 Bucket2 Weight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1849,21 +1853,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "cdf67ec6.8997c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 DryWeight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 DryWeight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -1871,12 +1872,20 @@
                 "value": "Gbox420 Bucket2 DryWeight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -1885,55 +1894,16 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
-    },
-    {
-        "id": "4b34e148.5d4f4",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 WasteLimit",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 WasteLimit"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:scale"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "kg"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "3a437979.c90796",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 DrainTarget",
         "version": "6",
         "entityType": "number",
@@ -1986,7 +1956,7 @@
         "id": "12228ac7.983205",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 EvaporationTarget",
         "version": "6",
         "entityType": "number",
@@ -2036,46 +2006,10 @@
         "debugEnabled": false
     },
     {
-        "id": "d8a25be1.aed678",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 PumpSpeed",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 PumpSpeed"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:speedometer"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "%"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
-    },
-    {
         "id": "644f7d5e.3b4294",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 PumpTimeout",
         "version": "6",
         "entityType": "number",
@@ -2125,48 +2059,12 @@
         "debugEnabled": false
     },
     {
-        "id": "c54e16f3.818e28",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 DrainTime",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 DrainTime"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:car-cruise-control"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "sec"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
-    },
-    {
         "id": "354e9929.69f5c6",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 State",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 State",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2174,12 +2072,20 @@
                 "value": "Gbox420 Bucket2 State"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2188,21 +2094,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "5c779d59.925d74",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 PumpState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 PumpState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2210,12 +2113,20 @@
                 "value": "Gbox420 Bucket2 PumpState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2224,21 +2135,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "e3073514.990498",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 NextWatering",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket2 NextWatering",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2246,12 +2154,20 @@
                 "value": "Gbox420 Bucket2 NextWatering"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2260,57 +2176,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
-    },
-    {
-        "id": "3df64d05.cf7f42",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Bucket2 WasteRemaining",
-        "version": 6,
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket2 WasteRemaining"
-            },
-            {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:scale"
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
-            }
-        ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "fe5f7841.5e7ec8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 Pressure",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 Pressure",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2318,12 +2195,20 @@
                 "value": "Gbox420 Aero1 Pressure"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:gauge"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2332,21 +2217,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "af1c593.a630aa8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 Weight",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 Weight",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2354,12 +2236,20 @@
                 "value": "Gbox420 Aero1 Weight"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:scale"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2368,21 +2258,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "a5d660a3.4b77e",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 LastSpray",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 LastSpray",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2390,12 +2277,20 @@
                 "value": "Gbox420 Aero1 LastSpray"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:gauge"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2404,19 +2299,16 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "b577aa34.eb39c8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 MinPressure",
         "version": "6",
         "entityType": "number",
@@ -2469,7 +2361,7 @@
         "id": "76e6f2cd.17794c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 MaxPressure",
         "version": "6",
         "entityType": "number",
@@ -2522,7 +2414,7 @@
         "id": "9424c4af.d7d638",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 SprayDuration",
         "version": "6",
         "entityType": "number",
@@ -2575,7 +2467,7 @@
         "id": "10b5dbe5.de83a4",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 DayInterval",
         "version": "6",
         "entityType": "number",
@@ -2628,7 +2520,7 @@
         "id": "f91ac6fb.1e1d28",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 NightInterval",
         "version": "6",
         "entityType": "number",
@@ -2681,7 +2573,7 @@
         "id": "23cb8b95.a5f934",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 PumpSpeed",
         "version": "6",
         "entityType": "number",
@@ -2734,7 +2626,7 @@
         "id": "5ca8ab0d.966d54",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 PumpTimeout",
         "version": "6",
         "entityType": "number",
@@ -2787,7 +2679,7 @@
         "id": "b9876e79.e57e7",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Aero1 PumpPrimingTime",
         "version": "6",
         "entityType": "number",
@@ -2840,9 +2732,9 @@
         "id": "7ac0f53d.882f2c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 State",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 State",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2850,12 +2742,20 @@
                 "value": "Gbox420 Aero1 State"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2864,21 +2764,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "a617a0ca.fa9cc",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 PumpState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 PumpState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2886,12 +2783,20 @@
                 "value": "Gbox420 Aero1 PumpState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:state-machine"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -2900,21 +2805,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "ad5680e3.56202",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Aero1 SprayEnabled",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 SprayEnabled",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -2922,35 +2824,32 @@
                 "value": "Gbox420 Aero1 SprayEnabled"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:spray"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "2a31bc43.b70204",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Aero1 PumpEnabled",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 PumpEnabled",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -2958,35 +2857,32 @@
                 "value": "Gbox420 Aero1 PumpEnabled"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:water-pump"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "fc7136b0.9b7878",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Aero1 ModuleState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Aero1 ModuleState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -2994,12 +2890,20 @@
                 "value": "Gbox420 Aero1 ModuleState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:access-point"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -3008,21 +2912,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "31d1b95.cc12746",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Hempy ModuleState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Hempy ModuleState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -3030,12 +2931,20 @@
                 "value": "Gbox420 Hempy ModuleState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:access-point"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -3044,21 +2953,18 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "27054857.c5df58",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Reservoir ModuleState",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Reservoir ModuleState",
+        "version": "6",
         "entityType": "sensor",
         "haConfig": [
             {
@@ -3066,12 +2972,20 @@
                 "value": "Gbox420 Reservoir ModuleState"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:access-point"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             },
             {
                 "property": "unit_of_measurement",
@@ -3080,19 +2994,16 @@
             {
                 "property": "state_class",
                 "value": ""
-            },
-            {
-                "property": "last_reset",
-                "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "d7d8f621.c5d7f8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Light1 Brightness",
         "version": "6",
         "entityType": "number",
@@ -3145,9 +3056,9 @@
         "id": "ea0afb41.b0bab8",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Light2 Timer",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 Timer",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -3155,34 +3066,31 @@
                 "value": "Gbox420 Light2 Timer"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:av-timer"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "b994934f.f56a6",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 LastReport",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 LastReport",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -3222,9 +3130,9 @@
         "id": "7bdd6417.6ac57c",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "switch config for Gbox420 Light1 Timer",
-        "version": 6,
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 Timer",
+        "version": "6",
         "entityType": "switch",
         "haConfig": [
             {
@@ -3232,34 +3140,31 @@
                 "value": "Gbox420 Light1 Timer"
             },
             {
-                "property": "device_class",
-                "value": "sensor"
-            },
-            {
                 "property": "icon",
                 "value": "mdi:av-timer"
             },
             {
-                "property": "unit_of_measurement",
+                "property": "entity_picture",
                 "value": ""
             },
             {
-                "property": "state_class",
+                "property": "entity_category",
                 "value": ""
             },
             {
-                "property": "last_reset",
+                "property": "device_class",
                 "value": ""
             }
         ],
-        "resend": true
+        "resend": true,
+        "debugEnabled": false
     },
     {
         "id": "5a517b77194250a9",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Waste Weight",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Waste Weight",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -3308,8 +3213,8 @@
         "id": "aa8f6e6cedc40542",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 Light1 Brightness",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 Brightness",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -3349,8 +3254,8 @@
         "id": "5470f76dc5b11de6",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "number config for Gbox420 Light2 Brightness",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 Brightness",
         "version": "6",
         "entityType": "number",
         "haConfig": [
@@ -3402,8 +3307,8 @@
         "id": "81efb8ed7c13b0c2",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config for Gbox420 LightSensor1 DarkBright",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 LightSensor1 DarkBright",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -3443,7 +3348,7 @@
         "id": "19c8ebd2849787f2",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 OverflowTarget",
         "version": "6",
         "entityType": "number",
@@ -3496,8 +3401,8 @@
         "id": "2944bc3cd8964ed4",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "sensor config of Gbox420 Bucket1 OverflowTarget",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Bucket1 OverflowTarget",
         "version": "6",
         "entityType": "sensor",
         "haConfig": [
@@ -3537,7 +3442,7 @@
         "id": "bb21585c50026aa0",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 DrainTarget",
         "version": "6",
         "entityType": "number",
@@ -3590,7 +3495,7 @@
         "id": "8cec7ccb164c920b",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 EvaporationTarget",
         "version": "6",
         "entityType": "number",
@@ -3643,7 +3548,7 @@
         "id": "8450db86582fc42e",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 MaxWeight",
         "version": "6",
         "entityType": "number",
@@ -3696,7 +3601,7 @@
         "id": "793463c04f9e3fa7",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 MaxWeight",
         "version": "6",
         "entityType": "number",
@@ -3749,7 +3654,7 @@
         "id": "9c61b16d80379cf1",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 WateringIncrement",
         "version": "6",
         "entityType": "number",
@@ -3802,7 +3707,7 @@
         "id": "717aeabf8b693b9d",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 WateringIncrement",
         "version": "6",
         "entityType": "number",
@@ -3855,7 +3760,7 @@
         "id": "1b4d37d75cfb4230",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 DrainTime",
         "version": "6",
         "entityType": "number",
@@ -3908,7 +3813,7 @@
         "id": "e797b893dc3f0e96",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 PumpSpeed",
         "version": "6",
         "entityType": "number",
@@ -3919,7 +3824,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:pump"
+                "value": "mdi:speedometer"
             },
             {
                 "property": "entity_picture",
@@ -3961,7 +3866,7 @@
         "id": "243096d5c14e804e",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket2 StartWeight",
         "version": "6",
         "entityType": "number",
@@ -4011,63 +3916,10 @@
         "debugEnabled": false
     },
     {
-        "id": "5a1e61eba58fb5e3",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "",
-        "name": "Gbox420 Bucket1 MaxWeight",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Bucket1 MaxWeight"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:weight-kilogram"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "kg"
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 25
-            },
-            {
-                "property": "step_value",
-                "value": 0.1
-            },
-            {
-                "property": "mode",
-                "value": "auto"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
         "id": "9ee3cb0fa570e429",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Bucket1 StartWeight",
         "version": "6",
         "entityType": "number",
@@ -4444,31 +4296,6 @@
         "debugEnabled": false
     },
     {
-        "id": "d3775481b76ac706",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 OffTimee",
-        "version": "6",
-        "entityType": "time",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 OffTimee"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-two-outline"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
         "id": "5a2602163291d253",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
@@ -4525,7 +4352,7 @@
         "id": "90d21701cb544edf",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
-        "deviceConfig": "",
+        "deviceConfig": "c1df6f2929147010",
         "name": "Gbox420 Light2 OffTimeHour",
         "version": "6",
         "entityType": "number",
@@ -9257,9 +9084,14 @@
         "type": "mqtt out",
         "z": "3d93eb6ca3793727",
         "name": "Update sensor readings",
-        "topic": "Gbox420CMD/Main1_Refresh",
+        "topic": "Gbox420CMD/Refresh",
         "qos": "0",
         "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 1210,
         "y": 280,
@@ -9270,7 +9102,7 @@
         "type": "mqtt out",
         "z": "3d93eb6ca3793727",
         "name": "MQTT report",
-        "topic": "Gbox420CMD/MQTT",
+        "topic": "Gbox420CMD/MQTTRep",
         "qos": "0",
         "retain": "false",
         "respTopic": "",
@@ -13788,7 +13620,7 @@
         "attributes": [],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1400,
+        "x": 1420,
         "y": 70,
         "wires": [
             []
@@ -13862,7 +13694,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1580,
+        "x": 1600,
         "y": 70,
         "wires": []
     },
@@ -16288,7 +16120,7 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1390,
+        "x": 1410,
         "y": 20,
         "wires": [
             []

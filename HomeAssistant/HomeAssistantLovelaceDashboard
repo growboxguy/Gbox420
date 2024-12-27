@@ -24,9 +24,11 @@ views:
     icon: mdi:home-assistant
     badges: []
     cards:
-      - type: markdown
-        content: |
-          {{ states('text.gbox420_eventlog') | safe }}
+      - type: custom:stack-in-card
+        cards:
+          - type: markdown
+            content: |
+              {{ states('text.gbox420_eventlog') | safe }}
       - type: entities
         title: null
         entities:
@@ -291,22 +293,30 @@ views:
       - type: entities
         entities:
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_reservoir_tds
+            entity: sensor.gbox420_waste_weight
             name: Reservoir
             secondary_info: last-updated
             icon: mdi:bucket
-            state_header: TDS
+            state_header: Waste
             entities:
               - entity: sensor.gbox420_reservoir_modulestate
                 name: Module
               - entity: sensor.gbox420_reservoir_weight
                 name: Weight
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_airpump
+            name: false
+            icon: 'no'
+            toggle: true
+            entities:
               - entity: sensor.gbox420_reservoir_watertemp
                 name: Temp
+              - entity: sensor.gbox420_reservoir_tds
+                name: TDS
               - entity: sensor.gbox420_reservoir_ph
                 name: pH
-          - entity: switch.gbox420_airpump
-            name: Air pump
+              - entity: switch.gbox420_airpump
+                name: AirPump
         footer:
           type: graph
           entity: sensor.gbox420_reservoir_weight
