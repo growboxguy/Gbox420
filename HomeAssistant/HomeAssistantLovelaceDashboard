@@ -141,7 +141,7 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_lightsensor1_reading
-          detail: 2
+          detail: 1
           hours_to_show: 48
         state_color: true
         show_header_toggle: false
@@ -317,6 +317,7 @@ views:
           type: graph
           entity: sensor.gbox420_reservoir_weight
           hours_to_show: 48
+          detail: 1
         state_color: true
         show_header_toggle: false
         card_mod:
@@ -404,6 +405,7 @@ views:
           type: graph
           entity: sensor.gbox420_bucket1_weight
           hours_to_show: 48
+          detail: 1
         show_header_toggle: false
         state_color: true
         card_mod:
@@ -491,6 +493,7 @@ views:
           type: graph
           entity: sensor.gbox420_bucket2_weight
           hours_to_show: 48
+          detail: 1
         show_header_toggle: false
         state_color: true
         card_mod:
@@ -629,6 +632,7 @@ views:
           type: graph
           entity: sensor.gbox420_aero1_weight
           hours_to_show: 48
+          detail: 1
         show_header_toggle: false
         state_color: true
         card_mod:
