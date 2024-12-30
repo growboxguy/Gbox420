@@ -1,24 +1,5 @@
 title: Gbox420
 views:
-  - panel: true
-    title: Grafana
-    path: Grafana
-    icon: mdi:chart-histogram
-    cards:
-      - type: iframe
-        url: >-
-          https://growboxguy.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
-    type: panel
-  - title: Node-RED
-    path: NodeRED
-    panel: true
-    icon: mdi:sitemap
-    badges: []
-    cards:
-      - type: iframe
-        url: >-
-          https://growboxguy.duckdns.org:15100/endpoint/ui/#!/0?socketid=hYSsEJsXHOmIbdONAAAn
-        aspect_ratio: 100%
   - path: HomeAssistant
     title: Home Assistant
     icon: mdi:home-assistant
@@ -40,7 +21,7 @@ views:
                 name: Hempy
               - entity: sensor.gbox420_reservoir_modulestate
                 name: Reservoir
-              - entity: sensor.gbox420_hempy_modulestate
+              - entity: sensor.gbox420_aero1_modulestate
                 name: Aeroponics
                 styles:
                   margin-right: 10px
@@ -655,6 +636,25 @@ views:
             ha-card {
               white-space: nowrap;
             }
+  - title: Node-RED
+    path: NodeRED
+    panel: true
+    icon: mdi:sitemap
+    badges: []
+    cards:
+      - type: iframe
+        url: >-
+          https://growboxguy.duckdns.org:15100/endpoint/ui/#!/0?socketid=hYSsEJsXHOmIbdONAAAn
+        aspect_ratio: 100%
+  - panel: true
+    title: Grafana
+    path: Grafana
+    icon: mdi:chart-histogram
+    cards:
+      - type: iframe
+        url: >-
+          https://growboxguy.duckdns.org:13100/api/hassio_ingress/MzjXsP-Fk5mGMhAWsCLQbECztrdRfR9ngq-LA-2sl74/public-dashboards/653aae89cb8f4a9da29e44f7fa4396b4?orgId=1&refresh=5s&from=now-7d&to=now&theme=dark
+    type: panel
   - title: Google Sheets
     path: GoogleSheets
     panel: true
