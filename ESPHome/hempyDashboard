@@ -37,7 +37,7 @@ views:
                     name: Watering increment
                   - entity: number.hempy_bucket1_max_watering_weight
                     name: Max weight
-                  - entity: number.hempy_bucket1_max_watering_time
+                  - entity: number.hempy_bucket1_pump_timeout
                     name: Watering timeout
                   - entity: number.hempy_bucket1_drain_wait_time
                     name: Drain wait
@@ -80,7 +80,7 @@ views:
                     name: Watering increment
                   - entity: number.hempy_bucket2_max_watering_weight
                     name: Max weight
-                  - entity: number.hempy_bucket2_max_watering_time
+                  - entity: number.hempy_bucket2_pump_timeout
                     name: Watering timeout
                   - entity: number.hempy_bucket2_drain_wait_time
                     name: Drain wait
