@@ -50,10 +50,36 @@ api:
   encryption:
     key: !secret hempy_encryption_key
   services:
+    #Bucket 1
+    - service: bucket1_start_watering # Triggers watering immediately (automatically re-enables watering logic)
+      then:
+        - lambda: |-
+            id(bucket1).start_watering();
+    - service: bucket1_stop_watering # Stops watering
+      then:
+        - lambda: |-
+            id(bucket1).stop_watering();   
+    - service: bucket1_disable_watering # Triggers watering immediately (automatically re-enables watering logic)
+      then:
+        - lambda: |-
+            id(bucket1).disable_watering();
     - service: bucket1_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
       then:
         - lambda: |-
             id(bucket1).toggle_watering();
+    #Bucket 2
+    - service: bucket2_start_watering # Triggers watering immediately (automatically re-enables watering logic)
+      then:
+        - lambda: |-
+            id(bucket2).start_watering();
+    - service: bucket2_stop_watering # Stops watering
+      then:
+        - lambda: |-
+            id(bucket2).stop_watering();   
+    - service: bucket2_disable_watering # Triggers watering immediately (automatically re-enables watering logic)
+      then:
+        - lambda: |-
+            id(bucket2).disable_watering();
     - service: bucket2_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
       then:
         - lambda: |-
@@ -255,7 +281,7 @@ number:
           id(bucket1).update_next_watering_weight(id(bucket1_start_watering_weight).state);
   - platform: template
     id: bucket1_watering_increments # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
-    name: "Bucket1 Watering increment"
+    name: "Bucket1 Watering increments"
     unit_of_measurement: "kg"
     icon: "mdi:water-plus"
     min_value: 0
@@ -276,8 +302,8 @@ number:
     restore_value: true # Restore the value from flash storage
     initial_value: 16 # Set default value if no value is stored
   - platform: template
-    id: bucket1_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
-    name: "Bucket1 Pump timeout"
+    id: bucket1_max_watering_time # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+    name: "Bucket1 Max watering time"
     unit_of_measurement: "sec"
     icon: "mdi:timer-alert-outline"
     min_value: 0
@@ -339,7 +365,7 @@ number:
           id(bucket2).update_next_watering_weight(id(bucket2_start_watering_weight).state);
   - platform: template
     id: bucket2_watering_increments
-    name: "Bucket2 Watering increment" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    name: "Bucket2 Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     unit_of_measurement: "kg"
     icon: "mdi:water-plus"
     min_value: 0
@@ -360,8 +386,8 @@ number:
     restore_value: true # Restore the value from flash storage
     initial_value: 16 # Set default value if no value is stored
   - platform: template
-    id: bucket2_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
-    name: "Bucket2 Pump timeout"
+    id: bucket2_max_watering_time # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+    name: "Bucket2 Max watering time"
     unit_of_measurement: "sec"
     icon: "mdi:timer-alert-outline"
     min_value: 0
@@ -416,7 +442,7 @@ hempy:
       start_watering_weight: bucket1_start_watering_weight
       watering_increments: bucket1_watering_increments
       max_watering_weight: bucket1_max_watering_weight
-      pump_timeout: bucket1_pump_timeout
+      max_watering_time: bucket1_max_watering_time
       drain_wait_time: bucket1_drain_wait_time
       drain_target_weight: bucket1_drain_target_weight
       evaporation_target_weight: bucket1_evaporation_target_weight
@@ -430,7 +456,7 @@ hempy:
       start_watering_weight: bucket2_start_watering_weight
       watering_increments: bucket2_watering_increments
       max_watering_weight: bucket2_max_watering_weight
-      pump_timeout: bucket2_pump_timeout
+      max_watering_time: bucket2_max_watering_time
       drain_wait_time: bucket2_drain_wait_time
       drain_target_weight: bucket2_drain_target_weight
       evaporation_target_weight: bucket2_evaporation_target_weight

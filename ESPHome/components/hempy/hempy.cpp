@@ -167,6 +167,24 @@ namespace esphome
       }
     }
 
+    void HempyBucket::start_watering()
+    {
+      if (State != HempyStates::WATERING && State != HempyStates::DRAINING) // If watering is not in progress: start watering
+        update_state(HempyStates::WATERING, true);
+    }
+
+    void HempyBucket::stop_watering()
+    {
+      if (State != HempyStates::IDLE)
+        update_state(HempyStates::IDLE, true);
+    }
+
+    void HempyBucket::disable_watering()
+    {
+      if (State != HempyStates::DISABLED)
+        update_state(HempyStates::DISABLED, true);
+    }
+
     void HempyBucket::toggle_watering()
     {
       if (State != HempyStates::WATERING && State != HempyStates::DRAINING) // If watering is not in progress: start watering
