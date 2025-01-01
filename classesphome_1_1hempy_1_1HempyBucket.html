@@ -124,8 +124,8 @@ Collaboration diagram for esphome::hempy::HempyBucket:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9baceedbf4c9b982a7993da30ad9292c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a9baceedbf4c9b982a7993da30ad9292c">HempyBucket</a> (std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *max_watering_time, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *next_watering_weight, switch_::Switch *waterPump, uint32_t <a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">update_interval</a>)</td></tr>
-<tr class="separator:a9baceedbf4c9b982a7993da30ad9292c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ad3b3fa27d957386c015f3a10da9eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a50ad3b3fa27d957386c015f3a10da9eb">HempyBucket</a> (std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *next_watering_weight, switch_::Switch *waterPump, uint32_t <a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">update_interval</a>)</td></tr>
+<tr class="separator:a50ad3b3fa27d957386c015f3a10da9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b052363e0502e663ab7b26557086d2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f">setup</a> () override</td></tr>
 <tr class="separator:a8b052363e0502e663ab7b26557086d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bf09e9841fc283b03b12a6973957ac1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1">update</a> () override</td></tr>
@@ -140,8 +140,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaa29898881d7e9ca599ea35a51eb16ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7eba5fd5aa95f760ee839b74c7f5ddab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab">toggle_watering_logic</a> (int8_t RequestedState=-1)</td></tr>
 <tr class="separator:a7eba5fd5aa95f760ee839b74c7f5ddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2523a66c5db5a4243ee782b68b2090ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed">start_watering</a> ()</td></tr>
+<tr class="separator:a2523a66c5db5a4243ee782b68b2090ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63f40adada91e2dd2add949e7beebf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8">stop_watering</a> ()</td></tr>
+<tr class="separator:af63f40adada91e2dd2add949e7beebf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac70f05a27ea62a0b560698d796efaa81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81">toggle_watering</a> ()</td></tr>
 <tr class="separator:ac70f05a27ea62a0b560698d796efaa81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3663708933a001839bf2c9fec949fc78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78">disable_watering</a> ()</td></tr>
+<tr class="separator:a3663708933a001839bf2c9fec949fc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f3252bf9d5831c40e0f0d75a5880616"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a7f3252bf9d5831c40e0f0d75a5880616">update_next_watering_weight</a> (float weight)</td></tr>
 <tr class="separator:a7f3252bf9d5831c40e0f0d75a5880616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb056b542f808230132a228dab6a509f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#aeb056b542f808230132a228dab6a509f">update_evaportation_target</a> (float EvaporationTarget)</td></tr>
@@ -156,8 +162,8 @@ Data Fields</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="hempy_8h_source.html#l00024">24</a> of file <a class="el" href="hempy_8h_source.html">hempy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9baceedbf4c9b982a7993da30ad9292c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9baceedbf4c9b982a7993da30ad9292c">&#9670;&nbsp;</a></span>HempyBucket()</h2>
+<a id="a50ad3b3fa27d957386c015f3a10da9eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50ad3b3fa27d957386c015f3a10da9eb">&#9670;&nbsp;</a></span>HempyBucket()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +211,7 @@ Data Fields</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">number::Number *&#160;</td>
-          <td class="paramname"><em>max_watering_time</em>, </td>
+          <td class="paramname"><em>pump_timeout</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -261,6 +267,36 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3663708933a001839bf2c9fec949fc78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3663708933a001839bf2c9fec949fc78">&#9670;&nbsp;</a></span>disable_watering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void esphome::hempy::HempyBucket::disable_watering </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00182">182</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_a3663708933a001839bf2c9fec949fc78_cgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_a3663708933a001839bf2c9fec949fc78_cgraph" alt=""/></div>
+<map name="aclassesphome_1_1hempy_1_1HempyBucket_a3663708933a001839bf2c9fec949fc78_cgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_a3663708933a001839bf2c9fec949fc78_cgraph">
+<area shape="rect" title=" " alt="" coords="5,39,239,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,39,520,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="568,5,801,47"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="568,71,801,112"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aaa29898881d7e9ca599ea35a51eb16ea"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaa29898881d7e9ca599ea35a51eb16ea">&#9670;&nbsp;</a></span>is_watering_active()</h2>
 
@@ -316,6 +352,66 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a2523a66c5db5a4243ee782b68b2090ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2523a66c5db5a4243ee782b68b2090ed">&#9670;&nbsp;</a></span>start_watering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void esphome::hempy::HempyBucket::start_watering </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00170">170</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_a2523a66c5db5a4243ee782b68b2090ed_cgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_a2523a66c5db5a4243ee782b68b2090ed_cgraph" alt=""/></div>
+<map name="aclassesphome_1_1hempy_1_1HempyBucket_a2523a66c5db5a4243ee782b68b2090ed_cgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_a2523a66c5db5a4243ee782b68b2090ed_cgraph">
+<area shape="rect" title=" " alt="" coords="5,39,239,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,39,520,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="568,5,801,47"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="568,71,801,112"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af63f40adada91e2dd2add949e7beebf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63f40adada91e2dd2add949e7beebf8">&#9670;&nbsp;</a></span>stop_watering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void esphome::hempy::HempyBucket::stop_watering </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00176">176</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_af63f40adada91e2dd2add949e7beebf8_cgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_af63f40adada91e2dd2add949e7beebf8_cgraph" alt=""/></div>
+<map name="aclassesphome_1_1hempy_1_1HempyBucket_af63f40adada91e2dd2add949e7beebf8_cgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_af63f40adada91e2dd2add949e7beebf8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,39,239,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,39,520,80"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="568,5,801,47"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="568,71,801,112"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a122db46da9819a020b012ad62f5e9e32"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a122db46da9819a020b012ad62f5e9e32">&#9670;&nbsp;</a></span>to_text_state()</h2>
 
@@ -338,11 +434,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_a122db46da9819a020b012ad62f5e9e32_icgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_a122db46da9819a020b012ad62f5e9e32_icgraph" alt=""/></div>
 <map name="aclassesphome_1_1hempy_1_1HempyBucket_a122db46da9819a020b012ad62f5e9e32_icgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_a122db46da9819a020b012ad62f5e9e32_icgraph">
-<area shape="rect" title=" " alt="" coords="568,39,801,80"/>
+<area shape="rect" title=" " alt="" coords="568,107,801,148"/>
 <area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="5,5,239,47"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,68,520,109"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,71,239,112"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,136,520,177"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78" title=" " alt="" coords="5,71,239,112"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8" title=" " alt="" coords="5,201,239,243"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,267,239,308"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,332,239,373"/>
 </map>
 </div>
 
@@ -363,7 +462,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00170">170</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00188">188</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -463,7 +562,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00188">188</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00206">206</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 
 </div>
 </div>
@@ -489,12 +588,15 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_a877d3cc37bd84ad7a00e2cb6bbad1cc9_icgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_a877d3cc37bd84ad7a00e2cb6bbad1cc9_icgraph" alt=""/></div>
 <map name="aclassesphome_1_1hempy_1_1HempyBucket_a877d3cc37bd84ad7a00e2cb6bbad1cc9_icgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_a877d3cc37bd84ad7a00e2cb6bbad1cc9_icgraph">
-<area shape="rect" title=" " alt="" coords="568,39,801,80"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f" title=" " alt="" coords="287,5,520,47"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,71,520,112"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,5,239,47"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,71,239,112"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" title=" " alt="" coords="568,137,801,179"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f" title=" " alt="" coords="287,104,520,145"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,169,520,211"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78" title=" " alt="" coords="5,5,239,47"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed" title=" " alt="" coords="5,71,239,112"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,201,239,243"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,267,239,308"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="5,332,239,373"/>
 </map>
 </div>
 
@@ -516,7 +618,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00178">178</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00196">196</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 
 </div>
 </div>
@@ -567,10 +669,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classesphome_1_1hempy_1_1HempyBucket_a254d15b0a7e7d047504a972ea9ae23e9_icgraph.png" border="0" usemap="#aclassesphome_1_1hempy_1_1HempyBucket_a254d15b0a7e7d047504a972ea9ae23e9_icgraph" alt=""/></div>
 <map name="aclassesphome_1_1hempy_1_1HempyBucket_a254d15b0a7e7d047504a972ea9ae23e9_icgraph" id="aclassesphome_1_1hempy_1_1HempyBucket_a254d15b0a7e7d047504a972ea9ae23e9_icgraph">
-<area shape="rect" title=" " alt="" coords="287,71,520,112"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,5,239,47"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,71,239,112"/>
-<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" title=" " alt="" coords="287,169,520,211"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78" title=" " alt="" coords="5,5,239,47"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed" title=" " alt="" coords="5,71,239,112"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8" title=" " alt="" coords="5,136,239,177"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,201,239,243"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,267,239,308"/>
+<area shape="rect" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="5,332,239,373"/>
 </map>
 </div>
 
@@ -589,7 +694,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8h_source.html#l00038">38</a> of file <a class="el" href="hempy_8h_source.html">hempy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8h_source.html#l00041">41</a> of file <a class="el" href="hempy_8h_source.html">hempy.h</a>.</p>
 
 </div>
 </div>

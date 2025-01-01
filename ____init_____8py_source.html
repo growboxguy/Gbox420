@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('____init_____8py_source.html',''); ini
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    cv.Required(<span class="stringliteral">&#39;start_watering_weight&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    cv.Required(<span class="stringliteral">&#39;watering_increments&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    cv.Required(<span class="stringliteral">&#39;max_watering_weight&#39;</span>): cv.use_id(number.Number),</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    cv.Required(<span class="stringliteral">&#39;max_watering_time&#39;</span>): cv.use_id(number.Number),</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    cv.Required(<span class="stringliteral">&#39;pump_timeout&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    cv.Required(<span class="stringliteral">&#39;drain_wait_time&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    cv.Required(<span class="stringliteral">&#39;drain_target_weight&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    cv.Required(<span class="stringliteral">&#39;evaporation_target_weight&#39;</span>): cv.use_id(number.Number),</div>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('____init_____8py_source.html',''); ini
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        start_watering_weight = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;start_watering_weight&#39;</span>])</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        watering_increments = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;watering_increments&#39;</span>])</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        max_watering_weight = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;max_watering_weight&#39;</span>])</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        max_watering_time = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;max_watering_time&#39;</span>])</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        pump_timeout = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;pump_timeout&#39;</span>])</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        drain_wait_time = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;drain_wait_time&#39;</span>])</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        drain_target_weight = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;drain_target_weight&#39;</span>])</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        evaporation_target_weight = await cg.get_variable(bucket_conf[<span class="stringliteral">&#39;evaporation_target_weight&#39;</span>])</div>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('____init_____8py_source.html',''); ini
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        update_interval = bucket_conf[<span class="stringliteral">&#39;update_interval&#39;</span>]</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment"># Create the HempyBucket instance with all required parameters</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, max_watering_time, drain_wait_time, drain_target_weight, evaporation_target_weight, next_watering_weight, waterpump, cg.uint32(update_interval))</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, pump_timeout, drain_wait_time, drain_target_weight, evaporation_target_weight, next_watering_weight, waterpump, cg.uint32(update_interval))</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        await cg.register_component(var, bucket_conf)</div>
 <div class="ttc" id="anamespacehempy_html_a738a2116a0dde5b9405edfb8059e3b15"><div class="ttname"><a href="namespacehempy.html#a738a2116a0dde5b9405edfb8059e3b15">hempy.to_code</a></div><div class="ttdeci">def to_code(config)</div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00034">__init__.py:34</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

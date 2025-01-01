@@ -57,7 +57,7 @@ var NAVTREEINDEX =
 [
 "Gbox420__Mega__Main_2SerialLog_8cpp.html",
 "Gbox420__Nano__Reservoir_8ino.html",
-"structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe"
+"structSettings_1_1PressurePumpSettings.html#ab9d57d65cbcbd5dd7dd62ddd91db79d6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

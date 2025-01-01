@@ -1,8 +1,11 @@
 var classesphome_1_1hempy_1_1HempyBucket =
 [
-    [ "HempyBucket", "classesphome_1_1hempy_1_1HempyBucket.html#a9baceedbf4c9b982a7993da30ad9292c", null ],
+    [ "HempyBucket", "classesphome_1_1hempy_1_1HempyBucket.html#a50ad3b3fa27d957386c015f3a10da9eb", null ],
+    [ "disable_watering", "classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78", null ],
     [ "is_watering_active", "classesphome_1_1hempy_1_1HempyBucket.html#aaa29898881d7e9ca599ea35a51eb16ea", null ],
     [ "setup", "classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f", null ],
+    [ "start_watering", "classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed", null ],
+    [ "stop_watering", "classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8", null ],
     [ "to_text_state", "classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32", null ],
     [ "toggle_watering", "classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81", null ],
     [ "toggle_watering_logic", "classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab", null ],
