@@ -1586,11 +1586,11 @@
             },
             {
                 "property": "max_value",
-                "value": ""
+                "value": 300
             },
             {
                 "property": "step_value",
-                "value": 1
+                "value": 5
             },
             {
                 "property": "mode",
@@ -2048,7 +2048,7 @@
             },
             {
                 "property": "step_value",
-                "value": ""
+                "value": 5
             },
             {
                 "property": "mode",
@@ -2665,7 +2665,7 @@
             },
             {
                 "property": "step_value",
-                "value": 1
+                "value": 5
             },
             {
                 "property": "mode",
@@ -3587,7 +3587,7 @@
             },
             {
                 "property": "step_value",
-                "value": 0.5
+                "value": 0.1
             },
             {
                 "property": "mode",
@@ -3640,7 +3640,7 @@
             },
             {
                 "property": "step_value",
-                "value": 0.5
+                "value": 0.1
             },
             {
                 "property": "mode",
