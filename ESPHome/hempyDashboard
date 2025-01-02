@@ -16,7 +16,7 @@ views:
               - entity: sensor.hempy_bucket1_weight
                 name: Weight
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket1_dryweight
+            entity: sensor.hempy_bucket1_next_watering_weight
             name: false
             icon: 'no'
             show_state: false
@@ -45,11 +45,11 @@ views:
                   action: call-service
                   service: esphome.hempy_bucket1_disable_watering
                   service_data: {}
-              - entity: sensor.gbox420_bucket1_dryweight
+              - entity: sensor.hempy_bucket1_dry_weight
                 name: Dry
-              - entity: sensor.gbox420_bucket1_wetweight
+              - entity: sensor.hempy_bucket1_wet_weight
                 name: Wet
-              - entity: sensor.gbox420_bucket1_nextwatering
+              - entity: sensor.hempy_bucket1_next_weight
                 name: Next
           - type: custom:fold-entity-row
             open: false
@@ -109,7 +109,7 @@ views:
               - entity: sensor.hempy_bucket2_weight
                 name: Weight
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket2_dryweight
+            entity: sensor.hempy_bucket2_dry_weight
             name: false
             icon: 'no'
             show_state: false
@@ -138,11 +138,11 @@ views:
                   action: call-service
                   service: esphome.hempy_bucket2_disable_watering
                   service_data: {}
-              - entity: sensor.gbox420_bucket2_dryweight
+              - entity: sensor.hempy_bucket2_dry_weight
                 name: Dry
-              - entity: sensor.gbox420_bucket2_wetweight
+              - entity: sensor.hempy_bucket2_wet_weight
                 name: Wet
-              - entity: sensor.gbox420_bucket2_nextwatering
+              - entity: sensor.hempy_bucket2_next_weight
                 name: Next
           - type: custom:fold-entity-row
             open: false

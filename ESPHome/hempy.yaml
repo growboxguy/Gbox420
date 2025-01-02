@@ -51,45 +51,39 @@ api:
     key: !secret hempy_encryption_key
   services:
     #Bucket 1
-    - service: bucket1_start_watering # Triggers watering immediately (automatically re-enables watering logic)
+    - service: bucket1_start_watering #Triggers watering (re-enables watering logic)
       then:
         - lambda: |-
             id(bucket1).start_watering();
-    - service: bucket1_stop_watering # Stops watering
+    - service: bucket1_stop_watering #Stops watering (re-enables watering logic)
       then:
         - lambda: |-
-            id(bucket1).stop_watering();   
-    - service: bucket1_disable_watering # Triggers watering immediately (automatically re-enables watering logic)
+            id(bucket1).stop_watering();
+    - service: bucket1_disable_watering #Disable watering logic
       then:
         - lambda: |-
             id(bucket1).disable_watering();
-    - service: bucket1_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
+    - service: bucket1_toggle_watering #Triggers watering (re-enables watering logic), or stops watering if it is already in progress
       then:
         - lambda: |-
             id(bucket1).toggle_watering();
     #Bucket 2
-    - service: bucket2_start_watering # Triggers watering immediately (automatically re-enables watering logic)
+    - service: bucket2_start_watering #Triggers watering (re-enables watering logic)
       then:
         - lambda: |-
             id(bucket2).start_watering();
-    - service: bucket2_stop_watering # Stops watering
+    - service: bucket2_stop_watering #Stops watering (re-enables watering logic)
       then:
         - lambda: |-
-            id(bucket2).stop_watering();   
-    - service: bucket2_disable_watering # Triggers watering immediately (automatically re-enables watering logic)
+            id(bucket2).stop_watering();
+    - service: bucket2_disable_watering #Disable watering logic
       then:
         - lambda: |-
             id(bucket2).disable_watering();
-    - service: bucket2_toggle_watering # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
+    - service: bucket2_toggle_watering #Triggers watering (re-enables watering logic), or stops watering if it is already in progress
       then:
         - lambda: |-
             id(bucket2).toggle_watering();
-    #- service: set_start_watering_weight
-    #  variables:
-    #    value: float
-    #  then:
-    #    - lambda: |-
-    #        id(bucket1).set_start_watering_weight(value);
 
 # Enable Over The Air updates
 ota:
@@ -204,6 +198,18 @@ sensor:
     unit_of_measurement: "kg"
     accuracy_decimals: 1
     icon: "mdi:water-alert"
+  - platform: template
+    id: bucket1_dry_weight
+    name: "Bucket1 Dry weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:cup-outline"
+  - platform: template
+    id: bucket1_wet_weight
+    name: "Bucket1 Wet weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:cup"
   - platform: hx711
     id: bucket1_weight_sensor
     name: "Bucket1 Weight"
@@ -222,6 +228,19 @@ sensor:
           window_size: 5 # Take the median of the last 5 readings
           send_every: 1 # Send every 1 reading
           send_first_at: 1
+  - platform: template
+    id: bucket1_next_weight
+    name: "Bucket1 Next Weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:water-sync"
+    lambda: |-
+      if (id(bucket1_weight_sensor).state != NAN && id(bucket1_dry_weight).state != NAN) {
+        return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
+      } else {
+        return NAN; // Return NAN if either sensor is not available
+      }
+    update_interval: 5s
   #Bucket 2
   - platform: template
     id: bucket2_next_watering_weight
@@ -229,6 +248,18 @@ sensor:
     unit_of_measurement: "kg"
     accuracy_decimals: 1
     icon: "mdi:water-alert"
+  - platform: template
+    id: bucket2_dry_weight
+    name: "Bucket2 Dry weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:cup-outline"
+  - platform: template
+    id: bucket2_wet_weight
+    name: "Bucket2 Wet weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:cup"
   - platform: hx711
     id: bucket2_weight_sensor
     name: "Bucket2 Weight"
@@ -247,6 +278,19 @@ sensor:
           window_size: 5 # Take the median of the last 5 readings
           send_every: 1 # Send every 1 reading
           send_first_at: 1
+  - platform: template
+    id: bucket2_next_weight
+    name: "Bucket2 Next Weight"
+    unit_of_measurement: "kg"
+    accuracy_decimals: 1
+    icon: "mdi:water-sync"
+    lambda: |-
+      if (id(bucket2_weight_sensor).state != NAN && id(bucket2_dry_weight).state != NAN) {
+        return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
+      } else {
+        return NAN; // Return NAN if either sensor is not available
+      }
+    update_interval: 5s
   #Internal temperature sensor
   - platform: internal_temperature
     name: "Internal temp"
@@ -446,7 +490,8 @@ hempy:
       drain_wait_time: bucket1_drain_wait_time
       drain_target_weight: bucket1_drain_target_weight
       evaporation_target_weight: bucket1_evaporation_target_weight
-      next_watering_weight: bucket1_next_watering_weight
+      dry_weight: bucket1_dry_weight
+      wet_weight: bucket1_wet_weight
       waterpump: bucket1_waterpump
       update_interval: 20s #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.
     - id: bucket2
@@ -460,6 +505,7 @@ hempy:
       drain_wait_time: bucket2_drain_wait_time
       drain_target_weight: bucket2_drain_target_weight
       evaporation_target_weight: bucket2_evaporation_target_weight
-      next_watering_weight: bucket2_next_watering_weight
+      dry_weight: bucket2_dry_weight
+      wet_weight: bucket2_wet_weight
       waterpump: bucket2_waterpump
       update_interval: 20s #How often to call update. During WATERING and DRAINING state this is dynamically set to 1sec.

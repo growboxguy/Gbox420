@@ -339,10 +339,10 @@ views:
               - entity: sensor.gbox420_bucket1_pumpstate
                 name: Pump
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket1_nextwatering
+            entity: sensor.gbox420_bucket1_dryweight
             name: false
             icon: 'no'
-            state_header: Next
+            show_state: false
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -375,6 +375,8 @@ views:
                 name: Dry
               - entity: sensor.gbox420_bucket1_wetweight
                 name: Wet
+              - entity: sensor.gbox420_bucket1_nextwatering
+                name: Next
           - type: custom:fold-entity-row
             open: false
             head:
@@ -427,10 +429,10 @@ views:
               - entity: sensor.gbox420_bucket2_pumpstate
                 name: Pump
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket2_nextwatering
+            entity: sensor.gbox420_bucket2_dryweight
             name: false
             icon: 'no'
-            state_header: Next
+            show_state: false
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -463,6 +465,8 @@ views:
                 name: Dry
               - entity: sensor.gbox420_bucket2_wetweight
                 name: Wet
+              - entity: sensor.gbox420_bucket2_nextwatering
+                name: Next
           - type: custom:fold-entity-row
             open: false
             head:

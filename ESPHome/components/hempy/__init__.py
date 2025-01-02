@@ -20,7 +20,8 @@ HEMPY_BUCKET_SCHEMA = cv.Schema({
     cv.Required('drain_wait_time'): cv.use_id(number.Number),
     cv.Required('drain_target_weight'): cv.use_id(number.Number),
     cv.Required('evaporation_target_weight'): cv.use_id(number.Number),
-    cv.Required('next_watering_weight'): cv.use_id(sensor.Sensor),
+    cv.Required('dry_weight'): cv.use_id(sensor.Sensor),
+    cv.Required('wet_weight'): cv.use_id(sensor.Sensor),
     cv.Required('waterpump'): cv.use_id(switch.Switch),
     cv.Optional('update_interval', default="30s"): cv.update_interval,
 })
@@ -43,10 +44,11 @@ async def to_code(config):
         drain_wait_time = await cg.get_variable(bucket_conf['drain_wait_time'])
         drain_target_weight = await cg.get_variable(bucket_conf['drain_target_weight'])
         evaporation_target_weight = await cg.get_variable(bucket_conf['evaporation_target_weight'])
-        next_watering_weight = await cg.get_variable(bucket_conf['next_watering_weight'])
+        dry_weight = await cg.get_variable(bucket_conf['dry_weight'])
+        wet_weight = await cg.get_variable(bucket_conf['wet_weight'])
         waterpump = await cg.get_variable(bucket_conf['waterpump'])
         update_interval = bucket_conf['update_interval']
 
         # Create the HempyBucket instance with all required parameters
-        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, pump_timeout, drain_wait_time, drain_target_weight, evaporation_target_weight, next_watering_weight, waterpump, cg.uint32(update_interval))
+        var = cg.new_Pvariable(bucket_conf[CONF_ID], name, state_sensor, weight_sensor, start_watering_weight, watering_increments, max_watering_weight, pump_timeout, drain_wait_time, drain_target_weight, evaporation_target_weight, dry_weight, wet_weight, waterpump, cg.uint32(update_interval))
         await cg.register_component(var, bucket_conf)

@@ -6,8 +6,9 @@ namespace esphome
   {
     void HempyBucket::setup()
     {
-      update_interval(DefaultUpdateInterval);                        // Sync the HempyBucket and WeightSensor's update interval
-      NextWateringWeight->publish_state(StartWateringWeight->state); // Before the first watering the wet weight is unknown and DryWeight cannot be calculated
+      update_interval(DefaultUpdateInterval);               // Sync the HempyBucket and WeightSensor's update interval
+      DryWeight->publish_state(StartWateringWeight->state); // At startup use StartWateringWeight, DryWeight will be calculated after each watering
+      WetWeight->publish_state(0);                          // Wet weight at startup is unknown, WetWeight will be calculated after each watering
       ESP_LOGI("hempy", "%s ready", Name.c_str());
     }
 
@@ -15,8 +16,8 @@ namespace esphome
     {
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Next: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
-               Name.c_str(), to_text_state(State), WeightSensor->state, NextWateringWeight->state, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight, WetWeight);
+      ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
+               Name.c_str(), to_text_state(State), WeightSensor->state, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight->state, WetWeight->state);
     }
 
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
@@ -57,7 +58,7 @@ namespace esphome
           WaterPump->turn_off();
         if (State != NewState)                    // When the state just changed
           update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
-        if ((StartWateringWeight->state > 0 && WeightSensor->state <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight > 0 && WeightSensor->state <= DryWeight))
+        if ((StartWateringWeight->state > 0 && WeightSensor->state <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight->state > 0 && WeightSensor->state <= DryWeight->state))
         {
           update_state(HempyStates::WATERING, true);
           BlockOverWritingState = true;
@@ -79,7 +80,7 @@ namespace esphome
           }
           WaterPump->turn_on();
         }
-        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= StateWeight + WateringIncrement->state && WeightSensor->state >= WetWeight)) // Max weight reached OR (WateringIncrement's worth of water was added AND WetWeight is reached), wait for it to drain
+        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= StateWeight + WateringIncrement->state && WeightSensor->state >= WetWeight->state)) // Max weight reached OR (WateringIncrement's worth of water was added AND WetWeight is reached), wait for it to drain
         {
           WateringTimer += CurrentTime - PumpOnTimer;
           update_state(HempyStates::DRAINING, true);
@@ -106,12 +107,12 @@ namespace esphome
           // ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, StateWeight, DrainTargetWeight->state);
           if (DrainProgress >= DrainTargetWeight->state) // Check if enough water was drained into the waste reservoir
           {
-            WetWeight = WeightSensor->state;                        // Store the wet weight
-            DryWeight = WetWeight - EvaporationTargetWeight->state; // Calculate next watering weight
-            if (DryWeight >= StartWateringWeight->state)
-              NextWateringWeight->publish_state(DryWeight);
+            WetWeight->publish_state(WeightSensor->state);                                    // Store the wet weight
+            float CalculatedDryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight
+            if (CalculatedDryWeight >= StartWateringWeight->state)
+              DryWeight->publish_state(CalculatedDryWeight);
             else
-              NextWateringWeight->publish_state(StartWateringWeight->state);
+              DryWeight->publish_state(StartWateringWeight->state);
             DrainProgress = 0; // Reset the drain tracker
             update_state(HempyStates::IDLE, true);
           }
@@ -195,25 +196,24 @@ namespace esphome
 
     void HempyBucket::update_next_watering_weight(float NewWateringWeight) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
     {
-      if (NextWateringWeight->state != NewWateringWeight)
+      if (DryWeight->state != NewWateringWeight)
       {
-        DryWeight = 0; // Reset dry weight calculated from a previous watering -> The new Start Water Weight will trigger the next watering
-        NextWateringWeight->publish_state(NewWateringWeight);
+        DryWeight->publish_state(NewWateringWeight);
         ESP_LOGI("hempy", "%s Next watering weight: %.2f", Name.c_str(), NewWateringWeight);
       }
     }
 
     void HempyBucket::update_evaportation_target(float EvaporationTarget) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
     {
-      if (WetWeight > 0)
+      if (WetWeight->state > 0)
       {
-        DryWeight = WetWeight - EvaporationTarget; // Calculate new dry weight
-        if (StartWateringWeight->state < DryWeight)
-          NextWateringWeight->publish_state(DryWeight); // use the new calculated watering weight
+        float NewDryWeight = WetWeight->state - EvaporationTarget; // Calculate new dry weight
+        if (StartWateringWeight->state < NewDryWeight)
+          DryWeight->publish_state(NewDryWeight); // use the new calculated watering weight
         else
-          NextWateringWeight->publish_state(StartWateringWeight->state); // use the Start Weight from the UI
+          DryWeight->publish_state(StartWateringWeight->state); // use the Start Weight from the UI
 
-        ESP_LOGI("hempy", "%s Next watering weight: %.2f", Name.c_str(), NextWateringWeight->state);
+        ESP_LOGI("hempy", "%s Next watering weight: %.2f", Name.c_str(), DryWeight->state);
       }
     }
 
