@@ -303,7 +303,7 @@ number:
     initial_value: 16 # Set default value if no value is stored
   - platform: template
     id: bucket1_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
-    name: "Bucket1 Max watering time"
+    name: "Bucket1 pump timeout"
     unit_of_measurement: "sec"
     icon: "mdi:timer-alert-outline"
     min_value: 0
@@ -387,7 +387,7 @@ number:
     initial_value: 16 # Set default value if no value is stored
   - platform: template
     id: bucket2_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
-    name: "Bucket2 Max watering time"
+    name: "Bucket2 pump timeout"
     unit_of_measurement: "sec"
     icon: "mdi:timer-alert-outline"
     min_value: 0

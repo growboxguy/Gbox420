@@ -346,7 +346,7 @@ views:
             entities:
               - type: button
                 icon: mdi:watering-can
-                name: Water
+                name: Start
                 state_color: true
                 tap_action:
                   action: call-service
@@ -383,17 +383,17 @@ views:
             entities:
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_startweight
-                name: Start weight
+                name: Start watering
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_wateringincrement
-                name: Increment
+                name: Watering increment
               - entity: number.gbox420_bucket1_maxweight
                 name: Max weight
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_evaporationtarget
                 name: Evaporation target
               - entity: number.gbox420_bucket1_draintime
-                name: Drain time
+                name: Drain wait
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_draintarget
                 name: Drain target
@@ -434,7 +434,7 @@ views:
             entities:
               - type: button
                 icon: mdi:watering-can
-                name: Water
+                name: Start
                 state_color: true
                 tap_action:
                   action: call-service
