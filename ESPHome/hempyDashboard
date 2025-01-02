@@ -52,7 +52,7 @@ views:
               - entity: sensor.gbox420_bucket1_nextwatering
                 name: Next
           - type: custom:fold-entity-row
-            open: true
+            open: false
             head:
               type: section
               label: Settings
@@ -81,7 +81,7 @@ views:
                 name: Drain target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket1_max_watering_time
+              - entity: number.hempy_bucket1_pump_timeout
                 name: Pump timeout
         footer:
           type: graph
@@ -145,7 +145,7 @@ views:
               - entity: sensor.gbox420_bucket2_nextwatering
                 name: Next
           - type: custom:fold-entity-row
-            open: true
+            open: false
             head:
               type: section
               label: Settings
@@ -174,7 +174,7 @@ views:
                 name: Drain target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket2_max_watering_time
+              - entity: number.hempy_bucket2_pump_timeout
                 name: Pump timeout
         footer:
           type: graph
