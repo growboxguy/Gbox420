@@ -7,7 +7,7 @@ var searchData=
   ['hempy_2eh_75',['hempy.h',['../hempy_8h.html',1,'']]],
   ['hempy_5fbucket_5fschema_76',['HEMPY_BUCKET_SCHEMA',['../namespacehempy.html#a8fe5bbb62828ff6bb7253f14724e212e',1,'hempy']]],
   ['hempy_5fns_77',['hempy_ns',['../namespacehempy.html#af7785adad97535ea93093153b1db1739',1,'hempy']]],
-  ['hempybucket_78',['HempyBucket',['../classesphome_1_1hempy_1_1HempyBucket.html',1,'esphome::hempy::HempyBucket'],['../namespacehempy.html#a47b768c1bedc02388121087b6b4c1044',1,'hempy.HempyBucket()'],['../classesphome_1_1hempy_1_1HempyBucket.html#a50ad3b3fa27d957386c015f3a10da9eb',1,'esphome::hempy::HempyBucket::HempyBucket()']]],
+  ['hempybucket_78',['HempyBucket',['../classesphome_1_1hempy_1_1HempyBucket.html',1,'esphome::hempy::HempyBucket'],['../namespacehempy.html#a47b768c1bedc02388121087b6b4c1044',1,'hempy.HempyBucket()'],['../classesphome_1_1hempy_1_1HempyBucket.html#ae89e4449f62604e0b6966ffb1e6b3e87',1,'esphome::hempy::HempyBucket::HempyBucket()']]],
   ['hempybucketsettings_79',['HempyBucketSettings',['../structSettings_1_1HempyBucketSettings.html',1,'Settings']]],
   ['hempymod1_80',['HempyMod1',['../Gbox420__Nano__Hempy_8ino.html#a75505364abc2ebf9d33a1b91bfec00c5',1,'Gbox420_Nano_Hempy.ino']]],
   ['hempymodule1_81',['HempyModule1',['../structSettings.html#a8aad5f767d357df44327a0d67b48568c',1,'Settings']]],

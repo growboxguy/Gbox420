@@ -124,8 +124,8 @@ Collaboration diagram for esphome::hempy::HempyBucket:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a50ad3b3fa27d957386c015f3a10da9eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a50ad3b3fa27d957386c015f3a10da9eb">HempyBucket</a> (std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *next_watering_weight, switch_::Switch *waterPump, uint32_t <a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">update_interval</a>)</td></tr>
-<tr class="separator:a50ad3b3fa27d957386c015f3a10da9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae89e4449f62604e0b6966ffb1e6b3e87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#ae89e4449f62604e0b6966ffb1e6b3e87">HempyBucket</a> (std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *dry_weight, sensor::Sensor *wet_weight, switch_::Switch *waterPump, uint32_t <a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">update_interval</a>)</td></tr>
+<tr class="separator:ae89e4449f62604e0b6966ffb1e6b3e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b052363e0502e663ab7b26557086d2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f">setup</a> () override</td></tr>
 <tr class="separator:a8b052363e0502e663ab7b26557086d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bf09e9841fc283b03b12a6973957ac1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1">update</a> () override</td></tr>
@@ -162,8 +162,8 @@ Data Fields</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="hempy_8h_source.html#l00024">24</a> of file <a class="el" href="hempy_8h_source.html">hempy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a50ad3b3fa27d957386c015f3a10da9eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50ad3b3fa27d957386c015f3a10da9eb">&#9670;&nbsp;</a></span>HempyBucket()</h2>
+<a id="ae89e4449f62604e0b6966ffb1e6b3e87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89e4449f62604e0b6966ffb1e6b3e87">&#9670;&nbsp;</a></span>HempyBucket()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +235,13 @@ Data Fields</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">sensor::Sensor *&#160;</td>
-          <td class="paramname"><em>next_watering_weight</em>, </td>
+          <td class="paramname"><em>dry_weight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sensor::Sensor *&#160;</td>
+          <td class="paramname"><em>wet_weight</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -282,7 +288,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00182">182</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00183">183</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -312,7 +318,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00151">151</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00152">152</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +373,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00170">170</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00171">171</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -397,7 +403,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00176">176</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00177">177</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -428,7 +434,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00134">134</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00135">135</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -462,7 +468,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00188">188</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00189">189</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -493,7 +499,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00156">156</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00157">157</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -531,7 +537,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00014">14</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00015">15</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -582,7 +588,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00022">22</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00023">23</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -618,7 +624,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00196">196</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00197">197</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 
 </div>
 </div>
@@ -653,7 +659,7 @@ Here is the caller graph for this function:</div>
 <p>Start measuring the pump ON time for this cycle</p>
 <p>Continue watering</p>
 
-<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00032">32</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hempy_8cpp_source.html#l00033">33</a> of file <a class="el" href="hempy_8cpp_source.html">hempy.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

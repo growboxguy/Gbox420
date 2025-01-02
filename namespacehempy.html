@@ -135,7 +135,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00034">34</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00035">35</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>
 
 </div>
 </div>
@@ -155,7 +155,7 @@ Variables</h2></td></tr>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    cv.Optional(<span class="stringliteral">&#39;buckets&#39;</span>): cv.ensure_list(HEMPY_BUCKET_SCHEMA)</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;})</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00029">29</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00030">30</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>
 
 </div>
 </div>
@@ -182,10 +182,11 @@ Variables</h2></td></tr>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    cv.Required(<span class="stringliteral">&#39;drain_wait_time&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    cv.Required(<span class="stringliteral">&#39;drain_target_weight&#39;</span>): cv.use_id(number.Number),</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    cv.Required(<span class="stringliteral">&#39;evaporation_target_weight&#39;</span>): cv.use_id(number.Number),</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    cv.Required(<span class="stringliteral">&#39;next_watering_weight&#39;</span>): cv.use_id(sensor.Sensor),</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    cv.Required(<span class="stringliteral">&#39;waterpump&#39;</span>): cv.use_id(switch.Switch),</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    cv.Optional(<span class="stringliteral">&#39;update_interval&#39;</span>, default=<span class="stringliteral">&quot;30s&quot;</span>): cv.update_interval,</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;})</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    cv.Required(<span class="stringliteral">&#39;dry_weight&#39;</span>): cv.use_id(sensor.Sensor),</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    cv.Required(<span class="stringliteral">&#39;wet_weight&#39;</span>): cv.use_id(sensor.Sensor),</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    cv.Required(<span class="stringliteral">&#39;waterpump&#39;</span>): cv.use_id(switch.Switch),</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    cv.Optional(<span class="stringliteral">&#39;update_interval&#39;</span>, default=<span class="stringliteral">&quot;30s&quot;</span>): cv.update_interval,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;})</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00011">11</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>
 
