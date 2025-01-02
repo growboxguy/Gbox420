@@ -1562,7 +1562,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:car-cruise-control"
+                "value": "mdi:timer-alert-outline"
             },
             {
                 "property": "entity_picture",
@@ -1643,7 +1643,7 @@
             },
             {
                 "property": "step_value",
-                "value": 1
+                "value": 5
             },
             {
                 "property": "mode",
@@ -2020,7 +2020,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi:car-cruise-control"
+                "value": "mdi:timer-alert-outline"
             },
             {
                 "property": "entity_picture",
@@ -3799,7 +3799,7 @@
             },
             {
                 "property": "step_value",
-                "value": 1
+                "value": 5
             },
             {
                 "property": "mode",

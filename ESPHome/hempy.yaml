@@ -235,11 +235,7 @@ sensor:
     accuracy_decimals: 1
     icon: "mdi:water-sync"
     lambda: |-
-      if (id(bucket1_weight_sensor).state != NAN && id(bucket1_dry_weight).state != NAN) {
-        return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
-      } else {
-        return NAN; // Return NAN if either sensor is not available
-      }
+         return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
     update_interval: 5s
   #Bucket 2
   - platform: template
@@ -285,11 +281,7 @@ sensor:
     accuracy_decimals: 1
     icon: "mdi:water-sync"
     lambda: |-
-      if (id(bucket2_weight_sensor).state != NAN && id(bucket2_dry_weight).state != NAN) {
-        return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
-      } else {
-        return NAN; // Return NAN if either sensor is not available
-      }
+      return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
     update_interval: 5s
   #Internal temperature sensor
   - platform: internal_temperature

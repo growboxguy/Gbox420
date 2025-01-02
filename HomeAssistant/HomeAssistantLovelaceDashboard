@@ -175,10 +175,11 @@ views:
               type: section
               label: Settings
             entities:
-              - entity: number.gbox420_light1_brightness
+              - type: custom:numberbox-card
+                entity: number.gbox420_light1_brightness
                 name: Brightness
-                type: custom:slider-entity-row
-                grow: true
+                delay: 5000
+                speed: 250
               - type: custom:stack-in-card
                 mode: horizontal
                 cards:
@@ -186,11 +187,13 @@ views:
                     entity: number.gbox420_light1_ontimehour
                     name: 'On'
                     delay: 5000
+                    speed: 250
                   - type: custom:numberbox-card
                     entity: number.gbox420_light1_ontimeminute
                     name: ':'
                     icon: false
                     delay: 5000
+                    speed: 250
                 card_mod:
                   style: |
                     ha-card {
@@ -205,11 +208,13 @@ views:
                     entity: number.gbox420_light1_offtimehour
                     name: 'Off'
                     delay: 5000
+                    speed: 250
                   - type: custom:numberbox-card
                     entity: number.gbox420_light1_offtimeminute
                     name: ':'
                     icon: false
                     delay: 5000
+                    speed: 250
                 card_mod:
                   style: |
                     ha-card {
@@ -243,10 +248,11 @@ views:
               type: section
               label: Settings
             entities:
-              - entity: number.gbox420_light2_brightness
+              - type: custom:numberbox-card
+                entity: number.gbox420_light2_brightness
                 name: Brightness
-                type: custom:slider-entity-row
-                grow: true
+                delay: 5000
+                speed: 250
               - type: custom:stack-in-card
                 mode: horizontal
                 cards:
@@ -254,11 +260,13 @@ views:
                     entity: number.gbox420_light2_ontimehour
                     name: 'On'
                     delay: 5000
+                    speed: 250
                   - type: custom:numberbox-card
                     entity: number.gbox420_light2_ontimeminute
                     name: ':'
                     icon: false
                     delay: 5000
+                    speed: 250
                 card_mod:
                   style: |
                     ha-card {
@@ -273,11 +281,13 @@ views:
                     entity: number.gbox420_light2_offtimehour
                     name: 'Off'
                     delay: 5000
+                    speed: 250
                   - type: custom:numberbox-card
                     entity: number.gbox420_light2_offtimeminute
                     name: ':'
                     icon: false
                     delay: 5000
+                    speed: 250
                 card_mod:
                   style: |
                     ha-card {
@@ -386,23 +396,43 @@ views:
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_startweight
                 name: Start watering
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_wateringincrement
                 name: Watering increment
-              - entity: number.gbox420_bucket1_maxweight
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_maxweight
                 name: Max weight
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_evaporationtarget
                 name: Evaporation target
-              - entity: number.gbox420_bucket1_draintime
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_draintime
                 name: Drain wait
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket1_draintarget
                 name: Drain target
-              - entity: number.gbox420_bucket1_pumpspeed
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_pumpspeed
                 name: Pump speed
-              - entity: number.gbox420_bucket1_pumptimeout
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket1_pumptimeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
         footer:
           type: graph
           entity: sensor.gbox420_bucket1_weight
@@ -475,24 +505,44 @@ views:
             entities:
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_startweight
-                name: Start weight
+                name: Start watering
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_wateringincrement
-                name: Increment
-              - entity: number.gbox420_bucket2_maxweight
+                name: Watering increment
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_maxweight
                 name: Max weight
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_evaporationtarget
                 name: Evaporation target
-              - entity: number.gbox420_bucket2_draintime
-                name: Drain time
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_draintime
+                name: Drain wait
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_bucket2_draintarget
                 name: Drain target
-              - entity: number.gbox420_bucket2_pumpspeed
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_pumpspeed
                 name: Pump speed
-              - entity: number.gbox420_bucket2_pumptimeout
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_bucket2_pumptimeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
         footer:
           type: graph
           entity: sensor.gbox420_bucket2_weight
@@ -561,16 +611,28 @@ views:
               - type: custom:numberbox-card
                 entity: number.gbox420_aero1_minpressure
                 name: Minimum pressure
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_aero1_maxpressure
                 name: Maximum pressure
-              - entity: number.gbox420_aero1_dayinterval
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_aero1_dayinterval
                 name: Spray interval day
-              - entity: number.gbox420_aero1_nightinterval
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_aero1_nightinterval
                 name: Spray interval night
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_aero1_sprayduration
                 name: Spray duration
+                delay: 5000
+                speed: 250
               - type: custom:multiple-entity-row
                 entity: sensor.gbox420_aero1_pressure
                 name: Pump
@@ -625,13 +687,21 @@ views:
                       service: mqtt.publish
                       service_data:
                         topic: Gbox420CMD/Aero1_PumpDis
-              - entity: number.gbox420_aero1_pumpspeed
+              - type: custom:numberbox-card
+                entity: number.gbox420_aero1_pumpspeed
                 name: Speed
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.gbox420_aero1_pumpprimingtime
                 name: Priming time
-              - entity: number.gbox420_aero1_pumptimeout
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.gbox420_aero1_pumptimeout
                 name: Timeout
+                delay: 5000
+                speed: 250
         footer:
           type: graph
           entity: sensor.gbox420_aero1_weight

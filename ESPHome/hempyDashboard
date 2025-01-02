@@ -67,22 +67,31 @@ views:
                 name: Watering increment
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket1_max_watering_weight
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket1_max_watering_weight
                 name: Max weight
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.hempy_bucket1_evaporation_target_weight
                 name: Evaporation target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket1_drain_wait_time
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket1_drain_wait_time
                 name: Drain wait
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.hempy_bucket1_drain_target_weight
                 name: Drain target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket1_pump_timeout
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket1_pump_timeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
         footer:
           type: graph
           entity: sensor.hempy_bucket1_weight
@@ -109,7 +118,7 @@ views:
               - entity: sensor.hempy_bucket2_weight
                 name: Weight
           - type: custom:multiple-entity-row
-            entity: sensor.hempy_bucket2_dry_weight
+            entity: sensor.hempy_bucket2_next_weight
             name: false
             icon: 'no'
             show_state: false
@@ -160,22 +169,31 @@ views:
                 name: Watering increment
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket2_max_watering_weight
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket2_max_watering_weight
                 name: Max weight
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.hempy_bucket2_evaporation_target_weight
                 name: Evaporation target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket2_drain_wait_time
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket2_drain_wait_time
                 name: Drain wait
+                delay: 5000
+                speed: 250
               - type: custom:numberbox-card
                 entity: number.hempy_bucket2_drain_target_weight
                 name: Drain target
                 delay: 5000
                 speed: 250
-              - entity: number.hempy_bucket2_pump_timeout
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket2_pump_timeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
         footer:
           type: graph
           entity: sensor.hempy_bucket2_weight
