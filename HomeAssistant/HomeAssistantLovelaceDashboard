@@ -25,6 +25,9 @@ views:
                 name: Aeroponics
                 styles:
                   margin-right: 10px
+          - type: markdown
+            content: |
+              {{ state_attr('sensor.gbox420_alerts', 'alerts') | safe }}
       - type: entities
         title: null
         entities:
@@ -721,8 +724,7 @@ views:
     badges: []
     cards:
       - type: iframe
-        url: >-
-          https://growboxguy.duckdns.org:15100/endpoint/ui/#!/0?socketid=hYSsEJsXHOmIbdONAAAn
+        url: https://growboxguy.duckdns.org:15100/endpoint/ui
         aspect_ratio: 100%
   - panel: true
     title: Grafana

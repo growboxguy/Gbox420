@@ -4529,6 +4529,92 @@
         "debugEnabled": false
     },
     {
+        "id": "84df810171f5aa03",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Alerts",
+        "version": "6",
+        "entityType": "text",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Alerts"
+            },
+            {
+                "property": "icon",
+                "value": "alert-box"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "mode",
+                "value": "text"
+            },
+            {
+                "property": "min_length",
+                "value": ""
+            },
+            {
+                "property": "max_length",
+                "value": 1024
+            },
+            {
+                "property": "pattern",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "c0ec4a4a00517844",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Alerts",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Alerts"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:alert-box"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
         "id": "fc4c86f7b6315961",
         "type": "mqtt in",
         "z": "3d93eb6ca3793727",
@@ -4554,7 +4640,7 @@
         "type": "debug",
         "z": "3d93eb6ca3793727",
         "name": "Debug output",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -4572,6 +4658,7 @@
         "z": "3d93eb6ca3793727",
         "name": "Gbox420Log",
         "filename": "Gbox420Log",
+        "filenameType": "str",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
@@ -4874,6 +4961,8 @@
         "mode": "time",
         "delay": "0",
         "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
         "topicType": "msg",
         "x": 1870,
         "y": 903,
@@ -9001,7 +9090,7 @@
         "id": "86eeeeaadbf9d29c",
         "type": "comment",
         "z": "3d93eb6ca3793727",
-        "name": "MQTT Commands are defined in the commandEven function",
+        "name": "MQTT Commands are defined in the commandEvent function",
         "info": "Aeroponics module:\n[https://github.com/growboxguy/Gbox420/blob/master/Gbox420_Mega_Main/src/Modules_Web/AeroModule_Web.cpp]()\n\nHempy module:\n[https://github.com/growboxguy/Gbox420/blob/master/Gbox420_Mega_Main/src/Modules_Web/HempyModule_Web.cpp]()\n\nMain module:\n[https://github.com/growboxguy/Gbox420/blob/master/Gbox420_Mega_Main/src/Modules_Web/MainModule_Web.cpp]()\n\nReservoir module:\n[https://github.com/growboxguy/Gbox420/blob/master/Gbox420_Mega_Main/src/Modules_Web/ReservoirModule_Web.cpp]()",
         "x": 2210,
         "y": 490,
@@ -9127,6 +9216,7 @@
         "ok": "OK",
         "cancel": "",
         "raw": false,
+        "className": "",
         "topic": "",
         "name": "Refersh notification",
         "x": 1630,
@@ -9701,6 +9791,7 @@
         "tooltip": "Force a report to Google Sheets",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "",
         "payload": "",
         "payloadType": "str",
@@ -10364,7 +10455,7 @@
         "tls": true,
         "name": "growboxguy@gmail.com",
         "dname": "",
-        "x": 2060,
+        "x": 2070,
         "y": 120,
         "wires": []
     },
@@ -11053,7 +11144,8 @@
         "wires": [
             [
                 "5b21cb94e1e2de8e",
-                "dda2915d7387f172"
+                "dda2915d7387f172",
+                "5e1fce441cbcee8b"
             ]
         ]
     },
@@ -11080,7 +11172,8 @@
         "y": 240,
         "wires": [
             [
-                "9d5f44229971347f"
+                "9d5f44229971347f",
+                "a6f3850ed08e4a99"
             ]
         ]
     },
@@ -12298,7 +12391,8 @@
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 1860,
+        "className": "",
+        "x": 2050,
         "y": 200,
         "wires": [
             []
@@ -13922,7 +14016,7 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1610,
+        "x": 1600,
         "y": 1170,
         "wires": [
             []
@@ -16084,7 +16178,7 @@
         ],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1640,
+        "x": 1630,
         "y": 1120,
         "wires": [
             [
@@ -16124,6 +16218,99 @@
         "y": 20,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "79514fbca1ba68fa",
+        "type": "ui_button",
+        "z": "3d93eb6ca3793727",
+        "name": "Update button",
+        "group": "daea9443.544e58",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Update",
+        "tooltip": "Refresh sensor readings",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 920,
+        "y": 280,
+        "wires": [
+            [
+                "1fb77a1a49c01fc3",
+                "331324e995328584"
+            ]
+        ]
+    },
+    {
+        "id": "5e1fce441cbcee8b",
+        "type": "function",
+        "z": "3d93eb6ca3793727",
+        "name": "Format Alerts",
+        "func": "msg.Alerts = \"<h3>Alerts</h3><ul>\"\nfor (var alert of flow.get(\"ActiveAlerts\")) {\nmsg.Alerts = msg.Alerts + \"<li>\" + alert + \"</li>\";\n}\nmsg.Alerts = msg.Alerts +\"</ul>\"\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1690,
+        "y": 160,
+        "wires": [
+            [
+                "48cca671d98af3f1"
+            ]
+        ]
+    },
+    {
+        "id": "48cca671d98af3f1",
+        "type": "ha-sensor",
+        "z": "3d93eb6ca3793727",
+        "name": "Gbox420 Alerts",
+        "entityConfig": "c0ec4a4a00517844",
+        "version": 0,
+        "state": "true",
+        "stateType": "bool",
+        "attributes": [
+            {
+                "property": "Alerts",
+                "value": "Alerts",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1880,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6f3850ed08e4a99",
+        "type": "function",
+        "z": "3d93eb6ca3793727",
+        "name": "Format Alerts",
+        "func": "msg.Alerts = \"<h3>No alerts</h3>\"\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1690,
+        "y": 240,
+        "wires": [
+            [
+                "48cca671d98af3f1"
+            ]
         ]
     }
 ]
