@@ -1,6 +1,9 @@
 <map id="restoreDefaults" name="restoreDefaults">
-<area shape="rect" id="node1" title="Load sketch default settings into EEPROM." alt="" coords="5,31,128,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="176,31,279,57"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="330,5,430,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="327,56,433,83"/>
+<area shape="rect" id="Node000001" title="Load sketch default settings into EEPROM." alt="" coords="5,31,128,56"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_2Settings_8cpp.html#acf8f5a3ec22c99bc4ee6a767fc5c2ac3" title="Load settings from EEPROM." alt="" coords="176,31,279,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,41,162,41,162,46,128,46"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="330,5,430,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="279,32,316,26,317,31,279,37"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="327,55,433,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="279,49,314,54,313,60,279,54"/>
 </map>

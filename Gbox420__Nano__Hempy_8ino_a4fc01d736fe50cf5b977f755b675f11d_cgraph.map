@@ -1,13 +1,26 @@
 <map id="setup" name="setup">
-<area shape="rect" id="node1" title=" " alt="" coords="5,157,64,184"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Hempy_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="112,5,247,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="298,81,398,108"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="128,208,231,235"/>
-<area shape="rect" id="node7" href="$Gbox420__Nano__Hempy_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="141,157,217,184"/>
-<area shape="rect" id="node8" href="$Gbox420__Nano__Hempy_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="143,309,216,336"/>
-<area shape="rect" id="node10" href="$Gbox420__Nano__Hempy_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="143,259,216,285"/>
-<area shape="rect" id="node11" href="$Gbox420__Nano__Hempy_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="129,56,229,83"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Hempy_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="309,5,387,32"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="295,208,401,235"/>
-<area shape="rect" id="node9" href="$Gbox420__Nano__Hempy_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Wireless communication." alt="" coords="305,309,391,336"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,156,64,181"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Hempy_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="112,5,247,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="38,155,63,100,84,68,110,40,117,35,120,39,114,44,88,71,67,103,43,157"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="298,80,398,105"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="63,156,111,141,284,102,285,107,113,146,65,161"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Mega__Main_2Settings_8cpp.html#acf8f5a3ec22c99bc4ee6a767fc5c2ac3" title="Load settings from EEPROM." alt="" coords="128,205,231,231"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="65,176,129,198,128,203,63,181"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Nano__Hempy_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="141,156,217,181"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="64,166,127,166,127,171,64,171"/>
+<area shape="rect" id="Node000008" href="$Gbox420__Nano__Hempy_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="143,304,216,329"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="43,180,68,234,88,264,114,291,131,301,129,306,110,295,84,267,63,236,38,183"/>
+<area shape="rect" id="Node000010" href="$Gbox420__Nano__Hempy_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="143,255,216,280"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="48,180,76,210,113,241,131,250,129,255,111,246,72,214,44,183"/>
+<area shape="rect" id="Node000011" href="$Gbox420__Nano__Hempy_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="129,55,229,80"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="46,154,74,126,110,97,134,84,136,88,114,102,78,130,50,158"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="219,28,248,40,313,71,310,76,246,44,217,33"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Hempy_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="309,5,387,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="247,15,295,15,295,21,247,21"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="221,203,245,190,291,153,326,114,330,118,295,157,248,195,223,208"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="295,205,401,231"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="231,215,281,215,281,221,231,221"/>
+<area shape="rect" id="Node000009" href="$Gbox420__Nano__Hempy_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Wireless communication." alt="" coords="305,304,391,329"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="216,314,291,314,291,319,216,319"/>
+<area shape="poly" id="edge13_Node000011_Node000003" title=" " alt="" coords="230,72,284,80,284,86,229,77"/>
 </map>

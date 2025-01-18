@@ -1,16 +1,40 @@
 <map id="resetWebServer" name="resetWebServer">
-<area shape="rect" id="node1" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="5,370,131,396"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="209,142,329,168"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="790,91,890,118"/>
-<area shape="rect" id="node7" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="605,243,711,270"/>
-<area shape="rect" id="node8" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming load/refresh event. Used when embedding another module&#39;s web interface that alre..." alt="" coords="209,395,328,422"/>
-<area shape="rect" id="node9" href="$Gbox420__Mega__Main_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="215,446,322,472"/>
-<area shape="rect" id="node10" href="$Gbox420__Mega__Main_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="207,496,331,523"/>
-<area shape="rect" id="node11" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="182,218,355,244"/>
-<area shape="rect" id="node12" href="$Gbox420__Mega__Main_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="577,344,739,371"/>
-<area shape="rect" id="node13" href="$Gbox420__Mega__Main_8ino.html#a82f70b21f331170e00323241a08bc24b" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="188,547,349,574"/>
-<area shape="rect" id="node14" href="$Gbox420__Mega__Main_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="179,598,359,624"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="407,91,529,118"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="787,243,893,270"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="607,91,709,118"/>
+<area shape="rect" id="Node000001" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="5,401,131,427"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed." alt="" coords="209,148,329,173"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,400,113,327,142,280,177,235,207,205,237,180,240,184,210,209,181,238,147,283,117,330,78,402"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="790,123,890,148"/>
+<area shape="poly" id="edge14_Node000001_Node000003" title=" " alt="" coords="68,401,75,351,92,279,106,239,124,201,148,165,177,133,246,79,311,41,375,16,440,5,507,4,578,15,655,33,740,60,784,82,818,111,815,115,781,87,738,64,653,38,577,20,506,10,440,10,376,21,313,45,249,84,180,137,152,168,129,203,111,241,97,280,80,352,73,401"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Mega__Main_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted." alt="" coords="605,275,711,300"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="116,399,178,383,405,334,590,297,591,302,406,340,179,389,118,404"/>
+<area shape="rect" id="Node000008" href="$Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922" title="Ignores the incoming load/refresh event. Used when embedding another module&#39;s web interface that alre..." alt="" coords="209,427,328,452"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="131,419,196,427,195,433,131,424"/>
+<area shape="rect" id="Node000009" href="$Gbox420__Mega__Main_8ino.html#acbc7c8452769da2a269da64e2cca5e59" title="Called when a website is loading on the ESP&#45;link webserver." alt="" coords="215,476,322,501"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="95,424,180,462,203,470,201,475,178,467,92,429"/>
+<area shape="rect" id="Node000010" href="$Gbox420__Mega__Main_8ino.html#ac60586661fd52933e8fb2e91f29d3d84" title="Called when a website is refreshing on the ESP&#45;link webserver." alt="" coords="207,525,331,551"/>
+<area shape="poly" id="edge15_Node000001_Node000010" title=" " alt="" coords="82,425,122,468,150,491,180,512,195,518,192,523,177,516,146,496,118,472,78,429"/>
+<area shape="rect" id="Node000011" href="$Gbox420__Mega__Main_8ino.html#a0839bd0ec7466b932a204bcbdafd3926" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="182,249,355,275"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="81,399,123,361,177,317,233,280,236,284,180,321,127,365,85,403"/>
+<area shape="rect" id="Node000012" href="$Gbox420__Mega__Main_8ino.html#abeb392f72182363fde431481d5a3c460" title="Called when a field on the /Settings.html website is submitted." alt="" coords="577,376,739,401"/>
+<area shape="poly" id="edge20_Node000001_Node000012" title=" " alt="" coords="131,409,563,390,564,395,131,414"/>
+<area shape="rect" id="Node000013" href="$Gbox420__Mega__Main_8ino.html#a82f70b21f331170e00323241a08bc24b" title="Called when the /Settings.html website is loading on the ESP&#45;link webserver." alt="" coords="188,575,349,600"/>
+<area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="77,426,114,491,144,529,180,561,190,567,187,571,177,565,140,533,110,494,73,428"/>
+<area shape="rect" id="Node000014" href="$Gbox420__Mega__Main_8ino.html#a231529aa21150e7272fba24328ffb539" title="Called when the /Settings.html website is refreshing on the ESP&#45;link webserver." alt="" coords="179,624,359,649"/>
+<area shape="poly" id="edge24_Node000001_Node000014" title=" " alt="" coords="75,426,87,463,108,513,138,566,158,590,180,611,187,615,184,620,177,615,154,593,134,569,103,515,82,465,70,428"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="298,145,348,126,406,107,498,85,572,71,646,71,739,86,775,98,807,113,805,118,773,103,738,91,646,76,573,77,499,90,407,113,349,131,300,150"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="407,123,529,148"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="329,150,392,142,393,147,329,156"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="787,275,893,300"/>
+<area shape="poly" id="edge8_Node000002_Node000006" title=" " alt="" coords="330,170,739,259,777,269,776,274,738,265,328,175"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="513,120,577,107,658,101,739,107,786,117,785,122,738,113,658,106,578,113,514,125"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Mega__Main_2Settings_8cpp.html#acf8f5a3ec22c99bc4ee6a767fc5c2ac3" title="Load settings from EEPROM." alt="" coords="607,123,709,148"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="530,133,593,133,593,138,530,138"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="710,133,776,133,776,138,710,138"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="703,146,740,165,767,188,790,213,826,261,822,265,786,217,763,192,737,170,701,150"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="701,272,737,253,763,231,786,206,822,158,826,161,790,209,767,235,740,258,703,277"/>
+<area shape="poly" id="edge11_Node000007_Node000006" title=" " alt="" coords="712,285,773,285,773,290,712,290"/>
+<area shape="poly" id="edge17_Node000011_Node000003" title=" " alt="" coords="329,247,738,157,776,148,777,153,739,162,330,252"/>
+<area shape="poly" id="edge18_Node000011_Node000004" title=" " alt="" coords="288,247,434,153,436,158,291,251"/>
+<area shape="poly" id="edge19_Node000011_Node000006" title=" " alt="" coords="321,272,401,289,505,305,621,313,681,313,738,309,782,301,783,306,739,314,681,318,621,319,505,310,400,294,320,277"/>
+<area shape="poly" id="edge21_Node000012_Node000003" title=" " alt="" coords="673,374,704,345,737,310,789,229,825,159,830,162,793,232,741,313,708,349,677,378"/>
+<area shape="poly" id="edge22_Node000012_Node000006" title=" " alt="" coords="695,374,737,354,810,306,813,311,740,359,697,378"/>
 </map>

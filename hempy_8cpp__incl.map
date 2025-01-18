@@ -1,11 +1,19 @@
 <map id="ESPHome/components/hempy/hempy.cpp" name="ESPHome/components/hempy/hempy.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="525,5,695,47"/>
-<area shape="rect" id="node2" href="$hempy_8h.html" title=" " alt="" coords="571,95,649,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,177,100,203"/>
-<area shape="rect" id="node4" title=" " alt="" coords="125,177,327,203"/>
-<area shape="rect" id="node5" title=" " alt="" coords="352,177,503,203"/>
-<area shape="rect" id="node6" title=" " alt="" coords="527,169,693,211"/>
-<area shape="rect" id="node7" title=" " alt="" coords="717,169,884,211"/>
-<area shape="rect" id="node8" title=" " alt="" coords="908,169,1075,211"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1099,169,1265,211"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="525,5,695,45"/>
+<area shape="rect" id="Node000002" href="$hempy_8h.html" title=" " alt="" coords="571,93,649,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="613,46,613,79,607,79,607,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,174,100,199"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="571,112,374,129,244,146,113,169,99,173,98,168,112,164,243,141,373,124,571,107"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="125,174,327,199"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="572,118,296,174,295,169,571,113"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="352,174,503,199"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="584,121,468,171,466,166,582,116"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="527,167,693,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="613,119,613,153,607,153,607,119"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="717,167,884,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="639,116,743,159,741,164,637,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="908,167,1075,207"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="650,113,895,163,894,168,648,118"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1099,167,1265,207"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="649,109,834,129,1086,164,1085,169,833,134,649,114"/>
 </map>

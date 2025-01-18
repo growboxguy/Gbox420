@@ -1,6 +1,10 @@
 <map id="Gbox420_Nano_Aero_Tank/Settings.cpp" name="Gbox420_Nano_Aero_Tank/Settings.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,200,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="77,169,161,196"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__Tank_2Settings_8h.html" title=" " alt="" coords="59,95,146,121"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__Tank_2SerialLog_8h.html" title=" " alt="" coords="170,95,265,121"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,200,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="77,167,161,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,47,65,62,53,80,46,99,49,118,65,140,87,157,83,161,61,143,44,120,41,98,48,78,61,59,77,44"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Aero__Tank_2Settings_8h.html" title=" " alt="" coords="59,93,146,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,46,105,79,100,79,100,46"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Aero__Tank_2SerialLog_8h.html" title=" " alt="" coords="170,93,265,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="132,43,191,83,188,88,129,48"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="203,121,147,161,144,156,200,117"/>
 </map>

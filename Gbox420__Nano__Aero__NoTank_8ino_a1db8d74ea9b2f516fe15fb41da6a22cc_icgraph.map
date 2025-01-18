@@ -1,9 +1,17 @@
 <map id="Wireless" name="Wireless">
-<area shape="rect" id="node1" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="479,56,557,83"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="112,5,243,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="291,107,431,133"/>
-<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="293,56,428,83"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="9,5,60,32"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="139,107,215,133"/>
-<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,81,64,108"/>
+<area shape="rect" id="Node000001" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="479,56,557,81"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="112,5,243,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="465,55,430,46,332,31,243,24,243,18,333,26,431,41,467,49"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="291,105,431,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="466,88,403,108,401,103,465,82"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="293,56,428,81"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="465,71,428,71,428,66,465,66"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads." alt="" coords="9,5,60,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,21,60,21,60,15,98,15"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="139,107,215,132"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="277,121,215,122,215,116,277,116"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,81,64,107"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="126,113,64,102,65,96,126,108"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="300,55,224,33,225,28,301,50"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="280,78,64,94,64,89,279,72"/>
 </map>

@@ -1,7 +1,12 @@
 <map id="getWirelessData" name="getWirelessData">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,136,83"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="184,5,319,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="377,56,456,83"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="201,107,301,133"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="367,5,467,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,136,81"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="184,5,319,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,53,191,32,193,37,118,58"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="377,55,456,80"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="136,66,364,65,364,70,136,71"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="201,107,301,132"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="118,79,193,100,191,105,116,84"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="367,5,467,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="319,15,353,15,353,21,319,21"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="295,28,364,49,363,54,294,33"/>
 </map>

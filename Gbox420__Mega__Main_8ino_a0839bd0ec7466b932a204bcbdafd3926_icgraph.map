@@ -1,5 +1,7 @@
 <map id="settingsButtonCallback" name="settingsButtonCallback">
-<area shape="rect" id="node1" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="285,5,459,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,5,237,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,32"/>
+<area shape="rect" id="Node000001" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="285,5,459,31"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="112,5,237,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,21,237,21,237,15,272,15"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,21,64,21,64,15,99,15"/>
 </map>

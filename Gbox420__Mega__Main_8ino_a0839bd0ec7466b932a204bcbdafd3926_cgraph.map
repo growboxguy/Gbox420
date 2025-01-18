@@ -1,7 +1,14 @@
 <map id="settingsButtonCallback" name="settingsButtonCallback">
-<area shape="rect" id="node1" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="5,31,179,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="551,5,651,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="227,31,349,57"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="548,81,655,108"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="397,56,500,83"/>
+<area shape="rect" id="Node000001" title="Called when a button is pressed on the /Settings.html web page." alt="" coords="5,31,179,56"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="551,5,651,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,28,226,15,303,8,363,6,500,10,538,12,538,17,500,15,363,12,303,14,227,21,150,33"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="227,31,349,56"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,41,213,41,213,46,179,46"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="548,81,655,107"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="163,53,227,65,312,81,398,91,468,94,534,94,534,99,468,100,397,97,311,86,226,70,162,59"/>
+<area shape="poly" id="edge6_Node000003_Node000002" title=" " alt="" coords="349,36,538,20,538,26,350,41"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Mega__Main_2Settings_8cpp.html#acf8f5a3ec22c99bc4ee6a767fc5c2ac3" title="Load settings from EEPROM." alt="" coords="397,56,500,81"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="350,50,384,56,383,61,349,56"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="487,53,549,33,550,38,489,58"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="501,75,535,80,534,86,500,80"/>
 </map>

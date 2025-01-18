@@ -1,7 +1,13 @@
 <map id="getWirelessData" name="getWirelessData">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,136,83"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="184,56,319,83"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="377,93,456,120"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="201,5,301,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="367,31,467,57"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,136,80"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="184,55,319,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,65,170,65,170,70,136,70"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="377,80,456,105"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="118,77,184,90,279,95,363,93,363,99,279,100,184,95,117,83"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="201,5,301,31"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="117,52,189,32,191,37,119,57"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="367,31,467,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="318,55,353,50,353,55,319,60"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="319,75,364,82,364,87,318,80"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="302,23,354,31,353,36,301,28"/>
 </map>

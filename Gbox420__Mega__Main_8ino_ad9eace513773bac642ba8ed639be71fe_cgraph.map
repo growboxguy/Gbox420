@@ -1,4 +1,5 @@
 <map id="run1sec" name="run1sec">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,79,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Turns the integrated LED on the Arduino board ON/OFF." alt="" coords="127,5,213,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,79,31"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Turns the integrated LED on the Arduino board ON/OFF." alt="" coords="127,5,213,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,15,113,15,113,21,79,21"/>
 </map>

@@ -1,5 +1,7 @@
 <map id="Gbox420_Mega_Main/Settings.h" name="Gbox420_Mega_Main/Settings.h">
-<area shape="rect" id="node1" title=" " alt="" coords="131,5,362,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch." alt="" coords="5,80,229,121"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2Settings_8cpp.html" title=" " alt="" coords="253,87,499,114"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="131,5,362,31"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch." alt="" coords="5,79,229,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,40,150,81,147,76,214,36"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2Settings_8cpp.html" title=" " alt="" coords="253,86,499,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="279,36,358,83,355,88,276,40"/>
 </map>

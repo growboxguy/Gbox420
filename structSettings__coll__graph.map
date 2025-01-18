@@ -1,24 +1,45 @@
 <map id="Settings" name="Settings">
-<area shape="rect" id="node1" title=" " alt="" coords="397,591,472,617"/>
-<area shape="rect" id="node2" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings" alt="" coords="29,26,222,67"/>
-<area shape="rect" id="node3" href="$structSettings_1_1FanSettings.html" title="&lt; Fan default settings" alt="" coords="46,92,205,119"/>
-<area shape="rect" id="node4" href="$structSettings_1_1AirPumpSettings.html" title="&lt; AirPump default settings" alt="" coords="30,143,221,169"/>
-<area shape="rect" id="node5" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings" alt="" coords="10,196,241,223"/>
-<area shape="rect" id="node6" href="$structSettings_1_1MainModuleSettings.html" title="&lt; MainModule default settings" alt="" coords="17,247,233,273"/>
-<area shape="rect" id="node7" href="$structSettings_1_1LightsSettings.html" title="&lt; Lights default settings" alt="" coords="38,300,213,327"/>
-<area shape="rect" id="node8" href="$structSettings_1_1PHSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="26,351,225,377"/>
-<area shape="rect" id="node9" href="$structSettings_1_1DHTSensorSettings.html" title="&lt; DHTSensor default settings" alt="" coords="21,401,229,428"/>
-<area shape="rect" id="node10" href="$structSettings_1_1AeroponicsSettings.html" title="&lt; Aeroponics_Tank default settings" alt="" coords="21,453,229,480"/>
-<area shape="rect" id="node11" href="$structSettings_1_1TDSSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="22,504,229,531"/>
-<area shape="rect" id="node12" href="$structSettings_1_1WeightSensorSettings.html" title="&lt; WeightSensor default settings" alt="" coords="13,589,238,616"/>
-<area shape="rect" id="node13" href="$structSettings_1_1HempyBucketSettings.html" title="&lt; HempyBucket default settings" alt="" coords="12,640,239,667"/>
-<area shape="rect" id="node14" href="$structSettings_1_1ACMotorModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="5,691,245,717"/>
-<area shape="rect" id="node15" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="18,741,233,768"/>
-<area shape="rect" id="node16" href="$structSettings_1_1PressurePumpSettings.html" title="&lt; PressurePump default settings" alt="" coords="11,792,240,819"/>
-<area shape="rect" id="node17" href="$structSettings_1_1SoundSettings.html" title="&lt; Sound default settings" alt="" coords="37,843,213,869"/>
-<area shape="rect" id="node18" href="$structSettings_1_1WaterPumpSettings.html" title="&lt; WaterPump default settings" alt="" coords="20,893,231,920"/>
-<area shape="rect" id="node19" href="$structSettings_1_1WaterTempSensorSettings.html" title="&lt; WaterTempSensor default settings" alt="" coords="25,945,225,986"/>
-<area shape="rect" id="node20" href="$structSettings_1_1PressureSensorSettings.html" title="&lt; PressureSensor default settings" alt="" coords="34,1010,217,1051"/>
-<area shape="rect" id="node21" href="$structSettings_1_1LightSensorSettings.html" title="&lt; LightSensor default settings" alt="" coords="19,1076,231,1103"/>
-<area shape="rect" id="node22" href="$structSettings_1_1AeroponicsModuleSettings.html" title=" " alt="" coords="24,1127,227,1169"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="397,535,472,561"/>
+<area shape="rect" id="Node000002" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="18,15,233,41"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,14,282,18,316,26,348,41,375,62,388,90,399,142,417,285,435,535,430,535,412,285,394,142,383,92,371,66,345,45,314,31,281,23,246,19"/>
+<area shape="rect" id="Node000003" href="$structSettings_1_1ACMotorModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="5,65,245,90"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="260,79,329,90,356,98,375,110,396,144,411,194,422,255,429,322,436,450,436,535,431,535,430,450,424,322,417,256,406,196,391,146,371,114,354,103,328,95,259,84"/>
+<area shape="rect" id="Node000004" href="$structSettings_1_1AirPumpSettings.html" title="&lt; AirPump default settings" alt="" coords="30,114,221,139"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="235,125,318,135,352,144,375,157,394,187,409,231,419,285,427,344,434,458,436,535,431,535,429,458,421,344,414,286,403,232,389,189,371,161,350,149,317,140,234,131"/>
+<area shape="rect" id="Node000005" href="$structSettings_1_1DHTSensorSettings.html" title="&lt; DHTSensor default settings" alt="" coords="21,163,229,189"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="243,174,322,182,354,190,375,202,392,228,406,267,424,365,433,466,436,535,430,535,427,466,418,366,401,268,388,230,372,206,352,195,321,187,243,179"/>
+<area shape="rect" id="Node000006" href="$structSettings_1_1FanSettings.html" title="&lt; Fan default settings" alt="" coords="46,218,205,243"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="219,230,311,240,349,250,375,263,390,284,402,316,419,395,430,477,435,535,430,535,425,477,414,396,397,317,385,287,372,267,347,254,310,245,218,235"/>
+<area shape="rect" id="Node000007" href="$structSettings_1_1MainModuleSettings.html" title="&lt; MainModule default settings" alt="" coords="17,267,233,293"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="247,280,323,289,354,297,375,309,388,326,399,351,416,417,435,535,429,536,411,418,394,353,383,329,372,313,352,302,322,294,247,285"/>
+<area shape="rect" id="Node000008" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings" alt="" coords="10,323,241,349"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="255,340,326,351,355,359,375,370,393,388,406,409,424,456,433,501,436,535,431,535,428,502,419,458,402,412,388,391,372,374,353,364,325,356,254,345"/>
+<area shape="rect" id="Node000009" href="$structSettings_1_1LightSensorSettings.html" title="&lt; LightSensor default settings" alt="" coords="19,373,231,398"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="245,386,322,395,353,402,375,413,401,441,419,475,429,508,434,535,429,536,424,510,414,477,397,444,372,417,351,407,321,400,244,391"/>
+<area shape="rect" id="Node000010" href="$structSettings_1_1LightsSettings.html" title="&lt; Lights default settings" alt="" coords="38,430,213,455"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="227,440,301,452,339,463,375,479,407,505,428,534,424,537,403,509,372,484,337,468,300,457,226,446"/>
+<area shape="rect" id="Node000011" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings" alt="" coords="29,480,222,520"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="236,508,374,529,397,535,396,540,373,535,235,514"/>
+<area shape="rect" id="Node000012" href="$structSettings_1_1SoundSettings.html" title="&lt; Sound default settings" alt="" coords="37,545,213,570"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="227,552,397,546,397,552,227,557"/>
+<area shape="rect" id="Node000013" href="$structSettings_1_1HempyBucketSettings.html" title="&lt; HempyBucket default settings" alt="" coords="12,595,239,621"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="253,607,313,600,372,585,397,573,417,559,420,563,399,578,374,591,314,606,253,613"/>
+<area shape="rect" id="Node000014" href="$structSettings_1_1WaterPumpSettings.html" title="&lt; WaterPump default settings" alt="" coords="20,655,231,681"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="245,675,311,666,342,656,372,642,392,624,408,602,427,560,432,562,413,605,396,628,375,646,344,661,312,672,245,680"/>
+<area shape="rect" id="Node000015" href="$structSettings_1_1WeightSensorSettings.html" title="&lt; WeightSensor default settings" alt="" coords="13,733,238,758"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="183,759,228,766,277,768,327,760,350,751,372,738,391,720,405,697,423,647,430,598,431,561,437,561,436,598,428,648,410,700,395,723,375,742,353,756,329,765,278,773,227,771,182,764"/>
+<area shape="rect" id="Node000016" href="$structSettings_1_1AeroponicsModuleSettings.html" title=" " alt="" coords="24,783,227,823"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="231,821,268,822,305,818,340,808,372,789,384,773,395,748,412,681,429,561,435,561,417,682,400,750,388,775,375,793,342,812,306,823,268,828,230,827"/>
+<area shape="rect" id="Node000017" href="$structSettings_1_1AeroponicsSettings.html" title="&lt; Aeroponics_Tank default settings" alt="" coords="21,847,229,873"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="242,871,320,872,351,867,372,858,387,837,400,804,417,716,427,625,430,561,436,561,432,625,423,717,405,805,392,839,375,862,353,872,321,877,242,876"/>
+<area shape="rect" id="Node000018" href="$structSettings_1_1PressureSensorSettings.html" title="&lt; PressureSensor default settings" alt="" coords="34,897,217,937"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="231,933,268,932,306,927,341,915,371,894,388,869,401,831,419,732,428,631,430,561,436,561,433,631,424,733,406,833,393,872,375,898,343,919,307,932,269,938,231,938"/>
+<area shape="rect" id="Node000019" href="$structSettings_1_1PressurePumpSettings.html" title="&lt; PressurePump default settings" alt="" coords="11,962,240,987"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="191,987,236,992,284,990,331,979,353,968,371,954,391,925,405,879,416,823,423,761,430,641,431,561,436,561,435,641,428,762,421,824,410,880,395,927,375,958,355,973,333,984,285,996,236,997,190,992"/>
+<area shape="rect" id="Node000020" href="$structSettings_1_1PHSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="26,1011,225,1037"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="239,1031,319,1029,351,1023,371,1013,383,988,394,940,412,803,430,561,435,561,417,803,399,941,388,990,375,1017,353,1028,320,1034,239,1036"/>
+<area shape="rect" id="Node000021" href="$structSettings_1_1TDSSensorSettings.html" title="&lt; PHSensor default settings" alt="" coords="22,1061,229,1086"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="190,1086,235,1091,284,1090,331,1078,353,1067,371,1053,384,1026,395,973,413,823,430,561,435,561,418,823,400,974,389,1027,375,1056,355,1072,333,1083,285,1095,235,1096,189,1091"/>
+<area shape="rect" id="Node000022" href="$structSettings_1_1WaterTempSensorSettings.html" title="&lt; WaterTempSensor default settings" alt="" coords="25,1111,225,1151"/>
+<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="234,1149,271,1149,308,1144,342,1132,371,1112,385,1081,397,1021,415,852,426,676,430,561,436,561,431,676,420,853,402,1022,390,1082,375,1115,344,1137,309,1149,272,1155,234,1154"/>
 </map>

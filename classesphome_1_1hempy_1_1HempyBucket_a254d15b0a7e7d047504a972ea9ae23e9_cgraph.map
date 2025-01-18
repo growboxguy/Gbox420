@@ -1,5 +1,8 @@
 <map id="esphome::hempy::HempyBucket::update_state" name="esphome::hempy::HempyBucket::update_state">
-<area shape="rect" id="node1" title=" " alt="" coords="5,39,239,80"/>
-<area shape="rect" id="node2" href="$classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="287,5,520,47"/>
-<area shape="rect" id="node3" href="$classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="287,71,520,112"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,239,77"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="70,38,67,28,75,18,94,13,122,11,154,13,172,21,170,26,153,19,122,16,95,18,78,23,72,29,75,36"/>
+<area shape="rect" id="Node000002" href="$classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="287,5,520,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,41,273,38,273,43,239,47"/>
+<area shape="rect" id="Node000003" href="$classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="287,69,520,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,68,273,72,273,77,238,73"/>
 </map>

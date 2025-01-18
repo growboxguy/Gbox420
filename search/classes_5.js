@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mainmodulesettings_256',['MainModuleSettings',['../structSettings_1_1MainModuleSettings.html',1,'Settings']]]
+  ['mainmodulesettings_0',['MainModuleSettings',['../structSettings_1_1MainModuleSettings.html',1,'Settings']]]
 ];

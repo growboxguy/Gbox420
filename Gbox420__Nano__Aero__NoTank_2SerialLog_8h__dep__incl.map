@@ -1,6 +1,9 @@
 <map id="Gbox420_Nano_Aero_NoTank/SerialLog.h" name="Gbox420_Nano_Aero_NoTank/SerialLog.h">
-<area shape="rect" id="node1" title=" " alt="" coords="271,5,485,47"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html" title="Aeroponics module without Pressure Tank for Nano." alt="" coords="5,95,247,136"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_2SerialLog_8cpp.html" title=" " alt="" coords="271,95,485,136"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_2Settings_8cpp.html" title=" " alt="" coords="509,95,722,136"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="271,5,485,45"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__NoTank_8ino.html" title="Aeroponics module without Pressure Tank for Nano." alt="" coords="5,93,247,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="311,52,182,96,180,91,309,47"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Aero__NoTank_2SerialLog_8cpp.html" title=" " alt="" coords="271,93,485,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="381,59,381,93,375,93,375,59"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Aero__NoTank_2Settings_8cpp.html" title=" " alt="" coords="509,93,722,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="444,48,564,91,562,96,442,53"/>
 </map>

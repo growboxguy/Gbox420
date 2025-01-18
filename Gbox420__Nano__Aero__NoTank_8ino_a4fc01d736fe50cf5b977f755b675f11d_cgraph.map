@@ -1,15 +1,32 @@
 <map id="setup" name="setup">
-<area shape="rect" id="node1" title=" " alt="" coords="5,183,64,209"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="344,56,479,83"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="529,107,629,133"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM." alt="" coords="151,157,254,184"/>
-<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title=" " alt="" coords="112,259,293,285"/>
-<area shape="rect" id="node8" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="165,5,241,32"/>
-<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="166,309,239,336"/>
-<area shape="rect" id="node12" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="166,360,239,387"/>
-<area shape="rect" id="node13" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="361,259,461,285"/>
-<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="540,31,619,57"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="358,208,465,235"/>
-<area shape="rect" id="node9" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="341,5,481,32"/>
-<area shape="rect" id="node11" href="$Gbox420__Nano__Aero__NoTank_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Wireless communication." alt="" coords="368,309,455,336"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,183,64,208"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="344,56,479,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,181,66,139,86,116,111,98,165,76,222,64,279,59,330,58,330,64,279,64,223,69,166,81,113,103,90,120,70,142,44,184"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="529,107,629,132"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="49,180,76,160,111,142,165,127,220,116,331,106,434,105,516,110,516,115,434,110,332,111,221,122,166,132,113,147,79,164,52,184"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Mega__Main_2Settings_8cpp.html#acf8f5a3ec22c99bc4ee6a767fc5c2ac3" title="Load settings from EEPROM." alt="" coords="151,157,254,183"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="64,188,137,177,138,182,64,194"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title=" " alt="" coords="112,259,293,284"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="57,206,113,237,149,252,147,257,111,242,55,211"/>
+<area shape="rect" id="Node000008" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b" title=" " alt="" coords="165,5,241,31"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="37,182,60,119,82,81,110,48,129,35,151,26,153,31,132,40,114,52,86,84,65,121,42,183"/>
+<area shape="rect" id="Node000010" href="$Gbox420__Nano__Aero__NoTank_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="166,308,239,333"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="44,207,70,250,90,274,113,294,133,305,154,311,152,316,131,309,111,299,86,278,66,253,40,209"/>
+<area shape="rect" id="Node000012" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a128f3b85166f7f4a7591b5f0294af58b" title=" " alt="" coords="166,357,239,383"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="41,207,49,236,63,273,84,311,114,344,132,355,153,362,151,367,130,360,110,348,80,314,58,275,44,237,36,209"/>
+<area shape="rect" id="Node000013" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="361,257,461,283"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="65,198,294,243,349,255,348,260,293,249,64,203"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="455,79,524,100,523,105,454,84"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="540,32,619,57"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="479,56,526,50,527,55,479,62"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="254,163,481,135,515,129,516,135,482,141,255,168"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="358,208,465,233"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="255,180,346,202,345,207,254,185"/>
+<area shape="rect" id="Node000009" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="341,7,481,32"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="241,16,327,16,327,21,241,21"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="457,30,483,41,523,68,556,95,553,99,520,72,480,46,455,35"/>
+<area shape="poly" id="edge12_Node000009_Node000004" title=" " alt="" coords="482,27,527,34,526,39,481,32"/>
+<area shape="rect" id="Node000011" href="$Gbox420__Nano__Aero__NoTank_8ino.html#abef6dd5b809e8a2ad491477bede9eb49" title="Wireless communication." alt="" coords="368,308,455,333"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="239,318,354,318,354,323,239,323"/>
+<area shape="poly" id="edge17_Node000013_Node000003" title=" " alt="" coords="457,255,480,242,506,220,529,193,562,143,567,146,533,196,510,223,483,247,460,260"/>
 </map>

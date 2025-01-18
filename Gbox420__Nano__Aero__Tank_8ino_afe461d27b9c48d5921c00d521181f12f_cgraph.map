@@ -1,8 +1,14 @@
 <map id="loop" name="loop">
-<area shape="rect" id="node1" title="Threads." alt="" coords="5,56,56,83"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__Tank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,56,235,83"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="283,5,417,32"/>
-<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="476,56,555,83"/>
-<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="300,107,400,133"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="465,5,565,32"/>
+<area shape="rect" id="Node000001" title="Threads." alt="" coords="5,56,56,81"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__Tank_8ino.html#a16c49958e5626b4e9844870a44edf469" title=" " alt="" coords="104,56,235,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,66,90,66,90,71,56,71"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title=" " alt="" coords="283,5,417,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,53,290,32,291,37,216,58"/>
+<area shape="rect" id="Node000005" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)" alt="" coords="476,55,555,80"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="235,66,462,65,462,70,235,71"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title=" " alt="" coords="300,107,400,132"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="216,79,291,100,290,105,215,84"/>
+<area shape="rect" id="Node000004" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="465,5,565,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="417,15,451,15,451,21,417,21"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="394,28,463,49,461,54,392,33"/>
 </map>

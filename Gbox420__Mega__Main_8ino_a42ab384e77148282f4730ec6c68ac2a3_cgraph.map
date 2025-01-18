@@ -1,0 +1,5 @@
+<map id="getNtpTime" name="getNtpTime">
+<area shape="rect" id="Node000001" title="Update the time over ESP&#45;link using NTP (Network Time Protocol)" alt="" coords="5,5,104,31"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="152,5,252,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,15,138,15,138,21,104,21"/>
+</map>

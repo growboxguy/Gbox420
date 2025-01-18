@@ -1,5 +1,7 @@
 <map id="heartBeat" name="heartBeat">
-<area shape="rect" id="node1" title="Wireless communication." alt="" coords="233,5,320,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__Tank_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="112,5,185,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__Tank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,32"/>
+<area shape="rect" id="Node000001" title="Wireless communication." alt="" coords="233,5,320,31"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Nano__Aero__Tank_8ino.html#ad9eace513773bac642ba8ed639be71fe" title=" " alt="" coords="112,5,185,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,21,185,21,185,15,220,15"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Aero__Tank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,21,64,21,64,15,98,15"/>
 </map>

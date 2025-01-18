@@ -1,5 +1,7 @@
 <map id="InitializeWireless" name="InitializeWireless">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,140,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="188,5,288,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Nano__Hempy_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="199,56,277,83"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,140,56"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="188,5,288,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,30,174,25,175,30,141,36"/>
+<area shape="rect" id="Node000003" href="$Gbox420__Nano__Hempy_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title=" " alt="" coords="199,55,277,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,50,186,57,185,62,140,56"/>
 </map>
