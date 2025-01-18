@@ -29,25 +29,20 @@ views:
             content: |
               {{ state_attr('sensor.gbox420_alerts', 'alerts') | safe }}
       - type: entities
-        title: null
         entities:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_power1_current
             secondary_info: last-updated
             name: Power Sensor
             state_header: Current
-            unit: A
             icon: mdi:lightning-bolt
             entities:
               - entity: sensor.gbox420_power1_power
                 name: Power
-                unit: kWh
               - entity: sensor.gbox420_power1_energy
                 name: Energy
-                unit: kWh
               - entity: sensor.gbox420_power1_voltage
                 name: Voltage
-                unit: V
       - type: entities
         state_color: true
         show_header_toggle: false
