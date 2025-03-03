@@ -118,7 +118,7 @@ views:
               - entity: sensor.hempy_bucket2_weight
                 name: Weight
           - type: custom:multiple-entity-row
-            entity: sensor.hempy_bucket2_next_weight
+            entity: sensor.hempy_bucket2_next_watering_weight
             name: false
             icon: 'no'
             show_state: false
@@ -212,4 +212,4 @@ views:
             name: Internal temp
           - type: weblink
             name: Gbox420 - Hempy bucket
-            url: https://sites.google.com
+            url: https://sites.google.com/site/growboxguy/hempy-bucket
