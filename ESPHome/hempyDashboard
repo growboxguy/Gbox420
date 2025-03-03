@@ -209,6 +209,7 @@ views:
       - type: entities
         entities:
           - entity: sensor.hempy_internal_temp
+            secondary_info: last-updated
             name: Internal temp
           - type: weblink
             name: Gbox420 - Hempy bucket
