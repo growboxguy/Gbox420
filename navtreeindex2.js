@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"structSettings_1_1PressurePumpSettings.html#ab15efef74b4ef77ecfe46e899ae90e51":[1,0,1,13,7],
 "structSettings_1_1PressurePumpSettings.html#ab9d57d65cbcbd5dd7dd62ddd91db79d6":[1,0,1,13,6],
 "structSettings_1_1PressurePumpSettings.html#acc5d570e180c5423feb9fd51a839763e":[1,0,1,13,0],
 "structSettings_1_1PressurePumpSettings.html#ad00e6572fde25f3575faf896c82a38b9":[1,0,1,13,11],
