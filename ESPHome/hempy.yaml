@@ -67,6 +67,10 @@ api:
       then:
         - lambda: |-
             id(bucket1).toggle_watering();
+    - service: bucket1_refresh #Triggers reading the bucket weight and reevaluate watering conditions
+      then:
+        - lambda: |-
+            id(bucket1).refresh();
     #Bucket 2
     - service: bucket2_start_watering #Triggers watering (re-enables watering logic)
       then:
@@ -84,6 +88,10 @@ api:
       then:
         - lambda: |-
             id(bucket2).toggle_watering();
+    - service: bucket2_refresh #Triggers reading the bucket weight and reevaluate watering conditions
+      then:
+        - lambda: |-
+            id(bucket2).refresh();
 
 # Enable Over The Air updates
 ota:

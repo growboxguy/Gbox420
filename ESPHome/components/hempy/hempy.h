@@ -27,15 +27,16 @@ namespace esphome
       HempyBucket(std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *dry_weight, sensor::Sensor *wet_weight, switch_::Switch *waterPump, uint32_t update_interval) : PollingComponent(update_interval), DefaultUpdateInterval(update_interval), Name(name), StateSensor(state_sensor), WeightSensor(weight_sensor), StartWateringWeight(start_watering_weight), WateringIncrement(watering_increments), MaxWateringWeight(max_watering_weight), MaxWateringTime(pump_timeout), DrainWaitTime(drain_wait_time), DrainTargetWeight(drain_target_weight), EvaporationTargetWeight(evaporation_target_weight), DryWeight(dry_weight), WetWeight(wet_weight), WaterPump(waterPump) {}
       void setup() override;
       void update() override;
+      void refresh();                       // Update the weight sensor before calling update()
       void update_interval(uint32_t miliseconds); // How often to call update(). Changes the Polling interval of the component
       void update_state(HempyStates NewState, bool Force = false);
       const char *to_text_state(HempyStates state);
       bool is_watering_active();
-      void toggle_watering_logic(int8_t RequestedState = -1); // Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
-      void start_watering();                                  // Start watering (re-enables watering logic)
-      void stop_watering();                                   // Stops watering
-      void toggle_watering();                                 // Triggers watering (re-enables watering logic), or stops watering if it is in progress
-      void disable_watering();                                // Disable watering logic
+      void toggle_watering_logic(int8_t RequestedState = -1);   // Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
+      void start_watering();                                    // Start watering (re-enables watering logic)
+      void stop_watering();                                     // Stops watering
+      void toggle_watering();                                   // Triggers watering (re-enables watering logic), or stops watering if it is in progress
+      void disable_watering();                                  // Disable watering logic
       void update_next_watering_weight(float weight);           // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
       void update_evaportation_target(float EvaporationTarget); // Recalculates watering weight if WetWeight is known
       HempyStates State{HempyStates::IDLE};                     // Stores the current state of the hempy bucket

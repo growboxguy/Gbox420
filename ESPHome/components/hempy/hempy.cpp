@@ -20,6 +20,12 @@ namespace esphome
                Name.c_str(), to_text_state(State), WeightSensor->state, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight->state, WetWeight->state);
     }
 
+    void HempyBucket::refresh()
+    {
+      WeightSensor->update(); // Force sensor update
+      update();
+    }
+
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
     {
       this->set_update_interval(miliseconds);

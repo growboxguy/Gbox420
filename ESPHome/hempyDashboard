@@ -45,6 +45,14 @@ views:
                   action: call-service
                   service: esphome.hempy_bucket1_disable_watering
                   service_data: {}
+              - type: button
+                icon: mdi:refresh
+                name: Refresh
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: esphome.hempy_bucket1_refresh
+                  service_data: {}
               - entity: sensor.hempy_bucket1_dry_weight
                 name: Dry
               - entity: sensor.hempy_bucket1_wet_weight
@@ -146,6 +154,14 @@ views:
                 tap_action:
                   action: call-service
                   service: esphome.hempy_bucket2_disable_watering
+                  service_data: {}
+              - type: button
+                icon: mdi:refresh
+                name: Refresh
+                state_color: true
+                tap_action:
+                  action: call-service
+                  service: esphome.hempy_bucket2_refresh
                   service_data: {}
               - entity: sensor.hempy_bucket2_dry_weight
                 name: Dry
