@@ -100,7 +100,7 @@ namespace esphome
         }
         break;
       case HempyStates::DRAINING:
-        if (WaterPump->state)
+        if (WaterPump->state) // If the pump is on -> turn it off
           WaterPump->turn_off();
         if (State != NewState)
         {
@@ -111,7 +111,7 @@ namespace esphome
         {
           DrainProgress += StateWeight - WeightSensor->state; // Calculate how much water has drained
           // ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, StateWeight, DrainTargetWeight->state);
-          if (DrainProgress >= DrainTargetWeight->state) // Check if enough water was drained into the waste reservoir
+          if (DrainProgress >= DrainTargetWeight->state || WeightSensor->state >= MaxWateringWeight->state) // Check if enough water was drained into the waste reservoir, OR MaxWateringWeight is reached
           {
             WetWeight->publish_state(WeightSensor->state);                                    // Store the wet weight
             float CalculatedDryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight

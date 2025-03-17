@@ -50,7 +50,7 @@ namespace esphome
       number::Number *MaxWateringWeight;       // Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
       number::Number *MaxWateringTime;         // Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
       number::Number *DrainWaitTime;           // How long to wait between watering cycles for the water to drain in to the waste reservoir
-      number::Number *DrainTargetWeight;       // How much water should drain before considering the watering done (drain to waste)
+      number::Number *DrainTargetWeight;       // Target weight reduction before watering is considered complete (drain-to-waste system)
       number::Number *EvaporationTargetWeight; // How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight. Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
       switch_::Switch *WaterPump;              // Reference to the relay controlling the water pump
       sensor::Sensor *DryWeight;               // Start watering when bucket weight drops below (Initially equals to StartWateringWeight, then calculated after each watering using EvaporationTargetWeight)
