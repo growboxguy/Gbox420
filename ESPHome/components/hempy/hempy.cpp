@@ -8,7 +8,7 @@ namespace esphome
     {
       update_interval(DefaultUpdateInterval);               // Sync the HempyBucket and WeightSensor's update interval
       DryWeight->publish_state(StartWateringWeight->state); // At startup use StartWateringWeight, DryWeight will be calculated after each watering
-      WetWeight->publish_state(0);                          // Wet weight at startup is unknown, WetWeight will be calculated after each watering
+      WetWeight->publish_state(MaxWateringWeight->state);                          // Wet weight at startup is unknown and set to MaxWateringWeight, WetWeight will be calculated after each watering
       ESP_LOGI("hempy", "%s ready", Name.c_str());
     }
 
