@@ -213,7 +213,7 @@ $(document).ready(function(){initNavTree('hempy_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        }</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceesphome_1_1hempy.html#aba804889a7349321b9672565b8cadbcda6a83fb962e26a218fee9b429eb62dbc6">HempyStates::DRAINING</a>:</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">if</span> (WaterPump-&gt;state)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">if</span> (WaterPump-&gt;state) <span class="comment">// If the pump is on -&gt; turn it off</span></div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>          WaterPump-&gt;turn_off();</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classesphome_1_1hempy_1_1HempyBucket.html#a1cfe8c28178101b532f79c2a43b84569">State</a> != NewState)</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        {</div>
@@ -224,7 +224,7 @@ $(document).ready(function(){initNavTree('hempy_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        {</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>          DrainProgress += StateWeight - WeightSensor-&gt;state; <span class="comment">// Calculate how much water has drained</span></div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>          <span class="comment">// ESP_LOGW(&quot;hempy&quot;, &quot;if %.2f &lt;=  %.2f - %.2f &quot;, WeightSensor-&gt;state, StateWeight, DrainTargetWeight-&gt;state);</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>          <span class="keywordflow">if</span> (DrainProgress &gt;= DrainTargetWeight-&gt;state) <span class="comment">// Check if enough water was drained into the waste reservoir</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>          <span class="keywordflow">if</span> (DrainProgress &gt;= DrainTargetWeight-&gt;state || WeightSensor-&gt;state &gt;= MaxWateringWeight-&gt;state) <span class="comment">// Check if enough water was drained into the waste reservoir, OR MaxWateringWeight is reached</span></div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>          {</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            WetWeight-&gt;publish_state(WeightSensor-&gt;state);                                    <span class="comment">// Store the wet weight</span></div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keywordtype">float</span> CalculatedDryWeight = WeightSensor-&gt;state - EvaporationTargetWeight-&gt;state; <span class="comment">// Calculate next watering weight</span></div>
