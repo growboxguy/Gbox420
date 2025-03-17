@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('hempy_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    {</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>      <a class="code hl_function" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">update_interval</a>(DefaultUpdateInterval);               <span class="comment">// Sync the HempyBucket and WeightSensor&#39;s update interval</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>      DryWeight-&gt;publish_state(StartWateringWeight-&gt;state); <span class="comment">// At startup use StartWateringWeight, DryWeight will be calculated after each watering</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>      WetWeight-&gt;publish_state(0);                          <span class="comment">// Wet weight at startup is unknown, WetWeight will be calculated after each watering</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>      WetWeight-&gt;publish_state(MaxWateringWeight-&gt;state);                          <span class="comment">// Wet weight at startup is unknown and set to MaxWateringWeight, WetWeight will be calculated after each watering</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>      ESP_LOGI(<span class="stringliteral">&quot;hempy&quot;</span>, <span class="stringliteral">&quot;%s ready&quot;</span>, Name.c_str());</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    }</div>
 </div>
