@@ -1,0 +1,77 @@
+alias: >-
+  Gbox420 Hempy Bucket State Notification
+description: Notify and manage persistent notification for Hempy bucket state changes. IMPORTANT Update mobile_app_bits20 to mobile_app_<your_mobile_name> using lowercase letters, as listed in Home Assistant under Settings > Devices & Services > Devices
+triggers:
+  - entity_id:
+      - sensor.hempy_bucket1_state
+      - sensor.hempy_bucket2_state
+    trigger: state
+  - event_type: mobile_app_notification_action
+    event_data:
+      action: START_WATERING
+    trigger: event
+  - event_type: mobile_app_notification_action
+    event_data:
+      action: STOP_WATERING
+    trigger: event
+conditions: []
+actions:
+  - variables:
+      bucket_number: >-
+        {{ trigger.entity_id.split('_')[-2][-1] if 'entity_id' in trigger else
+        '-1' }}
+      new_state: >-
+        {{ (trigger.to_state.state if trigger.to_state is defined else
+        'UNKNOWN').strip() }}
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ new_state == 'DISABLED' }}"
+        sequence:
+          - data:
+              notification_id: hempy_bucket{{ bucket_number }}_disabled
+              title: Gbox420
+              message: |
+                Hempy bucket {{ bucket_number }} is {{ new_state }}             
+            action: persistent_notification.create
+          - data:
+              title: Gbox420
+              message: |
+                Hempy bucket {{ bucket_number }} is {{ new_state }}
+              data:
+                actions:
+                  - action: START_WATERING
+                    title: Start Watering
+                  - action: STOP_WATERING
+                    title: Stop watering
+                  - action: DISMISS_NOTIFICATION
+                    title: Dismiss
+            action: notify.mobile_app_bits20
+      - conditions:
+          - condition: template
+            value_template: "{{ new_state != 'DISABLED' }}"
+        sequence:
+          - data:
+              notification_id: hempy_bucket{{ bucket_number }}_disabled
+            action: persistent_notification.dismiss
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: >-
+              {{ trigger.platform == 'event' and trigger.event.event_type ==
+              'mobile_app_notification_action' }}
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.action == 'START_WATERING' }}"
+                sequence:
+                  - action: esphome.hempy_bucket1_start_watering
+                    data: {}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.action == 'STOP_WATERING' }}"
+                sequence:
+                  - action: esphome.hempy_bucket1_stop_watering
+                    data: {}
+mode: parallel
