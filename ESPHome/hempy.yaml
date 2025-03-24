@@ -30,6 +30,10 @@ external_components:
     components: [hempy]
     refresh: 1d
 
+rtttl: #Ring Tone Text Transfer Language - 
+  id: buzzer
+  output: buzzer
+
 text_sensor:
   - platform: debug
     device:
@@ -40,10 +44,16 @@ text_sensor:
     id: bucket1_state_sensor
     name: "Bucket1 State"
     icon: "mdi:state-machine"
+    on_value:
+      then:
+        - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
   - platform: template
     id: bucket2_state_sensor
     name: "Bucket2 State"
     icon: "mdi:state-machine"
+    on_value:
+      then:
+        - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
 
 # Enable Home Assistant API
 api:
@@ -184,9 +194,6 @@ switch:
       - lambda: |-
           id(bucket2).toggle_watering_logic(false);
 
-rtttl: #Ring Tone Text Transfer Language
-  output: buzzer
-
 interval:
   - interval: 2000ms # Heart beat - Blink built-in LED every 2sec
     then:
@@ -313,7 +320,7 @@ number:
     id: bucket1_start_watering_weight # When the bucket weight drops below this -> Start the watering process
     name: "Bucket1 Start watering weight"
     unit_of_measurement: "kg"
-    icon: "mdi:weight-kilogram"
+    icon: "mdi:watering-can"
     min_value: 0
     max_value: 25
     step: 0.1
@@ -397,7 +404,7 @@ number:
     id: bucket2_start_watering_weight # When the bucket weight drops below this -> Start the watering process
     name: "Bucket2 Start watering weight"
     unit_of_measurement: "kg"
-    icon: "mdi:weight-kilogram"
+    icon: "mdi:watering-can"
     min_value: 0
     max_value: 25
     step: 0.1
