@@ -31,7 +31,6 @@ external_components:
     refresh: 1d
 
 rtttl: #Ring Tone Text Transfer Language - 
-  id: buzzer
   output: buzzer
 
 text_sensor:
@@ -55,9 +54,9 @@ text_sensor:
       then:
         - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
 
-# Beep when any of the bucket's State is DISABLED
+
 interval:
-  - interval: 30s
+  - interval: 30s  # Beep when any of the bucket's State is DISABLED
     then:
       - if:
           condition:
@@ -68,6 +67,12 @@ interval:
               );
           then:
             - rtttl.play: "alert:d=16,o=6,b=120:e,e,e"
+
+  - interval: 2s #Heart beat - Blink built-in LED every 2sec
+    then:
+      - output.turn_on: led
+      - delay: 1s
+      - output.turn_off: led
 
 # Enable Home Assistant API
 api:
@@ -207,13 +212,6 @@ switch:
           rtttl: "off:d=16,o=6,b=120:g,p,e"
       - lambda: |-
           id(bucket2).toggle_watering_logic(false);
-
-interval:
-  - interval: 2000ms # Heart beat - Blink built-in LED every 2sec
-    then:
-      - output.turn_on: led
-      - delay: 1000ms
-      - output.turn_off: led
 
 sensor:
   #Debug
