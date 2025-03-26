@@ -19,10 +19,10 @@ debug:
   update_interval: 60s
 
 external_components:
-  #- source:
+  #- source:           # Use this to load the hempy module from the \components folder (for code customization)
   #    type: local
   #    path: components
-  - source:
+  - source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
       type: git
       url: https://github.com/Growboxguy/Gbox420
       ref: master
@@ -31,6 +31,7 @@ external_components:
     refresh: 1d
 
 rtttl: #Ring Tone Text Transfer Language - 
+  id: buzzer_rtttl
   output: buzzer
 
 text_sensor:
@@ -45,15 +46,24 @@ text_sensor:
     icon: "mdi:state-machine"
     on_value:
       then:
-        - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
+       - lambda: |-   # Play sound when state changes
+          static std::string bucket1_previous_state = "unknown";
+          if (id(bucket1_state_sensor).state != bucket1_previous_state) { 
+            id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
+            bucket1_previous_state = id(bucket1_state_sensor).state;
+          }
   - platform: template
     id: bucket2_state_sensor
     name: "Bucket2 State"
     icon: "mdi:state-machine"
     on_value:
       then:
-        - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
-
+       - lambda: |-
+          static std::string bucket2_previous_state = "unknown";
+          if (id(bucket2_state_sensor).state != bucket2_previous_state) { 
+            id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
+            bucket2_previous_state = id(bucket2_state_sensor).state;
+          }
 
 interval:
   - interval: 30s  # Beep when any of the bucket's State is DISABLED
@@ -66,7 +76,7 @@ interval:
                 id(bucket2_state_sensor).state == "DISABLED" 
               );
           then:
-            - rtttl.play: "alert:d=16,o=6,b=120:e,e,e"
+            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e"
 
   - interval: 2s #Heart beat - Blink built-in LED every 2sec
     then:
