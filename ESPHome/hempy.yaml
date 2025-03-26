@@ -55,6 +55,20 @@ text_sensor:
       then:
         - rtttl.play: "change:d=16,o=6,b=120:e,g,b"  # Play sound when state changes
 
+# Beep when any of the bucket's State is DISABLED
+interval:
+  - interval: 30s
+    then:
+      - if:
+          condition:
+            lambda: |
+              return (
+                id(bucket1_state_sensor).state == "DISABLED" ||
+                id(bucket2_state_sensor).state == "DISABLED" 
+              );
+          then:
+            - rtttl.play: "alert:d=16,o=6,b=120:e,e,e"
+
 # Enable Home Assistant API
 api:
   encryption:
