@@ -64,8 +64,9 @@ namespace esphome
           WaterPump->turn_off(); // Pump is considered failed. With automatic watering it should never switch to DRY mode. Triggers a notification.
         if (State != NewState)   // When the state just changed
           update_interval(1000);
-        if (WeightSensor->state >= MaxWateringWeight->state) // Check if manual watering reached the Max Weight
+        if (WeightSensor->state >= MaxWateringWeight->state || WeightSensor->state >= WetWeight->state) // Check if manual watering reached the Max Weight
           update_state(HempyStates::IDLE);
+          BlockOverWritingState = true;
         break;
       case HempyStates::IDLE:
         if (WaterPump->state)

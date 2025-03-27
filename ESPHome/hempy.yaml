@@ -73,7 +73,9 @@ interval:
             lambda: |
               return (
                 id(bucket1_state_sensor).state == "DISABLED" ||
-                id(bucket2_state_sensor).state == "DISABLED" 
+                id(bucket2_state_sensor).state == "DISABLED" ||
+                id(bucket1_state_sensor).state == "DRY" ||
+                id(bucket2_state_sensor).state == "DRY" 
               );
           then:
             - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e"
