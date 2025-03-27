@@ -261,12 +261,8 @@ sensor:
     accuracy_decimals: 2
     filters:
       - calibrate_linear:
-          - -117400 -> 0 #Raw reading when the weight sensor has no weigth on it
+          - -117400 -> 0 #Raw reading when the weight sensor has no weight on it
           - -498723 -> 3 #Raw reading of an object with a known wight
-      - median:
-          window_size: 5 # Take the median of the last 5 readings
-          send_every: 1 # Send every 1 reading
-          send_first_at: 1
   - platform: template
     id: bucket1_next_weight
     name: "Bucket1 Next Weight"
@@ -309,10 +305,6 @@ sensor:
       - calibrate_linear:
           - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
           - -294500 -> 3 #Raw reading of an object with a known wight
-      - median:
-          window_size: 5 # Take the median of the last 5 readings
-          send_every: 1 # Send every 1 reading
-          send_first_at: 1
   - platform: template
     id: bucket2_next_weight
     name: "Bucket2 Next Weight"
