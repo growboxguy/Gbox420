@@ -65,8 +65,10 @@ namespace esphome
         if (State != NewState)   // When the state just changed
           update_interval(1000);
         if (WeightSensor->state >= MaxWateringWeight->state || WeightSensor->state >= WetWeight->state) // Check if manual watering reached the Max Weight
+        {
           update_state(HempyStates::IDLE);
           BlockOverWritingState = true;
+        }
         break;
       case HempyStates::IDLE:
         if (WaterPump->state)
