@@ -14,10 +14,10 @@ actions:
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ new_state == 'DISABLED' }}"
+            value_template: "{{ new_state == 'DISABLED' || new_state == 'DRY'}}"
         sequence:
           - data:
-              notification_id: hempy_bucket{{ bucket_number }}_disabled
+              notification_id: hempy_bucket{{ bucket_number }}_alert
               title: Gbox420
               message: |
                 Hempy bucket {{ bucket_number }} is {{ new_state }}            
@@ -33,9 +33,9 @@ actions:
             action: notify.mobile_app_MOBILENAME  #Update MOBILENAME to the device name that has HA Companion app installed
       - conditions:
           - condition: template
-            value_template: "{{ new_state != 'DISABLED' }}"
+            value_template: "{{ new_state != 'DISABLED' && new_state != 'DRY'}}"
         sequence:
           - data:
-              notification_id: hempy_bucket{{ bucket_number }}_disabled
+              notification_id: hempy_bucket{{ bucket_number }}_alert
             action: persistent_notification.dismiss
 mode: parallel

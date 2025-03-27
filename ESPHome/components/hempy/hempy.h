@@ -15,10 +15,11 @@ namespace esphome
 
     enum class HempyStates
     {
-      DISABLED,
-      IDLE,
-      WATERING,
-      DRAINING
+      DISABLED,  //Watering logic is disabled by the user. Can be re-enabled by starting or stopping the watering pump.
+      DRY,  // The plant needs manual watering, the pump possibly failed. Stop the manual watering when the system beeps, that means Max weight is reached
+      IDLE, // Hempy bucket weight within limits (between Start watering - Max weight)
+      WATERING,  // Water pump currently running, triggered when Start watering weight is reached, or if weight drops below Wet weight - Evaporation target 
+      DRAINING  // Wait for the Hempy bucket to drain, measures the bucket's weight loss. The sum of the total weight loss during DRAINING cycles is compared against DrainTarget
     };
 
     class HempyBucket : public PollingComponent

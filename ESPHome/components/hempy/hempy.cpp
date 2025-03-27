@@ -8,7 +8,7 @@ namespace esphome
     {
       update_interval(DefaultUpdateInterval);               // Sync the HempyBucket and WeightSensor's update interval
       DryWeight->publish_state(StartWateringWeight->state); // At startup use StartWateringWeight, DryWeight will be calculated after each watering
-      WetWeight->publish_state(MaxWateringWeight->state);                          // Wet weight at startup is unknown and set to MaxWateringWeight, WetWeight will be calculated after each watering
+      WetWeight->publish_state(MaxWateringWeight->state);   // Wet weight at startup is unknown and set to MaxWateringWeight, WetWeight will be calculated after each watering
       ESP_LOGI("hempy", "%s ready", Name.c_str());
     }
 
@@ -59,6 +59,14 @@ namespace esphome
         if (State != NewState)                    // When the state just changed
           update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
         break;
+      case HempyStates::DRY:
+        if (WaterPump->state)
+          WaterPump->turn_off(); // Pump is considered failed. With automatic watering it should never switch to DRY mode. Triggers a notification.
+        if (State != NewState)   // When the state just changed
+          update_interval(1000);
+        if (WeightSensor->state >= MaxWateringWeight->state) // Check if manual watering reached the Max Weight
+          update_state(HempyStates::IDLE);
+        break;
       case HempyStates::IDLE:
         if (WaterPump->state)
           WaterPump->turn_off();
@@ -73,9 +81,9 @@ namespace esphome
       case HempyStates::WATERING:
         if (State != NewState)
         {
-          update_interval(1000);                                            // 1sec - Speed up calling update()
-          StateWeight = WeightSensor->state;                                // Store the bucket weight before starting the pump
-          if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRAINING cycles
+          update_interval(1000);              // 1sec - Speed up calling update()
+          StateWeight = WeightSensor->state;  // Store the bucket weight before starting the pump
+          if (State != HempyStates::DRAINING) // First time entering the WATERING-DRAINING cycles
           {
             PumpOnTimer = CurrentTime; /// Start measuring the pump ON time for this cycle
             WateringTimer = 0;         /// Reset the counter that tracks the total pump ON time during the watering process (multiple WATERING-DRAINING cycles)
@@ -95,7 +103,7 @@ namespace esphome
         else if ((CurrentTime - PumpOnTimer) > MaxWateringTime->state * 1000) // Disable watering in case MaxWateringTime is reached: Consider the pump broken
         {
           ESP_LOGW("Hempy", "%s Timeout, pump DISABLED", Name.c_str());
-          update_state(HempyStates::DISABLED, true);
+          update_state(HempyStates::DRY, true);
           BlockOverWritingState = true;
         }
         break;
@@ -144,6 +152,8 @@ namespace esphome
       {
       case HempyStates::DISABLED:
         return "DISABLED";
+      case HempyStates::DRY:
+        return "DRY";
       case HempyStates::IDLE:
         return "IDLE";
       case HempyStates::WATERING:
@@ -157,7 +167,7 @@ namespace esphome
 
     bool HempyBucket::is_watering_active()
     {
-      return State != HempyStates::DISABLED;
+      return State != HempyStates::DISABLED && State != HempyStates::DRY;
     }
 
     void HempyBucket::toggle_watering_logic(int8_t RequestedState)
