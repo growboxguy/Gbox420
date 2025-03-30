@@ -6,7 +6,7 @@ esphome:
     priority: 10
     then:
       - rtttl.play:
-          rtttl: "start:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p"
+          rtttl: "start:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p" #Play startup tone on buzzer
 
 rp2040:
   board: rpipicow
@@ -46,7 +46,7 @@ text_sensor:
     icon: "mdi:state-machine"
     on_value:
       then:
-       - lambda: |-   # Play sound when state changes
+       - lambda: |-   # Play sound when  Bucket 1 state changes
           static std::string bucket1_previous_state = "unknown";
           if (id(bucket1_state_sensor).state != bucket1_previous_state) { 
             id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
@@ -58,7 +58,7 @@ text_sensor:
     icon: "mdi:state-machine"
     on_value:
       then:
-       - lambda: |-
+       - lambda: |-    # Play sound when Bucket 2 state changes
           static std::string bucket2_previous_state = "unknown";
           if (id(bucket2_state_sensor).state != bucket2_previous_state) { 
             id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
@@ -66,19 +66,20 @@ text_sensor:
           }
 
 interval:
-  - interval: 30s  # Beep when any of the bucket's State is DISABLED
+  - interval: 30s  # Beep when any of the bucket's are DRY
     then:
       - if:
-          condition:
-            lambda: |
-              return (
-                id(bucket1_state_sensor).state == "DISABLED" ||
-                id(bucket2_state_sensor).state == "DISABLED" ||
-                id(bucket1_state_sensor).state == "DRY" ||
-                id(bucket2_state_sensor).state == "DRY" 
-              );
+          condition: # Is more than one one bucket is DRY, the Bucket 1 beeps will be played only
+            lambda: | 
+              return (id(bucket1_state_sensor).state == "DRY");
           then:
-            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e"
+            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e,p,p,e"  # 3 beeps +  pause + 1 beep
+      - if:
+          condition:
+            lambda: | 
+              return (id(bucket2_state_sensor).state == "DRY");
+          then:
+            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e,p,p,e,p,e" # 3 beeps + pause + 2 beeps
 
   - interval: 2s #Heart beat - Blink built-in LED every 2sec
     then:
