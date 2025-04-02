@@ -2,6 +2,7 @@ var classesphome_1_1hempy_1_1HempyBucket =
 [
     [ "HempyBucket", "classesphome_1_1hempy_1_1HempyBucket.html#ae89e4449f62604e0b6966ffb1e6b3e87", null ],
     [ "disable_watering", "classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78", null ],
+    [ "get_average_weight", "classesphome_1_1hempy_1_1HempyBucket.html#a276c89b41e4175e1ca38db0f0d070886", null ],
     [ "is_watering_active", "classesphome_1_1hempy_1_1HempyBucket.html#aaa29898881d7e9ca599ea35a51eb16ea", null ],
     [ "refresh", "classesphome_1_1hempy_1_1HempyBucket.html#ae687f2cca824ab7ae811356b4a259f55", null ],
     [ "setup", "classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f", null ],
@@ -11,6 +12,7 @@ var classesphome_1_1hempy_1_1HempyBucket =
     [ "toggle_watering", "classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81", null ],
     [ "toggle_watering_logic", "classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab", null ],
     [ "update", "classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1", null ],
+    [ "update_average", "classesphome_1_1hempy_1_1HempyBucket.html#aace94254a3836be32da91e92771b2e59", null ],
     [ "update_evaportation_target", "classesphome_1_1hempy_1_1HempyBucket.html#aeb056b542f808230132a228dab6a509f", null ],
     [ "update_interval", "classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9", null ],
     [ "update_next_watering_weight", "classesphome_1_1hempy_1_1HempyBucket.html#a7f3252bf9d5831c40e0f0d75a5880616", null ],

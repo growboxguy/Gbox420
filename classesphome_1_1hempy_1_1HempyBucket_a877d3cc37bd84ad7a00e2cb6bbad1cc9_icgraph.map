@@ -1,22 +1,18 @@
 <map id="esphome::hempy::HempyBucket::update_interval" name="esphome::hempy::HempyBucket::update_interval">
-<area shape="rect" id="Node000001" title=" " alt="" coords="849,121,1083,161"/>
-<area shape="rect" id="Node000002" href="$classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f" title=" " alt="" coords="568,77,801,117"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="836,124,801,118,802,113,836,118"/>
-<area shape="rect" id="Node000003" href="$classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="568,165,801,205"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="836,164,802,170,801,164,836,159"/>
-<area shape="poly" id="edge10_Node000003_Node000003" title=" " alt="" coords="733,154,716,147,685,144,657,146,641,151,635,157,638,164,633,166,630,156,638,146,656,141,685,139,717,141,735,149"/>
-<area shape="rect" id="Node000004" href="$classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78" title=" " alt="" coords="287,5,520,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="613,162,566,131,550,112,542,93,534,76,518,59,498,48,501,43,522,55,539,73,547,91,555,109,570,127,616,157"/>
-<area shape="rect" id="Node000005" href="$classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed" title=" " alt="" coords="287,69,520,109"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="622,163,519,124,481,112,482,107,521,119,624,158"/>
-<area shape="rect" id="Node000006" href="$classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8" title=" " alt="" coords="287,133,520,173"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="554,173,520,169,521,164,555,168"/>
-<area shape="rect" id="Node000007" href="$classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="287,197,520,237"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="555,203,521,207,520,201,554,197"/>
-<area shape="rect" id="Node000008" href="$classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="287,261,520,301"/>
-<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="624,213,521,252,482,264,481,259,519,247,622,208"/>
-<area shape="rect" id="Node000009" href="$classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1" title=" " alt="" coords="287,325,520,365"/>
-<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="655,217,596,267,560,293,521,316,493,328,491,323,519,311,557,289,593,263,652,213"/>
-<area shape="rect" id="Node000010" href="$classesphome_1_1hempy_1_1HempyBucket.html#ae687f2cca824ab7ae811356b4a259f55" title=" " alt="" coords="5,325,239,365"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="273,348,239,348,239,343,273,343"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="568,89,801,129"/>
+<area shape="rect" id="Node000002" href="$classesphome_1_1hempy_1_1HempyBucket.html#a8b052363e0502e663ab7b26557086d2f" title=" " alt="" coords="287,45,520,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="554,92,520,86,521,81,555,86"/>
+<area shape="rect" id="Node000003" href="$classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,133,520,173"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="555,132,521,138,520,132,554,127"/>
+<area shape="poly" id="edge8_Node000003_Node000003" title=" " alt="" coords="451,122,434,115,403,112,376,114,360,119,354,125,357,132,352,134,348,124,357,114,375,109,403,107,436,109,453,117"/>
+<area shape="rect" id="Node000004" href="$classesphome_1_1hempy_1_1HempyBucket.html#a3663708933a001839bf2c9fec949fc78" title=" " alt="" coords="5,5,239,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="340,130,285,100,261,79,237,60,210,48,212,43,240,55,265,74,288,95,343,125"/>
+<area shape="rect" id="Node000005" href="$classesphome_1_1hempy_1_1HempyBucket.html#a2523a66c5db5a4243ee782b68b2090ed" title=" " alt="" coords="5,69,239,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="301,133,210,112,211,107,302,128"/>
+<area shape="rect" id="Node000006" href="$classesphome_1_1hempy_1_1HempyBucket.html#af63f40adada91e2dd2add949e7beebf8" title=" " alt="" coords="5,133,239,173"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="273,156,239,156,239,151,273,151"/>
+<area shape="rect" id="Node000007" href="$classesphome_1_1hempy_1_1HempyBucket.html#ac70f05a27ea62a0b560698d796efaa81" title=" " alt="" coords="5,197,239,237"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="302,179,211,200,210,195,301,174"/>
+<area shape="rect" id="Node000008" href="$classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab" title=" " alt="" coords="5,261,239,301"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="363,183,306,218,240,252,207,264,205,259,238,247,304,214,361,179"/>
 </map>

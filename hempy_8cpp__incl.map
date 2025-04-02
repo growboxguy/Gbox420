@@ -1,7 +1,9 @@
 <map id="ESPHome/components/hempy/hempy.cpp" name="ESPHome/components/hempy/hempy.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="525,5,695,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="577,5,747,45"/>
 <area shape="rect" id="Node000002" href="$hempy_8h.html" title=" " alt="" coords="571,93,649,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="613,46,613,79,607,79,607,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="652,47,628,83,623,80,647,44"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="673,93,758,119"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="677,44,702,80,697,83,673,47"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,174,100,199"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="571,112,374,129,244,146,113,169,99,173,98,168,112,164,243,141,373,124,571,107"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="125,174,327,199"/>
@@ -13,7 +15,7 @@
 <area shape="rect" id="Node000007" title=" " alt="" coords="717,167,884,207"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="639,116,743,159,741,164,637,121"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="908,167,1075,207"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="650,113,895,163,894,168,648,118"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="649,113,661,116,895,163,894,169,660,121,648,119"/>
 <area shape="rect" id="Node000009" title=" " alt="" coords="1099,167,1265,207"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="649,109,834,129,1086,164,1085,169,833,134,649,114"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="650,114,661,116,778,132,871,141,965,149,1086,164,1085,169,965,154,871,146,778,138,660,121,649,119"/>
 </map>
