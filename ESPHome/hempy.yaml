@@ -19,16 +19,17 @@ debug:
   update_interval: 60s
 
 external_components:
-  #- source:           # Use this to load the hempy module from the \components folder (for code customization)
-  #    type: local
-  #    path: components
-  - source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
-      type: git
-      url: https://github.com/Growboxguy/Gbox420
-      ref: master
-      path: ESPHome/components
-    components: [hempy]
-    refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
+  - source:           # Use this to load the hempy module from the \components folder (for code customization)
+      type: local
+      path: components
+  #- source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
+  #    type: git
+  #    url: https://github.com/Growboxguy/Gbox420
+  #    ref: master
+  #    path: ESPHome/components
+  #  components: [hempy]
+  #  refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
+
 
 rtttl: #Ring Tone Text Transfer Language - 
   id: buzzer_rtttl
@@ -44,26 +45,34 @@ text_sensor:
     id: bucket1_state_sensor
     name: "Bucket1 State"
     icon: "mdi:state-machine"
+    filters:
+      - lambda: |-
+          static std::string bucker1_last_state = "unknown";
+          if (bucker1_last_state != x) {
+            bucker1_last_state = x;
+            return x;
+          }
+          return {};
     on_value:
       then:
-       - lambda: |-   # Play sound when  Bucket 1 state changes
-          static std::string bucket1_previous_state = "unknown";
-          if (id(bucket1_state_sensor).state != bucket1_previous_state) { 
+        - lambda: |-
             id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
-            bucket1_previous_state = id(bucket1_state_sensor).state;
-          }
   - platform: template
     id: bucket2_state_sensor
     name: "Bucket2 State"
     icon: "mdi:state-machine"
+    filters:
+      - lambda: |-
+          static std::string bucker2_last_state = "unknown";
+          if (bucker2_last_state != x) {
+            bucker2_last_state = x;
+            return x;
+          }
+          return {};
     on_value:
       then:
-       - lambda: |-    # Play sound when Bucket 2 state changes
-          static std::string bucket2_previous_state = "unknown";
-          if (id(bucket2_state_sensor).state != bucket2_previous_state) { 
+        - lambda: |-
             id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
-            bucket2_previous_state = id(bucket2_state_sensor).state;
-          }
 
 interval:
   - interval: 30s  # Beep when any of the bucket's are DRY
@@ -264,6 +273,7 @@ sensor:
       - calibrate_linear:
           - -117400 -> 0 #Raw reading when the weight sensor has no weight on it
           - -498723 -> 3 #Raw reading of an object with a known wight
+      - delta: 0.05  # Only update if the change is greater than 0.05 kg
   - platform: template
     id: bucket1_next_weight
     name: "Bucket1 Next Weight"
@@ -273,6 +283,8 @@ sensor:
     lambda: |-
          return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
     update_interval: 5s
+    filters:
+    - delta: 0.1  # Only update if the change is greater than 0.05 kg
   #Bucket 2
   - platform: template
     id: bucket2_next_watering_weight
@@ -306,6 +318,7 @@ sensor:
       - calibrate_linear:
           - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
           - -294500 -> 3 #Raw reading of an object with a known wight
+      - delta: 0.05  # Only update if the change is greater than 0.01 kg
   - platform: template
     id: bucket2_next_weight
     name: "Bucket2 Next Weight"
@@ -315,6 +328,8 @@ sensor:
     lambda: |-
       return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
     update_interval: 5s
+    filters:
+    - delta: 0.1  # Only update if the change is greater than 0.01 kg
   #Internal temperature sensor
   - platform: internal_temperature
     name: "Internal temp"
@@ -324,7 +339,8 @@ sensor:
     state_class: "measurement"
     accuracy_decimals: 1
     update_interval: 60s
-    #filters:
+    filters:
+      - delta: 0.1  # Only update if the change is greater than 0.1 °C
     #  - sliding_window_moving_average:
     #      window_size: 15
     #      send_every: 15

@@ -3,3 +3,4 @@ arduino.json
 c_cpp_properties.json
 build/
 .vscode/
+ESPHome/components/hempy/__pycache__/

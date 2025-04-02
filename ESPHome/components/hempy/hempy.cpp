@@ -1,4 +1,5 @@
 #include "hempy.h"
+#include <algorithm>
 
 namespace esphome
 {
@@ -14,22 +15,29 @@ namespace esphome
 
     void HempyBucket::update()
     {
-      update_state(State);
+      AverageWeight = update_average(WeightSensor->state);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
-               Name.c_str(), to_text_state(State), WeightSensor->state, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight->state, WetWeight->state);
+      ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Average: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
+               Name.c_str(), to_text_state(State), WeightSensor->state, AverageWeight, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight->state, WetWeight->state);
     }
 
-    void HempyBucket::refresh()
+    void HempyBucket::refresh() // Action when a manual update is requested
     {
       WeightSensor->update(); // Force sensor update
+      AverageReset = true;
       update();
+    }
+
+    float HempyBucket::get_average_weight()
+    {
+
+      return AverageWeight;
     }
 
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
     {
       this->set_update_interval(miliseconds);
-      this->stop_poller();
+      this->stop_poller(); // To apply the changes must restart the poller
       this->start_poller();
       WeightSensor->set_update_interval(miliseconds);
       WeightSensor->stop_poller();
@@ -71,11 +79,11 @@ namespace esphome
         }
         break;
       case HempyStates::IDLE:
-        if (WaterPump->state)
+        if (WaterPump->state)  
           WaterPump->turn_off();
         if (State != NewState)                    // When the state just changed
           update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
-        if ((StartWateringWeight->state > 0 && WeightSensor->state <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight->state > 0 && WeightSensor->state <= DryWeight->state))
+        if (!AverageReset && ((StartWateringWeight->state > 0 && AverageWeight <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight->state > 0 && AverageWeight <= DryWeight->state)))
         {
           update_state(HempyStates::WATERING, true);
           BlockOverWritingState = true;
@@ -105,8 +113,8 @@ namespace esphome
         }
         else if ((CurrentTime - PumpOnTimer) > MaxWateringTime->state * 1000) // Disable watering in case MaxWateringTime is reached: Consider the pump broken
         {
-          ESP_LOGW("Hempy", "%s Timeout, pump DISABLED", Name.c_str());
-          update_state(HempyStates::DRY, true);
+          ESP_LOGW("Hempy", "%s Timeout, pump failed", Name.c_str());
+          update_state(HempyStates::DRY, true); // Switch to DRY state - Triggers alert in Home Assistant
           BlockOverWritingState = true;
         }
         break;
@@ -116,12 +124,12 @@ namespace esphome
         if (State != NewState)
         {
           StateWeight = WeightSensor->state;
-          // ESP_LOGW("hempy", "Stored drain start weight: %.2f", StateWeight);
+          ESP_LOGW("Hempy", "Stored drain start weight: %.2f", StateWeight);
         }
         if (CurrentTime - StateTimer >= (DrainWaitTime->state * 1000)) // Waiting for the water to drain
         {
           DrainProgress += StateWeight - WeightSensor->state; // Calculate how much water has drained
-          // ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, StateWeight, DrainTargetWeight->state);
+          // ESP_LOGW("Hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, StateWeight, DrainTargetWeight->state);
           if (DrainProgress >= DrainTargetWeight->state || WeightSensor->state >= MaxWateringWeight->state) // Check if enough water was drained into the waste reservoir, OR MaxWateringWeight is reached
           {
             WetWeight->publish_state(WeightSensor->state);                                    // Store the wet weight
@@ -178,12 +186,12 @@ namespace esphome
       if ((RequestedState == -1 && State == HempyStates::DISABLED) || RequestedState)
       {
         update_state(HempyStates::IDLE, true);
-        ESP_LOGW("hempy", "%s Watering logic enabled", Name.c_str());
+        ESP_LOGW("Hempy", "%s Watering logic enabled", Name.c_str());
       }
       else
       {
         update_state(HempyStates::DISABLED, true);
-        ESP_LOGW("hempy", "%s Watering logic disabled", Name.c_str());
+        ESP_LOGW("Hempy", "%s Watering logic disabled", Name.c_str());
       }
     }
 
@@ -236,5 +244,36 @@ namespace esphome
       }
     }
 
+    float HempyBucket::update_average(float NewValue)
+    {
+      if (isnan(NewValue) || isinf(NewValue))
+      {
+        ESP_LOGE("hempy", "Invalid sensor reading detected: %.2f, skipping it.", NewValue);
+        return AverageWeight; // Keep the last valid average and skip this invalid value
+      }
+      else
+      {
+        if (AverageReset)
+        {
+          for (int i = 0; i < AverageQueueSize; ++i)
+          {
+            AverageReadings[i] = NewValue;
+          }
+          AverageTotal = AverageQueueSize * NewValue;
+          AverageReset = false;
+        }
+        else
+        {
+          AverageTotal += NewValue - AverageReadings[AverageCurrent]; // Add the difference of the new and previous reading to AverageTotal
+          AverageReadings[AverageCurrent] = NewValue;
+        }
+        AverageCurrent = (AverageCurrent + 1) % AverageQueueSize;
+
+        //ESP_LOGD("hempy", "Debug: NewValue=%.2f, AverageWeight=%.2f, AverageTotal=%.2f, AverageQueueSize=%d, AverageCurrent=%d,AverageReset=%d, Readings=[%.2f, %.2f, %.2f, %.2f, %.2f]",
+        //         NewValue, AverageWeight, AverageTotal, AverageQueueSize, AverageCurrent, AverageReset,
+        //         AverageReadings[0], AverageReadings[1], AverageReadings[2], AverageReadings[3], AverageReadings[4]);
+        return AverageTotal / AverageQueueSize;
+      }
+    }
   } // namespace hempy
 } // namespace esphome
