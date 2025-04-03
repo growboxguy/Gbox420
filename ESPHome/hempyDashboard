@@ -15,8 +15,10 @@ views:
                 name: State
               - entity: sensor.hempy_bucket1_weight
                 name: Weight
+              - entity: sensor.hempy_bucket1_remaining_weight
+                name: Remaining
           - type: custom:multiple-entity-row
-            entity: sensor.hempy_bucket1_next_watering_weight
+            entity: sensor.hempy_bucket1_remaining_weight
             name: false
             icon: 'no'
             show_state: false
@@ -57,8 +59,6 @@ views:
                 name: Dry
               - entity: sensor.hempy_bucket1_wet_weight
                 name: Wet
-              - entity: sensor.hempy_bucket1_next_weight
-                name: Next
           - type: custom:fold-entity-row
             open: false
             head:
@@ -125,8 +125,10 @@ views:
                 name: State
               - entity: sensor.hempy_bucket2_weight
                 name: Weight
+              - entity: sensor.hempy_bucket2_remaining_weight
+                name: Remaining
           - type: custom:multiple-entity-row
-            entity: sensor.hempy_bucket2_next_watering_weight
+            entity: sensor.hempy_bucket2_remaining_weight
             name: false
             icon: 'no'
             show_state: false
@@ -167,8 +169,6 @@ views:
                 name: Dry
               - entity: sensor.hempy_bucket2_wet_weight
                 name: Wet
-              - entity: sensor.hempy_bucket2_next_weight
-                name: Next
           - type: custom:fold-entity-row
             open: false
             head:
@@ -181,13 +181,13 @@ views:
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
-                entity: number.hempy_bucket2_watering_increments
-                name: Watering increment
+                entity: number.hempy_bucket2_max_watering_weight
+                name: Max weight
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
-                entity: number.hempy_bucket2_max_watering_weight
-                name: Max weight
+                entity: number.hempy_bucket2_watering_increments
+                name: Watering increment
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
@@ -230,3 +230,40 @@ views:
           - type: weblink
             name: Gbox420 - Hempy bucket
             url: https://sites.google.com/site/growboxguy/hempy-bucket
+        footer:
+          type: graph
+          entity: sensor.bitgate_internal_temp
+          detail: 1
+          hours_to_show: 168
+  - type: masonry
+    path: ''
+    cards:
+      - type: vertical-stack
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            name: Gate
+            icon: mdi:gate
+            icon_height: 64px
+            hold_action:
+              action: none
+            entity: button.bitgate_gate
+          - type: entities
+            entities:
+              - type: weblink
+                name: Gbox420 - Gate opener
+                url: https://sites.google.com/site/growboxguy/gate
+              - entity: sensor.bitgate_internal_temp
+                secondary_info: last-updated
+                name: Internal temp
+            state_color: false
+            footer:
+              type: graph
+              entity: sensor.bitgate_internal_temp
+    title: Gate
+    icon: mdi:gate
+    visible:
+      - user: 91fcf5e2f507482b9009b230a1fca00a

@@ -242,12 +242,6 @@ sensor:
       name: "Loop Time"
   #Bucket 1
   - platform: template
-    id: bucket1_next_watering_weight
-    name: "Bucket1 Next watering weight"
-    unit_of_measurement: "kg"
-    accuracy_decimals: 1
-    icon: "mdi:water-alert"
-  - platform: template
     id: bucket1_dry_weight
     name: "Bucket1 Dry weight"
     unit_of_measurement: "kg"
@@ -274,9 +268,9 @@ sensor:
           - -117400 -> 0 #Raw reading when the weight sensor has no weight on it
           - -498723 -> 3 #Raw reading of an object with a known wight
       - delta: 0.05  # Only update if the change is greater than 0.05 kg
-  - platform: template
-    id: bucket1_next_weight
-    name: "Bucket1 Next Weight"
+  - platform: template  #How much water is remaining in the bucket  (Weight - DRY weight)
+    id: bucket1_remaining_weight
+    name: "Bucket1 Remaining Weight"
     unit_of_measurement: "kg"
     accuracy_decimals: 1
     icon: "mdi:water-sync"
@@ -286,12 +280,6 @@ sensor:
     filters:
     - delta: 0.1  # Only update if the change is greater than 0.05 kg
   #Bucket 2
-  - platform: template
-    id: bucket2_next_watering_weight
-    name: "Bucket2 Next watering weight"
-    unit_of_measurement: "kg"
-    accuracy_decimals: 1
-    icon: "mdi:water-alert"
   - platform: template
     id: bucket2_dry_weight
     name: "Bucket2 Dry weight"
@@ -320,8 +308,8 @@ sensor:
           - -294500 -> 3 #Raw reading of an object with a known wight
       - delta: 0.05  # Only update if the change is greater than 0.01 kg
   - platform: template
-    id: bucket2_next_weight
-    name: "Bucket2 Next Weight"
+    id: bucket2_remaining_weight
+    name: "Bucket2 Remaining Weight"
     unit_of_measurement: "kg"
     accuracy_decimals: 1
     icon: "mdi:water-sync"
