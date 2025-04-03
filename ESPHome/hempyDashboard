@@ -20,7 +20,7 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.hempy_bucket1_remaining_weight
             name: false
-            icon: 'no'
+            icon: "no"
             show_state: false
             entities:
               - type: button
@@ -130,7 +130,7 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.hempy_bucket2_remaining_weight
             name: false
-            icon: 'no'
+            icon: "no"
             show_state: false
             entities:
               - type: button
@@ -236,7 +236,7 @@ views:
           detail: 1
           hours_to_show: 168
   - type: masonry
-    path: ''
+    path: ""
     cards:
       - type: vertical-stack
         cards:

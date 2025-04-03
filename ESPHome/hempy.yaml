@@ -19,7 +19,7 @@ debug:
   update_interval: 60s
 
 external_components:
-  - source:           # Use this to load the hempy module from the \components folder (for code customization)
+  - source: # Use this to load the hempy module from the \components folder (for code customization)
       type: local
       path: components
   #- source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
@@ -30,8 +30,7 @@ external_components:
   #  components: [hempy]
   #  refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
 
-
-rtttl: #Ring Tone Text Transfer Language - 
+rtttl: #Ring Tone Text Transfer Language -
   id: buzzer_rtttl
   output: buzzer
 
@@ -75,17 +74,17 @@ text_sensor:
             id(buzzer_rtttl).play("change:d=16,o=6,b=120:e,g,b");
 
 interval:
-  - interval: 30s  # Beep when any of the bucket's are DRY
+  - interval: 30s # Beep when any of the bucket's are DRY
     then:
       - if:
           condition: # Is more than one one bucket is DRY, the Bucket 1 beeps will be played only
-            lambda: | 
+            lambda: |
               return (id(bucket1_state_sensor).state == "DRY");
           then:
-            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e,p,p,e"  # 3 beeps +  pause + 1 beep
+            - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e,p,p,e" # 3 beeps +  pause + 1 beep
       - if:
           condition:
-            lambda: | 
+            lambda: |
               return (id(bucket2_state_sensor).state == "DRY");
           then:
             - rtttl.play: "alert:d=,o=6,b=120:e,p,e,p,e,p,p,e,p,e" # 3 beeps + pause + 2 beeps
@@ -267,18 +266,18 @@ sensor:
       - calibrate_linear:
           - -117400 -> 0 #Raw reading when the weight sensor has no weight on it
           - -498723 -> 3 #Raw reading of an object with a known wight
-      - delta: 0.05  # Only update if the change is greater than 0.05 kg
-  - platform: template  #How much water is remaining in the bucket  (Weight - DRY weight)
+      - delta: 0.05 # Only update if the change is greater than 0.05 kg
+  - platform: template #How much water is remaining in the bucket  (Weight - DRY weight)
     id: bucket1_remaining_weight
     name: "Bucket1 Remaining Weight"
     unit_of_measurement: "kg"
     accuracy_decimals: 1
     icon: "mdi:water-sync"
     lambda: |-
-         return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
+      return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
     update_interval: 5s
     filters:
-    - delta: 0.1  # Only update if the change is greater than 0.05 kg
+      - delta: 0.1 # Only update if the change is greater than 0.05 kg
   #Bucket 2
   - platform: template
     id: bucket2_dry_weight
@@ -306,7 +305,7 @@ sensor:
       - calibrate_linear:
           - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
           - -294500 -> 3 #Raw reading of an object with a known wight
-      - delta: 0.05  # Only update if the change is greater than 0.01 kg
+      - delta: 0.05 # Only update if the change is greater than 0.01 kg
   - platform: template
     id: bucket2_remaining_weight
     name: "Bucket2 Remaining Weight"
@@ -317,7 +316,7 @@ sensor:
       return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
     update_interval: 5s
     filters:
-    - delta: 0.1  # Only update if the change is greater than 0.01 kg
+      - delta: 0.1 # Only update if the change is greater than 0.01 kg
   #Internal temperature sensor
   - platform: internal_temperature
     name: "Internal temp"
@@ -328,7 +327,7 @@ sensor:
     accuracy_decimals: 1
     update_interval: 60s
     filters:
-      - delta: 0.1  # Only update if the change is greater than 0.1 °C
+      - delta: 0.1 # Only update if the change is greater than 0.1 °C
     #  - sliding_window_moving_average:
     #      window_size: 15
     #      send_every: 15
