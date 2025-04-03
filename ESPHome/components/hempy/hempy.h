@@ -71,7 +71,6 @@ namespace esphome
       uint AverageCurrent = 0;                   // Keeps track of the next array item to update (to be used in circular buffer)
       float AverageTotal = 0;                    // Sum of the readings stored in AverageReadings
       bool AverageReset = true;                  // At first run (or when Reset=true), the average is (re)set as the NewValue
-
     };
 
   } // namespace hempy

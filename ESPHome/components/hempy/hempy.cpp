@@ -16,6 +16,7 @@ namespace esphome
     void HempyBucket::update()
     {
       AverageWeight = update_average(WeightSensor->state);
+      update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
       ESP_LOGI("hempy", "%s State: %s, Weight: %.2fkg (Average: %.1f, Increment: %.1f, Max: %.1f), Drain:%.1fkg (%.0fsec), Evaporation:%.1fkg (Dry: %.2fkg, Wet: %.2fkg)",
                Name.c_str(), to_text_state(State), WeightSensor->state, AverageWeight, WateringIncrement->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight->state, WetWeight->state);
@@ -30,7 +31,6 @@ namespace esphome
 
     float HempyBucket::get_average_weight()
     {
-
       return AverageWeight;
     }
 
@@ -79,7 +79,7 @@ namespace esphome
         }
         break;
       case HempyStates::IDLE:
-        if (WaterPump->state)  
+        if (WaterPump->state)
           WaterPump->turn_off();
         if (State != NewState)                    // When the state just changed
           update_interval(DefaultUpdateInterval); // Restore the original update_interval from YAML
@@ -95,14 +95,10 @@ namespace esphome
           update_interval(1000);              // 1sec - Speed up calling update()
           StateWeight = WeightSensor->state;  // Store the bucket weight before starting the pump
           if (State != HempyStates::DRAINING) // First time entering the WATERING-DRAINING cycles
-          {
-            PumpOnTimer = CurrentTime; /// Start measuring the pump ON time for this cycle
+          {            
             WateringTimer = 0;         /// Reset the counter that tracks the total pump ON time during the watering process (multiple WATERING-DRAINING cycles)
           }
-          if (State == HempyStates::DRAINING) /// The WATERING-DRAINING cycles are already in progress
-          {
-            PumpOnTimer = CurrentTime; /// Start measuring the pump ON time for this cycle
-          }
+          PumpOnTimer = CurrentTime;
           WaterPump->turn_on();
         }
         if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= StateWeight + WateringIncrement->state && WeightSensor->state >= WetWeight->state)) // Max weight reached OR (WateringIncrement's worth of water was added AND WetWeight is reached), wait for it to drain
@@ -239,7 +235,6 @@ namespace esphome
           DryWeight->publish_state(NewDryWeight); // use the new calculated watering weight
         else
           DryWeight->publish_state(StartWateringWeight->state); // use the Start Weight from the UI
-
         ESP_LOGI("hempy", "%s Next watering weight: %.2f", Name.c_str(), DryWeight->state);
       }
     }
@@ -268,10 +263,9 @@ namespace esphome
           AverageReadings[AverageCurrent] = NewValue;
         }
         AverageCurrent = (AverageCurrent + 1) % AverageQueueSize;
-
-        //ESP_LOGD("hempy", "Debug: NewValue=%.2f, AverageWeight=%.2f, AverageTotal=%.2f, AverageQueueSize=%d, AverageCurrent=%d,AverageReset=%d, Readings=[%.2f, %.2f, %.2f, %.2f, %.2f]",
-        //         NewValue, AverageWeight, AverageTotal, AverageQueueSize, AverageCurrent, AverageReset,
-        //         AverageReadings[0], AverageReadings[1], AverageReadings[2], AverageReadings[3], AverageReadings[4]);
+        // ESP_LOGD("hempy", "Debug: NewValue=%.2f, AverageWeight=%.2f, AverageTotal=%.2f, AverageQueueSize=%d, AverageCurrent=%d,AverageReset=%d, Readings=[%.2f, %.2f, %.2f, %.2f, %.2f]",
+        //          NewValue, AverageWeight, AverageTotal, AverageQueueSize, AverageCurrent, AverageReset,
+        //          AverageReadings[0], AverageReadings[1], AverageReadings[2], AverageReadings[3], AverageReadings[4]);
         return AverageTotal / AverageQueueSize;
       }
     }
