@@ -1,7 +1,13 @@
 <map id="esphome::hempy::HempyBucket::update" name="esphome::hempy::HempyBucket::update">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,239,77"/>
-<area shape="rect" id="Node000002" href="$classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="287,5,520,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,41,273,38,273,43,239,47"/>
-<area shape="rect" id="Node000003" href="$classesphome_1_1hempy_1_1HempyBucket.html#aace94254a3836be32da91e92771b2e59" title=" " alt="" coords="287,69,520,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,68,273,72,273,77,238,73"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,22,239,62"/>
+<area shape="rect" id="Node000002" href="$classesphome_1_1hempy_1_1HempyBucket.html#a122db46da9819a020b012ad62f5e9e32" title=" " alt="" coords="568,6,801,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,20,286,8,355,3,425,3,554,10,554,15,424,8,355,9,287,13,210,25"/>
+<area shape="rect" id="Node000003" href="$classesphome_1_1hempy_1_1HempyBucket.html#aace94254a3836be32da91e92771b2e59" title=" " alt="" coords="287,22,520,62"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,40,273,40,273,45,239,45"/>
+<area shape="rect" id="Node000004" href="$classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9" title=" " alt="" coords="287,110,520,150"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="188,60,326,104,324,109,186,65"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="457,108,616,49,618,54,459,113"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="352,111,348,101,357,91,375,86,403,84,436,87,453,94,451,99,434,92,403,89,376,91,360,96,354,102,357,109"/>
+<area shape="rect" id="Node000005" href="$classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9" title=" " alt="" coords="568,110,801,150"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="520,128,554,128,554,133,520,133"/>
 </map>
