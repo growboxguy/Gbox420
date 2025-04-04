@@ -33,10 +33,10 @@ wifi:
   power_save_mode: none
   fast_connect: true
   reboot_timeout: 30min
-  manual_ip:
-    static_ip: 192.168.1.42
-    gateway: 192.168.1.1 #Router's IP
-    subnet: 255.255.255.0 #Network mask
+  #manual_ip:
+    #static_ip: 192.168.1.42
+    #gateway: 192.168.1.1 #Router's IP
+    #subnet: 255.255.255.0 #Network mask
 
   # Enable fallback hotspot in case wifi connection fails
   ap:
