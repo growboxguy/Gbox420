@@ -235,35 +235,3 @@ views:
           entity: sensor.bitgate_internal_temp
           detail: 1
           hours_to_show: 168
-  - type: masonry
-    path: ""
-    cards:
-      - type: vertical-stack
-        cards:
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: toggle
-            name: Gate
-            icon: mdi:gate
-            icon_height: 64px
-            hold_action:
-              action: none
-            entity: button.bitgate_gate
-          - type: entities
-            entities:
-              - type: weblink
-                name: Gbox420 - Gate opener
-                url: https://sites.google.com/site/growboxguy/gate
-              - entity: sensor.bitgate_internal_temp
-                secondary_info: last-updated
-                name: Internal temp
-            state_color: false
-            footer:
-              type: graph
-              entity: sensor.bitgate_internal_temp
-    title: Gate
-    icon: mdi:gate
-    visible:
-      - user: 91fcf5e2f507482b9009b230a1fca00a
