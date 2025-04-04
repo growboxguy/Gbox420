@@ -9,10 +9,10 @@ esphome:
     priority: 10
     then:
       - output.turn_off: relay
-
+  
 rp2040:
   board: rpipicow
-
+  
 # Enable logging
 logger:
   level: DEBUG
