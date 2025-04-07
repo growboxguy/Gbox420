@@ -103,7 +103,7 @@ views:
         footer:
           type: graph
           entity: sensor.hempy_bucket1_weight
-          hours_to_show: 48
+          hours_to_show: 168
           detail: 1
         show_header_toggle: false
         state_color: true
@@ -213,7 +213,7 @@ views:
         footer:
           type: graph
           entity: sensor.hempy_bucket2_weight
-          hours_to_show: 48
+          hours_to_show: 168
           detail: 1
         show_header_toggle: false
         state_color: true
