@@ -328,6 +328,7 @@ sensor:
     update_interval: 60s
     filters:
       - delta: 0.1 # Only update if the change is greater than 0.1 °C
+      - offset: -4.5  # Compensate for the +4.5 °C error
     #  - sliding_window_moving_average:
     #      window_size: 15
     #      send_every: 15
