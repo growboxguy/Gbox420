@@ -77,6 +77,11 @@ namespace esphome
           update_state(HempyStates::IDLE, true);
           BlockOverWritingState = true;
         }
+        if (!AverageReset && (DryWeight->state > 0 && AverageWeight >= DryWeight->state))  //Check if Weight is above dry
+        {
+          update_state(HempyStates::IDLE, true);
+          BlockOverWritingState = true;
+        }
         break;
       case HempyStates::IDLE:
         if (WaterPump->state)
