@@ -66,7 +66,7 @@ namespace esphome
       bool UpdateInProgress = false;                 // True while the state of the hempy bucket is updating (update_state running)
       uint32_t DefaultUpdateInterval = 1000;         // Stores the update_interval set in the YAML file in miliseconds
       float AverageWeight = 0;                       // Stores the last calculated average weight sensor reading
-      static constexpr int AverageQueueSize = 5;     // How many readings to use for average calculation
+      static constexpr int AverageQueueSize = 15;    // How many readings to use for average calculation
       float AverageReadings[AverageQueueSize] = {0}; // Zero initialized array containing the previous readings
       uint AverageCurrent = 0;                       // Keeps track of the next array item to update (to be used in circular buffer)
       float AverageTotal = 0;                        // Sum of the readings stored in AverageReadings

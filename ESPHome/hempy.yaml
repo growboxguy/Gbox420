@@ -271,7 +271,7 @@ sensor:
     id: bucket1_remaining_weight
     name: "Bucket1 Remaining Weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:water-sync"
     lambda: |-
       return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
