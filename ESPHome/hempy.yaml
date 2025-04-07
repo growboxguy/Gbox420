@@ -373,6 +373,20 @@ number:
     optimistic: true
     restore_value: true # Restore the value from flash storage
     initial_value: 16 # Set default value if no value is stored
+    on_value:
+      then:
+        - script.execute: check_wet_weight
+  - platform: template
+    id: bucket1_manual_watering_time # Maximum time in seconds a manual watering should take
+    name: "Bucket1 Manual watering time"
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-refresh-outline"
+    min_value: 0
+    max_value: 60
+    step: 1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 30 # Set default value if no value is stored
   - platform: template
     id: bucket1_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
     name: "Bucket1 pump timeout"
@@ -456,7 +470,21 @@ number:
     step: 0.1
     optimistic: true
     restore_value: true # Restore the value from flash storage
-    initial_value: 16 # Set default value if no value is stored
+    initial_value: 16 # (0.2 liter) Set default value if no value is stored
+    on_value:
+      then:
+        - script.execute: check_wet_weight
+  - platform: template
+    id: bucket2_manual_watering_time # Maximum time in seconds a manual watering should take
+    name: "Bucket2 Manual watering time"
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-refresh-outline"
+    min_value: 0
+    max_value: 60
+    step: 1
+    optimistic: true
+    restore_value: true # Restore the value from flash storage
+    initial_value: 30 # Set default value if no value is stored
   - platform: template
     id: bucket2_pump_timeout # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
     name: "Bucket2 pump timeout"
@@ -505,6 +533,23 @@ number:
       - lambda: |-
           id(bucket2).update_evaportation_target(id(bucket2_evaporation_target_weight).state);
 
+script:
+  - id: check_wet_weight
+    then:
+      # Check bucket1 wet weight against its max weight
+      - if:
+          condition:
+            lambda: 'return id(bucket1_wet_weight).state > id(bucket1_max_watering_weight).state;'
+          then:
+            - lambda: 'id(bucket1_wet_weight).publish_state(id(bucket1_max_watering_weight).state);'
+
+      # Check bucket2 wet weight against its max weight
+      - if:
+          condition:
+            lambda: 'return id(bucket2_wet_weight).state > id(bucket2_max_watering_weight).state;'
+          then:
+            - lambda: 'id(bucket2_wet_weight).publish_state(id(bucket2_max_watering_weight).state);'
+
 hempy:
   buckets:
     - id: bucket1
@@ -514,6 +559,7 @@ hempy:
       start_watering_weight: bucket1_start_watering_weight
       watering_increments: bucket1_watering_increments
       max_watering_weight: bucket1_max_watering_weight
+      manual_watering_time: bucket1_manual_watering_time
       pump_timeout: bucket1_pump_timeout
       drain_wait_time: bucket1_drain_wait_time
       drain_target_weight: bucket1_drain_target_weight
@@ -529,6 +575,7 @@ hempy:
       start_watering_weight: bucket2_start_watering_weight
       watering_increments: bucket2_watering_increments
       max_watering_weight: bucket2_max_watering_weight
+      manual_watering_time: bucket2_manual_watering_time
       pump_timeout: bucket2_pump_timeout
       drain_wait_time: bucket2_drain_wait_time
       drain_target_weight: bucket2_drain_target_weight

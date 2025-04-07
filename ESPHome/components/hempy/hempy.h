@@ -25,7 +25,7 @@ namespace esphome
     class HempyBucket : public PollingComponent
     {
     public:
-      HempyBucket(std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *dry_weight, sensor::Sensor *wet_weight, switch_::Switch *waterPump, uint32_t update_interval) : PollingComponent(update_interval), DefaultUpdateInterval(update_interval), Name(name), StateSensor(state_sensor), WeightSensor(weight_sensor), StartWateringWeight(start_watering_weight), WateringIncrement(watering_increments), MaxWateringWeight(max_watering_weight), MaxWateringTime(pump_timeout), DrainWaitTime(drain_wait_time), DrainTargetWeight(drain_target_weight), EvaporationTargetWeight(evaporation_target_weight), DryWeight(dry_weight), WetWeight(wet_weight), WaterPump(waterPump) {}
+      HempyBucket(std::string name, text_sensor::TextSensor *state_sensor, hx711::HX711Sensor *weight_sensor, number::Number *start_watering_weight, number::Number *watering_increments, number::Number *max_watering_weight, number::Number *manual_watering_time, number::Number *pump_timeout, number::Number *drain_wait_time, number::Number *drain_target_weight, number::Number *evaporation_target_weight, sensor::Sensor *dry_weight, sensor::Sensor *wet_weight, switch_::Switch *waterPump, uint32_t update_interval) : PollingComponent(update_interval), DefaultUpdateInterval(update_interval), Name(name), StateSensor(state_sensor), WeightSensor(weight_sensor), StartWateringWeight(start_watering_weight), WateringIncrement(watering_increments), MaxWateringWeight(max_watering_weight), ManualWateringTime(manual_watering_time), MaxWateringTime(pump_timeout), DrainWaitTime(drain_wait_time), DrainTargetWeight(drain_target_weight), EvaporationTargetWeight(evaporation_target_weight), DryWeight(dry_weight), WetWeight(wet_weight), WaterPump(waterPump) {}
       void setup() override;
       void update() override;
       void refresh();                             // Update the weight sensor before calling update()
@@ -52,12 +52,15 @@ namespace esphome
       number::Number *WateringIncrement;             // How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
       number::Number *MaxWateringWeight;             // Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
       number::Number *MaxWateringTime;               // Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+      number::Number *ManualWateringTime;            // Maximum time a manual watering from DRY Weight to Wet or Max weight can take in seconds
       number::Number *DrainWaitTime;                 // How long to wait between watering cycles for the water to drain in to the waste reservoir
       number::Number *DrainTargetWeight;             // Target weight reduction before watering is considered complete (drain-to-waste system)
       number::Number *EvaporationTargetWeight;       // How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight. Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
       switch_::Switch *WaterPump;                    // Reference to the relay controlling the water pump
       sensor::Sensor *DryWeight;                     // Start watering when bucket weight drops below (Initially equals to StartWateringWeight, then calculated after each watering using EvaporationTargetWeight)
       sensor::Sensor *WetWeight;                     // Weight measured after watering
+      bool ManualWateringDetected = false;           // Set to true in DRY state, when weight increase is detected (manual watering in progress)
+      uint32_t ManualWateringStarted = 0;           // Stores when the manual watering has started (When weight starts to increase in DRY mode)
       uint32_t StateTimer = 0;                       // Track how much time is spent in one State
       uint32_t PumpOnTimer = 0;                      // Track how long watering pump is on continuously (one water-drain cycle)
       uint32_t WateringTimer = 0;                    // Track how long watering pump is on in total (all water-drain cycles)

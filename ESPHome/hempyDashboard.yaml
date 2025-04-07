@@ -71,13 +71,13 @@ views:
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
-                entity: number.hempy_bucket1_watering_increments
-                name: Watering increment
+                entity: number.hempy_bucket1_max_watering_weight
+                name: Max weight
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
-                entity: number.hempy_bucket1_max_watering_weight
-                name: Max weight
+                entity: number.hempy_bucket1_watering_increments
+                name: Watering increment
                 delay: 5000
                 speed: 250
               - type: custom:numberbox-card
@@ -98,6 +98,11 @@ views:
               - type: custom:numberbox-card
                 entity: number.hempy_bucket1_pump_timeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket1_manual_watering_time
+                name: Manual watering
                 delay: 5000
                 speed: 250
         footer:
@@ -208,6 +213,11 @@ views:
               - type: custom:numberbox-card
                 entity: number.hempy_bucket2_pump_timeout
                 name: Pump timeout
+                delay: 5000
+                speed: 250
+              - type: custom:numberbox-card
+                entity: number.hempy_bucket2_manual_watering_time
+                name: Manual watering
                 delay: 5000
                 speed: 250
         footer:

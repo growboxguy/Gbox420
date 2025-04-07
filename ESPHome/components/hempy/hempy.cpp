@@ -77,10 +77,19 @@ namespace esphome
           update_state(HempyStates::IDLE, true);
           BlockOverWritingState = true;
         }
-        if (!AverageReset && (DryWeight->state > 0 && AverageWeight >= DryWeight->state))  //Check if Weight is above dry
+        if (!ManualWateringDetected && DryWeight->state > 0 && WeightSensor->state > DryWeight->state && AverageWeight < WeightSensor->state)
         {
-          update_state(HempyStates::IDLE, true);
-          BlockOverWritingState = true;
+          ManualWateringDetected = true;
+          ManualWateringStarted = millis();
+        }
+        if (ManualWateringDetected && CurrentTime - ManualWateringStarted >= ManualWateringTime->state * 1000)
+        {
+          ManualWateringDetected = false;
+          if (!AverageReset && DryWeight->state > 0 && AverageWeight >= DryWeight->state)
+          {
+            update_state(HempyStates::IDLE, true);
+            BlockOverWritingState = true;
+          }
         }
         break;
       case HempyStates::IDLE:
@@ -100,8 +109,8 @@ namespace esphome
           update_interval(1000);              // 1sec - Speed up calling update()
           StateWeight = WeightSensor->state;  // Store the bucket weight before starting the pump
           if (State != HempyStates::DRAINING) // First time entering the WATERING-DRAINING cycles
-          {            
-            WateringTimer = 0;         /// Reset the counter that tracks the total pump ON time during the watering process (multiple WATERING-DRAINING cycles)
+          {
+            WateringTimer = 0; /// Reset the counter that tracks the total pump ON time during the watering process (multiple WATERING-DRAINING cycles)
           }
           PumpOnTimer = CurrentTime;
           WaterPump->turn_on();
