@@ -244,13 +244,13 @@ sensor:
     id: bucket1_dry_weight
     name: "Bucket1 Dry weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:cup-outline"
   - platform: template
     id: bucket1_wet_weight
     name: "Bucket1 Wet weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:cup"
   - platform: hx711
     id: bucket1_weight_sensor
@@ -283,13 +283,13 @@ sensor:
     id: bucket2_dry_weight
     name: "Bucket2 Dry weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:cup-outline"
   - platform: template
     id: bucket2_wet_weight
     name: "Bucket2 Wet weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:cup"
   - platform: hx711
     id: bucket2_weight_sensor
@@ -310,7 +310,7 @@ sensor:
     id: bucket2_remaining_weight
     name: "Bucket2 Remaining Weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     icon: "mdi:water-sync"
     lambda: |-
       return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
@@ -324,7 +324,7 @@ sensor:
     icon: "mdi:thermometer"
     device_class: "temperature"
     state_class: "measurement"
-    accuracy_decimals: 1
+    accuracy_decimals: 2
     update_interval: 60s
     filters:
       - delta: 0.1 # Only update if the change is greater than 0.1 °C
