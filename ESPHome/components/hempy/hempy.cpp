@@ -36,10 +36,10 @@ namespace esphome
 
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
     {
-      this->set_update_interval(miliseconds);
+      this->set_update_interval(miliseconds);  //Apply to HempyBucket
       this->stop_poller(); // To apply the changes must restart the poller
       this->start_poller();
-      WeightSensor->set_update_interval(miliseconds);
+      WeightSensor->set_update_interval(miliseconds); //Apply to WeightSensor
       WeightSensor->stop_poller();
       WeightSensor->start_poller();
     }

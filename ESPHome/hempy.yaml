@@ -328,7 +328,9 @@ sensor:
     update_interval: 60s
     filters:
       - delta: 0.1 # Only update if the change is greater than 0.1 °C
-    #  - offset: -4.5  # Compensate for the +4.5 °C error
+      - calibrate_linear: # Calibrate internal temp reading to ambient temperature, Sensor reading at two different known ambient temps, large temperature difference is best)
+          - 21.5 -> 7.0
+          - 24.3 -> 20.1
     #  - sliding_window_moving_average:
     #      window_size: 15
     #      send_every: 15
