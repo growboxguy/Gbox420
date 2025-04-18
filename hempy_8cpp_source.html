@@ -149,10 +149,10 @@ $(document).ready(function(){initNavTree('hempy_8cpp_source.html',''); initResiz
 <div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">   37</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9">HempyBucket::update_interval</a>(uint32_t miliseconds) <span class="comment">// Update the Polling frequency -&gt; how often should update() run</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      this-&gt;set_update_interval(miliseconds);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      this-&gt;set_update_interval(miliseconds);  <span class="comment">//Apply to HempyBucket</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      this-&gt;stop_poller(); <span class="comment">// To apply the changes must restart the poller</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      this-&gt;start_poller();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      WeightSensor-&gt;set_update_interval(miliseconds);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      WeightSensor-&gt;set_update_interval(miliseconds); <span class="comment">//Apply to WeightSensor</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      WeightSensor-&gt;stop_poller();</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      WeightSensor-&gt;start_poller();</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
