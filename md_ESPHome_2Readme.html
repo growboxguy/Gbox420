@@ -101,15 +101,14 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Welcome to the <b>ESPHome version</b> of the Gbox420 project. <br  />
- This is a full rewrite of the original C implementation, designed to run on a Raspberry Pi Pico W (or ESP8266/ESP32) using the <a href="https://esphome.io">ESPHome</a> platform. <a href="https://sites.google.com/site/growboxguy/esphome">Project Info &amp; Setup Guide</a></p>
-<p>Modules: Gate opener(new) - Open/Close gate or garage door with a virtual button for Home Assistant Hempy module - Wight based watering system for Hempy buckets (normal buckets without drainage also supported) with interactive Home Assistant Dashboard</p>
-<p>Remaining: Main - For measuring and controlling AC power (Lights,fans,AC-DC adapters) Aeroponics - Control aeroponics tote (Solenoids, Pressure pump, pressure sensor) Reservoir - Monitor water reservoir (Weight, PH, TDS, Auto dosing nutrients) Paradox serial relay(new) - Create a serial bridge between Home Assistant and a Paradox alarm system using <a href="https://github.com/ParadoxAlarmInterface">PAI</a> (Supported [Systems]: <a href="https://github.com/ParadoxAlarmInterface/pai/wiki/Compatibility">https://github.com/ParadoxAlarmInterface/pai/wiki/Compatibility</a> ) TODO: Move the links to SerialRelay.yaml</p>
+ This is a full rewrite of the original C implementation, designed to run on a Raspberry Pi Pico W (or ESP8266/ESP32) using the <a href="https://esphome.io">ESPHome</a> platform.<br  />
+<a href="https://sites.google.com/site/growboxguy/esphome">Project Info &amp; Setup Guide</a></p>
 <h1>Modules</h1>
 <ul>
 <li><b>Gate Opener (new):</b> Open/close a gate or garage door via a virtual Home Assistant button</li>
 <li><b>Hempy Module:</b> Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
 </ul>
-<h2>🧪 In Progress / Planned:</h2>
+<h2>In Progress / Planned:</h2>
 <ul>
 <li><b>Main:</b> Monitor and control AC power (lights, fans, DC adapters)</li>
 <li><b>Aeroponics:</b> Manage an aeroponics tote (solenoids, pump, pressure sensor, temp sensor)</li>
@@ -130,11 +129,19 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 </ul>
 <hr  />
 <h1>Getting Started</h1>
-<p>0. Verify you have Python, Python Package Manager and ESPHome installed (Guide: <a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q">ESPHome Setup</a>) python &ndash;version pip &ndash;version esphome &ndash;version</p><ol type="1">
+<p><b>Guide:</b> <a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q">ESPHome Setup</a></p>
+<p>0. Verify you have Python, Python Package Manager and ESPHome installed python &ndash;version<br  />
+ pip &ndash;version<br  />
+ esphome &ndash;version<br  />
+</p><ol type="1">
 <li>Copy this folder into your ESPHome config directory</li>
 <li>Customize the YAML files for your setup</li>
 <li>Append secrets_XXXX.yaml file content to your own secrets.yaml</li>
-<li>Build and flash using ESPHome: esphome run gate.yaml The above command runs all the below commands: esphome compile gate.yaml esphome upload gate.yaml esphome logs gate.yaml <br  />
+<li>Build and flash using ESPHome:<br  />
+ esphome run gate.yaml The above command runs all the below commands:<br  />
+ esphome compile gate.yaml<br  />
+ esphome upload gate.yaml<br  />
+ esphome logs gate.yaml <br  />
  </li>
 </ol>
 </div></div><!-- contents -->
