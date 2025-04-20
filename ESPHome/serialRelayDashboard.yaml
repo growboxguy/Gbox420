@@ -1,0 +1,16 @@
+square: false
+type: grid
+columns: 2
+cards:
+  - states:
+      - arm_home
+      - arm_away
+      - arm_night
+    type: alarm-panel
+    entity: alarm_control_panel.sp4000_partition_home
+    name: Home
+  - states:
+      - arm_away
+    type: alarm-panel
+    entity: alarm_control_panel.sp4000_partition_garage
+    name: "Garage"

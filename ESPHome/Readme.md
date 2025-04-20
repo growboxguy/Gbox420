@@ -20,6 +20,11 @@ This is a full rewrite of the original C implementation, designed to run on a Ra
 - `gateDashboard.yaml` – Home Assistant dashboard for Gate Opener  
 - `secrets_gate.yaml` – Gate-specific section for your `secrets.yaml`  
 
+### Serial relay - Paradox Alarm Interface
+- `serialRelay.yaml` – ESPHome config for Serial relay between Paradox alarm panel and Home Assistant - Paradox Alarm Interface  
+- `serialRelayDashboard.yaml` – Home Assistant dashboard for the Paradox alarm 
+- `secrets_serialRelay.yaml` – Gate-specific section for your `secrets.yaml`  
+
 ### Hempy Module
 - `hempy.yaml` – ESPHome config for Hempy Module (uses external component from `components/hempy` or [GitHub](https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy))  
 - `components/hempy/__init__.py` – Maps ESPHome YAML config to C++ logic  
