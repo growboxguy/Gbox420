@@ -5,8 +5,8 @@ This is a full rewrite of the original C implementation, designed to run on a Ra
 
 ## Modules
 
-- **Gate Opener (new):** Open/close a gate or garage door via a virtual Home Assistant button
-- **Hempy Module:** Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration
+- **[Gate Opener](https://sites.google.com/site/growboxguy/esphome/esphome_gate):** Open/close a gate or garage door via a virtual Home Assistant button
+- **[Hempy Module](https://sites.google.com/site/growboxguy/esphome/esphome_hempy)** Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration
 
 ### In Progress / Planned:
 - **Main:** Monitor and control AC power (lights, fans, DC adapters)
@@ -14,17 +14,21 @@ This is a full rewrite of the original C implementation, designed to run on a Ra
 - **Reservoir:** Monitor reservoir weight, pH, TDS, and auto-dosing nutrients
 - **Paradox Serial Relay (new):** Serial bridge for Paradox alarm systems using [PAI](https://github.com/ParadoxAlarmInterface/pai)  TODO: Move relevant links to `SerialRelay.yaml`
 
-##  Folder Structure
+## 📁 Folder Structure
 
-- `gate.yaml` – ESPHome config for Gate Opener
-- `gateDashboard.yaml` – Home Assistant dashboard for Gate Opener
-- `hempy.yaml` – ESPHome config for Hempy Module (uses external component from `components/hempy`) or [GitHub](https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
-- `components/hempy/__init__.py` – Maps ESPHome YAML config to C++ logic
-- `components/hempy/hempy.cpp` – Watering logic (C++)
-- `components/hempy/hempy.h` – Header file
-- `hempyAutomation.yaml` – Home Assistant automation for mobile phone +  for HA system notifications
-- `hempyDashboard.yaml` – Home Assistant dashboard for Hempy Module
-- `secrets_gate.yaml`, `secrets_hempy.yaml` – Device-specific sections for your `secrets.yaml`
+### 🚪 Gate Module
+- `gate.yaml` – ESPHome config for Gate Opener  
+- `gateDashboard.yaml` – Home Assistant dashboard for Gate Opener  
+- `secrets_gate.yaml` – Gate-specific section for your `secrets.yaml`  
+
+### 🌱 Hempy Module
+- `hempy.yaml` – ESPHome config for Hempy Module (uses external component from `components/hempy` or [GitHub](https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy))  
+- `components/hempy/__init__.py` – Maps ESPHome YAML config to C++ logic  
+- `components/hempy/hempy.cpp` – Watering logic (C++)  
+- `components/hempy/hempy.h` – Header file  
+- `hempyAutomation.yaml` – Home Assistant automation for mobile phone + HA system notifications  
+- `hempyDashboard.yaml` – Home Assistant dashboard for Hempy Module  
+- `secrets_hempy.yaml` – Hempy-specific section for your `secrets.yaml`  
 
 ---
 
@@ -33,15 +37,15 @@ This is a full rewrite of the original C implementation, designed to run on a Ra
 **Guide:** [ESPHome Setup](https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q)
 
 0. Verify you have Python, Python Package Manager and ESPHome installed
-    python --version<br/>
-    pip --version<br/>
-    esphome --version<br/>
+    **python --versio**<br/>
+    **pip --version**<br/>
+    **esphome --version**<br/>
 1. Copy this folder into your ESPHome config directory
 2. Customize the YAML files for your setup
-3. Append secrets_XXXX.yaml file content to your own secrets.yaml
-4. Build and flash using ESPHome:<br/>
-   esphome run gate.yaml
+3. Append **secrets_XXXX.yaml** file content to your own **secrets.yaml**
+4. Build and flash using the following Command Prompt commands<br/>
+   **esphome run gate.yaml**<br/>
    The above command runs all the below commands:<br/>
-    esphome compile gate.yaml<br/>
-    esphome upload gate.yaml<br/>
-    esphome logs gate.yaml       
+    **esphome compile gate.yaml**<br/>
+    **esphome upload gate.yaml**<br/>
+    **esphome logs gate.yaml**       
