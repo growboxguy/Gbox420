@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <a href="https://sites.google.com/site/growboxguy/esphome">Project Info &amp; Setup Guide</a></p>
 <h1>Modules</h1>
 <ul>
-<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_gate">Gate Opener</a>:</b> Open/close a gate or garage door via a virtual Home Assistant button</li>
-<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy">Hempy Module</a></b> Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
+<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_gate">Gate Opener</a></b> - Open/close a gate or garage door via a virtual Home Assistant button</li>
+<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy">Hempy Module</a></b> - Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
 </ul>
 <h2>In Progress / Planned:</h2>
 <ul>
@@ -115,8 +115,8 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <li><b>Reservoir:</b> Monitor reservoir weight, pH, TDS, and auto-dosing nutrients</li>
 <li><b>Paradox Serial Relay (new):</b> Serial bridge for Paradox alarm systems using <a href="https://github.com/ParadoxAlarmInterface/pai">PAI</a> TODO: Move relevant links to <code>SerialRelay.yaml</code></li>
 </ul>
-<h1>📁 Folder Structure</h1>
-<h2>🚪 Gate Module</h2>
+<h1>Folder Structure</h1>
+<h2>Gate Module</h2>
 <ul>
 <li><code>gate.yaml</code> – ESPHome config for Gate Opener <br  />
 </li>
@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <li><code>secrets_gate.yaml</code> – Gate-specific section for your <code>secrets.yaml</code> <br  />
 </li>
 </ul>
-<h2>🌱 Hempy Module</h2>
+<h2>Hempy Module</h2>
 <ul>
 <li><code>hempy.yaml</code> – ESPHome config for Hempy Module (uses external component from <code>components/hempy</code> or <a href="https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy">GitHub</a>) <br  />
 </li>
@@ -145,7 +145,8 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <hr  />
 <h1>Getting Started</h1>
 <p><b>Guide:</b> <a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q">ESPHome Setup</a></p>
-<p>0. Verify you have Python, Python Package Manager and ESPHome installed <b>python &ndash;versio</b><br  />
+<p>0. Verify you have Python, Python Package Manager and ESPHome installed<br  />
+ <b>python &ndash;versio</b><br  />
  <b>pip &ndash;version</b><br  />
  <b>esphome &ndash;version</b><br  />
 </p><ol type="1">
@@ -154,6 +155,7 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <li>Append <b>secrets_XXXX.yaml</b> file content to your own <b>secrets.yaml</b></li>
 <li>Build and flash using the following Command Prompt commands<br  />
  <b>esphome run gate.yaml</b><br  />
+<br  />
  The above command runs all the below commands:<br  />
  <b>esphome compile gate.yaml</b><br  />
  <b>esphome upload gate.yaml</b><br  />
