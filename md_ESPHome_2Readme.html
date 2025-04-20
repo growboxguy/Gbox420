@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <a href="https://sites.google.com/site/growboxguy/esphome">Project Info &amp; Setup Guide</a></p>
 <h1>Modules</h1>
 <ul>
-<li><b>Gate Opener (new):</b> Open/close a gate or garage door via a virtual Home Assistant button</li>
-<li><b>Hempy Module:</b> Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
+<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_gate">Gate Opener</a>:</b> Open/close a gate or garage door via a virtual Home Assistant button</li>
+<li><b><a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy">Hempy Module</a></b> Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
 </ul>
 <h2>In Progress / Planned:</h2>
 <ul>
@@ -115,33 +115,49 @@ $(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResi
 <li><b>Reservoir:</b> Monitor reservoir weight, pH, TDS, and auto-dosing nutrients</li>
 <li><b>Paradox Serial Relay (new):</b> Serial bridge for Paradox alarm systems using <a href="https://github.com/ParadoxAlarmInterface/pai">PAI</a> TODO: Move relevant links to <code>SerialRelay.yaml</code></li>
 </ul>
-<h1>Folder Structure</h1>
+<h1>📁 Folder Structure</h1>
+<h2>🚪 Gate Module</h2>
 <ul>
-<li><code>gate.yaml</code> – ESPHome config for Gate Opener</li>
-<li><code>gateDashboard.yaml</code> – Home Assistant dashboard for Gate Opener</li>
-<li><code>hempy.yaml</code> – ESPHome config for Hempy Module (uses external component from <code>components/hempy</code>) or <a href="https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy">GitHub</a></li>
-<li><code><a class="el" href="____init_____8py.html">components/hempy/__init__.py</a></code> – Maps ESPHome YAML config to C++ logic</li>
-<li><code><a class="el" href="hempy_8cpp.html">components/hempy/hempy.cpp</a></code> – Watering logic (C++)</li>
-<li><code><a class="el" href="hempy_8h.html">components/hempy/hempy.h</a></code> – Header file</li>
-<li><code>hempyAutomation.yaml</code> – Home Assistant automation for mobile phone + for HA system notifications</li>
-<li><code>hempyDashboard.yaml</code> – Home Assistant dashboard for Hempy Module</li>
-<li><code>secrets_gate.yaml</code>, <code>secrets_hempy.yaml</code> – Device-specific sections for your <code>secrets.yaml</code></li>
+<li><code>gate.yaml</code> – ESPHome config for Gate Opener <br  />
+</li>
+<li><code>gateDashboard.yaml</code> – Home Assistant dashboard for Gate Opener <br  />
+</li>
+<li><code>secrets_gate.yaml</code> – Gate-specific section for your <code>secrets.yaml</code> <br  />
+</li>
+</ul>
+<h2>🌱 Hempy Module</h2>
+<ul>
+<li><code>hempy.yaml</code> – ESPHome config for Hempy Module (uses external component from <code>components/hempy</code> or <a href="https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy">GitHub</a>) <br  />
+</li>
+<li><code><a class="el" href="____init_____8py.html">components/hempy/__init__.py</a></code> – Maps ESPHome YAML config to C++ logic <br  />
+</li>
+<li><code><a class="el" href="hempy_8cpp.html">components/hempy/hempy.cpp</a></code> – Watering logic (C++) <br  />
+</li>
+<li><code><a class="el" href="hempy_8h.html">components/hempy/hempy.h</a></code> – Header file <br  />
+</li>
+<li><code>hempyAutomation.yaml</code> – Home Assistant automation for mobile phone + HA system notifications <br  />
+</li>
+<li><code>hempyDashboard.yaml</code> – Home Assistant dashboard for Hempy Module <br  />
+</li>
+<li><code>secrets_hempy.yaml</code> – Hempy-specific section for your <code>secrets.yaml</code> <br  />
+</li>
 </ul>
 <hr  />
 <h1>Getting Started</h1>
 <p><b>Guide:</b> <a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q">ESPHome Setup</a></p>
-<p>0. Verify you have Python, Python Package Manager and ESPHome installed python &ndash;version<br  />
- pip &ndash;version<br  />
- esphome &ndash;version<br  />
+<p>0. Verify you have Python, Python Package Manager and ESPHome installed <b>python &ndash;versio</b><br  />
+ <b>pip &ndash;version</b><br  />
+ <b>esphome &ndash;version</b><br  />
 </p><ol type="1">
 <li>Copy this folder into your ESPHome config directory</li>
 <li>Customize the YAML files for your setup</li>
-<li>Append secrets_XXXX.yaml file content to your own secrets.yaml</li>
-<li>Build and flash using ESPHome:<br  />
- esphome run gate.yaml The above command runs all the below commands:<br  />
- esphome compile gate.yaml<br  />
- esphome upload gate.yaml<br  />
- esphome logs gate.yaml <br  />
+<li>Append <b>secrets_XXXX.yaml</b> file content to your own <b>secrets.yaml</b></li>
+<li>Build and flash using the following Command Prompt commands<br  />
+ <b>esphome run gate.yaml</b><br  />
+ The above command runs all the below commands:<br  />
+ <b>esphome compile gate.yaml</b><br  />
+ <b>esphome upload gate.yaml</b><br  />
+ <b>esphome logs gate.yaml</b> <br  />
  </li>
 </ol>
 </div></div><!-- contents -->
