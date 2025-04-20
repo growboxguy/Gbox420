@@ -1,0 +1,57 @@
+#WiFi Serial relay for Paradox Alarm Interface(https://github.com/ParadoxAlarmInterface/pai)
+
+esphome:
+  name: SerialRelay
+  friendly_name: Serial relay for Paradox alarm
+
+esp8266:
+  board: d1_mini_pro
+
+#Expose a UART stream over WiFi
+external_components:
+  - source: github://oxan/esphome-stream-server
+
+logger:
+  baud_rate: 0
+  level: DEBUG
+  
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret para_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret para_ota_password
+
+wifi:
+  #use_address: 192.168.1.254
+  ssid: !secret para_wifi_ssid
+  password: !secret para_wifi_password
+  fast_connect: true
+  reboot_timeout: 30min    
+  #manual_ip:
+    #static_ip: 192.168.1.250
+    #gateway: 192.168.1.1 #Router's IP
+    #subnet: 255.255.255.0 #Network mask
+
+uart:
+  id: uart_bus
+  baud_rate: 9600
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+
+#Expose a UART stream over WiFi
+stream_server:
+  uart_id: uart_bus
+  port: 2323
+
+binary_sensor:
+  - platform: stream_server
+    connected:
+      name: Connected
+
+sensor:
+  - platform: stream_server
+    connection_count:
+      name: Number of connections

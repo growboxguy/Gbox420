@@ -5,15 +5,14 @@ This is a full rewrite of the original C implementation, designed to run on a Ra
 
 ## Modules
 
-- **[Gate Opener](https://sites.google.com/site/growboxguy/esphome/esphome_gate)** - Open/close a gate or garage door via a virtual Home Assistant button
+- **[Gate Opener](https://sites.google.com/site/growboxguy/esphome/esphome_gate)** - Open/close a gate or garage door via a virtual button in Home Assistant 
 - **[Hempy Module](https://sites.google.com/site/growboxguy/esphome/esphome_hempy)** - Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration
 
 ### In Progress / Planned:
 - **Main:** Monitor and control AC power (lights, fans, DC adapters)
 - **Aeroponics:** Manage an aeroponics tote (solenoids, pump, pressure sensor, temp sensor)
 - **Reservoir:** Monitor reservoir weight, pH, TDS, and auto-dosing nutrients
-- **Paradox Serial Relay (new):** Serial bridge for Paradox alarm systems using [PAI](https://github.com/ParadoxAlarmInterface/pai)  TODO: Move relevant links to `SerialRelay.yaml`
-
+- **Paradox Serial Relay (new):** Serial bridge for Paradox alarm systems using [PAI](https://github.com/ParadoxAlarmInterface/pai)
 ## Folder Structure
 
 ### Gate Module
