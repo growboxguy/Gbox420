@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Gbox: Main Page</title>
+<title>Gbox: Gbox420 - ESPHome Edition</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_ESPHome_2Readme.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -96,24 +96,49 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Gbox Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Gbox420 - ESPHome Edition</div></div>
 </div><!--header-->
 <div class="contents">
-<ul><li><a href="index.html"><span>Main&#160;Page</span></a>
-</li><li><a href="pages.html"><span>Related&#160;Pages</span></a>
-</li><li><a href="annotated.html"><span>Data&#160;Structures</span></a>
-<ul><li><a href="annotated.html"><span>Data&#160;Structures</span></a>
-</li><li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a>
-</li><li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a>
-</li><li><a href="functions.html"><span>Data&#160;Fields</span></a>
-</li></ul>
-</li><li><a href="files.html"><span>Files</span></a>
-<ul><li><a href="files.html"><span>File&#160;List</span></a>
-</li><li><a href="globals.html"><span>Globals</span></a>
-</li></ul>
-</li></ul>
-</div><!-- contents -->
+<div class="textblock"><p>Welcome to the <b>ESPHome version</b> of the Gbox420 project. <br  />
+ This is a full rewrite of the original C implementation, designed to run on a Raspberry Pi Pico W (or ESP8266/ESP32) using the <a href="https://esphome.io">ESPHome</a> platform. <a href="https://sites.google.com/site/growboxguy/esphome">Project Info &amp; Setup Guide</a></p>
+<p>Modules: Gate opener(new) - Open/Close gate or garage door with a virtual button for Home Assistant Hempy module - Wight based watering system for Hempy buckets (normal buckets without drainage also supported) with interactive Home Assistant Dashboard</p>
+<p>Remaining: Main - For measuring and controlling AC power (Lights,fans,AC-DC adapters) Aeroponics - Control aeroponics tote (Solenoids, Pressure pump, pressure sensor) Reservoir - Monitor water reservoir (Weight, PH, TDS, Auto dosing nutrients) Paradox serial relay(new) - Create a serial bridge between Home Assistant and a Paradox alarm system using <a href="https://github.com/ParadoxAlarmInterface">PAI</a> (Supported [Systems]: <a href="https://github.com/ParadoxAlarmInterface/pai/wiki/Compatibility">https://github.com/ParadoxAlarmInterface/pai/wiki/Compatibility</a> ) TODO: Move the links to SerialRelay.yaml</p>
+<h1>Modules</h1>
+<ul>
+<li><b>Gate Opener (new):</b> Open/close a gate or garage door via a virtual Home Assistant button</li>
+<li><b>Hempy Module:</b> Weight-based watering system for Hempy buckets (supports standard non-draining buckets too) with full HA dashboard integration</li>
+</ul>
+<h2>🧪 In Progress / Planned:</h2>
+<ul>
+<li><b>Main:</b> Monitor and control AC power (lights, fans, DC adapters)</li>
+<li><b>Aeroponics:</b> Manage an aeroponics tote (solenoids, pump, pressure sensor, temp sensor)</li>
+<li><b>Reservoir:</b> Monitor reservoir weight, pH, TDS, and auto-dosing nutrients</li>
+<li><b>Paradox Serial Relay (new):</b> Serial bridge for Paradox alarm systems using <a href="https://github.com/ParadoxAlarmInterface/pai">PAI</a> TODO: Move relevant links to <code>SerialRelay.yaml</code></li>
+</ul>
+<h1>Folder Structure</h1>
+<ul>
+<li><code>gate.yaml</code> – ESPHome config for Gate Opener</li>
+<li><code>gateDashboard.yaml</code> – Home Assistant dashboard for Gate Opener</li>
+<li><code>hempy.yaml</code> – ESPHome config for Hempy Module (uses external component from <code>components/hempy</code>) or <a href="https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy">GitHub</a></li>
+<li><code><a class="el" href="____init_____8py.html">components/hempy/__init__.py</a></code> – Maps ESPHome YAML config to C++ logic</li>
+<li><code><a class="el" href="hempy_8cpp.html">components/hempy/hempy.cpp</a></code> – Watering logic (C++)</li>
+<li><code><a class="el" href="hempy_8h.html">components/hempy/hempy.h</a></code> – Header file</li>
+<li><code>hempyAutomation.yaml</code> – Home Assistant automation for mobile phone + for HA system notifications</li>
+<li><code>hempyDashboard.yaml</code> – Home Assistant dashboard for Hempy Module</li>
+<li><code>secrets_gate.yaml</code>, <code>secrets_hempy.yaml</code> – Device-specific sections for your <code>secrets.yaml</code></li>
+</ul>
+<hr  />
+<h1>Getting Started</h1>
+<p>0. Verify you have Python, Python Package Manager and ESPHome installed (Guide: <a href="https://sites.google.com/site/growboxguy/esphome/esphome_hempy#h.h3ovvputqo8q">ESPHome Setup</a>) python &ndash;version pip &ndash;version esphome &ndash;version</p><ol type="1">
+<li>Copy this folder into your ESPHome config directory</li>
+<li>Customize the YAML files for your setup</li>
+<li>Append secrets_XXXX.yaml file content to your own secrets.yaml</li>
+<li>Build and flash using ESPHome: esphome run gate.yaml The above command runs all the below commands: esphome compile gate.yaml esphome upload gate.yaml esphome logs gate.yaml <br  />
+ </li>
+</ol>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

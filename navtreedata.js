@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Gbox", "index.html", [
+    [ "Gbox420 - ESPHome Edition", "md_ESPHome_2Readme.html", null ],
     [ "Namespace Members", "namespacemembers.html", [
       [ "All", "namespacemembers.html", null ],
       [ "Functions", "namespacemembers_func.html", null ],
@@ -57,7 +58,7 @@ var NAVTREEINDEX =
 [
 "Gbox420__Mega__Main_2SerialLog_8cpp.html",
 "Gbox420__Nano__Reservoir_8ino.html",
-"structSettings_1_1PressurePumpSettings.html#a30866183221909fd13788d768ec831cf"
+"structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
