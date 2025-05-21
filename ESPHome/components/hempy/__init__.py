@@ -32,7 +32,7 @@ HEMPY_BUCKET_SCHEMA = cv.Schema({
 # Configuration schema for the list of HempyBuckets
 CONFIG_SCHEMA = cv.Schema({
     cv.Optional('buckets'): cv.ensure_list(HEMPY_BUCKET_SCHEMA)#,
-    #cv.Optional('active_waterings_limit', default=1): cv.positive_int,
+    cv.Optional('active_waterings_limit', default=1): cv.positive_int
 })
 
 # Code generation for handling multiple HempyBucket instances

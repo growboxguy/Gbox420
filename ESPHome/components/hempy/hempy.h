@@ -47,8 +47,8 @@ namespace esphome
       //static void set_active_waterings_limit(uint32_t limit);  // Called once at boot
 
     private:
-      static uint32_t ActiveWaterings;               // Tracks how many Hempy objects are watering simultaneously
-      static uint32_t ActiveWateringsLimit;          // Max simultaneously running pumps
+      //static uint32_t ActiveWaterings;               // Tracks how many Hempy objects are watering simultaneously
+      //static uint32_t ActiveWateringsLimit;          // Max simultaneously running pumps
       std::string Name;                              // Name of the object
       text_sensor::TextSensor *StateSensor;          // Register a sensor to publish current state: IDLE/WATERING/DRAINING/DISABLED
       hx711::HX711Sensor *WeightSensor;              // Weight sensor object
