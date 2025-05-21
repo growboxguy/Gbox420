@@ -28,7 +28,7 @@ external_components:
       ref: master
       path: ESPHome/components
     components: [hempy]
-    refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
+    refresh: 1sec  #How often to check the GitHub repo for updates. Default 1d
 
 rtttl: #Ring Tone Text Transfer Language -
   id: buzzer_rtttl
