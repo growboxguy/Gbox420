@@ -33,18 +33,22 @@ namespace esphome
       void update_state(HempyStates NewState, bool Force = false);
       const char *to_text_state(HempyStates state);
       bool is_watering_active();
-      void toggle_watering_logic(int8_t RequestedState = -1);   // Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
-      void start_watering();                                    // Start watering (re-enables watering logic)
-      void stop_watering();                                     // Stops watering
-      void toggle_watering();                                   // Triggers watering (re-enables watering logic), or stops watering if it is in progress
-      void disable_watering();                                  // Disable watering logic
-      void update_next_watering_weight(float weight);           // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
-      void update_evaportation_target(float EvaporationTarget); // Recalculates watering weight if WetWeight is known
-      float update_average(float NewValue);                     // Calculate the average of floats passed as NewValue. AverageQueueSize defines how many historical readings to keep
-      float get_average_weight();                               // Returns current Average weight as a float number
-      HempyStates State{HempyStates::IDLE};                     // Stores the current state of the hempy bucket
+      void toggle_watering_logic(int8_t RequestedState = -1);  // Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
+      void start_watering();                                   // Start watering (re-enables watering logic)
+      void stop_watering();                                    // Stops watering
+      void toggle_watering();                                  // Triggers watering (re-enables watering logic), or stops watering if it is in progress
+      void disable_watering();                                 // Disable watering logic
+      void update_next_watering_weight(float weight);          // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
+      void update_evaporation_target(float EvaporationTarget); // Recalculates watering weight if WetWeight is known
+      float update_average(float NewValue);                    // Calculate the average of floats passed as NewValue. AverageQueueSize defines how many historical readings to keep
+      float get_average_weight();                              // Returns current Average weight as a float number
+      HempyStates State{HempyStates::IDLE};                    // Stores the current state of the hempy bucket
+      static void set_active_waterings_limit(uint32_t limit) { ActiveWateringsLimit = limit;}
+      //static void set_active_waterings_limit(uint32_t limit);  // Called once at boot
 
     private:
+      static uint32_t ActiveWaterings;               // Tracks how many Hempy objects are watering simultaneously
+      static uint32_t ActiveWateringsLimit;          // Max simultaneously running pumps
       std::string Name;                              // Name of the object
       text_sensor::TextSensor *StateSensor;          // Register a sensor to publish current state: IDLE/WATERING/DRAINING/DISABLED
       hx711::HX711Sensor *WeightSensor;              // Weight sensor object
@@ -60,7 +64,7 @@ namespace esphome
       sensor::Sensor *DryWeight;                     // Start watering when bucket weight drops below (Initially equals to StartWateringWeight, then calculated after each watering using EvaporationTargetWeight)
       sensor::Sensor *WetWeight;                     // Weight measured after watering
       bool ManualWateringDetected = false;           // Set to true in DRY state, when weight increase is detected (manual watering in progress)
-      uint32_t ManualWateringStarted = 0;           // Stores when the manual watering has started (When weight starts to increase in DRY mode)
+      uint32_t ManualWateringStarted = 0;            // Stores when the manual watering has started (When weight starts to increase in DRY mode)
       uint32_t StateTimer = 0;                       // Track how much time is spent in one State
       uint32_t PumpOnTimer = 0;                      // Track how long watering pump is on continuously (one water-drain cycle)
       uint32_t WateringTimer = 0;                    // Track how long watering pump is on in total (all water-drain cycles)

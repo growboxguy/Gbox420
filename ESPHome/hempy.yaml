@@ -19,16 +19,16 @@ debug:
   update_interval: 60s
 
 external_components:
-  - source: # Use this to load the hempy module from the \components folder (for code customization)
-      type: local
-      path: components
-  #- source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
-  #    type: git
-  #    url: https://github.com/Growboxguy/Gbox420
-  #    ref: master
-  #    path: ESPHome/components
-  #  components: [hempy]
-  #  refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
+  #- source: # Use this to load the hempy module from the \components folder (for code customization)
+  #    type: local
+  #    path: components
+  - source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
+      type: git
+      url: https://github.com/Growboxguy/Gbox420
+      ref: master
+      path: ESPHome/components
+    components: [hempy]
+    refresh: 1d  #How often to check the GitHub repo for updates. Default 1d
 
 rtttl: #Ring Tone Text Transfer Language -
   id: buzzer_rtttl
@@ -305,7 +305,7 @@ sensor:
       - calibrate_linear:
           - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
           - -294500 -> 3 #Raw reading of an object with a known wight
-      - delta: 0.05 # Only update if the change is greater than 0.01 kg
+      - delta: 0.05 # Only update if the change is greater than 0.05 kg
   - platform: template
     id: bucket2_remaining_weight
     name: "Bucket2 Remaining Weight"
@@ -435,7 +435,7 @@ number:
     initial_value: 0.4 # Set default value if no value is stored
     on_value:
       - lambda: |-
-          id(bucket1).update_evaportation_target(id(bucket1_evaporation_target_weight).state);
+          id(bucket1).update_evaporation_target(id(bucket1_evaporation_target_weight).state);
   # Bucket2
   - platform: template
     id: bucket2_start_watering_weight # When the bucket weight drops below this -> Start the watering process
@@ -533,7 +533,7 @@ number:
     initial_value: 0.4 # Set default value if no value is stored
     on_value:
       - lambda: |-
-          id(bucket2).update_evaportation_target(id(bucket2_evaporation_target_weight).state);
+          id(bucket2).update_evaporation_target(id(bucket2_evaporation_target_weight).state);
 
 script:
   - id: check_wet_weight
@@ -553,6 +553,7 @@ script:
             - lambda: 'id(bucket2_wet_weight).publish_state(id(bucket2_max_watering_weight).state);'
 
 hempy:
+  #active_waterings_limit : 1   #Max number of pumps allowed to run at the same time (Increase only if power supply allows)
   buckets:
     - id: bucket1
       name: Bucket1

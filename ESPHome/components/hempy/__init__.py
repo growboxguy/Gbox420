@@ -3,6 +3,8 @@ import esphome.config_validation as cv
 from esphome.components import sensor, number, switch, text_sensor
 from esphome.const import CONF_ID
 
+# cg.add_global(cg.global_ns.include("hempy.h"))
+
 # Define a namespace for the component
 hempy_ns = cg.esphome_ns.namespace('hempy')
 HempyBucket = hempy_ns.class_('HempyBucket', cg.PollingComponent)

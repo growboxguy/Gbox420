@@ -34,12 +34,19 @@ namespace esphome
       return AverageWeight;
     }
 
+    /*
+    void HempyBucket::set_active_waterings_limit(uint32_t limit)
+    {
+      ActiveWateringsLimit = limit;
+    }
+    */
+
     void HempyBucket::update_interval(uint32_t miliseconds) // Update the Polling frequency -> how often should update() run
     {
-      this->set_update_interval(miliseconds);  //Apply to HempyBucket
-      this->stop_poller(); // To apply the changes must restart the poller
+      this->set_update_interval(miliseconds); // Apply to HempyBucket
+      this->stop_poller();                    // To apply the changes must restart the poller
       this->start_poller();
-      WeightSensor->set_update_interval(miliseconds); //Apply to WeightSensor
+      WeightSensor->set_update_interval(miliseconds); // Apply to WeightSensor
       WeightSensor->stop_poller();
       WeightSensor->start_poller();
     }
@@ -240,7 +247,7 @@ namespace esphome
       }
     }
 
-    void HempyBucket::update_evaportation_target(float EvaporationTarget) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
+    void HempyBucket::update_evaporation_target(float EvaporationTarget) // Force update the next watering weight (Called when Start Water Weight is changed on the dashboard)
     {
       if (WetWeight->state > 0)
       {
