@@ -13,7 +13,7 @@ var classesphome_1_1hempy_1_1HempyBucket =
     [ "toggle_watering_logic", "classesphome_1_1hempy_1_1HempyBucket.html#a7eba5fd5aa95f760ee839b74c7f5ddab", null ],
     [ "update", "classesphome_1_1hempy_1_1HempyBucket.html#a1bf09e9841fc283b03b12a6973957ac1", null ],
     [ "update_average", "classesphome_1_1hempy_1_1HempyBucket.html#aace94254a3836be32da91e92771b2e59", null ],
-    [ "update_evaportation_target", "classesphome_1_1hempy_1_1HempyBucket.html#aeb056b542f808230132a228dab6a509f", null ],
+    [ "update_evaporation_target", "classesphome_1_1hempy_1_1HempyBucket.html#a2b4134cdf17f93694b7548b10283ecd8", null ],
     [ "update_interval", "classesphome_1_1hempy_1_1HempyBucket.html#a877d3cc37bd84ad7a00e2cb6bbad1cc9", null ],
     [ "update_next_watering_weight", "classesphome_1_1hempy_1_1HempyBucket.html#a7f3252bf9d5831c40e0f0d75a5880616", null ],
     [ "update_state", "classesphome_1_1hempy_1_1HempyBucket.html#a254d15b0a7e7d047504a972ea9ae23e9", null ],
