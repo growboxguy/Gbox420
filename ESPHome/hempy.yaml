@@ -22,13 +22,13 @@ external_components:
   #- source: # Use this to load the hempy module from the \components folder (for code customization)
   #    type: local
   #    path: components
-  - source:            # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
+  - source: # Use this to load the hempy module from GitHub (https://github.com/growboxguy/Gbox420/tree/master/ESPHome/components/hempy)
       type: git
       url: https://github.com/Growboxguy/Gbox420
       ref: master
       path: ESPHome/components
     components: [hempy]
-    refresh: 1sec  #How often to check the GitHub repo for updates. Default 1d
+    refresh: 1d #How often to check the GitHub repo for updates. Default 1d
 
 rtttl: #Ring Tone Text Transfer Language -
   id: buzzer_rtttl

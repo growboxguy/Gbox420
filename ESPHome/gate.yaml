@@ -9,10 +9,10 @@ esphome:
     priority: 10
     then:
       - output.turn_off: relay
-  
+
 rp2040:
   board: rpipicow
-  
+
 # Enable logging
 logger:
   level: DEBUG
@@ -34,9 +34,9 @@ wifi:
   fast_connect: true
   reboot_timeout: 30min
   #manual_ip:
-    #static_ip: 192.168.1.42
-    #gateway: 192.168.1.1 #Router's IP
-    #subnet: 255.255.255.0 #Network mask
+  #static_ip: 192.168.1.42
+  #gateway: 192.168.1.1 #Router's IP
+  #subnet: 255.255.255.0 #Network mask
 
   # Enable fallback hotspot in case wifi connection fails
   ap:

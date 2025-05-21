@@ -14,7 +14,7 @@ external_components:
 logger:
   baud_rate: 0
   level: DEBUG
-  
+
 # Enable Home Assistant API
 api:
   encryption:
@@ -29,11 +29,11 @@ wifi:
   ssid: !secret para_wifi_ssid
   password: !secret para_wifi_password
   fast_connect: true
-  reboot_timeout: 30min    
+  reboot_timeout: 30min
   #manual_ip:
-    #static_ip: 192.168.1.250
-    #gateway: 192.168.1.1 #Router's IP
-    #subnet: 255.255.255.0 #Network mask
+  #static_ip: 192.168.1.250
+  #gateway: 192.168.1.1 #Router's IP
+  #subnet: 255.255.255.0 #Network mask
 
 uart:
   id: uart_bus
