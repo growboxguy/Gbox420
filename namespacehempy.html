@@ -155,7 +155,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  cv.Schema({</div>
 <div class="line"><span class="lineno">    2</span>    cv.Optional(<span class="stringliteral">&#39;buckets&#39;</span>): cv.ensure_list(HEMPY_BUCKET_SCHEMA)<span class="comment">#,</span></div>
-<div class="line"><span class="lineno">    3</span>    cv.Optional(<span class="stringliteral">&#39;active_waterings_limit&#39;</span>, default=1): cv.positive_int</div>
+<div class="line"><span class="lineno">    3</span>    <span class="comment"># cv.Optional(&#39;active_waterings_limit&#39;, default=1): cv.positive_int</span></div>
 <div class="line"><span class="lineno">    4</span>})</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="____init_____8py_source.html#l00033">33</a> of file <a class="el" href="____init_____8py_source.html">__init__.py</a>.</p>

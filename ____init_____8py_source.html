@@ -134,7 +134,7 @@ $(document).ready(function(){initNavTree('____init_____8py_source.html',''); ini
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"># Configuration schema for the list of HempyBuckets</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespacehempy.html#a5fcfc06ea007e34487528b280da50ffd">   33</a></span>CONFIG_SCHEMA = cv.Schema({</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    cv.Optional(<span class="stringliteral">&#39;buckets&#39;</span>): cv.ensure_list(HEMPY_BUCKET_SCHEMA)<span class="comment">#,</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    cv.Optional(<span class="stringliteral">&#39;active_waterings_limit&#39;</span>, default=1): cv.positive_int</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="comment"># cv.Optional(&#39;active_waterings_limit&#39;, default=1): cv.positive_int</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>})</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"># Code generation for handling multiple HempyBucket instances</span></div>
