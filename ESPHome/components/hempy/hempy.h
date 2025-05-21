@@ -43,7 +43,7 @@ namespace esphome
       float update_average(float NewValue);                    // Calculate the average of floats passed as NewValue. AverageQueueSize defines how many historical readings to keep
       float get_average_weight();                              // Returns current Average weight as a float number
       HempyStates State{HempyStates::IDLE};                    // Stores the current state of the hempy bucket
-      static void set_active_waterings_limit(uint32_t limit) { ActiveWateringsLimit = limit;}
+      //static void set_active_waterings_limit(uint32_t limit) { ActiveWateringsLimit = limit;}
       //static void set_active_waterings_limit(uint32_t limit);  // Called once at boot
 
     private:
