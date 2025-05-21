@@ -31,11 +31,17 @@ HEMPY_BUCKET_SCHEMA = cv.Schema({
 
 # Configuration schema for the list of HempyBuckets
 CONFIG_SCHEMA = cv.Schema({
-    cv.Optional('buckets'): cv.ensure_list(HEMPY_BUCKET_SCHEMA)
+    cv.Optional('buckets'): cv.ensure_list(HEMPY_BUCKET_SCHEMA)#,
+    #cv.Optional('active_waterings_limit', default=1): cv.positive_int,
 })
 
 # Code generation for handling multiple HempyBucket instances
 async def to_code(config):
+   # limit = config.get('active_waterings_limit', 1)    
+    #cg.add(var.set_active_waterings_limit(limit))
+   # cg.add(HempyBucket.set_active_waterings_limit(cg.uint32(limit)))
+   # cg.add(cg.RawStatement('#include "esphome/hempy/hempy.h"'))
+   # cg.add(cg.RawStatement(f"HempyBucket::set_active_waterings_limit({int(limit)});"))
     for bucket_conf in config['buckets']:
         name = bucket_conf['name']
         state_sensor = await cg.get_variable(bucket_conf['state_sensor'])
