@@ -15,12 +15,14 @@ views:
                 name: State
               - entity: sensor.hempy_bucket1_weight
                 name: Weight
+                format: precision2
               - entity: sensor.hempy_bucket1_remaining_weight
                 name: Remaining
+                format: precision2
           - type: custom:multiple-entity-row
             entity: sensor.hempy_bucket1_remaining_weight
             name: false
-            icon: "no"
+            icon: 'no'
             show_state: false
             entities:
               - type: button
@@ -57,8 +59,10 @@ views:
                   service_data: {}
               - entity: sensor.hempy_bucket1_dry_weight
                 name: Dry
+                format: precision2
               - entity: sensor.hempy_bucket1_wet_weight
                 name: Wet
+                format: precision2
           - type: custom:fold-entity-row
             open: false
             head:
@@ -130,12 +134,14 @@ views:
                 name: State
               - entity: sensor.hempy_bucket2_weight
                 name: Weight
+                format: precision2
               - entity: sensor.hempy_bucket2_remaining_weight
                 name: Remaining
+                format: precision2
           - type: custom:multiple-entity-row
             entity: sensor.hempy_bucket2_remaining_weight
             name: false
-            icon: "no"
+            icon: 'no'
             show_state: false
             entities:
               - type: button
@@ -172,8 +178,10 @@ views:
                   service_data: {}
               - entity: sensor.hempy_bucket2_dry_weight
                 name: Dry
+                format: precision2
               - entity: sensor.hempy_bucket2_wet_weight
                 name: Wet
+                format: precision2
           - type: custom:fold-entity-row
             open: false
             head:

@@ -246,12 +246,16 @@ sensor:
     unit_of_measurement: "kg"
     accuracy_decimals: 2
     icon: "mdi:cup-outline"
+    filters:
+      - round: 2
   - platform: template
     id: bucket1_wet_weight
     name: "Bucket1 Wet weight"
     unit_of_measurement: "kg"
     accuracy_decimals: 2
     icon: "mdi:cup"
+    filters:
+      - round: 2
   - platform: hx711
     id: bucket1_weight_sensor
     name: "Bucket1 Weight"
@@ -263,6 +267,7 @@ sensor:
     update_interval: 1s #Overwritten by the Hempy bucket's dynamic update_interval
     accuracy_decimals: 2
     filters:
+      - round: 2
       - calibrate_linear:
           - -117400 -> 0 #Raw reading when the weight sensor has no weight on it
           - -498723 -> 3 #Raw reading of an object with a known wight
@@ -277,7 +282,8 @@ sensor:
       return id(bucket1_weight_sensor).state - id(bucket1_dry_weight).state;
     update_interval: 5s
     filters:
-      - delta: 0.1 # Only update if the change is greater than 0.05 kg
+      - delta: 0.1 # Only update if the change is greater than 0.1 kg
+      - round: 2
   #Bucket 2
   - platform: template
     id: bucket2_dry_weight
@@ -285,12 +291,16 @@ sensor:
     unit_of_measurement: "kg"
     accuracy_decimals: 2
     icon: "mdi:cup-outline"
+    filters:
+      - round: 2
   - platform: template
     id: bucket2_wet_weight
     name: "Bucket2 Wet weight"
     unit_of_measurement: "kg"
     accuracy_decimals: 2
     icon: "mdi:cup"
+    filters:
+      - round: 2
   - platform: hx711
     id: bucket2_weight_sensor
     name: "Bucket2 Weight"
@@ -302,6 +312,7 @@ sensor:
     update_interval: 1s #Overwritten by the Hempy bucket's dynamic update_interval
     accuracy_decimals: 2
     filters:
+      - round: 2
       - calibrate_linear:
           - 43700 -> 0 #Raw reading when the weight sensor has no weight on it
           - -294500 -> 3 #Raw reading of an object with a known wight
@@ -310,13 +321,13 @@ sensor:
     id: bucket2_remaining_weight
     name: "Bucket2 Remaining Weight"
     unit_of_measurement: "kg"
-    accuracy_decimals: 2
     icon: "mdi:water-sync"
     lambda: |-
       return id(bucket2_weight_sensor).state - id(bucket2_dry_weight).state;
     update_interval: 5s
     filters:
-      - delta: 0.1 # Only update if the change is greater than 0.01 kg
+      - delta: 0.1 # Only update if the change is greater than 0.1 kg
+      - round: 2 # Only use 2 decimals (for Displaying and Storing)
   #Internal temperature sensor
   - platform: internal_temperature
     name: "Internal temp"
@@ -324,10 +335,10 @@ sensor:
     icon: "mdi:thermometer"
     device_class: "temperature"
     state_class: "measurement"
-    accuracy_decimals: 2
     update_interval: 60s
     filters:
       - delta: 0.1 # Only update if the change is greater than 0.1 °C
+      - round: 2 # Only use 2 decimals (for Displaying and Storing)
       - calibrate_linear: # Calibrate internal temp reading to ambient temperature, Sensor reading at two different known ambient temps, large temperature difference is best)
           - 21.5 -> 7.0
           - 24.3 -> 20.1
@@ -346,7 +357,7 @@ number:
     icon: "mdi:watering-can"
     min_value: 0
     max_value: 25
-    step: 0.1
+    step: 0.05
     optimistic: true
     restore_value: true # Restore the value from flash storage
     initial_value: 13.0 # Set default value if no value is stored
@@ -444,7 +455,7 @@ number:
     icon: "mdi:watering-can"
     min_value: 0
     max_value: 25
-    step: 0.1
+    step: 0.05
     optimistic: true
     restore_value: true # Restore the value from flash storage
     initial_value: 13.0 # Set default value if no value is stored
