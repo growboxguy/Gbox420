@@ -8,8 +8,24 @@ views:
       - type: custom:stack-in-card
         cards:
           - type: markdown
-            content: |
-              {{ states('text.gbox420_eventlog') | safe }}
+            content: >
+              {% set last = states.sensor.gbox420_hempy_modulestate.last_updated
+              %} {% set age = (as_timestamp(now()) - as_timestamp(last)) | int
+              %}
+
+              {% if age < 60 %}
+                {% set time_ago = age ~ ' sec ago' %}
+              {% elif age < 3600 %}
+                {% set time_ago = (age / 60) | int ~ ' min ago' %}
+              {% else %}
+                {% set time_ago = (age / 3600) | int ~ ' h ago' %}
+              {% endif %}
+
+              {% set events = states('text.gbox420_eventlog') %}
+
+              {% if age > 600 %} <b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events
+              }} {% else %} <b>✅ ONLINE ({{ time_ago }})</b><br> {{ events }} {%
+              endif %}
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_hempy_modulestate
             name: Modules
@@ -33,7 +49,7 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_power1_current
             secondary_info: last-updated
-            name: Power Sensor
+            name: AC Power
             state_header: Current
             icon: mdi:lightning-bolt
             entities:

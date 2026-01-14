@@ -1,0 +1,121 @@
+#ESPHome YAML configuration file for a Gate or Garage door - ESP32 version with HTML control
+#Runs on a ESP32-C  (or any ESP32 supported device with adjustments to the output section)
+#When a virtual button (sample in file gateDashoard) is pressed turn on a relay for 1 second using a Relay
+
+esphome:
+  name: gateesp
+  friendly_name: GateESP
+  on_boot:
+    priority: 10
+    then:
+      - output.turn_off: relay
+      - output.turn_off: led
+
+esp32:
+  variant: ESP32C3
+  board: esp32-c3-devkitm-1
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret gateesp_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret gateesp_ota_password
+
+wifi:
+  ssid: !secret gateesp_wifi_ssid
+  password: !secret gateesp_wifi_password
+  power_save_mode: light  #internal temp difference: 53C "none", 39C "light" 
+  output_power: 14dB      #up to 20db max
+  fast_connect: true
+  reboot_timeout: 30min
+  manual_ip:
+    static_ip: 192.168.1.51
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "GateHS"
+    password: !secret gateesp_wifi_password
+
+# Relay and LED outputs
+output:
+  - platform: gpio # Relay
+    pin: GPIO6     # Adjust to your wiring
+    id: relay
+    inverted: False
+  - platform: gpio # ESP32-C3 built-in LED (usually GPIO8)
+    pin: GPIO8
+    id: led
+    inverted: true 
+
+# Virtual gate button (software trigger)
+button:
+  - platform: template
+    id: gate_button
+    name: "Gate"
+    on_press:
+      then:
+        - lambda: |-
+            ESP_LOGI("Gate", "Gate button was pressed");
+        - output.turn_on: led
+        - output.turn_on: relay
+        - delay: 1s
+        - output.turn_off: led
+        - output.turn_off: relay
+
+# Internal temperature sensor
+sensor:
+  - platform: internal_temperature
+    name: "Internal temp"
+    id: internal_temp   # Added ID so we can use it in HTML page
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+    update_interval: 60s
+    filters:
+      - delta: 0.1 # Only update if the change is greater than 0.1 °C
+    #  - sliding_window_moving_average:
+    #      window_size: 15
+    #      send_every: 15
+    #   - median:
+    #     window_size: 10 #calculate median based on the last 10 readings
+
+# Periodic alive logging every 60 seconds
+interval:
+  - interval: 60s
+    then:
+      - logger.log: "GateESP alive and waiting for commands..."
+
+# Use BOOT button (GPIO9) as a trigger for the gate relay
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Boot Button Trigger"
+    internal: true
+    on_press:
+      then:
+        - logger.log: "BOOT button pressed - triggering gate"
+        - button.press: gate_button
+
+# Web server with HTML control page
+web_server:
+  port: 80
+  auth:
+    username: !secret gateesp_web_user
+    password: !secret gateesp_web_password
+  version: 3
+  local: true
+ 
