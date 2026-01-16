@@ -42,11 +42,11 @@ public:
 private:
 protected:
   Module *Parent;
-  void checkTimer();
-  void checkDimming();
+  void checkTimer();                                       ///< Based on ON/OFF time decide if AC Relays should be ON or OFF
+  void checkDimming();                                     ///< Currently unused - Can fade-on our fade out
   uint8_t &RelayPin;                                       ///< the Arduino pin controlling the AC relay
   uint8_t &DimmingPin;                                     ///< PWM based dimming, connected to optocoupler's base over 1k ohm resistor
-  uint8_t &DimmingLimit;                                   ///< Sets the LED dimming limit (Usually around 5%)
+  uint8_t &DimmingLimit;                                   ///< Sets the LED dimming LOW limit (Usually around 5%)
   uint8_t &DimmingDuration;                                ///< Timeout of temporary dimming in Minutes
   LightStates BeforeDimmingState = LightStates::TURNEDOFF; ///< Stores the state before the temporary dimming was activated
   uint8_t BeforeDimmingBrightness;                         ///< Stores the brightness before the temporary dimming was activated
