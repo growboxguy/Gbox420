@@ -42,7 +42,6 @@ public:
 private:
 protected:
   Module *Parent;
-  void checkRelay();
   void checkTimer();
   void checkDimming();
   uint8_t &RelayPin;                                       ///< the Arduino pin controlling the AC relay

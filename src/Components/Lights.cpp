@@ -32,7 +32,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   }
   setBrightness(CurrentBrightness, false, false); ///< Set initial brightness
   setLightOnOff(Status, false);
-  checkRelay();
+  checkTimer();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_Minute(this);
@@ -49,7 +49,6 @@ void Lights::refresh_Minute()
 { ///< makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   Common::refresh_Minute();
   checkTimer();
-  checkRelay();
 }
 
 /**
@@ -71,14 +70,6 @@ void Lights::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
   strcat(LongMessage, getOffTimeText());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-}
-
-void Lights::checkRelay()
-{
-  if (CurrentStatus == LightStates::TURNEDOFF)
-    digitalWrite(RelayPin, HIGH); ///< True turns relay OFF (HIGH signal de-activates Relay)
-  else
-    digitalWrite(RelayPin, LOW); ///< LOW turns relay ON
 }
 
 void Lights::dimLightsOnOff()
@@ -140,7 +131,7 @@ void Lights::checkDimming()
       dimLightsOnOff();
     }
   }
-  checkRelay();
+  checkTimer();
 }
 
 void Lights::checkTimer()
@@ -183,6 +174,10 @@ void Lights::checkTimer()
       }
     }
   }
+  if (CurrentStatus == LightStates::TURNEDOFF)
+    digitalWrite(RelayPin, HIGH); ///< True turns relay OFF (HIGH signal de-activates Relay)
+  else
+    digitalWrite(RelayPin, LOW); ///< LOW turns relay ON
 }
 
 void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
@@ -247,7 +242,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     }
   }
   this->Status = Status;
-  checkRelay();
+  checkTimer(); // light ON or OFF with new timer settings
 }
 
 char *Lights::getTimerOnOffText(bool UseWords)
