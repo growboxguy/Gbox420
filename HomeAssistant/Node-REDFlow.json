@@ -10,10 +10,17 @@
         "id": "a7c93785.9fe448",
         "type": "server",
         "name": "Home Assistant",
-        "version": 5,
+        "version": 6,
         "addon": true,
         "rejectUnauthorizedCerts": true,
-        "ha_boolean": "y|yes|true|on|home|open",
+        "ha_boolean": [
+            "y",
+            "yes",
+            "true",
+            "on",
+            "home",
+            "open"
+        ],
         "connectionDelay": true,
         "cacheJson": true,
         "heartbeat": false,
@@ -58,97 +65,6 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
-    },
-    {
-        "id": "bda16d8e.5cef7",
-        "type": "ui_group",
-        "name": "Light1",
-        "tab": "44180358.75752c",
-        "order": 5,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "48150cd2.dd7124",
-        "type": "ui_group",
-        "name": "Light2",
-        "tab": "44180358.75752c",
-        "order": 6,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "65d54d78.294e74",
-        "type": "ui_group",
-        "name": "Power sensor",
-        "tab": "44180358.75752c",
-        "order": 3,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "578e9d2e.2450e4",
-        "type": "ui_group",
-        "name": "Ventilation",
-        "tab": "44180358.75752c",
-        "order": 4,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "e3c44224.e25c8",
-        "type": "ui_group",
-        "name": "Reservoir",
-        "tab": "44180358.75752c",
-        "order": 10,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "ee644883.b6e878",
-        "type": "ui_group",
-        "name": "Hempy bucket 1",
-        "tab": "44180358.75752c",
-        "order": 8,
-        "disp": true,
-        "width": 7,
-        "collapse": true
-    },
-    {
-        "id": "7fd41d0.72483e4",
-        "type": "ui_group",
-        "name": "Hempy bucket 2",
-        "tab": "44180358.75752c",
-        "order": 9,
-        "disp": true,
-        "width": "7",
-        "collapse": true,
-        "className": ""
-    },
-    {
-        "id": "f4760b27.ac0428",
-        "type": "ui_group",
-        "name": "Aeroponics",
-        "tab": "44180358.75752c",
-        "order": 7,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "daea9443.544e58",
-        "type": "ui_group",
-        "name": "GrowBox",
-        "tab": "44180358.75752c",
-        "order": 1,
-        "disp": true,
-        "width": "7",
-        "collapse": true
     },
     {
         "id": "44180358.75752c",
@@ -261,6 +177,752 @@
         "name": "Alerts",
         "tab": "44180358.75752c",
         "order": 2,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "976d85601c7164ab",
+        "type": "ha-device-config",
+        "name": "Gbox420_LastReport",
+        "hwVersion": "",
+        "manufacturer": "Node-RED",
+        "model": "",
+        "swVersion": ""
+    },
+    {
+        "id": "c1df6f2929147010",
+        "type": "ha-device-config",
+        "name": "Gbox420",
+        "hwVersion": "",
+        "manufacturer": "GrowBoxGuy",
+        "model": "",
+        "swVersion": ""
+    },
+    {
+        "id": "e649f57193b9e1f8",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OnTimeMinute",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 OnTimeMinute"
+            },
+            {
+                "property": "icon",
+                "value": "mdi::clock-time-four"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 59
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "59abd57c30bbdd0d",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OnTimeHour",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 OnTimeHour"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-four"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 23
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "70dc8ce6c807ecb3",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OnTimeHour",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light2 OnTimeHour"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-four"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 23
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "6af172c21e884df7",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OnTimeMinute",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light2 OnTimeMinute"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-four"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 59
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "d8a0c25516192b15",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OffTimeHour",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 OffTimeHour"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-two-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 23
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "f80d64e940581745",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 OffTimeMinute",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 OffTimeMinute"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-two-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 59
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "5a2602163291d253",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OffTimeMinute",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light2 OffTimeMinute"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-two-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 59
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "auto"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "90d21701cb544edf",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 OffTimeHour",
+        "version": "6",
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light2 OffTimeHour"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:clock-time-two-outline"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": 0
+            },
+            {
+                "property": "max_value",
+                "value": 23
+            },
+            {
+                "property": "step_value",
+                "value": 1
+            },
+            {
+                "property": "mode",
+                "value": "box"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "738cd112b9b2fa1b",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light2 CurrentBrightness",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light2 CurrentBrightness"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": true,
+        "debugEnabled": false
+    },
+    {
+        "id": "1c3ce6617af78b48",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Light1 CurrentBrightness",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Light1 CurrentBrightness"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:brightness-7"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": true,
+        "debugEnabled": false
+    },
+    {
+        "id": "71f56445f0df566a",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 EventLog",
+        "version": "6",
+        "entityType": "text",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 EventLog"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "mode",
+                "value": "text"
+            },
+            {
+                "property": "min_length",
+                "value": ""
+            },
+            {
+                "property": "max_length",
+                "value": 1024
+            },
+            {
+                "property": "pattern",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "84df810171f5aa03",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Alerts",
+        "version": "6",
+        "entityType": "text",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Alerts"
+            },
+            {
+                "property": "icon",
+                "value": "alert-box"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "mode",
+                "value": "text"
+            },
+            {
+                "property": "min_length",
+                "value": ""
+            },
+            {
+                "property": "max_length",
+                "value": 1024
+            },
+            {
+                "property": "pattern",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "c0ec4a4a00517844",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox420 Alerts",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox420 Alerts"
+            },
+            {
+                "property": "icon",
+                "value": "mdi:alert-box"
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "bda16d8e.5cef7",
+        "type": "ui_group",
+        "name": "Light1",
+        "tab": "44180358.75752c",
+        "order": 5,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "48150cd2.dd7124",
+        "type": "ui_group",
+        "name": "Light2",
+        "tab": "44180358.75752c",
+        "order": 6,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "65d54d78.294e74",
+        "type": "ui_group",
+        "name": "Power sensor",
+        "tab": "44180358.75752c",
+        "order": 3,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "578e9d2e.2450e4",
+        "type": "ui_group",
+        "name": "Ventilation",
+        "tab": "44180358.75752c",
+        "order": 4,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "e3c44224.e25c8",
+        "type": "ui_group",
+        "name": "Reservoir",
+        "tab": "44180358.75752c",
+        "order": 10,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "ee644883.b6e878",
+        "type": "ui_group",
+        "name": "Hempy bucket 1",
+        "tab": "44180358.75752c",
+        "order": 8,
+        "disp": true,
+        "width": 7,
+        "collapse": true
+    },
+    {
+        "id": "7fd41d0.72483e4",
+        "type": "ui_group",
+        "name": "Hempy bucket 2",
+        "tab": "44180358.75752c",
+        "order": 9,
+        "disp": true,
+        "width": "7",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "f4760b27.ac0428",
+        "type": "ui_group",
+        "name": "Aeroponics",
+        "tab": "44180358.75752c",
+        "order": 7,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "daea9443.544e58",
+        "type": "ui_group",
+        "name": "GrowBox",
+        "tab": "44180358.75752c",
+        "order": 1,
         "disp": true,
         "width": "7",
         "collapse": true
@@ -3201,15 +3863,6 @@
         "debugEnabled": false
     },
     {
-        "id": "976d85601c7164ab",
-        "type": "ha-device-config",
-        "name": "Gbox420_LastReport",
-        "hwVersion": "",
-        "manufacturer": "Node-RED",
-        "model": "",
-        "swVersion": ""
-    },
-    {
         "id": "aa8f6e6cedc40542",
         "type": "ha-entity-config",
         "server": "a7c93785.9fe448",
@@ -3963,652 +4616,6 @@
             {
                 "property": "mode",
                 "value": "auto"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "c1df6f2929147010",
-        "type": "ha-device-config",
-        "name": "Gbox420",
-        "hwVersion": "",
-        "manufacturer": "GrowBoxGuy",
-        "model": "",
-        "swVersion": ""
-    },
-    {
-        "id": "e649f57193b9e1f8",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light1 OnTimeMinute",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 OnTimeMinute"
-            },
-            {
-                "property": "icon",
-                "value": "mdi::clock-time-four"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 59
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "59abd57c30bbdd0d",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light1 OnTimeHour",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 OnTimeHour"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-four"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 23
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "70dc8ce6c807ecb3",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 OnTimeHour",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 OnTimeHour"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-four"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 23
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "6af172c21e884df7",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 OnTimeMinute",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 OnTimeMinute"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-four"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 59
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "d8a0c25516192b15",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light1 OffTimeHour",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 OffTimeHour"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-two-outline"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 23
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "f80d64e940581745",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light1 OffTimeMinute",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 OffTimeMinute"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-two-outline"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 59
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "5a2602163291d253",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 OffTimeMinute",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 OffTimeMinute"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-two-outline"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 59
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "auto"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "90d21701cb544edf",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 OffTimeHour",
-        "version": "6",
-        "entityType": "number",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 OffTimeHour"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:clock-time-two-outline"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "min_value",
-                "value": 0
-            },
-            {
-                "property": "max_value",
-                "value": 23
-            },
-            {
-                "property": "step_value",
-                "value": 1
-            },
-            {
-                "property": "mode",
-                "value": "box"
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "738cd112b9b2fa1b",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light2 CurrentBrightness",
-        "version": "6",
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light2 CurrentBrightness"
-            },
-            {
-                "property": "icon",
-                "value": ""
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "%"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            }
-        ],
-        "resend": true,
-        "debugEnabled": false
-    },
-    {
-        "id": "1c3ce6617af78b48",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Light1 CurrentBrightness",
-        "version": "6",
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Light1 CurrentBrightness"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:brightness-7"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": "%"
-            },
-            {
-                "property": "state_class",
-                "value": ""
-            }
-        ],
-        "resend": true,
-        "debugEnabled": false
-    },
-    {
-        "id": "71f56445f0df566a",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 EventLog",
-        "version": "6",
-        "entityType": "text",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 EventLog"
-            },
-            {
-                "property": "icon",
-                "value": ""
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "mode",
-                "value": "text"
-            },
-            {
-                "property": "min_length",
-                "value": ""
-            },
-            {
-                "property": "max_length",
-                "value": 1024
-            },
-            {
-                "property": "pattern",
-                "value": ""
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "84df810171f5aa03",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Alerts",
-        "version": "6",
-        "entityType": "text",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Alerts"
-            },
-            {
-                "property": "icon",
-                "value": "alert-box"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "mode",
-                "value": "text"
-            },
-            {
-                "property": "min_length",
-                "value": ""
-            },
-            {
-                "property": "max_length",
-                "value": 1024
-            },
-            {
-                "property": "pattern",
-                "value": ""
-            }
-        ],
-        "resend": false,
-        "debugEnabled": false
-    },
-    {
-        "id": "c0ec4a4a00517844",
-        "type": "ha-entity-config",
-        "server": "a7c93785.9fe448",
-        "deviceConfig": "c1df6f2929147010",
-        "name": "Gbox420 Alerts",
-        "version": "6",
-        "entityType": "sensor",
-        "haConfig": [
-            {
-                "property": "name",
-                "value": "Gbox420 Alerts"
-            },
-            {
-                "property": "icon",
-                "value": "mdi:alert-box"
-            },
-            {
-                "property": "entity_picture",
-                "value": ""
-            },
-            {
-                "property": "entity_category",
-                "value": ""
-            },
-            {
-                "property": "device_class",
-                "value": ""
-            },
-            {
-                "property": "unit_of_measurement",
-                "value": ""
-            },
-            {
-                "property": "state_class",
-                "value": ""
             }
         ],
         "resend": false,
@@ -6851,7 +6858,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$number(msg.payload.Mi)",
+                "to": "$exists(payload.AS) ? $number(payload.AS) : 0",
                 "tot": "jsonata"
             }
         ],
@@ -10447,11 +10454,11 @@
         "type": "e-mail",
         "z": "3d93eb6ca3793727",
         "server": "smtp.gmail.com",
-        "port": "465",
+        "port": "587",
         "authtype": "BASIC",
         "saslformat": false,
         "token": "oauth2Response.access_token",
-        "secure": true,
+        "secure": false,
         "tls": true,
         "name": "growboxguy@gmail.com",
         "dname": "",
@@ -10467,7 +10474,7 @@
         "props": [
             {
                 "p": "payload.Log",
-                "v": "{\"IFan\":{\"S\":\"1\"},\"EFan\":{\"S\":\"1\"},\"APump1\":{\"S\":\"0\"},\"Lt1\":{\"S\":\"1\",\"CB\":\"90\",\"B\":\"90\",\"T\":\"1\",\"On\":\"14:20\",\"Of\":\"02:20\"},\"Lt2\":{\"S\":\"1\",\"CB\":\"89\",\"B\":\"89\",\"T\":\"1\",\"On\":\"10:20\",\"Of\":\"02:20\"},\"LtSen1\":{\"R\":\"959\",\"D\":\"0\"},\"DHT1\":{\"T\":\"35.10\",\"H\":\"25.80\"},\"Pow1\":{\"P\":\"789.90\",\"E\":\"870.22\",\"V\":\"245.00\",\"C\":\"5.68\",\"F\":\"50.00\",\"PF\":\"0.96\"},\"Hemp1\":{\"S\":\"0\",\"H1\":\"0\",\"P1\":\"0\",\"PS1\":\"100\",\"PT1\":\"120\",\"DT1\":\"300\",\"WB1\":\"16.35\",\"WR1\":\"18.05\",\"DW1\":\"19.96\",\"WW1\":\"21.96\",\"ET1\":\"2.00\",\"OT1\":\"0.20\",\"WL1\":\"13.00\",\"H2\":\"0\",\"P2\":\"0\",\"PS2\":\"100\",\"PT2\":\"120\",\"DT2\":\"300\",\"WB2\":\"15.55\",\"WR2\":\"19.13\",\"DW2\":\"20.11\",\"WW2\":\"22.11\",\"ET2\":\"2.00\",\"OT2\":\"0.20\",\"WL2\":\"13.00\"},\"Aero1\":{\"S\":\"0\",\"P\":\"3.76\",\"W\":\"19.59\",\"Ma\":\"7.00\",\"Mi\":\"5.00\",\"AS\":\"0\",\"LS\":\"3.93\",\"PSt\":\"0\",\"PS\":\"100\",\"PT\":\"420\",\"PP\":\"10\",\"SE\":\"1\",\"D\":\"3.00\",\"DI\":\"6\",\"NI\":\"10\"},\"Res1\":{\"S\":\"0\",\"P\":\"1.16\",\"T\":\"1567.62\",\"W\":\"2.19\",\"WT\":\"14.56\",\"AT\":\"34.30\",\"H\":\"23.10\"},\"Main1\":{\"M\":\"1\",\"D\":\"0\"}}",
+                "v": "{\"FanI\":{\"S\":\"1\"},\"FanE\":{\"S\":\"1\"},\"Ap1\":{\"S\":\"0\"},\"Lt1\":{\"S\":\"1\",\"CB\":\"90\",\"B\":\"90\",\"T\":\"1\",\"On\":\"14:20\",\"Of\":\"02:20\"},\"Lt2\":{\"S\":\"1\",\"CB\":\"89\",\"B\":\"89\",\"T\":\"1\",\"On\":\"10:20\",\"Of\":\"02:20\"},\"Ls1\":{\"R\":\"959\",\"D\":\"0\"},\"DHT1\":{\"T\":\"35.10\",\"H\":\"25.80\"},\"Pow1\":{\"P\":\"789.90\",\"E\":\"870.22\",\"V\":\"245.00\",\"C\":\"5.68\",\"F\":\"50.00\",\"PF\":\"0.96\"},\"Hemp1\":{\"S\":\"0\",\"H1\":\"0\",\"P1\":\"0\",\"PS1\":\"100\",\"PT1\":\"120\",\"DT1\":\"300\",\"WB1\":\"16.35\",\"DW1\":\"19.96\",\"WW1\":\"21.96\",\"MW1\":\"0\",\"ET1\":\"2.00\",\"OT1\":\"0.20\",\"D1\":\"60\",\"WI1\":\"0.10\",\"SW1\":\"15.00\",\"H2\":\"0\",\"P2\":\"0\",\"PS2\":\"100\",\"PT2\":\"120\",\"DT2\":\"300\",\"WB2\":\"15.55\",\"DW2\":\"20.11\",\"WW2\":\"22.11\",\"MW2\":\"0\",\"ET2\":\"2.00\",\"OT2\":\"0.20\",\"D2\":\"60\",\"WI2\":\"0.10\",\"SW2\":\"15.00\"},\"Aero1\":{\"S\":\"0\",\"P\":\"3.76\",\"W\":\"19.59\",\"Ma\":\"7.00\",\"Mi\":\"5.00\",\"AS\":\"0\",\"LS\":\"3.93\",\"PSt\":\"0\",\"PS\":\"100\",\"PT\":\"420\",\"PP\":\"10\",\"SE\":\"1\",\"D\":\"3.00\",\"DI\":\"6\",\"NI\":\"10\"},\"Res1\":{\"S\":\"0\",\"P\":\"1.16\",\"T\":\"1567.62\",\"W\":\"0.00\",\"WR\":\"0.00\",\"WT\":\"14.56\",\"AT\":\"34.30\",\"H\":\"23.10\"},\"Main1\":{\"M\":\"1\",\"D\":\"0\"}}",
                 "vt": "json"
             },
             {
@@ -10497,7 +10504,7 @@
         "props": [
             {
                 "p": "payload.Log",
-                "v": "{\"FanI\":{\"S\":\"1\"},\"FanE\":{\"S\":\"1\"},\"Ap1\":{\"S\":\"1\"},\"Lt1\":{\"S\":\"1\",\"CB\":\"98\",\"B\":\"98\",\"T\":\"1\",\"On\":\"04:20\",\"Of\":\"16:20\"},\"Lt2\":{\"S\":\"0\",\"CB\":\"0\",\"B\":\"55\",\"T\":\"0\",\"On\":\"04:20\",\"Of\":\"16:20\"},\"Ls1\":{\"R\":\"956\",\"D\":\"0\"},\"DHT1\":{\"T\":\"22.00\",\"H\":\"60.00\"},\"Pow1\":{\"P\":\"111.60\",\"E\":\"420.00\",\"V\":\"226.1\",\"C\":\"0.59\",\"F\":\"50.00\",\"PF\":\"0.93\"},\"Hemp1\":{\"S\":\"1\",\"H1\":\"1\",\"P1\":\"1\",\"PS1\":\"100\",\"PT1\":\"123\",\"DT1\":\"300\",\"WB1\":\"14.54\",\"DW1\":\"14.00\",\"WW1\":\"15.00\",\"MW1\":\"16.00\",\"ET1\":\"1.00\",\"OT1\":\"0.10\",\"H2\":\"1\",\"P2\":\"1\",\"PS2\":\"100\",\"PT2\":\"120\",\"DT2\":\"300\",\"WB2\":\"13.87\",\"DW2\":\"13.00\",\"WW2\":\"14.00\",\"MW2\":\"15.00\",\"ET2\":\"1.00\",\"OT2\":\"0.10\"},\"Aero1\":{\"S\":\"1\",\"P\":\"5.67\",\"W\":\"10.17\",\"Ma\":\"7.00\",\"Mi\":\"5.00\",\"AS\":\"1\",\"LS\":\"5.76\",\"PSt\":\"1\",\"PS\":\"100\",\"PT\":\"420\",\"PP\":\"10\",\"SE\":\"1\",\"D\":\"3.00\",\"DI\":\"6\",\"NI\":\"10\"},\"Res1\":{\"S\":\"1\",\"P\":\"7.12\",\"T\":\"1683.41\",\"W\":\"11.18\",\"WR\":\"3.80\",\"WT\":\"21.63\",\"AT\":\"22.70\",\"H\":\"53.70\"},\"Main1\":{\"M\":\"1\",\"D\":\"1\"}}",
+                "v": "{\"FanI\":{\"S\":\"1\"},\"FanE\":{\"S\":\"1\"},\"Ap1\":{\"S\":\"1\"},\"Lt1\":{\"S\":\"1\",\"CB\":\"98\",\"B\":\"98\",\"T\":\"1\",\"On\":\"04:20\",\"Of\":\"16:20\"},\"Lt2\":{\"S\":\"0\",\"CB\":\"0\",\"B\":\"55\",\"T\":\"0\",\"On\":\"04:20\",\"Of\":\"16:20\"},\"Ls1\":{\"R\":\"956\",\"D\":\"0\"},\"DHT1\":{\"T\":\"22.00\",\"H\":\"60.00\"},\"Pow1\":{\"P\":\"111.60\",\"E\":\"420.00\",\"V\":\"226.1\",\"C\":\"0.59\",\"F\":\"50.00\",\"PF\":\"0.93\"},\"Hemp1\":{\"S\":\"1\",\"H1\":\"1\",\"P1\":\"1\",\"PS1\":\"100\",\"PT1\":\"123\",\"DT1\":\"300\",\"WB1\":\"14.54\",\"DW1\":\"14.00\",\"WW1\":\"15.00\",\"MW1\":\"16.00\",\"ET1\":\"1.00\",\"OT1\":\"0.10\",\"D1\":\"60\",\"WI1\":\"0.10\",\"SW1\":\"15.00\",\"H2\":\"1\",\"P2\":\"1\",\"PS2\":\"100\",\"PT2\":\"120\",\"DT2\":\"300\",\"WB2\":\"13.87\",\"DW2\":\"13.00\",\"WW2\":\"14.00\",\"MW2\":\"15.00\",\"ET2\":\"1.00\",\"OT2\":\"0.10\",\"D2\":\"60\",\"WI2\":\"0.10\",\"SW2\":\"15.00\"},\"Aero1\":{\"S\":\"1\",\"P\":\"5.67\",\"W\":\"10.17\",\"Ma\":\"7.00\",\"Mi\":\"5.00\",\"AS\":\"1\",\"LS\":\"5.76\",\"PSt\":\"1\",\"PS\":\"100\",\"PT\":\"420\",\"PP\":\"10\",\"SE\":\"1\",\"D\":\"3.00\",\"DI\":\"6\",\"NI\":\"10\"},\"Res1\":{\"S\":\"1\",\"P\":\"7.12\",\"T\":\"1683.41\",\"W\":\"11.18\",\"WR\":\"3.80\",\"WT\":\"21.63\",\"AT\":\"22.70\",\"H\":\"53.70\"},\"Main1\":{\"M\":\"1\",\"D\":\"1\"}}",
                 "vt": "json"
             },
             {
@@ -10886,13 +10893,14 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "{{#flow.ActiveAlerts.length}}\n  <font size=\"+2\"><b>{{ActiveAlertsSize}} active alert(s):</b></font><br>\n  <font size=\"+1\" color='red'>\n   {{#flow.ActiveAlerts}}<li>{{{.}}}</li>{{/flow.ActiveAlerts}}\n  </font><br>\n{{/flow.ActiveAlerts.length}}\n\n{{#flow.RecoveredAlerts.length}}\n  <font size=\"+2\"><b>{{RecoveredAlertsSize}} recovered alert(s):</b></font><br>\n  <font size=\"+1\" color='green'>\n   {{#flow.RecoveredAlerts}}<li>{{{.}}}</li>{{/flow.RecoveredAlerts}}\n  </font><br>\n{{/flow.RecoveredAlerts.length}}\n\n{{{payload}}}",
+        "template": "<div style=\"font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; line-height: 1.2; color: #333;\">\n\n  {{#flow.ActiveAlerts.length}}\n    <div style=\"color: #FF0000; font-weight: bold; margin-bottom: 2px;\">{{ActiveAlertsSize}} ACTIVE ALERTS:</div>\n    <div style=\"border-left: 3px solid #FF0000; padding-left: 8px; margin-bottom: 10px;\">\n      {{#flow.ActiveAlerts}}\n        <div style=\"margin-bottom: 1px;\">• {{{.}}}</div>\n      {{/flow.ActiveAlerts}}\n    </div>\n  {{/flow.ActiveAlerts.length}}\n\n  {{#flow.RecoveredAlerts.length}}\n    <div style=\"color: #008000; font-weight: bold; margin-bottom: 2px;\">{{RecoveredAlertsSize}} RECOVERED:</div>\n    <div style=\"border-left: 3px solid #008000; padding-left: 8px; margin-bottom: 10px;\">\n      {{#flow.RecoveredAlerts}}\n        <div style=\"margin-bottom: 1px;\">• {{{.}}}</div>\n      {{/flow.RecoveredAlerts}}\n    </div>\n  {{/flow.RecoveredAlerts.length}}\n\n  <table\n    style=\"width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 11px; margin-top: 5px;\">\n    <tr>\n      <td style=\"border: 1px solid #ccc; padding: 2px 5px; word-break: break-all; color: #444; background: #fafafa;\">\n        {{{payload}}}</td>\n    </tr>\n  </table>\n\n</div>",
         "output": "str",
         "x": 1830,
         "y": 120,
         "wires": [
             [
-                "6a67a16d7f48ce98"
+                "6a67a16d7f48ce98",
+                "77a08272dae5a95f"
             ]
         ]
     },
@@ -11367,14 +11375,14 @@
                 "t": "set",
                 "p": "minLimit",
                 "pt": "msg",
-                "to": "17",
+                "to": "15",
                 "tot": "num"
             },
             {
                 "t": "set",
                 "p": "maxLimit",
                 "pt": "msg",
-                "to": "24",
+                "to": "17",
                 "tot": "num"
             },
             {
@@ -11423,14 +11431,14 @@
                 "t": "set",
                 "p": "minLimit",
                 "pt": "msg",
-                "to": "17",
+                "to": "15",
                 "tot": "num"
             },
             {
                 "t": "set",
                 "p": "maxLimit",
                 "pt": "msg",
-                "to": "24",
+                "to": "17",
                 "tot": "num"
             },
             {
@@ -12365,6 +12373,7 @@
         "name": "Count Array size / Set email title",
         "func": "msg.topic = \"GrowBox report\"; //Email title\nflow.set(\"SendEmail\",false); //Reset email sending flag\nmsg.ActiveAlertsSize = flow.get('ActiveAlerts').length;  //Count active alerts array size\nmsg.RecoveredAlertsSize = flow.get('RecoveredAlerts').length; //Count resolved alerts array size\n\n\n\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -16312,5 +16321,99 @@
                 "48cca671d98af3f1"
             ]
         ]
+    },
+    {
+        "id": "d464f4aeab3789ac",
+        "type": "inject",
+        "z": "3d93eb6ca3793727",
+        "name": "Trigger test email",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "minLimit",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "p": "maxLimit",
+                "v": "2",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "3",
+        "payload": "TestEmail",
+        "payloadType": "msg",
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "df16d7b937bccdd5"
+            ]
+        ]
+    },
+    {
+        "id": "77a08272dae5a95f",
+        "type": "debug",
+        "z": "3d93eb6ca3793727",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2120,
+        "y": 70,
+        "wires": []
+    },
+    {
+        "id": "df16d7b937bccdd5",
+        "type": "change",
+        "z": "3d93eb6ca3793727",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "SendEmail",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6a35b286411b549",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-home-assistant-websocket": "0.80.3",
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-moment": "5.0.0",
+            "node-red-contrib-ui-level": "0.1.46",
+            "node-red-node-email": "5.1.0",
+            "node-red-contrib-tableify": "0.0.2",
+            "node-red-contrib-deglitch": "1.0.2"
+        }
     }
 ]
