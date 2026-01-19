@@ -365,8 +365,21 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_bucket1_dryweight
             name: false
-            icon: 'no'
+            icon: none
             show_state: false
+            card_mod:
+              style:
+                hui-generic-entity-row $: |
+                  .info {
+                    display: none;
+                  }
+                  div.entity {
+                    margin-right: auto;
+                  }
+                .: |
+                  div.entities-row {
+                    justify-content: flex-start !important;
+                  }
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -475,8 +488,21 @@ views:
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_bucket2_dryweight
             name: false
-            icon: 'no'
+            icon: none
             show_state: false
+            card_mod:
+              style:
+                hui-generic-entity-row $: |
+                  .info {
+                    display: none;
+                  }
+                  div.entity {
+                    margin-right: auto;
+                  }
+                .: |
+                  div.entities-row {
+                    justify-content: flex-start !important;
+                  }
             entities:
               - type: button
                 icon: mdi:watering-can
@@ -584,7 +610,20 @@ views:
             entity: sensor.gbox420_aero1_pressure
             name: false
             show_state: false
-            icon: 'no'
+            icon: none
+            card_mod:
+              style:
+                hui-generic-entity-row $: |
+                  .info {
+                    display: none;
+                  }
+                  div.entity {
+                    margin-right: auto;
+                  }
+                .: |
+                  div.entities-row {
+                    justify-content: flex-start !important;
+                  }
             entities:
               - type: button
                 icon: mdi:water
