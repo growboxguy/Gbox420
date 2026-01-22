@@ -4,8 +4,8 @@ profiles:
   Gbox420_Main:
     name: Gbox420_Main
     notes: >
-      Gbox420 Main Module for Arduino Mega 2560
-      Documentation: https://sites.google.com/site/growboxguy/arduino/main-module
+      Gbox420 Main Module for Arduino Mega 2560.  Documentation:
+      https://sites.google.com/site/growboxguy/arduino/main-module
     fqbn: arduino:avr:mega:cpu=atmega2560
     platforms:
       - platform: arduino:avr
@@ -17,8 +17,6 @@ profiles:
       - DHT sensor library (1.4.6)
       - Adafruit Unified Sensor (1.1.15)
       - PZEM004Tv30 (1.2.1)
-  config:
-      library_paths:
-        - ./libraries
-  protocol: serial
+      - dir: ./libraries/ELClient
+    protocol: serial
 default_profile: Gbox420_Main
