@@ -17,6 +17,6 @@ profiles:
       - DHT sensor library (1.4.6)
       - Adafruit Unified Sensor (1.1.15)
       - PZEM004Tv30 (1.2.1)
-      - dir: ./libraries/ELClient
+      - dir: ./ELClient
     protocol: serial
 default_profile: Gbox420_Main
