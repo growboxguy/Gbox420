@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['tdssensorsettings_0',['TDSSensorSettings',['../structSettings_1_1TDSSensorSettings.html',1,'Settings']]]
+  ['settings_0',['Settings',['../structSettings.html',1,'']]],
+  ['soundsettings_1',['SoundSettings',['../structSettings_1_1SoundSettings.html',1,'Settings']]]
 ];

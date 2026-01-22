@@ -1,11 +1,21 @@
 var searchData=
 [
-  ['blowofftime_0',['BlowOffTime',['../structSettings_1_1PressurePumpSettings.html#acc5d570e180c5423feb9fd51a839763e',1,'Settings::PressurePumpSettings']]],
-  ['brightness_1',['Brightness',['../structSettings_1_1LightsSettings.html#a1b40be02a65c2b4f6cf958f9b28a1413',1,'Settings::LightsSettings']]],
-  ['bucket1_2',['Bucket1',['../structSettings.html#a312d8c1c5c6370ab52b75ba4e0ade18e',1,'Settings']]],
-  ['bucket2_3',['Bucket2',['../structSettings.html#a40c442f2ab78fa04e15f5920e2e72ddb',1,'Settings']]],
-  ['bypasssolenoidclosingdelay_4',['BypassSolenoidClosingDelay',['../structSettings_1_1PressurePumpSettings.html#af32492ae9e8aede60f40b38ee572aed7',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidmaxopentime_5',['BypassSolenoidMaxOpenTime',['../structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidnegativelogic_6',['BypassSolenoidNegativeLogic',['../structSettings_1_1PressurePumpSettings.html#a4528de4dca33b48a6eea757d06a78c76',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidpin_7',['BypassSolenoidPin',['../structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe',1,'Settings::PressurePumpSettings']]]
+  ['acmotor1_0',['ACMotor1',['../structSettings.html#af94394a1ff5745c7c83b5a45279496fe',1,'Settings']]],
+  ['adc_5favg_1',['adc_avg',['../VoltagePage_8ino.html#aa070d8cded6d43868b16e6a95964f0c6',1,'VoltagePage.ino']]],
+  ['adc_5fmax_2',['adc_max',['../VoltagePage_8ino.html#ad95e5753ae9265851ccceddf35aa510e',1,'VoltagePage.ino']]],
+  ['adc_5fmin_3',['adc_min',['../VoltagePage_8ino.html#af2e6fd85463d4b8806400b2dc8b87108',1,'VoltagePage.ino']]],
+  ['addr_4',['addr',['../PZEMChangeAddress_8ino.html#af5105c72a61e60d3b44670de20e0c3fb',1,'PZEMChangeAddress.ino']]],
+  ['aero1_5',['Aero1',['../structSettings.html#a1d645caa6e9346e7ea2d834a5477a06b',1,'Settings']]],
+  ['aeromod1_6',['aeromod1',['../Gbox420__Nano__Aero__NoTank_8ino.html#aa8138c0d9e77e3b99339945ae84f186f',1,'AeroMod1:&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#aa8138c0d9e77e3b99339945ae84f186f',1,'AeroMod1:&#160;Gbox420_Nano_Aero_Tank.ino']]],
+  ['aeromodule1_7',['AeroModule1',['../structSettings.html#a384089d7d207a69156cd768f1881e40c',1,'Settings']]],
+  ['aeront1_8',['AeroNT1',['../structSettings.html#a650aad0ec5e8b5bd5c2d10c86722e4e1',1,'Settings']]],
+  ['aeropump1_9',['AeroPump1',['../structSettings.html#a145e944e3a960f9bfd4a786869760fc7',1,'Settings']]],
+  ['aerot1_10',['AeroT1',['../structSettings.html#a25af9a86a9ca1d29c8d578717dc55e98',1,'Settings']]],
+  ['alarms_11',['alarms',['../classPZEM004Tv30.html#a2f79101a26ef68e18289d191154bf853',1,'PZEM004Tv30']]],
+  ['analogpin_12',['AnalogPin',['../structSettings_1_1LightSensorSettings.html#af3096c7e90d342a4860b901c84def760',1,'Settings::LightSensorSettings']]],
+  ['ap1_13',['Ap1',['../structSettings.html#a1cb9dab01816e68ef7fa0534169a6ec3',1,'Settings']]],
+  ['api_5fkey_14',['api_key',['../thingspeak_8ino.html#af3b26bb1e042784ae17635a01b0447f2',1,'thingspeak.ino']]],
+  ['arduinoserial_15',['arduinoserial',['../Gbox420__Mega__Main_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Mega__Main_2SerialLog_8h.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Hempy_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Hempy_2SerialLog_8h.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__Tank_2SerialLog_8h.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Aero__NoTank_2SerialLog_8h.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Reservoir_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Nano_Reservoir.ino'],['../Gbox420__Nano__Reservoir_2SerialLog_8h.html#aaa89c80a04f1a6b0b5f2e425a9d045db',1,'ArduinoSerial:&#160;Gbox420_Mega_Main.ino']]],
+  ['argc_16',['argc',['../structPACKED.html#a9a12a208e58953058c7ef0d7480a5ca0',1,'PACKED']]],
+  ['args_17',['args',['../structPACKED.html#ab1df4f9a289ae68c1d167d28f3801f63',1,'PACKED']]]
 ];

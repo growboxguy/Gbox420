@@ -1,0 +1,11 @@
+<map id="ELClientWebServer::setArgFloat" name="ELClientWebServer::setArgFloat">
+<area shape="rect" id="Node000001" title="Sets float value of a field." alt="" coords="5,23,159,63"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a66fdfca8cd119ffa74525ff2e73d7b7b" title="Start a request." alt="" coords="207,31,343,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,41,193,41,193,46,159,46"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="391,5,540,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="342,32,377,27,377,32,343,37"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a752ddd938f29124a1a6a8b7f72cd9787" title="Send a byte." alt="" coords="407,55,523,80"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="343,49,394,56,393,61,342,55"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="588,5,731,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="540,15,574,15,574,21,540,21"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="ELClient::WaitReturn" name="ELClient::WaitReturn">
+<area shape="rect" id="Node000001" title="Wait for a response from ESP for a given timeout." alt="" coords="223,80,377,105"/>
+<area shape="rect" id="Node000002" href="$classELClientSocket.html#ac8381fbc4660741b557df986675c1012" title="Initialize communication to a remote server." alt="" coords="9,5,171,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,77,174,45,138,33,140,28,176,39,258,72"/>
+<area shape="rect" id="Node000003" href="$classELClientRest.html#a3426676c75a0ce45a7ea394e91f6d485" title="Initialize communication to a REST server." alt="" coords="16,55,164,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,84,164,79,165,74,209,79"/>
+<area shape="rect" id="Node000004" href="$classELClientCmd.html#a45ce482a602039ad0873736759786181" title="Get time from ESP." alt="" coords="5,104,175,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,106,175,110,174,104,209,100"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a31168558c71a43d38e19246cce161b7a" title="Synchronize the communication between the MCU and the ESP." alt="" coords="33,153,147,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="256,113,176,143,136,156,134,151,174,138,254,108"/>
+</map>

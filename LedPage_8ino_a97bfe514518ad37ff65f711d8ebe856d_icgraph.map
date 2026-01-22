@@ -1,0 +1,12 @@
+<map id="ledHistoryToLog" name="ledHistoryToLog">
+<area shape="rect" id="Node000001" title=" " alt="" coords="519,5,645,31"/>
+<area shape="rect" id="Node000002" href="$LedPage_8ino.html#a949324716e5bc868e518c4372393b6b2" title=" " alt="" coords="361,5,471,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="505,21,471,21,471,15,505,15"/>
+<area shape="rect" id="Node000003" href="$LedPage_8ino.html#ab3a99dd408f1ba48013fe1cdd1ee8cfb" title=" " alt="" coords="112,5,175,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="348,21,175,21,175,15,348,15"/>
+<area shape="rect" id="Node000005" href="$LedPage_8ino.html#a4e8ccad6cbdec060ba852f6dfd9034e3" title=" " alt="" coords="223,31,313,56"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="348,32,314,38,313,33,347,27"/>
+<area shape="rect" id="Node000004" href="$webserver__controls_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="98,21,64,21,64,15,98,15"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="209,34,174,27,175,22,210,29"/>
+</map>

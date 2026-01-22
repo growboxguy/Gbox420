@@ -1,0 +1,41 @@
+<map id="setup" name="setup">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,179,64,204"/>
+<area shape="rect" id="Node000002" href="$LedPage_8ino.html#ab3a99dd408f1ba48013fe1cdd1ee8cfb" title=" " alt="" coords="127,203,189,228"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,194,114,204,113,209,64,200"/>
+<area shape="rect" id="Node000010" href="$webserver__controls_8ino.html#aecac63f529b543963279fdf5ef982e38" title=" " alt="" coords="122,252,194,277"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="57,202,113,237,124,243,121,248,111,242,54,206"/>
+<area shape="rect" id="Node000011" href="$UserPage_8ino.html#a0c5fe2b0843784b74406a16461353491" title=" " alt="" coords="123,80,193,105"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="50,176,128,112,132,116,53,180"/>
+<area shape="rect" id="Node000016" href="$VoltagePage_8ino.html#a82a1c60a6913e7b73f2db147034d2842" title=" " alt="" coords="112,153,204,179"/>
+<area shape="poly" id="edge18_Node000001_Node000016" title=" " alt="" coords="64,183,98,176,99,181,65,188"/>
+<area shape="rect" id="Node000003" href="$classFP.html#af226f17795cb329002e68f32fb8e32a4" title=" " alt="" coords="278,104,365,129"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,200,202,188,225,163,235,151,251,138,264,131,267,136,253,143,239,155,229,166,206,192,186,205"/>
+<area shape="rect" id="Node000004" href="$LedPage_8ino.html#aaf2e7fc0c5a7f1b5043130de16720f71" title=" " alt="" coords="253,203,390,228"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="190,213,239,213,239,218,190,218"/>
+<area shape="rect" id="Node000006" href="$LedPage_8ino.html#a4e8ccad6cbdec060ba852f6dfd9034e3" title=" " alt="" coords="276,353,367,379"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="191,226,206,237,223,263,230,286,237,309,254,332,271,345,268,349,250,336,232,311,225,288,218,265,202,241,188,230"/>
+<area shape="rect" id="Node000007" href="$LedPage_8ino.html#a949324716e5bc868e518c4372393b6b2" title=" " alt="" coords="439,328,548,353"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="188,226,206,237,220,251,229,264,238,275,253,286,295,305,340,319,425,334,424,339,339,324,294,310,251,291,235,279,225,267,216,254,202,241,185,230"/>
+<area shape="rect" id="Node000009" href="$LedPage_8ino.html#a64d1623bc8e3339bdd40636ccf41f664" title=" " alt="" coords="266,252,377,277"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="190,222,266,245,265,250,189,227"/>
+<area shape="rect" id="Node000005" href="$LedPage_8ino.html#ad31011facae0fd3ef58de44d25acdb43" title=" " alt="" coords="448,228,539,253"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="390,223,435,229,434,235,390,228"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="366,357,425,348,426,353,367,362"/>
+<area shape="rect" id="Node000008" href="$LedPage_8ino.html#a97bfe514518ad37ff65f711d8ebe856d" title=" " alt="" coords="596,328,723,353"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="548,338,582,338,582,343,548,343"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="376,254,433,246,434,252,377,260"/>
+<area shape="poly" id="edge13_Node000011_Node000003" title=" " alt="" coords="194,95,265,106,264,111,193,100"/>
+<area shape="rect" id="Node000012" href="$UserPage_8ino.html#a36a23b9f5ba5aa4fe32224e28a38f368" title=" " alt="" coords="272,5,371,31"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="179,78,251,40,267,33,269,38,253,44,181,82"/>
+<area shape="rect" id="Node000014" href="$UserPage_8ino.html#abd0f3f2fb78936ca7c08274d0e6e614a" title=" " alt="" coords="262,55,381,80"/>
+<area shape="poly" id="edge16_Node000011_Node000014" title=" " alt="" coords="193,85,248,76,249,81,194,90"/>
+<area shape="rect" id="Node000013" href="$UserPage_8ino.html#af7d6b0bb14570a232bead3b22274d4a0" title=" " alt="" coords="443,5,544,31"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="371,15,429,15,429,21,371,21"/>
+<area shape="rect" id="Node000015" href="$UserPage_8ino.html#a8dd73c618c8bb555064636c50722885c" title=" " alt="" coords="442,55,545,80"/>
+<area shape="poly" id="edge17_Node000014_Node000015" title=" " alt="" coords="381,65,428,65,428,70,381,70"/>
+<area shape="poly" id="edge19_Node000016_Node000003" title=" " alt="" coords="200,151,265,131,266,136,201,156"/>
+<area shape="rect" id="Node000017" href="$VoltagePage_8ino.html#a72fad9abea29ab71e10c0de8143487b0" title=" " alt="" coords="252,153,391,179"/>
+<area shape="poly" id="edge20_Node000016_Node000017" title=" " alt="" coords="204,163,238,163,238,169,204,169"/>
+<area shape="rect" id="Node000018" href="$VoltagePage_8ino.html#a1999191a8a0e5e2e20ff4991f5e85795" title=" " alt="" coords="442,153,545,179"/>
+<area shape="poly" id="edge21_Node000017_Node000018" title=" " alt="" coords="391,163,428,163,428,169,391,169"/>
+</map>

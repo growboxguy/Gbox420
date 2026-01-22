@@ -1,0 +1,14 @@
+<map id="ELClientRest::request" name="ELClientRest::request">
+<area shape="rect" id="Node000001" title="Send request to REST server." alt="" coords="292,80,453,105"/>
+<area shape="poly" id="edge6_Node000001_Node000001" title=" " alt="" coords="408,70,398,62,373,59,352,61,341,65,338,71,344,78,340,81,333,72,337,62,350,56,373,53,400,57,411,66"/>
+<area shape="rect" id="Node000002" href="$classELClientRest.html#a19fd81b270a081e4cfbe1afbfadf0acc" title="Send DELETE request to REST server." alt="" coords="108,5,240,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="327,77,243,44,212,33,213,28,245,40,329,72"/>
+<area shape="rect" id="Node000003" href="$classELClientRest.html#a3b2e522ff9115387c778a57ee697753a" title="Send GET request to REST server." alt="" coords="107,55,241,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="278,83,241,78,242,73,278,78"/>
+<area shape="rect" id="Node000005" href="$classELClientRest.html#a753e374e0e10046c9d8677d8c0adf0b2" title="Send POST request to REST server." alt="" coords="104,104,244,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="279,107,245,111,244,106,278,101"/>
+<area shape="rect" id="Node000006" href="$classELClientRest.html#a074a8efcdb60a32738ca01909ad566b4" title="Send PUT request to REST server." alt="" coords="107,153,241,179"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="326,113,245,143,211,156,209,151,243,138,324,108"/>
+<area shape="rect" id="Node000004" href="$rest_8ino.html#afe461d27b9c48d5921c00d521181f12f" title=" " alt="" coords="5,55,56,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="94,70,56,70,56,65,94,65"/>
+</map>

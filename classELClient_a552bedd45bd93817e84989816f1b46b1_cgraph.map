@@ -1,0 +1,13 @@
+<map id="ELClient::Process" name="ELClient::Process">
+<area shape="rect" id="Node000001" title="Handle serial input." alt="" coords="5,55,139,80"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a16dec25a8d3b96cc741fa89e8408b13b" title="Process a received SLIP message." alt="" coords="187,55,392,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,65,173,65,173,70,139,70"/>
+<area shape="rect" id="Node000003" href="$classFP.html#a98d90035c755bea09b761377214029cf" title=" " alt="" coords="463,5,566,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="347,52,449,29,450,35,349,57"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="440,55,589,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="392,65,426,65,426,70,392,70"/>
+<area shape="rect" id="Node000006" href="$classELClient.html#a7683229d72d18af54d52506e7953c4e4" title="Send debug message over serial debug stream." alt="" coords="459,104,571,129"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="349,77,446,99,445,104,347,83"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="637,55,780,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="589,65,623,65,623,70,589,70"/>
+</map>

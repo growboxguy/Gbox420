@@ -1,0 +1,18 @@
+<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientSocket.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientSocket.h">
+<area shape="rect" id="Node000001" title="Definitions for ELClientSocket." alt="" coords="5,5,224,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="134,240,218,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,47,89,77,76,114,71,153,74,173,81,191,102,215,130,232,127,237,99,219,76,193,69,174,66,153,71,112,84,74,100,45"/>
+<area shape="rect" id="Node000003" href="$FP_8h.html" title="Core Utility &#45; Templated Function Pointer Class." alt="" coords="91,167,139,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,46,117,153,112,153,112,46"/>
+<area shape="rect" id="Node000004" href="$ELClient_8h.html" title="Definitions for ELClient." alt="" coords="193,93,279,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="145,43,208,84,205,88,143,48"/>
+<area shape="poly" id="edge6_Node000004_Node000002" title=" " alt="" coords="231,120,204,168,184,227,179,225,199,166,226,117"/>
+<area shape="poly" id="edge9_Node000004_Node000003" title=" " alt="" coords="218,121,147,162,145,157,215,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="214,167,341,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="245,118,266,153,261,156,241,120"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="365,167,499,192"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="268,116,388,159,386,164,267,121"/>
+<area shape="rect" id="Node000007" href="$ELClientResponse_8h.html" title="Definitions for ELClientResponse." alt="" coords="523,167,674,192"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="280,113,527,161,526,167,279,118"/>
+<area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="531,195,232,245,231,239,530,189"/>
+</map>

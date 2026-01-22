@@ -1,0 +1,69 @@
+<map id="ELClient::Request" name="ELClient::Request">
+<area shape="rect" id="Node000001" title="Start a request." alt="" coords="475,844,611,869"/>
+<area shape="rect" id="Node000002" href="$classELClientSocket.html#ac8381fbc4660741b557df986675c1012" title="Initialize communication to a remote server." alt="" coords="239,5,401,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="539,830,536,670,522,433,508,310,488,198,460,106,444,70,425,44,400,28,403,23,429,40,448,68,465,104,493,197,514,310,528,433,542,670,544,830"/>
+<area shape="rect" id="Node000003" href="$classELClientRest.html#a3426676c75a0ce45a7ea394e91f6d485" title="Initialize communication to a REST server." alt="" coords="246,55,394,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="539,830,535,679,519,457,505,342,485,237,459,151,443,118,425,93,410,82,393,74,395,70,413,77,429,89,447,115,464,149,490,236,510,341,525,457,540,679,544,830"/>
+<area shape="rect" id="Node000004" href="$classELClientCmd.html#a45ce482a602039ad0873736759786181" title="Get time from ESP." alt="" coords="235,104,405,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="538,830,533,687,516,480,502,373,482,276,457,196,441,165,425,143,403,128,406,123,429,139,446,163,462,194,487,274,507,372,522,479,538,687,544,830"/>
+<area shape="rect" id="Node000005" href="$classELClientMqtt.html#ae6cb9429e77e59869c225e1eab958bdc" title="Set MQTT last will." alt="" coords="253,153,387,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="538,830,531,697,513,504,499,405,479,315,455,241,440,213,425,192,407,179,386,171,388,166,410,174,429,188,445,210,460,239,484,314,504,404,519,503,536,696,543,830"/>
+<area shape="rect" id="Node000006" href="$classELClientMqtt.html#a5b23f214c0ee5fa9c805f0731d68594a" title="Set MQTT last will." alt="" coords="253,203,387,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="538,830,529,705,510,528,495,437,476,354,453,286,439,261,425,241,407,228,386,221,388,216,410,224,429,237,444,258,458,284,481,353,501,436,515,527,535,705,543,830"/>
+<area shape="rect" id="Node000007" href="$classELClientMqtt.html#a9e1f5858895c2e3ca7ecb1e1aaa4678d" title="Subscribe to MQTT topic." alt="" coords="240,252,400,277"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="537,831,527,715,507,552,492,469,473,393,451,332,438,308,425,291,399,274,402,270,428,287,443,305,456,329,478,392,497,468,512,551,533,714,542,830"/>
+<area shape="rect" id="Node000008" href="$classELClientMqtt.html#ae8a7a0174a0a1483a9e4e484e89b94e6" title="Subscribe to MQTT topic." alt="" coords="240,301,400,327"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="536,830,525,723,504,575,488,500,470,432,449,377,425,340,399,324,402,319,429,336,454,374,475,430,494,499,509,574,531,722,542,829"/>
+<area shape="rect" id="Node000009" href="$classELClientMqtt.html#a3b134d02620237064950e50fd96c4b43" title="Subscribe to MQTT topic." alt="" coords="240,351,400,376"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="536,831,523,733,500,600,485,533,467,472,447,422,425,389,399,373,401,369,429,385,452,420,472,470,490,531,506,599,529,732,541,830"/>
+<area shape="rect" id="Node000010" href="$classELClientMqtt.html#a641aa6d32b037c7d2827c1c7f17fe981" title="Subscribe to MQTT topic." alt="" coords="240,400,400,425"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="535,831,521,742,497,624,464,511,445,467,425,439,399,423,402,418,428,435,450,465,469,509,502,622,526,741,540,830"/>
+<area shape="rect" id="Node000012" href="$classELClientRest.html#a43377e56a5a8173f06c61b553947fa9b" title="Send request to REST server." alt="" coords="239,449,401,475"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="539,830,535,761,519,668,505,619,485,571,459,527,425,488,399,473,402,468,428,484,463,523,490,569,510,617,524,667,540,761,544,830"/>
+<area shape="rect" id="Node000013" href="$classELClientSocket.html#aead6469c7a8473daf08c222ffb8fccf8" title="Send data to the remote server." alt="" coords="241,499,399,524"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="537,831,530,770,512,691,498,649,479,609,455,571,425,539,398,523,400,518,428,535,459,568,483,606,503,647,517,690,535,770,543,830"/>
+<area shape="rect" id="Node000014" href="$classELClientWebServer.html#a313a0cfd1f748770a4aa23a0c22d143d" title="Sets boolean value of a field." alt="" coords="243,549,397,589"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="534,831,523,782,502,721,470,657,449,628,425,603,396,585,398,581,428,599,453,625,475,654,507,719,528,781,540,830"/>
+<area shape="rect" id="Node000015" href="$classELClientWebServer.html#a1ded921400a30406735894dbe42d5999" title="Sets boolean value of a field." alt="" coords="243,613,397,653"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="530,832,516,795,493,750,463,705,425,667,395,650,398,646,428,663,467,702,498,748,520,793,535,830"/>
+<area shape="rect" id="Node000016" href="$classELClientWebServer.html#a12d70af2a9af86468b0346194a8a2382" title="Sets float value of a field." alt="" coords="243,677,397,717"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="524,834,483,782,456,754,425,731,396,716,398,712,428,726,459,750,487,778,528,831"/>
+<area shape="rect" id="Node000017" href="$classELClientWebServer.html#a7c7baab5882334346a5d222628dd4100" title="Sets float value of a field." alt="" coords="243,741,397,781"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="509,839,470,817,426,795,394,783,396,778,428,790,472,812,511,835"/>
+<area shape="rect" id="Node000018" href="$classELClientWebServer.html#a9942b35145c49d8a45cd98064cc20d43" title="Sets integer value of a field." alt="" coords="243,805,397,845"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="460,848,397,838,397,833,461,842"/>
+<area shape="rect" id="Node000019" href="$classELClientWebServer.html#a2445d0995087f0a222eff4f72231c133" title="Sets integer value of a field." alt="" coords="243,869,397,909"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="461,871,397,880,397,875,460,866"/>
+<area shape="rect" id="Node000020" href="$classELClientWebServer.html#af86a676269d09a3b7fd8716363456d6b" title="Sets JSON value of a field." alt="" coords="243,933,397,973"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="511,879,472,901,428,923,396,935,394,930,426,918,470,897,509,874"/>
+<area shape="rect" id="Node000021" href="$classELClientWebServer.html#a920c8a0c54b4544f24d2190f7f432a9a" title="Sets JSON value of a field." alt="" coords="243,997,397,1037"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="528,883,487,935,459,963,428,987,398,1002,396,997,425,982,456,959,483,932,524,879"/>
+<area shape="rect" id="Node000022" href="$classELClientWebServer.html#a66c37f78ae1602bbb26d4f83c85de29e" title="Sets JSON value of a field." alt="" coords="243,1061,397,1101"/>
+<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="535,883,520,921,498,966,467,1011,428,1051,398,1068,395,1063,425,1047,463,1008,493,963,516,919,530,881"/>
+<area shape="rect" id="Node000023" href="$classELClientWebServer.html#a5e41e6b7442b6eef0d0453dd8f5d03df" title="Sets null value to a field." alt="" coords="243,1125,397,1165"/>
+<area shape="poly" id="edge22_Node000001_Node000023" title=" " alt="" coords="540,883,528,932,507,995,475,1059,453,1089,428,1115,398,1133,396,1128,425,1111,449,1085,470,1056,502,993,523,931,534,882"/>
+<area shape="rect" id="Node000024" href="$classELClientWebServer.html#ad50440e284dac10b3a9cd6de6cdd0ad4" title="Sets null value to a field." alt="" coords="243,1189,397,1229"/>
+<area shape="poly" id="edge23_Node000001_Node000024" title=" " alt="" coords="542,884,534,944,516,1023,501,1065,482,1106,458,1145,428,1179,398,1198,395,1193,425,1175,454,1141,477,1104,496,1063,511,1021,529,943,537,883"/>
+<area shape="rect" id="Node000025" href="$classELClientWebServer.html#aa80449ed25b5cad90cc90d9d47a3849d" title="Sets string value of a field." alt="" coords="243,1253,397,1293"/>
+<area shape="poly" id="edge24_Node000001_Node000025" title=" " alt="" coords="544,883,540,954,524,1050,510,1102,490,1153,463,1200,428,1243,398,1262,395,1258,425,1239,458,1197,485,1150,505,1100,519,1049,535,953,539,883"/>
+<area shape="rect" id="Node000026" href="$classELClientWebServer.html#aa0848139a1b0be25b5725aa592c208dc" title="Sets string value of a field." alt="" coords="243,1317,397,1357"/>
+<area shape="poly" id="edge25_Node000001_Node000026" title=" " alt="" coords="541,884,527,977,503,1104,470,1226,450,1273,429,1307,398,1326,396,1322,425,1303,446,1271,465,1224,498,1102,521,976,535,883"/>
+<area shape="rect" id="Node000027" href="$classELClientWebServer.html#a0499e3b1dbbd8d6c6437616c8c906493" title="Sets string value of a field." alt="" coords="243,1381,397,1421"/>
+<area shape="poly" id="edge26_Node000001_Node000027" title=" " alt="" coords="542,883,530,989,507,1135,492,1209,474,1276,453,1332,429,1370,414,1382,398,1391,395,1386,411,1378,425,1367,448,1330,469,1275,487,1207,502,1134,524,988,536,883"/>
+<area shape="rect" id="Node000028" href="$classELClientRest.html#aaf21aea051a6919105a50ba930482be9" title="Set content type of header." alt="" coords="213,1445,427,1471"/>
+<area shape="poly" id="edge27_Node000001_Node000028" title=" " alt="" coords="542,883,533,1001,512,1166,497,1251,479,1328,456,1391,443,1416,429,1435,412,1447,409,1443,425,1431,438,1413,451,1389,474,1326,492,1250,507,1166,528,1001,537,883"/>
+<area shape="rect" id="Node000029" href="$classELClientRest.html#a6f378840d348144f4d8e73234b669327" title="Set generic header content." alt="" coords="231,1495,409,1520"/>
+<area shape="poly" id="edge28_Node000001_Node000029" title=" " alt="" coords="543,884,535,1010,516,1190,501,1283,482,1367,458,1436,444,1463,429,1484,411,1497,408,1493,425,1480,439,1460,453,1434,477,1366,495,1282,510,1190,529,1010,538,883"/>
+<area shape="rect" id="Node000030" href="$classELClientWebServer.html#a51214bb5d02eb565fb5dc15f7dbae24f" title="Initializes web&#45;server." alt="" coords="243,1545,397,1585"/>
+<area shape="poly" id="edge29_Node000001_Node000030" title=" " alt="" coords="543,883,536,1018,517,1212,502,1313,483,1404,459,1480,445,1510,429,1533,415,1545,398,1554,396,1550,412,1541,425,1530,440,1508,454,1478,478,1403,497,1312,512,1212,530,1018,538,883"/>
+<area shape="rect" id="Node000031" href="$classELClientMqtt.html#acddbf07065c65695f31b6d560ee945b4" title="Setup mqtt." alt="" coords="245,1609,395,1635"/>
+<area shape="poly" id="edge30_Node000001_Node000031" title=" " alt="" coords="544,883,539,1030,523,1245,508,1356,488,1457,462,1541,446,1574,429,1599,413,1611,396,1619,394,1614,411,1606,425,1595,442,1571,457,1539,483,1456,503,1355,518,1244,534,1030,538,883"/>
+<area shape="rect" id="Node000032" href="$classELClientRest.html#a044a4483a3a08ffa0444d221d1c7df49" title="Set user agent of header." alt="" coords="220,1659,420,1684"/>
+<area shape="poly" id="edge31_Node000001_Node000032" title=" " alt="" coords="544,883,541,1039,526,1268,512,1387,491,1496,464,1586,448,1621,429,1648,413,1661,409,1656,425,1644,443,1618,459,1584,486,1495,506,1387,520,1268,535,1039,539,883"/>
+<area shape="rect" id="Node000033" href="$classELClientMqtt.html#a159b4f7decb235c95e47e1d7c759baa6" title="Subscribe to MQTT topic." alt="" coords="233,1708,407,1733"/>
+<area shape="poly" id="edge32_Node000001_Node000033" title=" " alt="" coords="544,883,542,1047,538,1164,529,1291,515,1418,494,1535,466,1631,449,1669,429,1697,409,1712,406,1708,425,1693,444,1666,461,1629,489,1534,510,1418,524,1291,532,1164,537,1047,539,883"/>
+<area shape="rect" id="Node000034" href="$classELClientMqtt.html#acaa8a0ad0e55affcbd286ae6d4d4a1d7" title="Subscribe to MQTT topic." alt="" coords="233,1757,407,1783"/>
+<area shape="poly" id="edge33_Node000001_Node000034" title=" " alt="" coords="544,883,544,1056,540,1180,532,1315,518,1450,497,1574,484,1629,468,1676,450,1716,429,1747,409,1761,406,1757,425,1743,445,1713,463,1674,479,1627,492,1573,513,1449,526,1315,535,1180,538,1056,539,883"/>
+<area shape="rect" id="Node000011" href="$classELClientMqtt.html#a9a4c0792d2fe922a42d5ab2ee0f5d843" title="Subscribe to MQTT topic." alt="" coords="5,400,165,425"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="226,415,166,415,166,410,226,410"/>
+</map>

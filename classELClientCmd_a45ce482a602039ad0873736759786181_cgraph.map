@@ -1,0 +1,22 @@
+<map id="ELClientCmd::GetTime" name="ELClientCmd::GetTime">
+<area shape="rect" id="Node000001" title="Get time from ESP." alt="" coords="5,75,175,100"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a66fdfca8cd119ffa74525ff2e73d7b7b" title="Start a request." alt="" coords="232,49,368,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,74,218,69,219,74,175,80"/>
+<area shape="rect" id="Node000006" href="$classELClient.html#a96fc499e95ef69089c3aebdb89981342" title="Wait for a response from ESP for a given timeout." alt="" coords="223,99,377,124"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="175,94,209,98,209,104,175,100"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="860,5,1009,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="357,47,425,35,539,25,653,19,846,15,846,20,653,24,539,30,426,41,358,52"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a752ddd938f29124a1a6a8b7f72cd9787" title="Send a byte." alt="" coords="434,49,550,75"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="368,59,420,59,420,65,368,65"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="1057,5,1200,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1009,15,1043,15,1043,21,1009,21"/>
+<area shape="rect" id="Node000007" href="$classELClient.html#a552bedd45bd93817e84989816f1b46b1" title="Handle serial input." alt="" coords="425,99,559,124"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="378,109,411,109,411,114,378,114"/>
+<area shape="rect" id="Node000008" href="$classELClient.html#a16dec25a8d3b96cc741fa89e8408b13b" title="Process a received SLIP message." alt="" coords="607,92,812,117"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="559,107,593,106,593,111,559,112"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="743,89,887,33,889,38,744,94"/>
+<area shape="rect" id="Node000009" href="$classFP.html#a98d90035c755bea09b761377214029cf" title=" " alt="" coords="883,67,986,92"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="812,90,869,84,870,89,813,96"/>
+<area shape="rect" id="Node000010" href="$classELClient.html#a7683229d72d18af54d52506e7953c4e4" title="Send debug message over serial debug stream." alt="" coords="879,116,991,141"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="813,113,865,119,864,124,812,118"/>
+</map>

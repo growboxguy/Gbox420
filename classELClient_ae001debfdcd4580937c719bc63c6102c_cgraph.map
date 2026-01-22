@@ -1,0 +1,5 @@
+<map id="ELClient::crc16Data" name="ELClient::crc16Data">
+<area shape="rect" id="Node000001" title="Create/add CRC for a data buffer." alt="" coords="5,5,155,31"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="203,5,345,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,15,189,15,189,21,155,21"/>
+</map>

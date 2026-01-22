@@ -1,0 +1,11 @@
+<map id="ELClient::protoCompletedCb" name="ELClient::protoCompletedCb">
+<area shape="rect" id="Node000001" title="Process a received SLIP message." alt="" coords="5,55,211,80"/>
+<area shape="rect" id="Node000002" href="$classFP.html#a98d90035c755bea09b761377214029cf" title=" " alt="" coords="282,5,385,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,52,268,29,269,35,167,57"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="259,55,408,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,65,245,65,245,70,211,70"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a7683229d72d18af54d52506e7953c4e4" title="Send debug message over serial debug stream." alt="" coords="277,104,389,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="167,77,264,99,263,104,166,83"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="456,55,599,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="408,65,442,65,442,70,408,70"/>
+</map>

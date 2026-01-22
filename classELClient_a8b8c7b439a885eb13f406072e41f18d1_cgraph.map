@@ -1,0 +1,5 @@
+<map id="ELClient::write" name="ELClient::write">
+<area shape="rect" id="Node000001" title="Send several byte." alt="" coords="5,5,121,31"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a752ddd938f29124a1a6a8b7f72cd9787" title="Send a byte." alt="" coords="169,5,285,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,15,155,15,155,21,122,21"/>
+</map>

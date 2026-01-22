@@ -1,0 +1,21 @@
+<map id="Gbox420_Mega_Main/libraries/ELClient/examples/thingspeak/thingspeak.ino" name="Gbox420_Mega_Main/libraries/ELClient/examples/thingspeak/thingspeak.ino">
+<area shape="rect" id="Node000001" title=" " alt="" coords="383,5,605,60"/>
+<area shape="rect" id="Node000002" href="$ELClient_8h.html" title="Definitions for ELClient." alt="" coords="399,181,485,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="488,61,453,169,448,167,483,59"/>
+<area shape="rect" id="Node000008" href="$ELClientRest_8h.html" title="Definitions for ELClientRes." alt="" coords="491,108,607,133"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="513,59,536,95,532,98,508,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,255,132,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="399,206,142,255,141,250,398,201"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="156,255,291,280"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="408,209,273,253,271,248,406,204"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="400,328,484,353"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="413,209,381,228,367,241,356,256,354,274,363,291,381,307,402,320,399,324,377,311,359,295,348,275,352,254,363,237,378,224,410,205"/>
+<area shape="rect" id="Node000006" href="$ELClientResponse_8h.html" title="Definitions for ELClientResponse." alt="" coords="367,255,517,280"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="445,207,445,241,439,241,439,207"/>
+<area shape="rect" id="Node000007" href="$FP_8h.html" title="Core Utility &#45; Templated Function Pointer Class." alt="" coords="542,255,590,280"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="463,204,535,245,533,250,461,209"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="445,280,445,314,439,314,439,280"/>
+<area shape="poly" id="edge11_Node000008_Node000002" title=" " alt="" coords="533,136,472,176,469,171,530,131"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="561,132,583,160,604,198,612,219,615,241,613,262,604,282,583,304,556,320,527,331,498,337,497,332,525,326,553,315,579,300,600,278,608,260,610,241,607,221,600,200,578,163,557,135"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="553,133,566,241,560,241,547,134"/>
+</map>

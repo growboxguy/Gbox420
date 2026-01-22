@@ -1,0 +1,17 @@
+<map id="ELClientSocket::waitResponse" name="ELClientSocket::waitResponse">
+<area shape="rect" id="Node000001" title="Wait for the response." alt="" coords="5,31,223,56"/>
+<area shape="rect" id="Node000002" href="$classELClientSocket.html#a07087d4d7a98e6eea1aed4e2bc8bcf81" title="Retrieve response." alt="" coords="271,5,481,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,30,257,27,257,32,223,36"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#a552bedd45bd93817e84989816f1b46b1" title="Handle serial input." alt="" coords="309,55,443,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="223,51,296,57,296,63,222,56"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a16dec25a8d3b96cc741fa89e8408b13b" title="Process a received SLIP message." alt="" coords="529,55,735,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="443,65,516,65,516,70,443,70"/>
+<area shape="rect" id="Node000005" href="$classFP.html#a98d90035c755bea09b761377214029cf" title=" " alt="" coords="806,5,909,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="690,52,792,29,793,35,691,57"/>
+<area shape="rect" id="Node000006" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="783,55,932,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="735,65,769,65,769,70,735,70"/>
+<area shape="rect" id="Node000008" href="$classELClient.html#a7683229d72d18af54d52506e7953c4e4" title="Send debug message over serial debug stream." alt="" coords="801,104,913,129"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="691,77,788,99,787,104,690,83"/>
+<area shape="rect" id="Node000007" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="980,55,1123,80"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="932,65,966,65,966,70,932,70"/>
+</map>

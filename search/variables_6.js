@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['hemp1_0',['Hemp1',['../structSettings.html#a7ad58535157a492e359dd8266f3eeefe',1,'Settings']]],
-  ['hempy_5fbucket_5fschema_1',['HEMPY_BUCKET_SCHEMA',['../namespacehempy.html#a8fe5bbb62828ff6bb7253f14724e212e',1,'hempy']]],
-  ['hempy_5fns_2',['hempy_ns',['../namespacehempy.html#af7785adad97535ea93093153b1db1739',1,'hempy']]],
-  ['hempybucket_3',['HempyBucket',['../namespacehempy.html#a47b768c1bedc02388121087b6b4c1044',1,'hempy']]],
-  ['hempymod1_4',['HempyMod1',['../Gbox420__Nano__Hempy_8ino.html#a75505364abc2ebf9d33a1b91bfec00c5',1,'Gbox420_Nano_Hempy.ino']]],
-  ['hempymodule1_5',['HempyModule1',['../structSettings.html#a8aad5f767d357df44327a0d67b48568c',1,'Settings']]],
-  ['hempypump1_6',['HempyPump1',['../structSettings.html#ab97c074d1d101e3ebad215e5050a369b',1,'Settings']]],
-  ['hempypump2_7',['HempyPump2',['../structSettings.html#ace005f695de72f1325e24b600163b4fa',1,'Settings']]],
-  ['highspeed_8',['HighSpeed',['../structSettings_1_1FanSettings.html#ae3579c0670e2048e1a6b9d09777adc7f',1,'Settings::FanSettings']]]
+  ['fadingenabled_0',['FadingEnabled',['../structSettings_1_1LightsSettings.html#acaa21f5a7591c074b73cfc4edaf9d350',1,'Settings::LightsSettings']]],
+  ['fadingincrements_1',['FadingIncrements',['../structSettings_1_1LightsSettings.html#a6199221d929dcf9848475b00712e3108',1,'Settings::LightsSettings']]],
+  ['fadinginterval_2',['FadingInterval',['../structSettings_1_1LightsSettings.html#a67dcb17d1b40f518c3c7828726f0a555',1,'Settings::LightsSettings']]],
+  ['fane_3',['FanE',['../structSettings.html#a7b8af9117d243b0f212f3298f1b3e21e',1,'Settings']]],
+  ['fani_4',['FanI',['../structSettings.html#a2cbaa15588456e98628e24d056c8173b',1,'Settings']]],
+  ['fivesecthread_5',['fivesecthread',['../Gbox420__Mega__Main_8ino.html#a53a9d8bb350581bc4ffb215418731b79',1,'FiveSecThread:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Hempy_8ino.html#a53a9d8bb350581bc4ffb215418731b79',1,'FiveSecThread:&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#a53a9d8bb350581bc4ffb215418731b79',1,'FiveSecThread:&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#a53a9d8bb350581bc4ffb215418731b79',1,'FiveSecThread:&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Reservoir_8ino.html#a53a9d8bb350581bc4ffb215418731b79',1,'FiveSecThread:&#160;Gbox420_Nano_Reservoir.ino']]],
+  ['frequeny_6',['frequeny',['../classPZEM004Tv30.html#a1aed69ee8f7137e6c289c9b20a0d06cd',1,'PZEM004Tv30']]]
 ];

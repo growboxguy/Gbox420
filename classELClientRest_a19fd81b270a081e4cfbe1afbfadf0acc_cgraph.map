@@ -1,0 +1,6 @@
+<map id="ELClientRest::del" name="ELClientRest::del">
+<area shape="rect" id="Node000001" title="Send DELETE request to REST server." alt="" coords="5,29,137,55"/>
+<area shape="rect" id="Node000002" href="$classELClientRest.html#a4a500adb9311d4dfe7c8e19c64c54d1e" title="Send request to REST server." alt="" coords="185,29,347,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,39,172,39,172,45,138,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="234,31,227,21,231,11,244,5,266,3,293,6,304,15,301,19,291,11,266,8,245,10,234,15,232,20,238,28"/>
+</map>

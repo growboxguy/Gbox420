@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Gbox", "index.html", [
+    [ "Simple demo", "index.html", null ],
     [ "Gbox420 - ESPHome Edition", "md_ESPHome_2Readme.html", null ],
     [ "Namespace Members", "namespacemembers.html", [
       [ "All", "namespacemembers.html", null ],
@@ -37,7 +38,7 @@ var NAVTREE =
       [ "Data Structure Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
@@ -48,6 +49,9 @@ var NAVTREE =
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -56,9 +60,11 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"Gbox420__Mega__Main_2SerialLog_8cpp.html",
-"Gbox420__Nano__Reservoir_8ino.html",
-"structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81"
+"ELClientCmd_8cpp.html",
+"Gbox420__Nano__Aero__Tank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b",
+"classELClient.html",
+"hempy_8h.html#aba804889a7349321b9672565b8cadbcda6a83fb962e26a218fee9b429eb62dbc6",
+"tcp__client_8ino.html#a4fc01d736fe50cf5b977f755b675f11d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -8,6 +8,11 @@
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="94,96,141,104,140,109,93,102"/>
 <area shape="rect" id="Node000005" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title=" " alt="" coords="155,153,269,179"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="74,103,142,138,161,146,159,151,140,143,71,108"/>
-<area shape="rect" id="Node000006" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="331,153,431,179"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="269,163,317,163,317,169,269,169"/>
+<area shape="rect" id="Node000006" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="331,104,431,129"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="255,151,322,131,324,136,257,156"/>
+<area shape="rect" id="Node000007" href="$mqtt_8ino.html#a3406da2ff2ea0b672966163b1134e83a" title=" " alt="" coords="339,153,423,179"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="269,163,324,163,324,169,269,169"/>
+<area shape="rect" id="Node000008" href="$classELClientResponse.html#a6be2bcccdf29df7eae7c974dac39cb7a" title="Extract a string from the response packet." alt="" coords="479,179,687,204"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="265,176,331,187,398,192,465,193,465,198,398,197,330,193,264,181"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="423,169,468,174,467,180,422,174"/>
 </map>

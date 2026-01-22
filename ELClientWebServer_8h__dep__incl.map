@@ -1,0 +1,17 @@
+<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h">
+<area shape="rect" id="Node000001" title="Definitions for ELClientWebServer." alt="" coords="752,5,971,45"/>
+<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch." alt="" coords="5,101,229,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="739,39,507,61,242,96,201,103,200,98,241,91,507,56,738,34"/>
+<area shape="rect" id="Node000003" href="$ELClientWebServer_8cpp.html" title="Constructor and functions for ELClientWebServer." alt="" coords="253,101,485,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="743,50,498,96,461,103,460,98,497,91,742,45"/>
+<area shape="rect" id="Node000004" href="$LedPage_8ino.html" title=" " alt="" coords="509,93,728,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="800,53,688,96,686,91,799,48"/>
+<area shape="rect" id="Node000005" href="$UserPage_8ino.html" title=" " alt="" coords="752,93,971,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="864,59,864,93,859,93,859,59"/>
+<area shape="rect" id="Node000006" href="$VoltagePage_8ino.html" title=" " alt="" coords="995,93,1213,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="924,48,1037,91,1035,96,922,53"/>
+<area shape="rect" id="Node000007" href="$webserver__controls_8ino.html" title=" " alt="" coords="1238,93,1474,148"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="980,45,1226,91,1238,93,1237,98,1225,96,979,50"/>
+<area shape="rect" id="Node000008" href="$webserver__led_8ino.html" title=" " alt="" coords="1499,93,1717,148"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="985,33,1218,55,1487,91,1499,93,1498,98,1486,96,1218,61,984,39"/>
+</map>

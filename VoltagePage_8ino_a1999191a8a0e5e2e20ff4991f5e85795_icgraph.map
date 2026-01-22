@@ -1,0 +1,9 @@
+<map id="floatToString" name="floatToString">
+<area shape="rect" id="Node000001" title=" " alt="" coords="439,5,541,31"/>
+<area shape="rect" id="Node000002" href="$VoltagePage_8ino.html#a72fad9abea29ab71e10c0de8143487b0" title=" " alt="" coords="252,5,391,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="425,21,391,21,391,15,425,15"/>
+<area shape="rect" id="Node000003" href="$VoltagePage_8ino.html#a82a1c60a6913e7b73f2db147034d2842" title=" " alt="" coords="112,5,204,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="238,21,204,21,204,15,238,15"/>
+<area shape="rect" id="Node000004" href="$webserver__controls_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,64,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="98,21,64,21,64,15,98,15"/>
+</map>

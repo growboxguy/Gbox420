@@ -1,0 +1,13 @@
+<map id="Gbox420_Mega_Main/libraries/PZEM&#45;004T&#45;v30&#45;master/PZEM004Tv30.h" name="Gbox420_Mega_Main/libraries/PZEM&#45;004T&#45;v30&#45;master/PZEM004Tv30.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="676,5,963,45"/>
+<area shape="rect" id="Node000002" href="$PZEM004Tv30_8cpp.html" title=" " alt="" coords="5,101,308,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="662,49,321,96,273,103,272,98,320,91,662,44"/>
+<area shape="rect" id="Node000003" href="$PZEMChangeAddress_8ino.html" title=" " alt="" coords="333,93,663,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="742,52,589,96,588,91,740,47"/>
+<area shape="rect" id="Node000004" href="$PZEMHardSerial_8ino.html" title=" " alt="" coords="687,93,951,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="822,59,822,93,817,93,817,59"/>
+<area shape="rect" id="Node000005" href="$PZEMSoftwareSerial_8ino.html" title=" " alt="" coords="976,93,1292,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="897,47,1046,91,1045,96,895,52"/>
+<area shape="rect" id="Node000006" href="$SoftwareSerial_8ino.html" title=" " alt="" coords="1316,93,1595,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="976,44,1305,91,1316,92,1315,98,1304,96,976,49"/>
+</map>

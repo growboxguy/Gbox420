@@ -1,9 +1,21 @@
 var searchData=
 [
-  ['enabled_0',['Enabled',['../structSettings_1_1SoundSettings.html#afea3193e9bde3ee58c9098ed9abcec4e',1,'Settings::SoundSettings']]],
-  ['esplink_1',['ESPLink',['../Gbox420__Mega__Main_8ino.html#aaf19672988e5c97031ddba277dcd14ec',1,'Gbox420_Mega_Main.ino']]],
-  ['espserial_2',['espserial',['../Gbox420__Mega__Main_8ino.html#a42d46ca1befe52b08a5fa43ecb03e4e5',1,'ESPSerial:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Mega__Main_2SerialLog_8h.html#aea644f78656fead3c543a01abe9951f4',1,'ESPSerial:&#160;Gbox420_Mega_Main.ino']]],
-  ['evaporationtarget_3',['EvaporationTarget',['../structSettings_1_1HempyBucketSettings.html#a95a241a884a0b4640103bf54f2cb39d8',1,'Settings::HempyBucketSettings']]],
-  ['evaporationtarget_5fb1_4',['EvaporationTarget_B1',['../structSettings_1_1HempyModuleSettings.html#a502523df5963a0ddad0e8609bc2bc6a7',1,'Settings::HempyModuleSettings']]],
-  ['evaporationtarget_5fb2_5',['EvaporationTarget_B2',['../structSettings_1_1HempyModuleSettings.html#a89da4b06b5ec40ebc4a47990ee24eb86',1,'Settings::HempyModuleSettings']]]
+  ['datacb_0',['dataCb',['../classELClientMqtt.html#aefc689a94b4b19ac43f54b417d55138b',1,'ELClientMqtt']]],
+  ['datalen_1',['dataLen',['../structELClientProtocol.html#ae2e5f2e93aff68ed271b4e770205d46b',1,'ELClientProtocol']]],
+  ['dayinterval_2',['dayinterval',['../structSettings_1_1AeroModuleSettings.html#aea83d68af2820270cef46d957d878cf4',1,'Settings::AeroModuleSettings::DayInterval'],['../structSettings_1_1AeroponicsSettings.html#a0f1acfffb1f7177325e2c70fb702b455',1,'Settings::AeroponicsSettings::DayInterval'],['../structSettings_1_1AeroponicsSettings.html#a205c5f366140135934347560db75bcb9',1,'Settings::AeroponicsSettings::DayInterval']]],
+  ['debug_3',['debug',['../Gbox420__Nano__Reservoir_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23',1,'Debug:&#160;Gbox420_Nano_Reservoir.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23',1,'Debug:&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23',1,'Debug:&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Hempy_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23',1,'Debug:&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Mega__Main_8ino.html#abd3c39b29d5b6b4bf8fcf5ab816dfc23',1,'Debug:&#160;Gbox420_Mega_Main.ino'],['../structSettings.html#ae85fc15d5c9994d5249d43ff3009fbd5',1,'Settings::Debug']]],
+  ['dht1_4',['DHT1',['../structSettings.html#aec1acd152ecb3b5e311b0c00d2d250ed',1,'Settings']]],
+  ['digitalpin_5',['DigitalPin',['../structSettings_1_1LightSensorSettings.html#ad98e9ef02b4ca23a70eb758cea023a52',1,'Settings::LightSensorSettings']]],
+  ['dimmingduration_6',['DimmingDuration',['../structSettings_1_1LightsSettings.html#a5920b7fc2a92a583157521c204b6f529',1,'Settings::LightsSettings']]],
+  ['dimminglimit_7',['DimmingLimit',['../structSettings_1_1LightsSettings.html#a8d6e754a00896b403bb1d32a219f2df7',1,'Settings::LightsSettings']]],
+  ['dimmingpin_8',['DimmingPin',['../structSettings_1_1LightsSettings.html#a26618951ebacea0df224f9ea07a5756b',1,'Settings::LightsSettings']]],
+  ['disconnectedcb_9',['disconnectedCb',['../classELClientMqtt.html#a3874d37f02716a1bcc72128a671f34fb',1,'ELClientMqtt']]],
+  ['draintargetweight_10',['DrainTargetWeight',['../structSettings_1_1HempyBucketSettings.html#a73c18906bc8e2de938d1563c2a620015',1,'Settings::HempyBucketSettings']]],
+  ['draintargetweight_5fb1_11',['DrainTargetWeight_B1',['../structSettings_1_1HempyModuleSettings.html#a7ee20d11759af1a5d67935430a1a4eb3',1,'Settings::HempyModuleSettings']]],
+  ['draintargetweight_5fb2_12',['DrainTargetWeight_B2',['../structSettings_1_1HempyModuleSettings.html#af8a8ea2af7575203333b31899bc0febd',1,'Settings::HempyModuleSettings']]],
+  ['drainwaittime_13',['DrainWaitTime',['../structSettings_1_1HempyBucketSettings.html#ac77954a7d38a936a6e0fc6bfbb87ac6f',1,'Settings::HempyBucketSettings']]],
+  ['drainwaittime_5fb1_14',['DrainWaitTime_B1',['../structSettings_1_1HempyModuleSettings.html#a025a7781413bf841fd68292d25130db1',1,'Settings::HempyModuleSettings']]],
+  ['drainwaittime_5fb2_15',['DrainWaitTime_B2',['../structSettings_1_1HempyModuleSettings.html#ac1afbb37d10d58a2b8f2cf48e51f332c',1,'Settings::HempyModuleSettings']]],
+  ['dtpin_16',['DTPin',['../structSettings_1_1WeightSensorSettings.html#a1bc513b2dbbdf5522f91a9d4cafb497f',1,'Settings::WeightSensorSettings']]],
+  ['duration_17',['duration',['../structSettings_1_1AeroModuleSettings.html#a8ffffe6faf187630a2f8b6795bd6b8b7',1,'Settings::AeroModuleSettings::Duration'],['../structSettings_1_1AeroponicsSettings.html#a9f01759beecac62b9be228648cac8e26',1,'Settings::AeroponicsSettings::Duration']]]
 ];

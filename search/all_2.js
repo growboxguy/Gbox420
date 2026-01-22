@@ -1,12 +1,23 @@
 var searchData=
 [
-  ['blowofftime_0',['BlowOffTime',['../structSettings_1_1PressurePumpSettings.html#acc5d570e180c5423feb9fd51a839763e',1,'Settings::PressurePumpSettings']]],
-  ['brightness_1',['Brightness',['../structSettings_1_1LightsSettings.html#a1b40be02a65c2b4f6cf958f9b28a1413',1,'Settings::LightsSettings']]],
-  ['bucket1_2',['Bucket1',['../structSettings.html#a312d8c1c5c6370ab52b75ba4e0ade18e',1,'Settings']]],
-  ['bucket2_3',['Bucket2',['../structSettings.html#a40c442f2ab78fa04e15f5920e2e72ddb',1,'Settings']]],
-  ['buttoncallback_4',['buttonCallback',['../Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612',1,'Gbox420_Mega_Main.ino']]],
-  ['bypasssolenoidclosingdelay_5',['BypassSolenoidClosingDelay',['../structSettings_1_1PressurePumpSettings.html#af32492ae9e8aede60f40b38ee572aed7',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidmaxopentime_6',['BypassSolenoidMaxOpenTime',['../structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidnegativelogic_7',['BypassSolenoidNegativeLogic',['../structSettings_1_1PressurePumpSettings.html#a4528de4dca33b48a6eea757d06a78c76',1,'Settings::PressurePumpSettings']]],
-  ['bypasssolenoidpin_8',['BypassSolenoidPin',['../structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe',1,'Settings::PressurePumpSettings']]]
+  ['begin_0',['begin',['../classELClientSocket.html#ac8381fbc4660741b557df986675c1012',1,'ELClientSocket::begin()'],['../classELClientRest.html#a3426676c75a0ce45a7ea394e91f6d485',1,'ELClientRest::begin()']]],
+  ['blinking_1',['blinking',['../LedPage_8ino.html#aff1279cab68751c05924f66bd66ed434',1,'LedPage.ino']]],
+  ['blinking_5fduty_2',['blinking_duty',['../LedPage_8ino.html#ab750a3040f45e3240eb3d883a6ea4e8c',1,'LedPage.ino']]],
+  ['blinking_5ffrequency_3',['blinking_frequency',['../LedPage_8ino.html#a7f6a602d92c70a8527d4e9778f11dabd',1,'LedPage.ino']]],
+  ['blinking_5fnext_5fts_4',['blinking_next_ts',['../LedPage_8ino.html#ad83e60e79b8f8793e4f0926a0096d3dc',1,'LedPage.ino']]],
+  ['blinking_5fperiod_5',['blinking_period',['../LedPage_8ino.html#a48224c568257f6b4d31619023973ab61',1,'LedPage.ino']]],
+  ['blinking_5fphase_6',['blinking_phase',['../LedPage_8ino.html#aa5be24c7e1c1f0e096336a2bb8dcfe36',1,'LedPage.ino']]],
+  ['blowofftime_7',['BlowOffTime',['../structSettings_1_1PressurePumpSettings.html#acc5d570e180c5423feb9fd51a839763e',1,'Settings::PressurePumpSettings']]],
+  ['brightness_8',['Brightness',['../structSettings_1_1LightsSettings.html#a1b40be02a65c2b4f6cf958f9b28a1413',1,'Settings::LightsSettings']]],
+  ['bucket1_9',['Bucket1',['../structSettings.html#a312d8c1c5c6370ab52b75ba4e0ade18e',1,'Settings']]],
+  ['bucket2_10',['Bucket2',['../structSettings.html#a40c442f2ab78fa04e15f5920e2e72ddb',1,'Settings']]],
+  ['buf_11',['buf',['../structELClientProtocol.html#a8adcdb1463a2968d2eeb9acbe8a88ffd',1,'ELClientProtocol']]],
+  ['buflen_12',['buflen',['../thingspeak_8ino.html#ad974fe981249f5e84fbf1683b012c9f8',1,'BUFLEN:&#160;thingspeak.ino'],['../rest_8ino.html#ad974fe981249f5e84fbf1683b012c9f8',1,'BUFLEN:&#160;rest.ino']]],
+  ['bufsize_13',['bufSize',['../structELClientProtocol.html#ae729705002d3a6cabe094bb2667642f4',1,'ELClientProtocol']]],
+  ['buttoncallback_14',['buttonCallback',['../Gbox420__Mega__Main_8ino.html#a4a2cfece0a181ca0f95f1f342f645612',1,'Gbox420_Mega_Main.ino']]],
+  ['buttoncb_15',['buttonCb',['../structURL__HANDLER.html#a9b5a6001d70ce61f49344c53869ec345',1,'URL_HANDLER']]],
+  ['bypasssolenoidclosingdelay_16',['BypassSolenoidClosingDelay',['../structSettings_1_1PressurePumpSettings.html#af32492ae9e8aede60f40b38ee572aed7',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidmaxopentime_17',['BypassSolenoidMaxOpenTime',['../structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidnegativelogic_18',['BypassSolenoidNegativeLogic',['../structSettings_1_1PressurePumpSettings.html#a4528de4dca33b48a6eea757d06a78c76',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidpin_19',['BypassSolenoidPin',['../structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe',1,'Settings::PressurePumpSettings']]]
 ];

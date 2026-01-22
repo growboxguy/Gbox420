@@ -1,0 +1,9 @@
+<map id="ELClient::Request" name="ELClient::Request">
+<area shape="rect" id="Node000001" title="Start a request." alt="" coords="5,31,141,56"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="189,5,339,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,32,175,27,176,32,142,37"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a752ddd938f29124a1a6a8b7f72cd9787" title="Send a byte." alt="" coords="206,55,322,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="142,49,192,56,191,61,141,55"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="387,5,529,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="339,15,373,15,373,21,339,21"/>
+</map>

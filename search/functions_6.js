@@ -1,6 +1,19 @@
 var searchData=
 [
-  ['ignorecallback_0',['ignoreCallback',['../Gbox420__Mega__Main_8ino.html#ae20d29224c7c73ab950247fa775e0922',1,'Gbox420_Mega_Main.ino']]],
-  ['initializewireless_1',['initializewireless',['../Gbox420__Nano__Hempy_8ino.html#a95db03d1e7e16b28a065a97809c55551',1,'InitializeWireless():&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551',1,'InitializeWireless():&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551',1,'InitializeWireless():&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551',1,'InitializeWireless():&#160;Gbox420_Nano_Reservoir.ino']]],
-  ['is_5fwatering_5factive_2',['is_watering_active',['../classesphome_1_1hempy_1_1HempyBucket.html#aaa29898881d7e9ca599ea35a51eb16ea',1,'esphome::hempy::HempyBucket']]]
+  ['get_0',['get',['../classELClientRest.html#a3b2e522ff9115387c778a57ee697753a',1,'ELClientRest']]],
+  ['get_5faverage_5fweight_1',['get_average_weight',['../classesphome_1_1hempy_1_1HempyBucket.html#a276c89b41e4175e1ca38db0f0d070886',1,'esphome::hempy::HempyBucket']]],
+  ['getaddress_2',['getAddress',['../classPZEM004Tv30.html#a3006697b40584e1bd418968747d82151',1,'PZEM004Tv30']]],
+  ['getargboolean_3',['getArgBoolean',['../classELClientWebServer.html#a6c2a9b704a6a1192423a3cdbca2555bb',1,'ELClientWebServer']]],
+  ['getargfloat_4',['getArgFloat',['../classELClientWebServer.html#a53559439dcd7aaccf1b7b78a257f72e3',1,'ELClientWebServer']]],
+  ['getargint_5',['getArgInt',['../classELClientWebServer.html#a68535ed673c724ed4d8692249798bf97',1,'ELClientWebServer']]],
+  ['getargstring_6',['getArgString',['../classELClientWebServer.html#aa9587c81a72c902f21e39014451ebeb1',1,'ELClientWebServer']]],
+  ['geterrtxt_7',['geterrtxt',['../tcp__client_8ino.html#a854ed4fc8590b34842a4b6326556068c',1,'getErrTxt(int16_t commError):&#160;tcp_client.ino'],['../udp_8ino.html#a854ed4fc8590b34842a4b6326556068c',1,'getErrTxt(int16_t commError):&#160;udp.ino'],['../tcp__server_8ino.html#a854ed4fc8590b34842a4b6326556068c',1,'getErrTxt(int16_t commError):&#160;tcp_server.ino'],['../tcp__client__resp_8ino.html#a854ed4fc8590b34842a4b6326556068c',1,'getErrTxt(int16_t commError):&#160;tcp_client_resp.ino']]],
+  ['getinstance_8',['getInstance',['../classELClientWebServer.html#abe6389470916226ef81360bf6828a1a0',1,'ELClientWebServer']]],
+  ['getntptime_9',['getNtpTime',['../Gbox420__Mega__Main_8ino.html#a42ab384e77148282f4730ec6c68ac2a3',1,'Gbox420_Mega_Main.ino']]],
+  ['getpoweralarm_10',['getPowerAlarm',['../classPZEM004Tv30.html#aed98567da52c4a15ee3068836f8975b8',1,'PZEM004Tv30']]],
+  ['getresponse_11',['getresponse',['../classELClientSocket.html#a07087d4d7a98e6eea1aed4e2bc8bcf81',1,'ELClientSocket::getResponse()'],['../classELClientRest.html#aba064b010d5edf4a21a195887dbd3bbc',1,'ELClientRest::getResponse()']]],
+  ['gettime_12',['GetTime',['../classELClientCmd.html#a45ce482a602039ad0873736759786181',1,'ELClientCmd']]],
+  ['getwifistatus_13',['GetWifiStatus',['../classELClient.html#afb5624ca6a564b45a10f3bd04b5d9e46',1,'ELClient']]],
+  ['getwirelessdata_14',['getwirelessdata',['../Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469',1,'getWirelessData():&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#a16c49958e5626b4e9844870a44edf469',1,'getWirelessData():&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469',1,'getWirelessData():&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469',1,'getWirelessData():&#160;Gbox420_Nano_Reservoir.ino']]],
+  ['getwirelessstatus_15',['getwirelessstatus',['../Gbox420__Mega__Main_8ino.html#aefb388f6afb97c766f549d7c809c35f9',1,'getWirelessStatus():&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Hempy_8ino.html#aefb388f6afb97c766f549d7c809c35f9',1,'getWirelessStatus():&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#aefb388f6afb97c766f549d7c809c35f9',1,'getWirelessStatus():&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9',1,'getWirelessStatus():&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Reservoir_8ino.html#aefb388f6afb97c766f549d7c809c35f9',1,'getWirelessStatus():&#160;Gbox420_Nano_Reservoir.ino']]]
 ];

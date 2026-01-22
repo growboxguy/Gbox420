@@ -1,6 +1,20 @@
 var searchData=
 [
-  ['compatibilityversion_0',['CompatibilityVersion',['../structSettings.html#a073845c882435533a9058bddc336f951',1,'Settings']]],
-  ['config_5fschema_1',['CONFIG_SCHEMA',['../namespacehempy.html#a5fcfc06ea007e34487528b280da50ffd',1,'hempy']]],
-  ['currenttime_2',['currenttime',['../Gbox420__Mega__Main_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Mega__Main_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Hempy_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Nano_Hempy.ino'],['../Gbox420__Nano__Hempy_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Aero__Tank_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Nano_Aero_Tank.ino'],['../Gbox420__Nano__Aero__Tank_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Aero__NoTank_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Nano_Aero_NoTank.ino'],['../Gbox420__Nano__Aero__NoTank_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino'],['../Gbox420__Nano__Reservoir_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Nano_Reservoir.ino'],['../Gbox420__Nano__Reservoir_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1',1,'CurrentTime:&#160;Gbox420_Mega_Main.ino']]]
+  ['blinking_0',['blinking',['../LedPage_8ino.html#aff1279cab68751c05924f66bd66ed434',1,'LedPage.ino']]],
+  ['blinking_5fduty_1',['blinking_duty',['../LedPage_8ino.html#ab750a3040f45e3240eb3d883a6ea4e8c',1,'LedPage.ino']]],
+  ['blinking_5ffrequency_2',['blinking_frequency',['../LedPage_8ino.html#a7f6a602d92c70a8527d4e9778f11dabd',1,'LedPage.ino']]],
+  ['blinking_5fnext_5fts_3',['blinking_next_ts',['../LedPage_8ino.html#ad83e60e79b8f8793e4f0926a0096d3dc',1,'LedPage.ino']]],
+  ['blinking_5fperiod_4',['blinking_period',['../LedPage_8ino.html#a48224c568257f6b4d31619023973ab61',1,'LedPage.ino']]],
+  ['blinking_5fphase_5',['blinking_phase',['../LedPage_8ino.html#aa5be24c7e1c1f0e096336a2bb8dcfe36',1,'LedPage.ino']]],
+  ['blowofftime_6',['BlowOffTime',['../structSettings_1_1PressurePumpSettings.html#acc5d570e180c5423feb9fd51a839763e',1,'Settings::PressurePumpSettings']]],
+  ['brightness_7',['Brightness',['../structSettings_1_1LightsSettings.html#a1b40be02a65c2b4f6cf958f9b28a1413',1,'Settings::LightsSettings']]],
+  ['bucket1_8',['Bucket1',['../structSettings.html#a312d8c1c5c6370ab52b75ba4e0ade18e',1,'Settings']]],
+  ['bucket2_9',['Bucket2',['../structSettings.html#a40c442f2ab78fa04e15f5920e2e72ddb',1,'Settings']]],
+  ['buf_10',['buf',['../structELClientProtocol.html#a8adcdb1463a2968d2eeb9acbe8a88ffd',1,'ELClientProtocol']]],
+  ['bufsize_11',['bufSize',['../structELClientProtocol.html#ae729705002d3a6cabe094bb2667642f4',1,'ELClientProtocol']]],
+  ['buttoncb_12',['buttonCb',['../structURL__HANDLER.html#a9b5a6001d70ce61f49344c53869ec345',1,'URL_HANDLER']]],
+  ['bypasssolenoidclosingdelay_13',['BypassSolenoidClosingDelay',['../structSettings_1_1PressurePumpSettings.html#af32492ae9e8aede60f40b38ee572aed7',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidmaxopentime_14',['BypassSolenoidMaxOpenTime',['../structSettings_1_1PressurePumpSettings.html#a231225d8e67fb7bcb206826ad1ff2b81',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidnegativelogic_15',['BypassSolenoidNegativeLogic',['../structSettings_1_1PressurePumpSettings.html#a4528de4dca33b48a6eea757d06a78c76',1,'Settings::PressurePumpSettings']]],
+  ['bypasssolenoidpin_16',['BypassSolenoidPin',['../structSettings_1_1PressurePumpSettings.html#ad0bb91e71d753f98213719d5eee97cbe',1,'Settings::PressurePumpSettings']]]
 ];

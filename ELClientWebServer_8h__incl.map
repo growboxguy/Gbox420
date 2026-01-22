@@ -1,0 +1,18 @@
+<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h">
+<area shape="rect" id="Node000001" title="Definitions for ELClientWebServer." alt="" coords="194,5,413,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,240,89,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,48,187,66,137,92,91,125,72,146,55,168,46,197,46,227,40,227,40,196,50,165,68,142,88,121,134,87,184,61,232,43"/>
+<area shape="rect" id="Node000003" href="$ELClient_8h.html" title="Definitions for ELClient." alt="" coords="260,93,347,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="306,46,306,79,301,79,301,46"/>
+<area shape="rect" id="Node000007" href="$FP_8h.html" title="Core Utility &#45; Templated Function Pointer Class." alt="" coords="570,167,618,192"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="341,43,561,158,559,163,338,48"/>
+<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="260,109,216,112,167,121,117,139,95,152,75,169,65,181,58,196,51,227,46,226,53,194,60,178,71,165,92,148,115,134,165,116,216,107,260,104"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="85,167,212,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="280,121,187,163,185,158,277,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="236,167,371,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="306,119,306,153,301,153,301,119"/>
+<area shape="rect" id="Node000006" href="$ELClientResponse_8h.html" title="Definitions for ELClientResponse." alt="" coords="395,167,545,192"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="331,116,431,159,429,164,329,121"/>
+<area shape="poly" id="edge8_Node000003_Node000007" title=" " alt="" coords="347,114,557,164,556,169,346,119"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="403,195,103,245,102,239,402,189"/>
+</map>

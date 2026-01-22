@@ -1,0 +1,25 @@
+<map id="FP::attach" name="FP::attach">
+<area shape="rect" id="Node000001" title=" " alt="" coords="323,195,409,220"/>
+<area shape="rect" id="Node000002" href="$classELClientSocket.html#ac8381fbc4660741b557df986675c1012" title="Initialize communication to a remote server." alt="" coords="112,5,275,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="355,182,344,151,326,113,303,76,273,44,254,33,257,28,276,40,307,73,331,111,349,149,360,181"/>
+<area shape="rect" id="Node000003" href="$classELClientRest.html#a3426676c75a0ce45a7ea394e91f6d485" title="Initialize communication to a REST server." alt="" coords="119,55,267,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="349,184,318,139,297,115,273,95,249,82,251,78,276,90,301,111,322,135,354,181"/>
+<area shape="rect" id="Node000004" href="$classELClientWebServer.html#a4b23f30d912895671a51536378999a98" title="Creates a Web&#45;Server instance." alt="" coords="117,105,270,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="331,190,273,159,247,147,249,142,276,154,333,185"/>
+<area shape="rect" id="Node000005" href="$LedPage_8ino.html#ab3a99dd408f1ba48013fe1cdd1ee8cfb" title=" " alt="" coords="162,219,225,244"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="310,218,225,230,225,224,309,213"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection" alt="" coords="131,169,256,195"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="309,202,256,194,257,189,310,196"/>
+<area shape="rect" id="Node000009" href="$webserver__led_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="164,268,223,293"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="334,230,276,259,224,276,222,271,274,254,331,225"/>
+<area shape="rect" id="Node000010" href="$UserPage_8ino.html#a0c5fe2b0843784b74406a16461353491" title=" " alt="" coords="158,317,229,343"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="351,233,319,272,276,308,253,319,229,327,228,322,251,314,273,304,315,268,346,230"/>
+<area shape="rect" id="Node000011" href="$VoltagePage_8ino.html#a82a1c60a6913e7b73f2db147034d2842" title=" " alt="" coords="147,367,239,392"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="358,234,328,296,305,329,276,357,259,368,240,375,238,370,257,363,273,353,301,326,324,293,353,232"/>
+<area shape="rect" id="Node000006" href="$webserver__controls_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,317,64,343"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="150,244,113,259,76,289,48,319,44,315,72,285,111,254,148,239"/>
+<area shape="rect" id="Node000008" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,169,64,195"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="117,185,64,185,64,179,117,179"/>
+<area shape="poly" id="edge10_Node000010_Node000006" title=" " alt="" coords="144,333,64,333,64,327,144,327"/>
+<area shape="poly" id="edge12_Node000011_Node000006" title=" " alt="" coords="135,365,111,358,63,342,65,337,113,353,136,360"/>
+</map>

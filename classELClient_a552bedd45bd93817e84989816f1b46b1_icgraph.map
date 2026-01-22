@@ -1,0 +1,17 @@
+<map id="ELClient::Process" name="ELClient::Process">
+<area shape="rect" id="Node000001" title="Handle serial input." alt="" coords="488,55,621,80"/>
+<area shape="rect" id="Node000002" href="$classELClientRest.html#a743f4ff9ac0ed78ed9eb5bac540e1a5e" title="Wait for the response." alt="" coords="230,5,433,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="483,54,389,33,390,28,484,49"/>
+<area shape="rect" id="Node000003" href="$classELClientSocket.html#a66629c98e586c73f5f2eee2b14a963dd" title="Wait for the response." alt="" coords="223,55,440,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="474,70,440,70,440,65,474,65"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a96fc499e95ef69089c3aebdb89981342" title="Wait for a response from ESP for a given timeout." alt="" coords="254,104,409,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="484,86,390,107,389,101,483,80"/>
+<area shape="rect" id="Node000005" href="$classELClientSocket.html#ac8381fbc4660741b557df986675c1012" title="Initialize communication to a remote server." alt="" coords="9,29,171,55"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="250,103,222,94,197,81,174,68,141,57,143,52,176,64,200,77,224,89,252,98"/>
+<area shape="rect" id="Node000006" href="$classELClientRest.html#a3426676c75a0ce45a7ea394e91f6d485" title="Initialize communication to a REST server." alt="" coords="16,79,164,104"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="240,110,164,102,165,96,241,105"/>
+<area shape="rect" id="Node000007" href="$classELClientCmd.html#a45ce482a602039ad0873736759786181" title="Get time from ESP." alt="" coords="5,128,175,153"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="240,128,175,135,175,130,240,123"/>
+<area shape="rect" id="Node000008" href="$classELClient.html#a31168558c71a43d38e19246cce161b7a" title="Synchronize the communication between the MCU and the ESP." alt="" coords="33,177,147,203"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="277,136,175,167,134,180,133,175,174,162,275,131"/>
+</map>

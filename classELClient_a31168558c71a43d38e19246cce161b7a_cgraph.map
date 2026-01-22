@@ -1,0 +1,21 @@
+<map id="ELClient::Sync" name="ELClient::Sync">
+<area shape="rect" id="Node000001" title="Synchronize the communication between the MCU and the ESP." alt="" coords="5,31,120,56"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#a3c80cabcf67c04aaf365df478d50556d" title="Finish the request." alt="" coords="177,5,313,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,33,163,27,164,32,121,38"/>
+<area shape="rect" id="Node000004" href="$classELClient.html#a96fc499e95ef69089c3aebdb89981342" title="Wait for a response from ESP for a given timeout." alt="" coords="168,55,323,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="121,48,155,53,154,58,120,54"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#a752ddd938f29124a1a6a8b7f72cd9787" title="Send a byte." alt="" coords="379,5,495,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="313,15,366,15,366,21,313,21"/>
+<area shape="rect" id="Node000005" href="$classELClient.html#a552bedd45bd93817e84989816f1b46b1" title="Handle serial input." alt="" coords="371,55,504,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="323,65,357,65,357,70,323,70"/>
+<area shape="rect" id="Node000006" href="$classELClient.html#a16dec25a8d3b96cc741fa89e8408b13b" title="Process a received SLIP message." alt="" coords="552,55,757,80"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="504,65,538,65,538,70,504,70"/>
+<area shape="rect" id="Node000007" href="$classFP.html#a98d90035c755bea09b761377214029cf" title=" " alt="" coords="829,5,931,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="713,52,814,29,816,35,714,57"/>
+<area shape="rect" id="Node000008" href="$classELClient.html#ae001debfdcd4580937c719bc63c6102c" title="Create/add CRC for a data buffer." alt="" coords="805,55,955,80"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="758,65,792,65,792,70,758,70"/>
+<area shape="rect" id="Node000010" href="$classELClient.html#a7683229d72d18af54d52506e7953c4e4" title="Send debug message over serial debug stream." alt="" coords="824,104,936,129"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="714,77,811,99,810,104,713,83"/>
+<area shape="rect" id="Node000009" href="$classELClient.html#a11b3e6232ad7310de68135831decd903" title="Create CRC for a byte add it to an existing CRC checksum and return the result." alt="" coords="1003,55,1145,80"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="955,65,989,65,989,70,955,70"/>
+</map>

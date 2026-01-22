@@ -1,0 +1,7 @@
+<map id="ELClient::Request" name="ELClient::Request">
+<area shape="rect" id="Node000001" title="Finish the request." alt="" coords="225,31,361,56"/>
+<area shape="rect" id="Node000002" href="$classELClient.html#afb5624ca6a564b45a10f3bd04b5d9e46" title="Request WiFi status from the ESP." alt="" coords="5,5,177,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,36,177,31,178,26,212,30"/>
+<area shape="rect" id="Node000003" href="$classELClient.html#a31168558c71a43d38e19246cce161b7a" title="Synchronize the communication between the MCU and the ESP." alt="" coords="34,55,149,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,56,149,63,149,58,211,50"/>
+</map>

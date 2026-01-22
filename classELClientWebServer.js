@@ -1,0 +1,27 @@
+var classELClientWebServer =
+[
+    [ "ELClientWebServer", "classELClientWebServer.html#a4b23f30d912895671a51536378999a98", null ],
+    [ "createURLHandler", "classELClientWebServer.html#add19a175a6a104e3f84f0b30bd60b6fe", null ],
+    [ "createURLHandler", "classELClientWebServer.html#ae7c222f87cfd7e1b58c5d1235d4a58f2", null ],
+    [ "createURLHandler", "classELClientWebServer.html#afd4e9e3c828f2e364d8fa1d8e750d084", null ],
+    [ "destroyURLHandler", "classELClientWebServer.html#a9b00b11f323ada662b766aab8e13f9fb", null ],
+    [ "getArgBoolean", "classELClientWebServer.html#a6c2a9b704a6a1192423a3cdbca2555bb", null ],
+    [ "getArgFloat", "classELClientWebServer.html#a53559439dcd7aaccf1b7b78a257f72e3", null ],
+    [ "getArgInt", "classELClientWebServer.html#a68535ed673c724ed4d8692249798bf97", null ],
+    [ "getArgString", "classELClientWebServer.html#aa9587c81a72c902f21e39014451ebeb1", null ],
+    [ "setArgBoolean", "classELClientWebServer.html#a313a0cfd1f748770a4aa23a0c22d143d", null ],
+    [ "setArgBoolean", "classELClientWebServer.html#a1ded921400a30406735894dbe42d5999", null ],
+    [ "setArgFloat", "classELClientWebServer.html#a12d70af2a9af86468b0346194a8a2382", null ],
+    [ "setArgFloat", "classELClientWebServer.html#a7c7baab5882334346a5d222628dd4100", null ],
+    [ "setArgInt", "classELClientWebServer.html#a9942b35145c49d8a45cd98064cc20d43", null ],
+    [ "setArgInt", "classELClientWebServer.html#a2445d0995087f0a222eff4f72231c133", null ],
+    [ "setArgJson", "classELClientWebServer.html#af86a676269d09a3b7fd8716363456d6b", null ],
+    [ "setArgJson", "classELClientWebServer.html#a920c8a0c54b4544f24d2190f7f432a9a", null ],
+    [ "setArgJson", "classELClientWebServer.html#a66c37f78ae1602bbb26d4f83c85de29e", null ],
+    [ "setArgNull", "classELClientWebServer.html#a5e41e6b7442b6eef0d0453dd8f5d03df", null ],
+    [ "setArgNull", "classELClientWebServer.html#ad50440e284dac10b3a9cd6de6cdd0ad4", null ],
+    [ "setArgString", "classELClientWebServer.html#aa80449ed25b5cad90cc90d9d47a3849d", null ],
+    [ "setArgString", "classELClientWebServer.html#aa0848139a1b0be25b5725aa592c208dc", null ],
+    [ "setArgString", "classELClientWebServer.html#a0499e3b1dbbd8d6c6437616c8c906493", null ],
+    [ "setup", "classELClientWebServer.html#a51214bb5d02eb565fb5dc15f7dbae24f", null ]
+];
