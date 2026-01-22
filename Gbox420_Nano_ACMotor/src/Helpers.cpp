@@ -2,6 +2,12 @@
 
 ///< Debug
 
+int freeMemory() {
+  char top;
+  extern int __heap_start, *__brkval;
+  return (int)&top - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
+}
+
 void getFreeMemory()
 {
   logToSerials(F("Free bytes:"), false, 0);

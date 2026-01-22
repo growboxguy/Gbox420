@@ -8,17 +8,17 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h" // Watchdog timer related bug fix
-#include "printf.h"
-#include "Thread.h"                 // Splitting functions to threads for timing
-#include "StaticThreadController.h" // Grouping threads
-#include "SPI.h"                    ///< communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                   // https://github.com/maniacbug/RF24
-#include "SerialLog.h"              // Logging messages to Serial
+#include "avr/wdt.h" 
+#include "avr/boot.h" 
+#include <SPI.h>
+#include <RF24.h> 
+#include <printf.h>
+#include "Thread.h"
+#include "StaticThreadController.h"
+#include "SerialLog.h"
 #include "Settings.h"
 #include "src/Modules/HempyModule.h"
-#include "src/WirelessCommands_Hempy.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
+#include "src/WirelessCommands_Hempy.h"
 
 // Global variable initialization
 bool &Debug = *new bool;                      // Placeholder reference, to be initialized in setup()

@@ -1,5 +1,5 @@
 #pragma once
-#include "HX711.h"
+#include <HX711.h>
 // #include "movingAvg.h"
 #include "420Common.h"
 #include "420Module.h"

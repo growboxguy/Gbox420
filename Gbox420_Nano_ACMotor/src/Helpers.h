@@ -9,7 +9,6 @@
 
 #include "Arduino.h"
 #include "TimeLib.h"    // Keeping track of time
-#include "MemoryFree.h" // Checking remaining memory
 #include "avr/wdt.h"    // Watchdog timer
 #include "../SerialLog.h"
 #include "../Settings.h" // Storing/reading defaults

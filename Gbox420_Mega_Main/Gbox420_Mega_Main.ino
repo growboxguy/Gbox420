@@ -7,22 +7,22 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                       // Watchdog timer related bug fix
-#include "printf.h"                         // Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                     // Interrupt handling for webpage
+#include <avr/wdt.h>                        // Watchdog timer for detecting a crash and automatically resetting the board
+#include <avr/boot.h>                       // Watchdog timer related bug fix
+#include <printf.h>                         // Printing the wireless status message from nRF24L01
+#include <TimerThree.h>                     // Interrupt handling for the web server
 #include "ELClient.h"                       // ESP-link
 #include "ELClientWebServer.h"              // ESP-link - WebServer API
 #include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
 #include "ELClientRest.h"                   // ESP-link - REST API
-#include "ELClientMqtt.h"                   // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "Thread.h"                         // Splitting functions to threads for timing
-#include "StaticThreadController.h"         // Grouping threads
-#include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
-#include "Settings.h"                       // EEPROM stored settings for every component
-#include "src/Modules_Web/MainModule_Web.h" // Represents a complete box with all feautres
-#include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                           // https://github.com/maniacbug/RF24
+#include "ELClientMqtt.h"                          // ESP-link MQTT protocol for IoT messaging
+#include <Thread.h>                         // Logic threading for function timing
+#include <StaticThreadController.h>         // Grouping multiple threads
+#include "SerialLog.h"                      // Logging to Serial and ESP-link console
+#include "Settings.h"                       // EEPROM settings management
+#include "src/Modules_Web/MainModule_Web.h" // Main box features and web module
+#include <SPI.h>                            // Hardware SPI communication
+#include <RF24.h>                           // nRF24L01 wireless radio driver - https://github.com/maniacbug/RF24
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)

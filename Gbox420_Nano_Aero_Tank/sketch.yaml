@@ -1,0 +1,21 @@
+# Arduino Maker Workshop - Configuration
+name: "Gbox420_Aero_Tank"
+version: "1.0.0"
+
+profiles:
+  Gbox420_Aero_Tank:
+    name: "Gbox420_Aero_Tank"  
+    notes: >
+      Gbox420 Aeroponics (With pressure tank) Module for Arduino Nano 
+      Documentation: https://sites.google.com/site/growboxguy/aeroponics/aero-module
+    fqbn: "arduino:avr:nano:cpu=atmega328"
+    platforms:
+      - platform: "arduino:avr"
+    libraries:
+      - "RF24 (1.4.10)"
+      - "ArduinoThread (2.1.1)"
+      - "Time (1.6.1)"
+      - "HX711 Arduino Library (0.7.5)"
+      - "movingAvg (2.3.1)"
+    protocol: "serial"
+default_profile: Gbox420_Aero_Tank

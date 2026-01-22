@@ -1,0 +1,25 @@
+name: Gbox420_Main
+version: 1.0.0
+
+profiles:
+  Gbox420_Main:
+    name: Gbox420_Main
+    notes: >
+      Gbox420 Main Module for Arduino Mega 2560. 
+      Documentation: https://sites.google.com/site/growboxguy/arduino/main-module
+    fqbn: arduino:avr:mega:cpu=atmega2560
+    platforms:
+      - platform: arduino:avr
+    libraries:
+      - "RF24 (1.4.10)"
+      - "TimerThree (1.1.0)"
+      - "ArduinoThread (2.1.1)"
+      - "Time (1.6.1)"
+      - "DHT sensor library (1.4.6)"
+      - "Adafruit Unified Sensor (1.1.15)"
+  config:
+      library_paths:
+        - ./libraries
+  protocol: serial
+
+default_profile: Gbox420_Main

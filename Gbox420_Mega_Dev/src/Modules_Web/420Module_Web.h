@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Arduino.h"
-#include "ELClient.h"          ///< ESP-link
-#include "ELClientWebServer.h" ///< ESP-link - WebServer API
-#include "ELClientRest.h"      ///< ESP-link - REST API
-#include "ELClientMqtt.h"      // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
-#include "TimeLib.h"           // Keeping track of time
+#include "../../libraries/ELClient/ELClient.h"          ///< ESP-link
+#include "../../libraries/ELClient/ELClientWebServer.h" ///< ESP-link - WebServer API
+#include "../../libraries/ELClient/ELClientRest.h"      ///< ESP-link - REST API
+#include "../../libraries/ELClient/ELClientMqtt.h"      // ESP-link - MQTT protocol for sending and receiving IoT messages
+#include "../../libraries/ELClient/ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
+#include <TimeLib.h>                              // Keeping track of time
 #include "SPI.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
