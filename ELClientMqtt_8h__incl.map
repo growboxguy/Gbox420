@@ -1,4 +1,4 @@
-<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientMqtt.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientMqtt.h">
+<map id="Gbox420_Mega_Main/ELClient/ELClientMqtt.h" name="Gbox420_Mega_Main/ELClient/ELClientMqtt.h">
 <area shape="rect" id="Node000001" title="Definitions for ELClientMqtt." alt="" coords="5,5,224,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="6,93,77,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,47,64,85,60,81,95,44"/>

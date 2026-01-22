@@ -63,8 +63,8 @@ var NAVTREEINDEX =
 "ELClientCmd_8cpp.html",
 "Gbox420__Nano__Aero__Tank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b",
 "classELClientResponse.html#a509b2624fee22e83914fbc79094ec761",
-"structSettings.html#af94394a1ff5745c7c83b5a45279496fe",
-"webserver__led_8ino.html#aaaa01b0b0174f89ea79b24255e93d501"
+"structSettings.html#afa4a8fc0205dc74f3ecd7be1e105efd4",
+"webserver__led_8ino.html#ab4553be4db9860d940f81d7447173b2f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

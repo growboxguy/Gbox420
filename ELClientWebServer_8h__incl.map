@@ -1,4 +1,4 @@
-<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientWebServer.h">
+<map id="Gbox420_Mega_Main/ELClient/ELClientWebServer.h" name="Gbox420_Mega_Main/ELClient/ELClientWebServer.h">
 <area shape="rect" id="Node000001" title="Definitions for ELClientWebServer." alt="" coords="194,5,413,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,240,89,265"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,48,187,66,137,92,91,125,72,146,55,168,46,197,46,227,40,227,40,196,50,165,68,142,88,121,134,87,184,61,232,43"/>

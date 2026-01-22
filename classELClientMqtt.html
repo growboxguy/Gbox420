@@ -773,15 +773,15 @@ Here is the caller graph for this function:</div>
 
 <p>Setup mqtt. </p>
 <p><a class="el" href="classELClientMqtt.html#acddbf07065c65695f31b6d560ee945b4" title="Setup mqtt.">setup(void)</a></p>
-<p>Send callback functions for MQTT events to the ESP </p><dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">mqtt.connectedCb.attach(<a class="code hl_function" href="Gbox420__Mega__Main_8ino.html#a38232ea81f36ec91ea7d13c045b82be7">mqttConnected</a>);</div>
-<div class="line">mqtt.disconnectedCb.attach(<a class="code hl_function" href="Gbox420__Mega__Main_8ino.html#a2820bdbff8498859dd60f983889695b8">mqttDisconnected</a>);</div>
-<div class="line">mqtt.publishedCb.attach(<a class="code hl_function" href="Gbox420__Mega__Main_8ino.html#a5e72855c850b7eea531a639a121b769e">mqttPublished</a>);</div>
+<p>Send callback functions for MQTT events to the ESP </p><dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">mqtt.connectedCb.attach(<a class="code hl_function" href="mqtt_8ino.html#a01bcd10c2afc9c7b39c5da283353945b">mqttConnected</a>);</div>
+<div class="line">mqtt.disconnectedCb.attach(<a class="code hl_function" href="mqtt_8ino.html#acb866f89716f9272ccada4f9c9c7d09c">mqttDisconnected</a>);</div>
+<div class="line">mqtt.publishedCb.attach(<a class="code hl_function" href="mqtt_8ino.html#a9b7c7d96670d3bcde774877e8995d105">mqttPublished</a>);</div>
 <div class="line">mqtt.dataCb.attach(<a class="code hl_function" href="mqtt_8ino.html#a3406da2ff2ea0b672966163b1134e83a">mqttData</a>);</div>
 <div class="line">mqtt.setup();</div>
-<div class="ttc" id="aGbox420__Mega__Main_8ino_html_a2820bdbff8498859dd60f983889695b8"><div class="ttname"><a href="Gbox420__Mega__Main_8ino.html#a2820bdbff8498859dd60f983889695b8">mqttDisconnected</a></div><div class="ttdeci">void mqttDisconnected(__attribute__((unused)) void *response)</div><div class="ttdef"><b>Definition</b> <a href="Gbox420__Mega__Main_8ino_source.html#l00234">Gbox420_Mega_Main.ino:234</a></div></div>
-<div class="ttc" id="aGbox420__Mega__Main_8ino_html_a38232ea81f36ec91ea7d13c045b82be7"><div class="ttname"><a href="Gbox420__Mega__Main_8ino.html#a38232ea81f36ec91ea7d13c045b82be7">mqttConnected</a></div><div class="ttdeci">void mqttConnected(__attribute__((unused)) void *response)</div><div class="ttdef"><b>Definition</b> <a href="Gbox420__Mega__Main_8ino_source.html#l00227">Gbox420_Mega_Main.ino:227</a></div></div>
-<div class="ttc" id="aGbox420__Mega__Main_8ino_html_a5e72855c850b7eea531a639a121b769e"><div class="ttname"><a href="Gbox420__Mega__Main_8ino.html#a5e72855c850b7eea531a639a121b769e">mqttPublished</a></div><div class="ttdeci">void mqttPublished(__attribute__((unused)) void *response)</div><div class="ttdef"><b>Definition</b> <a href="Gbox420__Mega__Main_8ino_source.html#l00240">Gbox420_Mega_Main.ino:240</a></div></div>
+<div class="ttc" id="amqtt_8ino_html_a01bcd10c2afc9c7b39c5da283353945b"><div class="ttname"><a href="mqtt_8ino.html#a01bcd10c2afc9c7b39c5da283353945b">mqttConnected</a></div><div class="ttdeci">void mqttConnected(void *response)</div><div class="ttdef"><b>Definition</b> <a href="mqtt_8ino_source.html#l00039">mqtt.ino:39</a></div></div>
 <div class="ttc" id="amqtt_8ino_html_a3406da2ff2ea0b672966163b1134e83a"><div class="ttname"><a href="mqtt_8ino.html#a3406da2ff2ea0b672966163b1134e83a">mqttData</a></div><div class="ttdeci">void mqttData(void *response)</div><div class="ttdef"><b>Definition</b> <a href="mqtt_8ino_source.html#l00055">mqtt.ino:55</a></div></div>
+<div class="ttc" id="amqtt_8ino_html_a9b7c7d96670d3bcde774877e8995d105"><div class="ttname"><a href="mqtt_8ino.html#a9b7c7d96670d3bcde774877e8995d105">mqttPublished</a></div><div class="ttdeci">void mqttPublished(void *response)</div><div class="ttdef"><b>Definition</b> <a href="mqtt_8ino_source.html#l00067">mqtt.ino:67</a></div></div>
+<div class="ttc" id="amqtt_8ino_html_acb866f89716f9272ccada4f9c9c7d09c"><div class="ttname"><a href="mqtt_8ino.html#acb866f89716f9272ccada4f9c9c7d09c">mqttDisconnected</a></div><div class="ttdeci">void mqttDisconnected(void *response)</div><div class="ttdef"><b>Definition</b> <a href="mqtt_8ino_source.html#l00049">mqtt.ino:49</a></div></div>
 </div><!-- fragment --> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ELClientMqtt_8cpp_source.html#l00034">34</a> of file <a class="el" href="ELClientMqtt_8cpp_source.html">ELClientMqtt.cpp</a>.</p>
@@ -993,8 +993,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Gbox420_Mega_Main/libraries/ELClient/<a class="el" href="ELClientMqtt_8h_source.html">ELClientMqtt.h</a></li>
-<li>Gbox420_Mega_Main/libraries/ELClient/<a class="el" href="ELClientMqtt_8cpp_source.html">ELClientMqtt.cpp</a></li>
+<li>Gbox420_Mega_Main/ELClient/<a class="el" href="ELClientMqtt_8h_source.html">ELClientMqtt.h</a></li>
+<li>Gbox420_Mega_Main/ELClient/<a class="el" href="ELClientMqtt_8cpp_source.html">ELClientMqtt.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

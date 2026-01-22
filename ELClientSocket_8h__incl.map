@@ -1,4 +1,4 @@
-<map id="Gbox420_Mega_Main/libraries/ELClient/ELClientSocket.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClientSocket.h">
+<map id="Gbox420_Mega_Main/ELClient/ELClientSocket.h" name="Gbox420_Mega_Main/ELClient/ELClientSocket.h">
 <area shape="rect" id="Node000001" title="Definitions for ELClientSocket." alt="" coords="5,5,224,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="134,240,218,265"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,47,89,77,76,114,71,153,74,173,81,191,102,215,130,232,127,237,99,219,76,193,69,174,66,153,71,112,84,74,100,45"/>

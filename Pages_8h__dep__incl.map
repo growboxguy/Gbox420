@@ -1,5 +1,5 @@
-<map id="Gbox420_Mega_Main/libraries/ELClient/examples/webserver_controls/Pages.h" name="Gbox420_Mega_Main/libraries/ELClient/examples/webserver_controls/Pages.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="14,5,233,60"/>
-<area shape="rect" id="Node000002" href="$webserver__controls_8ino.html" title=" " alt="" coords="5,108,241,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,74,126,108,121,108,121,74"/>
+<map id="Gbox420_Mega_Main/ELClient/examples/webserver_controls/Pages.h" name="Gbox420_Mega_Main/ELClient/examples/webserver_controls/Pages.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,227,60"/>
+<area shape="rect" id="Node000002" href="$webserver__controls_8ino.html" title=" " alt="" coords="5,108,227,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,74,119,108,113,108,113,74"/>
 </map>

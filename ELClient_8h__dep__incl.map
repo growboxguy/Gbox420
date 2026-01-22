@@ -1,68 +1,68 @@
-<map id="Gbox420_Mega_Main/libraries/ELClient/ELClient.h" name="Gbox420_Mega_Main/libraries/ELClient/ELClient.h">
-<area shape="rect" id="Node000001" title="Definitions for ELClient." alt="" coords="2321,5,2540,45"/>
-<area shape="rect" id="Node000002" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch." alt="" coords="976,189,1200,229"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2308,29,2139,32,1925,41,1690,62,1571,77,1455,96,1366,116,1278,142,1137,191,1135,186,1276,137,1364,111,1454,91,1570,72,1689,56,1925,36,2138,26,2308,23"/>
-<area shape="rect" id="Node000003" href="$ELClient_8cpp.html" title="Constructor and functions for ELClient." alt="" coords="2665,93,2884,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="2520,46,2700,91,2699,96,2519,51"/>
-<area shape="rect" id="Node000004" href="$ELClientCmd_8h.html" title="Definitions for ELClientCmd." alt="" coords="491,93,709,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="2308,32,1654,50,1219,69,778,96,710,102,709,97,777,91,1219,64,1654,45,2308,26"/>
-<area shape="rect" id="Node000006" href="$mqtt_8ino.html" title=" " alt="" coords="5,181,224,236"/>
-<area shape="poly" id="edge31_Node000001_Node000006" title=" " alt="" coords="2308,29,1915,31,1387,40,1115,48,862,60,644,76,479,96,397,114,316,136,180,184,178,179,315,131,396,108,478,91,643,71,861,55,1115,43,1387,35,1915,26,2308,24"/>
-<area shape="rect" id="Node000007" href="$test_8ino.html" title=" " alt="" coords="491,181,709,236"/>
-<area shape="poly" id="edge36_Node000001_Node000007" title=" " alt="" coords="2308,30,1996,34,1596,44,1204,64,1042,78,919,96,847,114,776,136,658,184,656,179,775,131,846,108,918,91,1041,73,1203,59,1595,39,1996,29,2307,25"/>
-<area shape="rect" id="Node000008" href="$ELClientMqtt_8h.html" title="Definitions for ELClientMqtt." alt="" coords="931,93,1149,133"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="2308,36,1314,96,1150,107,1150,102,1313,91,2307,31"/>
+<map id="Gbox420_Mega_Main/ELClient/ELClient.h" name="Gbox420_Mega_Main/ELClient/ELClient.h">
+<area shape="rect" id="Node000001" title="Definitions for ELClient." alt="" coords="1733,5,1952,45"/>
+<area shape="rect" id="Node000002" href="$ELClient_8cpp.html" title="Constructor and functions for ELClient." alt="" coords="320,93,539,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1720,32,1500,38,1210,49,882,68,551,96,539,97,539,92,550,91,881,63,1209,44,1500,32,1720,26"/>
+<area shape="rect" id="Node000003" href="$ELClientCmd_8h.html" title="Definitions for ELClientCmd." alt="" coords="856,93,1075,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1720,41,1075,104,1074,99,1719,36"/>
+<area shape="rect" id="Node000005" href="$mqtt_8ino.html" title=" " alt="" coords="248,189,467,229"/>
+<area shape="poly" id="edge30_Node000001_Node000005" title=" " alt="" coords="1720,29,1507,31,1254,40,1129,48,1015,60,918,76,845,96,830,104,820,115,810,126,795,136,749,153,709,164,640,172,568,174,479,184,442,191,441,186,478,179,568,168,639,166,708,158,747,148,792,131,807,122,817,111,827,100,843,91,917,71,1014,55,1129,43,1254,34,1507,25,1720,23"/>
+<area shape="rect" id="Node000006" href="$test_8ino.html" title=" " alt="" coords="733,189,952,229"/>
+<area shape="poly" id="edge35_Node000001_Node000006" title=" " alt="" coords="1720,41,1526,63,1308,96,1088,144,909,191,908,186,1087,139,1308,91,1525,57,1719,35"/>
+<area shape="rect" id="Node000007" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch." alt="" coords="976,189,1200,229"/>
+<area shape="poly" id="edge40_Node000001_Node000007" title=" " alt="" coords="1720,46,1592,68,1455,96,1283,144,1142,191,1140,186,1281,139,1454,91,1591,62,1719,41"/>
+<area shape="rect" id="Node000008" href="$ELClientMqtt_8h.html" title="Definitions for ELClientMqtt." alt="" coords="563,93,781,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1720,34,1311,55,1056,73,800,96,782,98,781,93,800,91,1056,67,1311,50,1719,29"/>
 <area shape="rect" id="Node000010" href="$ELClientRest_8h.html" title="Definitions for ELClientRes." alt="" coords="1467,93,1685,133"/>
-<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="2308,40,1728,96,1686,101,1685,96,1728,91,2307,35"/>
-<area shape="rect" id="Node000012" href="$rest_8ino.html" title=" " alt="" coords="1467,181,1685,236"/>
-<area shape="poly" id="edge32_Node000001_Node000012" title=" " alt="" coords="2308,50,2067,96,1862,141,1682,184,1681,179,1861,136,2066,91,2307,45"/>
-<area shape="rect" id="Node000013" href="$thingspeak_8ino.html" title=" " alt="" coords="1710,181,1933,236"/>
-<area shape="poly" id="edge37_Node000001_Node000013" title=" " alt="" coords="2355,52,1910,184,1908,179,2353,47"/>
-<area shape="rect" id="Node000014" href="$ELClientSocket_8h.html" title="Definitions for ELClientSocket." alt="" coords="3772,93,3991,133"/>
-<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="2554,27,3067,47,3397,66,3731,91,3772,95,3772,100,3730,96,3397,71,3067,53,2554,33"/>
-<area shape="rect" id="Node000016" href="$tcp__client_8ino.html" title=" " alt="" coords="3445,181,3664,236"/>
-<area shape="poly" id="edge33_Node000001_Node000016" title=" " alt="" coords="2554,40,2946,97,3190,136,3434,179,3445,181,3444,186,3433,184,3189,141,2946,102,2553,46"/>
-<area shape="rect" id="Node000017" href="$tcp__client__resp_8ino.html" title=" " alt="" coords="3688,181,3907,236"/>
-<area shape="poly" id="edge34_Node000001_Node000017" title=" " alt="" coords="2554,35,2767,56,3046,87,3360,129,3676,179,3688,181,3687,186,3676,184,3360,134,3046,93,2766,61,2554,40"/>
-<area shape="rect" id="Node000018" href="$tcp__server_8ino.html" title=" " alt="" coords="4173,181,4392,236"/>
-<area shape="poly" id="edge35_Node000001_Node000018" title=" " alt="" coords="2554,24,2877,26,3295,35,3508,43,3705,55,3875,71,4003,91,4067,108,4130,131,4234,179,4232,184,4128,136,4066,113,4002,96,3874,76,3705,60,3507,49,3295,40,2876,31,2554,29"/>
-<area shape="rect" id="Node000019" href="$udp_8ino.html" title=" " alt="" coords="4416,189,4643,229"/>
-<area shape="poly" id="edge38_Node000001_Node000019" title=" " alt="" coords="2554,26,2890,32,3331,44,3765,63,3945,76,4082,91,4191,111,4299,136,4473,186,4471,191,4298,141,4190,116,4081,96,3944,81,3765,68,3331,49,2890,37,2554,31"/>
-<area shape="rect" id="Node000020" href="$ELClientWebServer_8h.html" title="Definitions for ELClientWebServer." alt="" coords="2321,93,2540,133"/>
-<area shape="poly" id="edge23_Node000001_Node000020" title=" " alt="" coords="2433,59,2433,93,2428,93,2428,59"/>
-<area shape="rect" id="Node000025" href="$webserver__controls_8ino.html" title=" " alt="" coords="2942,181,3178,236"/>
-<area shape="poly" id="edge39_Node000001_Node000025" title=" " alt="" coords="2481,50,2553,91,2581,113,2610,131,2656,147,2696,157,2767,165,2839,168,2930,179,2942,181,2941,186,2929,184,2838,174,2766,171,2695,162,2655,152,2608,136,2578,117,2551,96,2478,54"/>
-<area shape="rect" id="Node000026" href="$webserver__led_8ino.html" title=" " alt="" coords="3203,181,3421,236"/>
-<area shape="poly" id="edge40_Node000001_Node000026" title=" " alt="" coords="2503,47,2552,67,2601,91,2628,113,2638,122,2654,131,2731,156,2798,169,2859,174,2916,173,3037,168,3108,170,3190,179,3203,181,3202,186,3189,184,3107,175,3037,174,2916,179,2859,179,2798,175,2730,161,2652,136,2635,127,2624,117,2599,96,2550,72,2501,52"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="720,133,965,179,1001,186,1000,191,963,184,719,138"/>
-<area shape="rect" id="Node000005" href="$ELClientCmd_8cpp.html" title="Constructor and functions for ELClientCmd." alt="" coords="248,189,467,229"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="539,141,407,191,405,186,537,136"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="480,138,237,184,225,186,224,181,235,179,479,133"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="603,147,603,181,597,181,597,147"/>
-<area shape="poly" id="edge9_Node000008_Node000002" title=" " alt="" coords="1058,144,1081,187,1076,190,1054,147"/>
-<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="917,126,553,153,370,169,236,184,225,186,224,181,236,179,369,163,552,147,917,120"/>
-<area shape="rect" id="Node000009" href="$ELClientMqtt_8cpp.html" title="Constructor and functions for ELClientMqtt." alt="" coords="733,189,952,229"/>
-<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="989,142,884,191,881,186,987,137"/>
-<area shape="poly" id="edge13_Node000010_Node000002" title=" " alt="" coords="1457,138,1213,184,1176,191,1175,186,1211,179,1456,133"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="1772,52,1635,96,1634,91,1770,47"/>
+<area shape="rect" id="Node000012" href="$rest_8ino.html" title=" " alt="" coords="1467,189,1685,229"/>
+<area shape="poly" id="edge31_Node000001_Node000012" title=" " alt="" coords="1809,56,1699,136,1610,191,1607,186,1696,131,1806,52"/>
+<area shape="rect" id="Node000013" href="$thingspeak_8ino.html" title=" " alt="" coords="1709,189,1976,229"/>
+<area shape="poly" id="edge36_Node000001_Node000013" title=" " alt="" coords="1845,59,1845,189,1840,189,1840,59"/>
+<area shape="rect" id="Node000014" href="$ELClientSocket_8h.html" title="Definitions for ELClientSocket." alt="" coords="3776,93,3995,133"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="1966,27,2684,47,3167,66,3659,91,3776,99,3776,105,3659,96,3167,71,2684,52,1966,32"/>
+<area shape="rect" id="Node000016" href="$tcp__client_8ino.html" title=" " alt="" coords="3467,181,3685,236"/>
+<area shape="poly" id="edge32_Node000001_Node000016" title=" " alt="" coords="1966,30,2343,52,2575,69,2808,91,3133,127,3455,179,3467,181,3466,186,3454,184,3132,132,2808,96,2575,75,2342,58,1965,35"/>
+<area shape="rect" id="Node000017" href="$tcp__client__resp_8ino.html" title=" " alt="" coords="3709,181,3928,236"/>
+<area shape="poly" id="edge33_Node000001_Node000017" title=" " alt="" coords="1966,27,2271,39,2701,65,2944,85,3196,110,3450,141,3698,179,3709,181,3708,186,3697,184,3449,146,3196,115,2944,90,2701,70,2271,44,1966,32"/>
+<area shape="rect" id="Node000018" href="$tcp__server_8ino.html" title=" " alt="" coords="4195,181,4413,236"/>
+<area shape="poly" id="edge34_Node000001_Node000018" title=" " alt="" coords="1966,25,2438,32,3072,45,3664,64,3879,77,4007,91,4075,108,4142,131,4253,179,4251,184,4140,136,4074,113,4006,96,3879,82,3664,70,3072,50,2438,37,1966,31"/>
+<area shape="rect" id="Node000019" href="$udp_8ino.html" title=" " alt="" coords="4437,189,4656,229"/>
+<area shape="poly" id="edge37_Node000001_Node000019" title=" " alt="" coords="1966,24,2411,27,3026,36,3344,45,3642,56,3898,71,4092,91,4204,110,4314,136,4490,186,4488,191,4312,141,4203,116,4092,96,3898,77,3641,61,3344,50,3026,42,2411,32,1966,29"/>
+<area shape="rect" id="Node000020" href="$ELClientWebServer_8h.html" title="Definitions for ELClientWebServer." alt="" coords="2279,93,2497,133"/>
+<area shape="poly" id="edge22_Node000001_Node000020" title=" " alt="" coords="1966,43,2279,92,2278,97,1966,49"/>
+<area shape="rect" id="Node000025" href="$webserver__controls_8ino.html" title=" " alt="" coords="2979,181,3200,236"/>
+<area shape="poly" id="edge38_Node000001_Node000025" title=" " alt="" coords="1966,33,2217,55,2510,91,2639,111,2739,131,2967,179,2979,181,2978,186,2966,184,2738,136,2638,117,2509,96,2217,61,1965,38"/>
+<area shape="rect" id="Node000026" href="$webserver__led_8ino.html" title=" " alt="" coords="3224,181,3443,236"/>
+<area shape="poly" id="edge39_Node000001_Node000026" title=" " alt="" coords="1966,32,2274,54,2643,91,2929,129,3212,179,3224,181,3223,186,3212,184,2928,134,2642,96,2273,60,1965,37"/>
+<area shape="rect" id="Node000004" href="$ELClientCmd_8cpp.html" title="Constructor and functions for ELClientCmd." alt="" coords="491,189,709,229"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="879,139,674,191,673,186,878,134"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="843,135,838,136,658,158,479,184,441,191,440,186,478,179,657,153,837,131,842,130"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="931,144,869,191,866,186,928,140"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="1003,140,1065,186,1062,191,1000,144"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="596,140,422,191,420,186,595,135"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="770,134,1005,186,1003,191,769,139"/>
+<area shape="rect" id="Node000009" href="$ELClientMqtt_8cpp.html" title="Constructor and functions for ELClientMqtt." alt="" coords="5,189,224,229"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="549,136,391,159,236,184,199,191,198,186,236,179,390,154,548,131"/>
+<area shape="poly" id="edge15_Node000010_Node000007" title=" " alt="" coords="1457,138,1213,184,1176,191,1175,186,1211,179,1456,133"/>
 <area shape="rect" id="Node000011" href="$ELClientRest_8cpp.html" title="Constructor and functions for ELClientRest." alt="" coords="1224,189,1443,229"/>
-<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="1515,141,1383,191,1381,186,1513,136"/>
-<area shape="poly" id="edge15_Node000010_Node000012" title=" " alt="" coords="1579,147,1579,181,1573,181,1573,147"/>
-<area shape="poly" id="edge16_Node000010_Node000013" title=" " alt="" coords="1639,136,1753,179,1751,184,1638,141"/>
-<area shape="rect" id="Node000015" href="$ELClientSocket_8cpp.html" title="Constructor and functions for ELClientSocket." alt="" coords="3931,189,4149,229"/>
-<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="3926,138,4009,186,4007,191,3924,142"/>
-<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="3803,140,3647,184,3646,179,3802,135"/>
-<area shape="poly" id="edge20_Node000014_Node000017" title=" " alt="" coords="3857,145,3823,183,3819,179,3853,142"/>
-<area shape="poly" id="edge21_Node000014_Node000018" title=" " alt="" coords="3976,134,4174,179,4172,185,3975,139"/>
-<area shape="poly" id="edge22_Node000014_Node000019" title=" " alt="" coords="4004,125,4193,148,4404,179,4444,186,4443,191,4404,184,4192,153,4004,130"/>
-<area shape="poly" id="edge24_Node000020_Node000002" title=" " alt="" coords="2308,118,2100,122,1827,132,1521,152,1365,166,1212,184,1169,191,1168,186,1212,179,1364,161,1520,147,1827,127,2100,117,2308,113"/>
-<area shape="rect" id="Node000021" href="$ELClientWebServer_8cpp.html" title="Constructor and functions for ELClientWebServer." alt="" coords="2685,189,2917,229"/>
-<area shape="poly" id="edge25_Node000020_Node000021" title=" " alt="" coords="2519,134,2727,186,2726,191,2518,139"/>
-<area shape="rect" id="Node000022" href="$LedPage_8ino.html" title=" " alt="" coords="1957,181,2176,236"/>
-<area shape="poly" id="edge26_Node000020_Node000022" title=" " alt="" coords="2345,139,2169,184,2168,179,2343,134"/>
-<area shape="rect" id="Node000023" href="$UserPage_8ino.html" title=" " alt="" coords="2200,181,2419,236"/>
-<area shape="poly" id="edge27_Node000020_Node000023" title=" " alt="" coords="2397,144,2345,183,2342,179,2394,140"/>
-<area shape="rect" id="Node000024" href="$VoltagePage_8ino.html" title=" " alt="" coords="2443,181,2661,236"/>
-<area shape="poly" id="edge28_Node000020_Node000024" title=" " alt="" coords="2468,140,2519,179,2516,183,2464,144"/>
-<area shape="poly" id="edge29_Node000020_Node000025" title=" " alt="" coords="2554,130,2559,131,2745,153,2930,179,2942,181,2941,186,2929,184,2744,158,2558,136,2553,135"/>
-<area shape="poly" id="edge30_Node000020_Node000026" title=" " alt="" coords="2554,125,2610,131,2773,143,2900,150,3027,159,3190,179,3203,181,3202,186,3189,184,3027,164,2900,155,2772,148,2609,136,2553,131"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="1515,141,1383,191,1381,186,1513,136"/>
+<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="1579,147,1579,189,1573,189,1573,147"/>
+<area shape="poly" id="edge14_Node000010_Node000013" title=" " alt="" coords="1644,135,1790,186,1788,191,1642,140"/>
+<area shape="rect" id="Node000015" href="$ELClientSocket_8cpp.html" title="Constructor and functions for ELClientSocket." alt="" coords="3952,189,4171,229"/>
+<area shape="poly" id="edge17_Node000014_Node000015" title=" " alt="" coords="3934,137,4027,186,4025,191,3932,142"/>
+<area shape="poly" id="edge18_Node000014_Node000016" title=" " alt="" coords="3810,140,3664,184,3662,179,3809,135"/>
+<area shape="poly" id="edge19_Node000014_Node000017" title=" " alt="" coords="3866,146,3840,183,3835,180,3862,143"/>
+<area shape="poly" id="edge20_Node000014_Node000018" title=" " alt="" coords="3984,134,4195,180,4194,186,3983,139"/>
+<area shape="poly" id="edge21_Node000014_Node000019" title=" " alt="" coords="4009,124,4205,147,4426,179,4464,186,4463,191,4425,184,4204,152,4008,129"/>
+<area shape="poly" id="edge29_Node000020_Node000007" title=" " alt="" coords="2265,118,2063,123,1801,133,1507,153,1212,184,1169,191,1168,186,1212,179,1507,147,1801,128,2063,117,2265,113"/>
+<area shape="rect" id="Node000021" href="$ELClientWebServer_8cpp.html" title="Constructor and functions for ELClientWebServer." alt="" coords="2736,189,2955,229"/>
+<area shape="poly" id="edge23_Node000020_Node000021" title=" " alt="" coords="2498,133,2725,179,2759,186,2758,191,2723,184,2497,139"/>
+<area shape="rect" id="Node000022" href="$LedPage_8ino.html" title=" " alt="" coords="2000,181,2221,236"/>
+<area shape="poly" id="edge24_Node000020_Node000022" title=" " alt="" coords="2320,140,2190,184,2188,179,2318,135"/>
+<area shape="rect" id="Node000023" href="$UserPage_8ino.html" title=" " alt="" coords="2245,181,2467,236"/>
+<area shape="poly" id="edge25_Node000020_Node000023" title=" " alt="" coords="2380,147,2368,182,2362,180,2375,145"/>
+<area shape="rect" id="Node000024" href="$VoltagePage_8ino.html" title=" " alt="" coords="2491,181,2712,236"/>
+<area shape="poly" id="edge26_Node000020_Node000024" title=" " alt="" coords="2445,136,2542,179,2540,184,2442,141"/>
+<area shape="poly" id="edge27_Node000020_Node000025" title=" " alt="" coords="2512,125,2761,152,2967,179,2979,181,2978,186,2966,184,2761,158,2511,130"/>
+<area shape="poly" id="edge28_Node000020_Node000026" title=" " alt="" coords="2512,117,2830,137,3021,155,3212,179,3224,181,3223,186,3212,184,3021,160,2830,142,2511,122"/>
 </map>
