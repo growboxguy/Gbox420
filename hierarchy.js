@@ -30,7 +30,6 @@ var hierarchy =
     ] ],
     [ "Settings::PressurePumpSettings", "structSettings_1_1PressurePumpSettings.html", null ],
     [ "Settings::PressureSensorSettings", "structSettings_1_1PressureSensorSettings.html", null ],
-    [ "PZEM004Tv30", "classPZEM004Tv30.html", null ],
     [ "Settings::ReservoirModuleSettings", "structSettings_1_1ReservoirModuleSettings.html", null ],
     [ "Settings", "structSettings.html", null ],
     [ "Settings::SoundSettings", "structSettings_1_1SoundSettings.html", null ],

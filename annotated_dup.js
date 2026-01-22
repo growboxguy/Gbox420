@@ -15,7 +15,6 @@ var annotated_dup =
     [ "ELClientWebServer", "classELClientWebServer.html", "classELClientWebServer" ],
     [ "FP", "classFP.html", "classFP" ],
     [ "PACKED", "structPACKED.html", "structPACKED" ],
-    [ "PZEM004Tv30", "classPZEM004Tv30.html", "classPZEM004Tv30" ],
     [ "Settings", "structSettings.html", "structSettings" ],
     [ "URL_HANDLER", "structURL__HANDLER.html", "structURL__HANDLER" ]
 ];

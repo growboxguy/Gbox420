@@ -62,9 +62,9 @@ var NAVTREEINDEX =
 [
 "ELClientCmd_8cpp.html",
 "Gbox420__Nano__Aero__Tank_8ino.html#a7ae83b8212e2418e69cd6ae535bc1f5b",
-"classELClient.html",
-"hempy_8h.html#aba804889a7349321b9672565b8cadbcda6a83fb962e26a218fee9b429eb62dbc6",
-"tcp__client_8ino.html#a4fc01d736fe50cf5b977f755b675f11d"
+"classELClientResponse.html#a509b2624fee22e83914fbc79094ec761",
+"structSettings.html#af94394a1ff5745c7c83b5a45279496fe",
+"webserver__led_8ino.html#aaaa01b0b0174f89ea79b24255e93d501"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

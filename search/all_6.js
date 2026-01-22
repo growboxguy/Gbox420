@@ -13,7 +13,5 @@ var searchData=
   ['fp_2ecpp_10',['FP.cpp',['../FP_8cpp.html',1,'']]],
   ['fp_2eh_11',['FP.h',['../FP_8h.html',1,'']]],
   ['fp_3c_20void_2c_20char_20_2a_20_3e_12',['FP&lt; void, char * &gt;',['../classFP.html',1,'']]],
-  ['fp_3c_20void_2c_20void_20_2a_20_3e_13',['FP&lt; void, void * &gt;',['../classFP.html',1,'']]],
-  ['frequency_14',['frequency',['../classPZEM004Tv30.html#a57b201804bb8f6f64cbd1d899d1530d5',1,'PZEM004Tv30']]],
-  ['frequeny_15',['frequeny',['../classPZEM004Tv30.html#a1aed69ee8f7137e6c289c9b20a0d06cd',1,'PZEM004Tv30']]]
+  ['fp_3c_20void_2c_20void_20_2a_20_3e_13',['FP&lt; void, void * &gt;',['../classFP.html',1,'']]]
 ];

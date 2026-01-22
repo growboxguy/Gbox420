@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['packed_0',['PACKED',['../ELClientResponse_8h.html#a36d525cf4d116b2fe4ecc00222b256f1',1,'ELClientResponse.h']]],
-  ['period_5fcount_1',['PERIOD_COUNT',['../VoltagePage_8ino.html#a9a068e24fb7fc8d39e956cc810c8185a',1,'VoltagePage.ino']]],
-  ['pushingboxlogrelayid_2',['PushingBoxLogRelayID',['../Gbox420__Mega__Main_2Settings_8h.html#a96edd77f364c0ab765ea03941f7607f3',1,'Settings.h']]],
-  ['pzem_5fbaud_5frate_3',['PZEM_BAUD_RATE',['../PZEM004Tv30_8cpp.html#a67e85a331368a3258bdee430d886ae1d',1,'PZEM004Tv30.cpp']]],
-  ['pzem_5fdefault_5faddr_4',['PZEM_DEFAULT_ADDR',['../PZEM004Tv30_8h.html#a8f4f7e17d249c73f9fa5faa4a8d3da04',1,'PZEM004Tv30.h']]]
+  ['sample_5fcount_0',['SAMPLE_COUNT',['../VoltagePage_8ino.html#a1682c770d91c5d167b621a782be940d4',1,'VoltagePage.ino']]],
+  ['slip_5fend_1',['SLIP_END',['../ELClient_8cpp.html#ac08c4b8e75c6456f5654145f8b001005',1,'ELClient.cpp']]],
+  ['slip_5fesc_2',['SLIP_ESC',['../ELClient_8cpp.html#a379cfa838122508f0e88fbbe8ce80c47',1,'ELClient.cpp']]],
+  ['slip_5fesc_5fend_3',['SLIP_ESC_END',['../ELClient_8cpp.html#a660be27a37d4105d47000a333dd26c1a',1,'ELClient.cpp']]],
+  ['slip_5fesc_5fesc_4',['SLIP_ESC_ESC',['../ELClient_8cpp.html#a75cd5d5e3cdfa54f2a7c6d137406bb72',1,'ELClient.cpp']]],
+  ['socket_5ftcp_5fclient_5',['SOCKET_TCP_CLIENT',['../ELClientSocket_8h.html#a2d8e6e9008b53882944cff06ea87cff9',1,'ELClientSocket.h']]],
+  ['socket_5ftcp_5fclient_5flisten_6',['SOCKET_TCP_CLIENT_LISTEN',['../ELClientSocket_8h.html#a84bb01396ed2119c249409f50f9aedec',1,'ELClientSocket.h']]],
+  ['socket_5ftcp_5fserver_7',['SOCKET_TCP_SERVER',['../ELClientSocket_8h.html#a218352369adea3fa31d23465c58351b8',1,'ELClientSocket.h']]],
+  ['socket_5fudp_8',['SOCKET_UDP',['../ELClientSocket_8h.html#a65e08d8b4929940e5c01735eb47295a0',1,'ELClientSocket.h']]]
 ];
