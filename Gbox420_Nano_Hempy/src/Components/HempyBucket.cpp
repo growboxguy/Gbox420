@@ -11,9 +11,9 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
       StartWeight(DefaultSettings.StartWeight),
       MaxWeight(DefaultSettings.MaxWeight),
       DrainWaitTime(DefaultSettings.DrainWaitTime)
-{
-  WetWeight = DefaultSettings.MaxWeight;  // Initialize WetWeight to MaxWeight until first watering
+{  
   DryWeight = DefaultSettings.StartWeight; // Until first watering use StartWeight. After watering DryWeight is calculated from WetWeight - EvaporationTarget
+  WetWeight = DryWeight + DefaultSettings.EvaporationTarget;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -96,6 +96,14 @@ void HempyBucket::updateState(HempyStates NewState)
   case HempyStates::DISABLED:
     BucketPump.disablePump();
     break;
+  case HempyStates::DRY:
+    BucketPump.stopPump(true);
+    if (BucketWeightSensor.getWeight() >= WetWeight)  ///< If the bucket has been refilled manually, go back to IDLE
+    {
+      updateState(HempyStates::IDLE);
+      BlockOverWritingState = true;
+    }
+    break;
   case HempyStates::IDLE:
     BucketPump.stopPump(true);
     if (BucketPump.getState() != WaterPumpStates::DISABLED && BucketWeightSensor.getWeight() <= DryWeight)
@@ -125,9 +133,14 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED || BucketWeightSensor.getWeight() > MaxWeight) ///< Disable watering if: Timeout before the waste target was reached, pump failed or the maximum weight was reached
+    if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)&& BucketWeightSensor.getWeight() < WetWeight) ///< Watering failed if: Timeout before the waste target was reached, pump failed 
     {
-      updateState(HempyStates::DISABLED);
+      updateState(HempyStates::DRY);
+      BlockOverWritingState = true;
+    }
+    else if (BucketWeightSensor.getWeight() > MaxWeight) //the maximum weight was reached without reaching drain target
+    {
+      updateState(HempyStates::IDLE);
       BlockOverWritingState = true;
     }
     break;

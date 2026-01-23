@@ -42,7 +42,8 @@ enum class HempyStates
   DISABLED,
   IDLE,
   WATERING,
-  DRAINING
+  DRAINING,
+  DRY
 };
 
 enum class PressurePumpStates

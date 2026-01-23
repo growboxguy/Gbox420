@@ -431,6 +431,9 @@ char *toText_hempyState(HempyStates State)
   case HempyStates::DRAINING:
     return toText(F("DRAINING"));
     break;
+  case HempyStates::DRY:
+    return toText(F("DRY"));
+    break;
   default:
     return toText(F("?"));
     break;

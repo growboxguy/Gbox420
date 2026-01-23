@@ -6207,8 +6207,9 @@
         "type": "function",
         "z": "3d93eb6ca3793727",
         "name": "Bucket1 state",
-        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 4:\n     msg.valueText = \"DRY\";\n     msg.color = \"red\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -9160,8 +9161,9 @@
         "type": "function",
         "z": "3d93eb6ca3793727",
         "name": "Bucket state",
-        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  case 4:\n     msg.valueText = \"DRY\";\n     msg.color = \"red\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -16403,7 +16405,7 @@
         ]
     },
     {
-        "id": "d6a35b286411b549",
+        "id": "13d40bc446be4bcb",
         "type": "global-config",
         "env": [],
         "modules": {
