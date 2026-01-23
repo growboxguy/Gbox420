@@ -67,9 +67,9 @@ void AeroModule_Web::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.Duration) : toText(AeroCommand1ToSend.Duration));
   strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.DayInterval) : toText(AeroCommand1ToSend.DayInterval));
+  strcat(LongMessage, FriendlyFormat ? toText_minute(AeroCommand1ToSend.DayInterval) : toText(AeroCommand1ToSend.DayInterval));
   strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.NightInterval) : toText(AeroCommand1ToSend.NightInterval));
+  strcat(LongMessage, FriendlyFormat ? toText_minute(AeroCommand1ToSend.NightInterval) : toText(AeroCommand1ToSend.NightInterval));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 

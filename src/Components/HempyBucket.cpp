@@ -12,6 +12,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
       MaxWeight(DefaultSettings.MaxWeight),
       DrainWaitTime(DefaultSettings.DrainWaitTime)
 {
+  WetWeight = DefaultSettings.MaxWeight;  // Initialize WetWeight to MaxWeight until first watering
   DryWeight = DefaultSettings.StartWeight; // Until first watering use StartWeight. After watering DryWeight is calculated from WetWeight - EvaporationTarget
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
@@ -225,15 +226,12 @@ void HempyBucket::setMaxWeight(float Weight)
   }
 }
 
-void HempyBucket::setEvaporationTarget(float Weight)
+void HempyBucket::setEvaporationTarget(float newEvaporationTarget)
 {
-  if (EvaporationTarget != Weight)
+  if (EvaporationTarget != newEvaporationTarget)
   {
-    if (DryWeight > 0) // If the next watering weight is already known
-    {
-      DryWeight += EvaporationTarget - Weight;
-    }
-    EvaporationTarget = Weight;
+    DryWeight = max(StartWeight, WetWeight - newEvaporationTarget);
+    EvaporationTarget = newEvaporationTarget;
     Parent->getSoundObject()->playOnSound();
   }
 }

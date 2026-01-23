@@ -6,7 +6,7 @@
   \details This class contains pure virtual functions forces implementing functions required to interact with the ESP-link website
 */
 
-#include "ELClientWebServer.h" ///< ESP-link - WebServer API
+#include "../../libraries/ELClient/ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "../Components/420Common.h"
 
 ///< forward declaration

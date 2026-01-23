@@ -1,7 +1,7 @@
 #pragma once
 
 #define PZEM004_NO_SWSERIAL ///< Singals to the PZEM004Tv30 module to use HardwareSerial instead of SoftwareSerial
-#include "PZEM004Tv30.h"    ///< 3rd party module for the PZEM004T V3.0 power sensor
+#include <PZEM004Tv30.h>    ///< 3rd party module for the PZEM004T V3.0 power sensor
 #include "420Common_Web.h"
 #include "../Modules_Web/420Module_Web.h"
 #include "../Components/PowerSensorV3.h"
