@@ -73,17 +73,14 @@ bool setup()
     // number of bytes we need to transmit
     radio.setPayloadSize(SIZE); // default value is the maximum 32 bytes
 
-    // set the TX address of the RX node into the TX pipe
-    radio.openWritingPipe(address[radioNumber]); // always uses pipe 0
+    // set the TX address of the RX node for use on the TX pipe (pipe 0)
+    radio.stopListening(address[radioNumber]);
 
     // set the RX address of the TX node into a RX pipe
     radio.openReadingPipe(1, address[!radioNumber]); // using pipe 1
 
     // additional setup specific to the node's role
-    if (role) {
-        radio.stopListening(); // put radio in TX mode
-    }
-    else {
+    if (!role) {
         radio.startListening(); // put radio in RX mode
     }
 
@@ -110,8 +107,15 @@ void loop()
         while (i < SIZE) {
             makePayload(i); // make the payload
             if (!radio.writeFast(&buffer, SIZE)) {
-                failures++;
-                radio.reUseTX();
+                uint8_t flags = radio.getStatusFlags();
+                if (flags & RF24_TX_DF) {
+                    failures++;
+                    // now we need to reset the tx_df flag and the radio's CE pin.
+                    radio.ce(LOW);
+                    radio.clearStatusFlags(RF24_TX_DF);
+                    radio.ce(HIGH);
+                }
+                // else the TX FIFO is full; just continue loop.
             }
             else {
                 i++;

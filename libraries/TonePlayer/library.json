@@ -1,0 +1,15 @@
+{
+  "name": "TonePlayer",
+  "keywords": "tone, pitch, note, player, parser, music",
+  "description": "A library for playing melody in background process using the builtin tone() function. No needed for delay() function to waste the MCU processing power. It parses melodic tones from PROGMEM to conserve the SRAM. The frequency of each tone is computed instead of being stored as constant values. Supports repeat to a specified number of tones till five levels of stack.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/ZulNs/TonePlayer.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "any"
+  ]
+}

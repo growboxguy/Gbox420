@@ -65,17 +65,7 @@ int attachInterrupt(rf24_gpio_pin_t pin, int mode, void (*function)(void))
     detachInterrupt(pin);
     GPIO::close(pin);
 
-    try {
-        irqChipCache.openDevice();
-    }
-    catch (GPIOException& exc) {
-        if (irqChipCache.chipInitialized) {
-            throw exc;
-            return 0;
-        }
-        irqChipCache.chip = "/dev/gpiochip0";
-        irqChipCache.openDevice();
-    }
+    irqChipCache.openDevice();
 
     // get chip info
     gpiochip_info info;
@@ -83,13 +73,13 @@ int attachInterrupt(rf24_gpio_pin_t pin, int mode, void (*function)(void))
     int ret = ioctl(irqChipCache.fd, GPIO_GET_CHIPINFO_IOCTL, &info);
     if (ret < 0) {
         std::string msg = "[attachInterrupt] Could not gather info about ";
-        msg += irqChipCache.chip;
+        msg += RF24_LINUX_GPIO_CHIP;
         throw IRQException(msg);
         return 0;
     }
 
     if (pin > info.lines) {
-        std::string msg = "[attachInterrupt] pin " + std::to_string(pin) + " is not available on " + irqChipCache.chip;
+        std::string msg = "[attachInterrupt] pin " + std::to_string(pin) + " is not available on " + RF24_LINUX_GPIO_CHIP;
         throw IRQException(msg);
         return 0;
     }
@@ -143,11 +133,18 @@ int attachInterrupt(rf24_gpio_pin_t pin, int mode, void (*function)(void))
     IrqPinCache irqPinCache;
     irqPinCache.fd = request.fd;
     irqPinCache.function = function;
-    std::pair<std::map<rf24_gpio_pin_t, IrqPinCache>::iterator, bool> indexPair = irqCache.insert(std::pair<rf24_gpio_pin_t, IrqPinCache>(pin, irqPinCache));
 
+    std::pair<std::map<rf24_gpio_pin_t, IrqPinCache>::iterator, bool> indexPair = irqCache.insert(std::pair<rf24_gpio_pin_t, IrqPinCache>(pin, irqPinCache));
     if (!indexPair.second) {
         // this should not be reached, but indexPair.first needs to be the inserted map element
         throw IRQException("[attachInterrupt] Could not cache the IRQ pin with function pointer");
+        return 0;
+    }
+
+    std::pair<std::map<rf24_gpio_pin_t, gpio_fd>::iterator, bool> gpioPair = irqChipCache.cachedPins.insert(std::pair<rf24_gpio_pin_t, gpio_fd>(pin, request.fd));
+    if (!gpioPair.second) {
+        // this should not be reached, but gpioPair.first needs to be the inserted map element
+        throw IRQException("[attachInterrupt] Could not cache the GPIO pin's file descriptor");
         return 0;
     }
 
@@ -167,8 +164,9 @@ int detachInterrupt(rf24_gpio_pin_t pin)
     }
     pthread_cancel(cachedPin->second.id);     // send cancel request
     pthread_join(cachedPin->second.id, NULL); // wait till thread terminates
-    close(cachedPin->second.fd);
     irqCache.erase(cachedPin);
+    // reconfigure the pin for basic `digitalRead()`
+    GPIO::open(pin, GPIO::DIRECTION_IN);
     return 1;
 }
 

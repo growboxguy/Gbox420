@@ -98,6 +98,11 @@ void openWritingPipe_wrap(RF24& ref, const bp::object address)
     ref.openWritingPipe((const uint8_t*)(get_bytes_or_bytearray_str(address)));
 }
 
+void stopListening_wrap(RF24& ref, const bp::object address)
+{
+    ref.stopListening((const uint8_t*)(get_bytes_or_bytearray_str(address)));
+}
+
 void openReadingPipe_wrap(RF24& ref, uint8_t number, const bp::object address)
 {
     ref.openReadingPipe(number, (const uint8_t*)(get_bytes_or_bytearray_str(address)));
@@ -280,6 +285,21 @@ BOOST_PYTHON_MODULE(RF24)
         .value("RF24_PA_ERROR", RF24_PA_ERROR)
         .export_values();
 
+    bp::enum_<rf24_fifo_state_e>("rf24_fifo_state_e")
+        .value("RF24_FIFO_OCCUPIED", RF24_FIFO_OCCUPIED)
+        .value("RF24_FIFO_EMPTY", RF24_FIFO_EMPTY)
+        .value("RF24_FIFO_FULL", RF24_FIFO_FULL)
+        .value("RF24_FIFO_INVALID", RF24_FIFO_INVALID)
+        .export_values();
+
+    bp::enum_<rf24_irq_flags_e>("rf24_irq_flags_e")
+        .value("RF24_TX_DF", RF24_TX_DF)
+        .value("RF24_TX_DS", RF24_TX_DS)
+        .value("RF24_RX_DR", RF24_RX_DR)
+        .value("RF24_IRQ_ALL", RF24_IRQ_ALL)
+        .value("RF24_IRQ_NONE", RF24_IRQ_NONE)
+        .export_values();
+
     // ******************** RF24 class  **************************
     bp::class_<RF24>("RF24", bp::init<uint16_t, uint16_t>((bp::arg("_cepin"), bp::arg("_cspin"))))
 #if defined(RF24_LINUX) && !defined(MRAA)
@@ -291,6 +311,7 @@ BOOST_PYTHON_MODULE(RF24)
         .def("available_pipe", &available_wrap) // needed to rename this method as python does not allow such overloading
         .def("begin", (bool(::RF24::*)(void))(&::RF24::begin))
         .def("begin", &begin_with_pins)
+        .def("ce", &::RF24::ce)
         .def("closeReadingPipe", &RF24::closeReadingPipe)
         .def("disableCRC", &RF24::disableCRC)
         .def("enableAckPayload", &RF24::enableAckPayload)
@@ -315,12 +336,13 @@ BOOST_PYTHON_MODULE(RF24)
         .def("powerDown", &RF24::powerDown)
         .def("powerUp", &RF24::powerUp)
         .def("printDetails", &RF24::printDetails)
+        .def("printStatus", &RF24::printStatus)
         .def("printPrettyDetails", &RF24::printPrettyDetails)
         .def("sprintfPrettyDetails", &sprintfPrettyDetails_wrap)
         .def("reUseTX", &RF24::reUseTX)
         .def("read", &read_wrap, (bp::arg("maxlen")))
         .def("rxFifoFull", &RF24::rxFifoFull)
-        .def("isFifo", (uint8_t(::RF24::*)(bool))(&::RF24::isFifo), (bp::arg("about_tx")))
+        .def("isFifo", (rf24_fifo_state_e(::RF24::*)(bool))(&::RF24::isFifo), (bp::arg("about_tx")))
         .def("isFifo", (bool(::RF24::*)(bool, bool))(&::RF24::isFifo), (bp::arg("about_tx"), bp::arg("check_empty")))
         .def("setAddressWidth", &RF24::setAddressWidth)
         .def("setAutoAck", (void(::RF24::*)(bool))(&::RF24::setAutoAck), (bp::arg("enable")))
@@ -334,13 +356,20 @@ BOOST_PYTHON_MODULE(RF24)
         .def("startFastWrite", &startFastWrite_wrap2, (bp::arg("buf"), bp::arg("len"), bp::arg("multicast"), bp::arg("startTx")))
         .def("startListening", &RF24::startListening)
         .def("startWrite", &startWrite_wrap, (bp::arg("buf"), bp::arg("len"), bp::arg("multicast")))
-        .def("stopListening", &RF24::stopListening)
+        .def("stopListening", (void(::RF24::*)(void))(&RF24::stopListening))
+        .def("stopListening", &stopListening_wrap, (bp::arg("txAddress")))
         .def("testCarrier", &RF24::testCarrier)
         .def("testRPD", &RF24::testRPD)
         .def("toggleAllPipes", &RF24::toggleAllPipes)
         .def("setRadiation", &RF24::setRadiation)
         .def("txStandBy", (bool(::RF24::*)(::uint32_t, bool))(&RF24::txStandBy), txStandBy_wrap1(bp::args("timeout", "startTx")))
         .def("whatHappened", &whatHappened_wrap)
+        .def("setStatusFlags", (uint8_t(::RF24::*)(void))(&RF24::setStatusFlags))
+        .def("setStatusFlags", (uint8_t(::RF24::*)(uint8_t))(&RF24::setStatusFlags), (bp::arg("flags")))
+        .def("clearStatusFlags", (uint8_t(::RF24::*)(void))(&RF24::clearStatusFlags))
+        .def("clearStatusFlags", (uint8_t(::RF24::*)(uint8_t))(&RF24::clearStatusFlags), (bp::arg("flags")))
+        .def("getStatusFlags", &RF24::getStatusFlags)
+        .def("update", &RF24::update)
         .def("startConstCarrier", &RF24::startConstCarrier, (bp::arg("level"), bp::arg("channel")))
         .def("stopConstCarrier", &RF24::stopConstCarrier)
         .def("write", &write_wrap1, (bp::arg("buf")))

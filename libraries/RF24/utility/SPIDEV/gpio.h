@@ -15,17 +15,15 @@
 
 #include <stdexcept>
 #include <cstdint>
+#include <map>
 #include "linux/gpio.h" // gpiochip_info
 
 typedef uint16_t rf24_gpio_pin_t;
 #define RF24_PIN_INVALID 0xFFFF
 
 #ifndef RF24_LINUX_GPIO_CHIP
-    /**
-     * The default GPIO chip to use.  Defaults to `/dev/gpiochip4` (for RPi5).
-     * Falls back to `/dev/gpiochip0` if this value is somehow incorrect.
-     */
-    #define RF24_LINUX_GPIO_CHIP "/dev/gpiochip4"
+    /// The default GPIO chip to use.  Defaults to `/dev/gpiochip0`.
+    #define RF24_LINUX_GPIO_CHIP "/dev/gpiochip0"
 #endif
 
 /** Specific exception for GPIO errors */
@@ -38,13 +36,26 @@ public:
     }
 };
 
+typedef int gpio_fd; // for readability
+
 /// A struct to manage the GPIO chip file descriptor.
 /// This struct's destructor should close any cached GPIO pin requests' file descriptors.
 struct GPIOChipCache
 {
-    const char* chip = RF24_LINUX_GPIO_CHIP;
-    int fd = -1;
-    bool chipInitialized = false;
+    /// @brief The file descriptor used to access the GPIO chip.
+    ///
+    /// This is used to open/close pins exposed by the GPIO chip specified via
+    /// `RF24_LINUX_GPIO_CHIP`.
+    ///
+    /// Because this member is static, all instances (& derivative instances) of this
+    /// struct use the same file descriptor.
+    static int fd;
+
+    /// @brief The map of pin numbers to their corresponding file descriptors.
+    ///
+    /// Because this member is static, all instances (& derivative instances) of this
+    /// struct use the same mapping.
+    static std::map<rf24_gpio_pin_t, gpio_fd> cachedPins;
 
     /// Open the File Descriptor for the GPIO chip
     void openDevice();

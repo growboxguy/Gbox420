@@ -11,30 +11,30 @@
 #include <sys/ioctl.h> // ioctl()
 #include <errno.h>     // errno, strerror()
 #include <string.h>    // std::string, strcpy()
-#include <map>
 #include "gpio.h"
 
 // instantiate some global structs to setup cache
 // doing this globally ensures the data struct is zero-ed out
-typedef int gpio_fd; // for readability
-std::map<rf24_gpio_pin_t, gpio_fd> cachedPins;
 struct gpio_v2_line_request request;
 struct gpio_v2_line_values data;
+
+// initialize static members.
+int GPIOChipCache::fd = -1;
+std::map<rf24_gpio_pin_t, gpio_fd> GPIOChipCache::cachedPins = std::map<rf24_gpio_pin_t, gpio_fd>();
 
 void GPIOChipCache::openDevice()
 {
     if (fd < 0) {
-        fd = open(chip, O_RDONLY);
+        fd = open(RF24_LINUX_GPIO_CHIP, O_RDONLY);
         if (fd < 0) {
             std::string msg = "Can't open device ";
-            msg += chip;
+            msg += RF24_LINUX_GPIO_CHIP;
             msg += "; ";
             msg += strerror(errno);
             throw GPIOException(msg);
             return;
         }
     }
-    chipInitialized = true;
 }
 
 void GPIOChipCache::closeDevice()
@@ -75,17 +75,7 @@ GPIO::~GPIO()
 
 void GPIO::open(rf24_gpio_pin_t port, int DDR)
 {
-    try {
-        gpioCache.openDevice();
-    }
-    catch (GPIOException& exc) {
-        if (gpioCache.chipInitialized) {
-            throw exc;
-            return;
-        }
-        gpioCache.chip = "/dev/gpiochip0";
-        gpioCache.openDevice();
-    }
+    gpioCache.openDevice();
 
     // get chip info
     gpiochip_info info;
@@ -93,20 +83,20 @@ void GPIO::open(rf24_gpio_pin_t port, int DDR)
     int ret = ioctl(gpioCache.fd, GPIO_GET_CHIPINFO_IOCTL, &info);
     if (ret < 0) {
         std::string msg = "Could not gather info about ";
-        msg += gpioCache.chip;
+        msg += RF24_LINUX_GPIO_CHIP;
         throw GPIOException(msg);
         return;
     }
 
     if (port > info.lines) {
-        std::string msg = "pin number " + std::to_string(port) + " not available for " + gpioCache.chip;
+        std::string msg = "pin number " + std::to_string(port) + " not available for " + RF24_LINUX_GPIO_CHIP;
         throw GPIOException(msg);
         return;
     }
 
     // check if pin is already in use
-    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
-    if (pin == cachedPins.end()) { // pin not in use; add it to cached request
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = gpioCache.cachedPins.find(port);
+    if (pin == gpioCache.cachedPins.end()) { // pin not in use; add it to cached request
         request.offsets[0] = port;
         request.fd = 0;
     }
@@ -135,25 +125,25 @@ void GPIO::open(rf24_gpio_pin_t port, int DDR)
         throw GPIOException(msg);
         return;
     }
-    cachedPins.insert(std::pair<rf24_gpio_pin_t, gpio_fd>(port, request.fd));
+    gpioCache.cachedPins.insert(std::pair<rf24_gpio_pin_t, gpio_fd>(port, request.fd));
 }
 
 void GPIO::close(rf24_gpio_pin_t port)
 {
-    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
-    if (pin == cachedPins.end()) {
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = gpioCache.cachedPins.find(port);
+    if (pin == gpioCache.cachedPins.end()) {
         return;
     }
     if (pin->second > 0) {
         ::close(pin->second);
     }
-    cachedPins.erase(pin);
+    gpioCache.cachedPins.erase(pin);
 }
 
 int GPIO::read(rf24_gpio_pin_t port)
 {
-    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
-    if (pin == cachedPins.end() || pin->second <= 0) {
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = gpioCache.cachedPins.find(port);
+    if (pin == gpioCache.cachedPins.end() || pin->second <= 0) {
         throw GPIOException("[GPIO::read] pin not initialized! Use GPIO::open() first");
         return -1;
     }
@@ -172,8 +162,8 @@ int GPIO::read(rf24_gpio_pin_t port)
 
 void GPIO::write(rf24_gpio_pin_t port, int value)
 {
-    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = cachedPins.find(port);
-    if (pin == cachedPins.end() || pin->second <= 0) {
+    std::map<rf24_gpio_pin_t, gpio_fd>::iterator pin = gpioCache.cachedPins.find(port);
+    if (pin == gpioCache.cachedPins.end() || pin->second <= 0) {
         throw GPIOException("[GPIO::write] pin not initialized! Use GPIO::open() first");
         return;
     }
