@@ -275,17 +275,23 @@ time_t getNtpTime()
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
-      delay(1000);
-      logToSerials(F("."), false, 0);
-      wdt_reset(); /// reset watchdog timeout
+      if (NTPResponse == 0) {
+          delay(1000);
+          logToSerials(F("."), false, 0);
+          wdt_reset(); /// reset watchdog timeout
+      }
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("sync failed"), true, 3);
+      logToSerials(F("sync failed"), true, 3); // FORCE the library to try again in 60 seconds instead of 1 day
+      setSyncInterval(60); 
     }
     else
-      logToSerials(F("synchronized"), true, 3);
+    {
+      logToSerials(F("synchronized"), true, 3); // SUCCESS: Set the interval back to 1 day
+      setSyncInterval(86400); 
+    }
   }
   return NTPResponse;
 }
