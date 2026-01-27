@@ -98,7 +98,7 @@ void HempyBucket::updateState(HempyStates NewState)
     break;
   case HempyStates::DRY:
     BucketPump.stopPump(true);
-    if (BucketWeightSensor.getWeight() >= WetWeight)
+    if (BucketWeightSensor.getWeight() >= WetWeight)  ///< If the bucket has been refilled manually, go back to IDLE
     {
       updateState(HempyStates::IDLE);
       BlockOverWritingState = true;
