@@ -571,12 +571,17 @@
             "15be7ab80c29b5e7",
             "2df4915d4894d007",
             "94feaa7db06c7ec9",
-            "891789520855e7aa"
+            "891789520855e7aa",
+            "0b05d017af7bcbe8",
+            "097da65028f422d4",
+            "58d4d117ccf41906",
+            "8bdeafe4329a344e",
+            "c03793fd2fc9c1de"
         ],
-        "x": 2474,
+        "x": 2494,
         "y": 2909,
-        "w": 1082,
-        "h": 182
+        "w": 1062,
+        "h": 292
     },
     {
         "id": "f873403030164f2f",
@@ -5214,6 +5219,39 @@
             {
                 "property": "mode",
                 "value": "auto"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "973fcb9297e21488",
+        "type": "ha-entity-config",
+        "server": "a7c93785.9fe448",
+        "deviceConfig": "c1df6f2929147010",
+        "name": "Gbox Acknowledge",
+        "version": 6,
+        "entityType": "button",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Gbox Acknowledge"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
             }
         ],
         "resend": false,
@@ -13200,7 +13238,7 @@
         "mode": 1,
         "time": "1",
         "timeUnits": "minutes",
-        "x": 2600,
+        "x": 2620,
         "y": 3050,
         "wires": [
             [
@@ -17368,7 +17406,7 @@
         "server": "a7c93785.9fe448",
         "version": 7,
         "debugenabled": false,
-        "action": "notify.mobile_app_MOBILENAME",
+        "action": "notify.mobile_app_bitred",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -17382,8 +17420,8 @@
         "queue": "none",
         "blockInputOverrides": true,
         "domain": "notify",
-        "service": "mobile_app_MOBILENAME",
-        "x": 3320,
+        "service": "mobile_app_bitred",
+        "x": 3340,
         "y": 3000,
         "wires": [
             []
@@ -17399,9 +17437,9 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<div style=\"font-family: sans-serif;\">\n  {{#ActiveAlertsSize}}\n  <b style=\"color: #d63031;\">🚨 {{ActiveAlertsSize}} ACTIVE ALERTS</b><br>\n  {{#ActiveAlerts}}\n    • {{{.}}}<br>\n  {{/ActiveAlerts}}\n  {{/ActiveAlertsSize}}\n\n  {{#RecoveredAlertsSize}}\n  <br>\n  <b style=\"color: #27ae60;\">✅ {{RecoveredAlertsSize}} RECOVERED</b><br>\n  {{#RecoveredAlerts}}\n    • {{{.}}}<br>\n  {{/RecoveredAlerts}}\n  {{/RecoveredAlertsSize}}\n</div>",
+        "template": "{{{payload.message}}}",
         "output": "str",
-        "x": 3050,
+        "x": 3070,
         "y": 3000,
         "wires": [
             [
@@ -17415,18 +17453,20 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Process alerts",
-        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\n\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\n\nif (isOutsideRange) {\n    // Check if sensor is already in the list (ignoring the [NEW] tag)\n    var alreadyActive = ActiveAlerts.some(alert => alert.includes(name));\n    \n    if (!alreadyActive) {\n        shouldNotify = true;\n        // This is a BRAND NEW alert\n        ActiveAlerts.push(\"<b>[NEW] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> [\" + minLimit + \" / \" + maxLimit + \"]\");\n        \n        // Remove from recovered if it was there\n        RecoveredAlerts = RecoveredAlerts.filter(alert => !alert.includes(name));\n    }\n} else {\n    // RECOVERY LOGIC\n    var alertIndex = ActiveAlerts.findIndex(alert => alert.includes(name));\n    \n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        RecoveredAlerts = RecoveredAlerts.filter(alert => !alert.includes(name));\n        RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> [OK]\");\n        ActiveAlerts.splice(alertIndex, 1);\n    }\n}\n\n// 3. Prepare Notification Data\nmsg.ActiveAlerts = [...ActiveAlerts]; // Copy current state for this notification\nmsg.RecoveredAlerts = [...RecoveredAlerts];\n\n// 4. CLEANUP FOR NEXT TIME\n// Remove the [NEW] tag from ActiveAlerts so they aren't \"new\" in the next cycle\nvar cleanedActive = ActiveAlerts.map(alert => alert.replace(\"<b>[NEW] </b>\", \"\"));\n\nflow.set(\"ActiveAlerts\", cleanedActive);\nflow.set(\"RecoveredAlerts\", []); // Clear recovered so they don't repeat\n\n// 5. Build Shell Object\nmsg.ActiveAlertsSize = msg.ActiveAlerts.length;\nmsg.RecoveredAlertsSize = msg.RecoveredAlerts.length;\nmsg.payload = {\n    \"title\": \"GrowBox Monitor\",\n    \"message\": \"\",\n    \"data\": {\n        \"tag\": \"growbox_alerts\",\n        \"color\": isOutsideRange ? \"#e74c3c\" : \"#2ecc71\"       \n    }\n};\n\nreturn shouldNotify ? msg : null;",
-        "outputs": 1,
+        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\n\n// Clean up display for null limits\nvar minDisp = (minLimit !== null) ? minLimit : \"-\";\nvar maxDisp = (maxLimit !== null) ? maxLimit : \"-\";\nvar rangeLabel = \"[\" + minDisp + \" / \" + maxDisp + \"]\";\n\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\n\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>[NEW⚠️] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range,but had alert before\n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        }\n    }\n}\n\n// 3. Save State\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 2: Dashboard/Persistent\n\nvar htmlList = \"\";\n\n// Add Active Alerts\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;·\" + alert + \"<br>\";\n});\n\n// Add Recovered Alerts\nif (RecoveredAlerts.length > 0) {\n    htmlList += \"---<br>\";\n    RecoveredAlerts.forEach(recovered => {\n        htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n    });\n};\n\n// Ensure the payload has the \"Alerts\" attribute for the HA node to grab\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0, // Main state becomes True if there are active alerts\n        attributes: {\n            Alerts: htmlList // This puts the HTML in the attribute\n        }\n    }\n}\n\n// 5. Output 1: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅ RECOVERED:\\n\" + recoveryList;\n\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"⚠️ GrowBox Alert\" : \"\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                // THIS LINE OPENS THE DASHBOARD when clicking the notification\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\n\nreturn [notificationMsg, dashboardMsg];",
+        "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2810,
+        "x": 2830,
         "y": 3050,
         "wires": [
             [
-                "6c9dfb524a79b29a",
+                "6c9dfb524a79b29a"
+            ],
+            [
                 "2df4915d4894d007"
             ]
         ]
@@ -17449,16 +17489,21 @@
                 "p": "minLimit",
                 "v": "5.0",
                 "vt": "str"
+            },
+            {
+                "p": "maxLimit",
+                "v": "7.1",
+                "vt": "str"
             }
         ],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "Test Sensor2",
+        "topic": "Test Sensor",
         "payload": "1.0",
         "payloadType": "json",
-        "x": 2620,
+        "x": 2640,
         "y": 2950,
         "wires": [
             [
@@ -17484,6 +17529,11 @@
                 "p": "minLimit",
                 "v": "5.0",
                 "vt": "str"
+            },
+            {
+                "p": "maxLimit",
+                "v": "7.1",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -17493,7 +17543,7 @@
         "topic": "Test Sensor",
         "payload": "6.0",
         "payloadType": "json",
-        "x": 2600,
+        "x": 2620,
         "y": 3000,
         "wires": [
             [
@@ -17524,7 +17574,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3010,
+        "x": 3030,
         "y": 2950,
         "wires": [
             []
@@ -17542,7 +17592,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 2830,
+        "x": 2850,
         "y": 2950,
         "wires": [
             [
@@ -17556,19 +17606,18 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Persistent notification template",
-        "func": "// 1. Convert lists to Markdown strings\nlet mdMessage = \"\";\n\nif (msg.ActiveAlertsSize > 0) {\n    mdMessage += \"## 🚨 \" + msg.ActiveAlertsSize + \" ACTIVE ALERTS\\n\";\n    msg.ActiveAlerts.forEach(alert => {\n        // First: Convert all <b> to **\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        // Second: Specifically remove ** from around [NEW]\n        cleanAlert = cleanAlert.replace(\"**[NEW] **\", \"[NEW] \");\n\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\nif (msg.RecoveredAlertsSize > 0) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + msg.RecoveredAlertsSize + \" RECOVERED\\n\";\n    msg.RecoveredAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\n// 2. CONSTRUCT PAYLOAD\n// We wrap this in 'data' to ensure the Home Assistant node accepts it every time\nmsg.payload = {\n    data: {\n        title: \"GrowBox Monitor\",\n        message: mdMessage,\n        notification_id: \"growbox_persistent\"\n    }\n};\n\n// 2. CONSTRUCT PAYLOAD\n// We remove the inner 'data' wrapper so msg.payload IS the service data\nmsg.payload = {\n    title: \"GrowBox Monitor\",\n    message: mdMessage,\n    notification_id: \"growbox_persistent\"\n};\n\nreturn msg;",
+        "func": "// 1. Convert lists to Markdown strings\nlet mdMessage = \"\";\n\nif (msg.payload.ActiveAlertsSize > 0) {\n    mdMessage += \"## 🚨 \" + msg.payload.ActiveAlertsSize + \" ACTIVE ALERTS\\n\";\n    msg.payload.ActiveAlerts.forEach(alert => {\n        // Convert <b> to Markdown **\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        \n        // Ensure the [NEW] tag stands out in the dashboard\n        // This makes sure it doesn't get double-bolded or broken\n        cleanAlert = cleanAlert.replace(\"**[NEW⚠️] **\", \"⚠️ **[NEW]** \");\n\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\nif (msg.payload.RecoveredAlertsSize > 0) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + msg.payload.RecoveredAlertsSize + \" RECOVERED\\n\";\n    msg.payload.RecoveredAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\n// 2. CONSTRUCT PAYLOAD\n// Note: We use msg.payload.ActiveAlerts because it's coming from Output 2 of the previous node\nmsg.payload = {\n    title: \"GrowBox Monitor\",\n    message: mdMessage,\n    notification_id: \"growbox_persistent\"\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 3060,
+        "x": 3080,
         "y": 3050,
         "wires": [
             [
-                "94feaa7db06c7ec9",
-                "cce72c2b121c3aee"
+                "94feaa7db06c7ec9"
             ]
         ]
     },
@@ -17596,7 +17645,7 @@
         "blockInputOverrides": true,
         "domain": "persistent_notification",
         "service": "create",
-        "x": 3330,
+        "x": 3350,
         "y": 3050,
         "wires": [
             []
@@ -17607,9 +17656,9 @@
         "type": "comment",
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
-        "name": "⚠️ Change to: notify.mobile_app_YOUR_DEVICE_NAME",
+        "name": "⚠️ Change to: notify.mobile_app_YOURDEVICENAME",
         "info": "",
-        "x": 3320,
+        "x": 3330,
         "y": 2950,
         "wires": []
     },
@@ -17629,7 +17678,7 @@
         "z": "3d93eb6ca3793727",
         "g": "dbcad7b68e9b907f",
         "name": "Verify Light sensor vs Light2",
-        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt2.T === \"1\" || msg.payload.Lt2.T === true;\n// Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt2.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt2.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light2Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    // Check if the timer is even running before labeling the window\n    if (timerEnabled) {\n        msg.valueText = isScheduledTime ? \"BRIGHT (OK)\" : \"DARK (OK)\";\n    } else {\n        msg.valueText = sensorState === 0 ? \"BRIGHT (Manual)\" : \"DARK (Manual)\";\n    }\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
+        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt2.T === \"1\"; // Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt2.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt2.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light2Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17645,29 +17694,13 @@
         ]
     },
     {
-        "id": "cce72c2b121c3aee",
-        "type": "debug",
-        "z": "3d93eb6ca3793727",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3350,
-        "y": 3240,
-        "wires": []
-    },
-    {
         "id": "2c8652a55f49f6bc",
         "type": "function",
         "z": "3d93eb6ca3793727",
         "d": true,
         "g": "f93e02817a994818",
         "name": "Verify Light sensor vs Light1",
-        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt1.T === \"1\" || msg.payload.Lt1.T === true;\n// Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt1.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt1.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light2Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    // Check if the timer is even running before labeling the window\n    if (timerEnabled) {\n        msg.valueText = isScheduledTime ? \"BRIGHT (OK)\" : \"DARK (OK)\";\n    } else {\n        msg.valueText = sensorState === 0 ? \"BRIGHT (Manual)\" : \"DARK (Manual)\";\n    }\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
+        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt1.T === \"1\"; // Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt1.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt1.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light1Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17683,7 +17716,141 @@
         ]
     },
     {
-        "id": "2bfe681b332aec96",
+        "id": "0b05d017af7bcbe8",
+        "type": "function",
+        "z": "3d93eb6ca3793727",
+        "g": "5958ef736e8c461d",
+        "name": "Acknowledge alerts",
+        "func": "var ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\n\n// 1. Remove [NEW] tags\nvar acknowledgedAlerts = ActiveAlerts.map(alert => alert.replace(\"<b>[NEW⚠️] </b>\", \"\"));\n\n// 2. Clear Recovered list completely\nflow.set(\"ActiveAlerts\", acknowledgedAlerts);\nflow.set(\"RecoveredAlerts\", []);\n\n// 3. Prepare data for UI\nmsg.payload = {\n    ActiveAlerts: acknowledgedAlerts,\n    ActiveAlertsSize: acknowledgedAlerts.length,\n    RecoveredAlerts: [],\n    RecoveredAlertsSize: 0\n};\n\n// 4. CRITICAL: If no active alerts left, send empty list to force dashboard to hide\nif (acknowledgedAlerts.length === 0) {\n    msg.payload = \"[]\"; \n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2890,
+        "y": 3100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "097da65028f422d4",
+        "type": "server-events",
+        "z": "3d93eb6ca3793727",
+        "g": "5958ef736e8c461d",
+        "name": "",
+        "server": "a7c93785.9fe448",
+        "version": 3,
+        "exposeAsEntityConfig": "",
+        "eventType": "mobile_app_notification_action",
+        "eventData": "",
+        "waitForRunning": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 2690,
+        "y": 3160,
+        "wires": [
+            [
+                "58d4d117ccf41906"
+            ]
+        ]
+    },
+    {
+        "id": "58d4d117ccf41906",
+        "type": "switch",
+        "z": "3d93eb6ca3793727",
+        "g": "5958ef736e8c461d",
+        "name": "",
+        "property": "payload.event.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ACKNOWLEDGE_GROWBOX",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 2930,
+        "y": 3160,
+        "wires": [
+            [
+                "0b05d017af7bcbe8"
+            ]
+        ]
+    },
+    {
+        "id": "8bdeafe4329a344e",
+        "type": "ha-button",
+        "z": "3d93eb6ca3793727",
+        "g": "5958ef736e8c461d",
+        "name": "Gbox Acknowledge button",
+        "version": 0,
+        "debugenabled": false,
+        "outputs": 1,
+        "entityConfig": "973fcb9297e21488",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "string",
+                "valueType": "entityState"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 2650,
+        "y": 3100,
+        "wires": [
+            [
+                "0b05d017af7bcbe8"
+            ]
+        ]
+    },
+    {
+        "id": "c03793fd2fc9c1de",
+        "type": "debug",
+        "z": "3d93eb6ca3793727",
+        "g": "5958ef736e8c461d",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3160,
+        "y": 3130,
+        "wires": []
+    },
+    {
+        "id": "9ceae32dd208f856",
         "type": "global-config",
         "env": [],
         "modules": {

@@ -10,21 +10,16 @@ views:
           - type: markdown
             content: >
               {% set last = states.sensor.gbox420_hempy_modulestate.last_updated
-              %} {% set age = (as_timestamp(now()) - as_timestamp(last)) | int
-              %}
-
-              {% if age < 60 %}
+              %}  {% set age = (as_timestamp(now()) - as_timestamp(last)) | int
+              %} {% if age < 60 %}
                 {% set time_ago = age ~ ' sec ago' %}
               {% elif age < 3600 %}
                 {% set time_ago = (age / 60) | int ~ ' min ago' %}
               {% else %}
                 {% set time_ago = (age / 3600) | int ~ ' h ago' %}
-              {% endif %}
-
-              {% set events = states('text.gbox420_eventlog') %}
-
-              {% if age > 600 %} <b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events
-              }} {% else %} <b>✅ ONLINE ({{ time_ago }})</b><br> {{ events }} {%
+              {% endif %} {% set events = states('text.gbox420_eventlog') %} {%
+              if age > 600 %} <b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events }}
+              {% else %} <b>✅ ONLINE ({{ time_ago }})</b><br> {{ events }} {%
               endif %}
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_hempy_modulestate
@@ -41,9 +36,35 @@ views:
                 name: Aeroponics
                 styles:
                   margin-right: 10px
-          - type: markdown
-            content: |
-              {{ state_attr('sensor.gbox420_alerts', 'alerts') | safe }}
+          - type: vertical-stack
+            card_mod:
+              style: |
+                :host {
+                  {# Hide if the attribute is empty OR contains 'No alerts' #}
+                  {# We look for the dot '·' which Node-RED only adds when it maps a real alert #}
+                  display: {% if '·' not in state_attr('sensor.gbox420_alerts', 'alerts') %} none {% else %} block {% endif %};
+                }
+            cards:
+              - type: markdown
+                content: |
+                  {{ state_attr('sensor.gbox420_alerts', 'alerts') | safe }}
+                card_mod:
+                  style: |
+                    ha-card {
+                      margin-bottom: -15px; 
+                    }
+              - type: entities
+                entities:
+                  - entity: button.gbox_acknowledge
+                    name: Acknowledge Alerts
+                    icon: mdi:check-all
+                    action_name: Clear
+                card_mod:
+                  style: |
+                    ha-card {
+                      border: none;
+                      background: transparent;
+                    }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
