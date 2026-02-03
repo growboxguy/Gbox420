@@ -430,12 +430,13 @@
             "f979eed923301349",
             "3820a352364eb5fd",
             "b31c5f873725c83e",
-            "ec87ee66799243d8"
+            "ec87ee66799243d8",
+            "f4e8583c624e1728"
         ],
         "x": 814,
-        "y": 3999,
-        "w": 1682,
-        "h": 772
+        "y": 3989,
+        "w": 1772,
+        "h": 782
     },
     {
         "id": "df717d45f745c6b2",
@@ -575,12 +576,11 @@
             "0b05d017af7bcbe8",
             "097da65028f422d4",
             "58d4d117ccf41906",
-            "8bdeafe4329a344e",
-            "c03793fd2fc9c1de"
+            "8bdeafe4329a344e"
         ],
-        "x": 2494,
+        "x": 2474,
         "y": 2909,
-        "w": 1062,
+        "w": 1082,
         "h": 292
     },
     {
@@ -602,7 +602,8 @@
             "c0e33bb143213693",
             "17dd403c6ba7f33a",
             "0233b59e798190a5",
-            "3b27be9465ca9214"
+            "3b27be9465ca9214",
+            "31b8291f81d3c2c9"
         ],
         "x": 814,
         "y": 539,
@@ -5379,8 +5380,8 @@
         "y": 580,
         "wires": [
             [
-                "013aaa7f75b1a9ef",
-                "17dd403c6ba7f33a"
+                "17dd403c6ba7f33a",
+                "013aaa7f75b1a9ef"
             ]
         ]
     },
@@ -6899,7 +6900,7 @@
         "z": "3d93eb6ca3793727",
         "g": "dba9d57a3250e881",
         "name": "Bucket1 state",
-        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 4:\n     msg.valueText = \"DRY\";\n     msg.color = \"red\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"red\";\n    break;\n  case 4:\n     msg.valueText = \"DRY\";\n     msg.color = \"red\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7050,7 +7051,7 @@
         ],
         "seg1": "10",
         "seg2": "40",
-        "x": 1880,
+        "x": 1890,
         "y": 4040,
         "wires": []
     },
@@ -8602,7 +8603,8 @@
         "y": 4430,
         "wires": [
             [
-                "b848ede8a9a78d81"
+                "b848ede8a9a78d81",
+                "f4e8583c624e1728"
             ]
         ]
     },
@@ -8732,7 +8734,8 @@
         "y": 3630,
         "wires": [
             [
-                "150a07b73acfe3c1"
+                "150a07b73acfe3c1",
+                "f4e8583c624e1728"
             ]
         ]
     },
@@ -10630,7 +10633,7 @@
         "y": 630,
         "wires": [
             [
-                "3b27be9465ca9214"
+                "31b8291f81d3c2c9"
             ]
         ]
     },
@@ -12111,6 +12114,13 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "maxLimit",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -12492,6 +12502,13 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "maxLimit",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -13238,7 +13255,7 @@
         "mode": 1,
         "time": "1",
         "timeUnits": "minutes",
-        "x": 2620,
+        "x": 2580,
         "y": 3050,
         "wires": [
             [
@@ -13816,7 +13833,7 @@
                 "valueType": "jsonata"
             }
         ],
-        "x": 1770,
+        "x": 1610,
         "y": 3080,
         "wires": [
             [
@@ -14542,7 +14559,7 @@
         ],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1780,
+        "x": 1620,
         "y": 3190,
         "wires": [
             [
@@ -14705,8 +14722,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 2038,
-        "y": 3190.9998779296875,
+        "x": 1870,
+        "y": 3190,
         "wires": []
     },
     {
@@ -14894,8 +14911,8 @@
         ],
         "seg1": "10",
         "seg2": "40",
-        "x": 1848.571445465088,
-        "y": 3241.428617477417,
+        "x": 1850,
+        "y": 3240,
         "wires": []
     },
     {
@@ -15099,11 +15116,12 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1640,
+        "x": 1630,
         "y": 3630,
         "wires": [
             [
-                "c6ab68bfc0143cfb"
+                "c6ab68bfc0143cfb",
+                "f4e8583c624e1728"
             ]
         ]
     },
@@ -15993,11 +16011,12 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1650,
+        "x": 1640,
         "y": 4430,
         "wires": [
             [
-                "285ee4b52de308cf"
+                "285ee4b52de308cf",
+                "f4e8583c624e1728"
             ]
         ]
     },
@@ -17453,7 +17472,7 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Process alerts",
-        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\n\n// Clean up display for null limits\nvar minDisp = (minLimit !== null) ? minLimit : \"-\";\nvar maxDisp = (maxLimit !== null) ? maxLimit : \"-\";\nvar rangeLabel = \"[\" + minDisp + \" / \" + maxDisp + \"]\";\n\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\n\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>[NEW⚠️] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range,but had alert before\n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        }\n    }\n}\n\n// 3. Save State\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 2: Dashboard/Persistent\n\nvar htmlList = \"\";\n\n// Add Active Alerts\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;·\" + alert + \"<br>\";\n});\n\n// Add Recovered Alerts\nif (RecoveredAlerts.length > 0) {\n    htmlList += \"---<br>\";\n    RecoveredAlerts.forEach(recovered => {\n        htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n    });\n};\n\n// Ensure the payload has the \"Alerts\" attribute for the HA node to grab\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0, // Main state becomes True if there are active alerts\n        attributes: {\n            Alerts: htmlList // This puts the HTML in the attribute\n        }\n    }\n}\n\n// 5. Output 1: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅ RECOVERED:\\n\" + recoveryList;\n\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"⚠️ GrowBox Alert\" : \"\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                // THIS LINE OPENS THE DASHBOARD when clicking the notification\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\n\nreturn [notificationMsg, dashboardMsg];",
+        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\n\n// Clean up display for null limits\nvar minDisp = (minLimit !== null) ? minLimit : \"-\";\nvar maxDisp = (maxLimit !== null) ? maxLimit : \"-\";\nvar rangeLabel = \"[\" + minDisp + \" / \" + maxDisp + \"]\";\n\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\n\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>[NEW⚠️] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range,but had alert before\n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        }\n    }\n}\n\n// 3. Save State\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 2: Dashboard/Persistent\n\nvar htmlList = \"\";\n\n// Add Active Alerts\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;·\" + alert + \"<br>\";\n});\n\n// Add Recovered Alerts\nif (RecoveredAlerts.length > 0) {\n    htmlList += \"---<br>\";\n    RecoveredAlerts.forEach(recovered => {\n        htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n    });\n};\n\n// Ensure the payload has the \"Alerts\" attribute for the HA node to grab\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0, // Main state becomes True if there are active alerts\n        attributes: {\n            Alerts: htmlList // This puts the HTML in the attribute\n        }\n    }\n}\n\n// 5. Output 1: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅ RECOVERED:\\n\" + recoveryList;\n\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"⚠️ GrowBox Alert\" : \"\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                // THIS LINE OPENS THE DASHBOARD when clicking the notification\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\n\nreturn [notificationMsg, dashboardMsg];",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
@@ -17606,7 +17625,7 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Persistent notification template",
-        "func": "// 1. Convert lists to Markdown strings\nlet mdMessage = \"\";\n\nif (msg.payload.ActiveAlertsSize > 0) {\n    mdMessage += \"## 🚨 \" + msg.payload.ActiveAlertsSize + \" ACTIVE ALERTS\\n\";\n    msg.payload.ActiveAlerts.forEach(alert => {\n        // Convert <b> to Markdown **\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        \n        // Ensure the [NEW] tag stands out in the dashboard\n        // This makes sure it doesn't get double-bolded or broken\n        cleanAlert = cleanAlert.replace(\"**[NEW⚠️] **\", \"⚠️ **[NEW]** \");\n\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\nif (msg.payload.RecoveredAlertsSize > 0) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + msg.payload.RecoveredAlertsSize + \" RECOVERED\\n\";\n    msg.payload.RecoveredAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\n// 2. CONSTRUCT PAYLOAD\n// Note: We use msg.payload.ActiveAlerts because it's coming from Output 2 of the previous node\nmsg.payload = {\n    title: \"GrowBox Monitor\",\n    message: mdMessage,\n    notification_id: \"growbox_persistent\"\n};\n\nreturn msg;",
+        "func": "// 1. Fetch the data directly from flow context\nlet activeAlerts = flow.get(\"ActiveAlerts\") || [];\nlet recoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nlet mdMessage = \"\";\n\n// 2. Process Active Alerts\nif (activeAlerts.length > 0) {\n    mdMessage += \"## 🚨 \" + activeAlerts.length + \" ACTIVE ALERTS\\n\";\n    activeAlerts.forEach(alert => {\n        // Convert <b> to Markdown ** and fix [NEW] formatting\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\")\n                              .replace(\"**[NEW⚠️] **\", \"⚠️ **[NEW]** \");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\n// 3. Process Recovered Alerts\nif (recoveredAlerts.length > 0) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + recoveredAlerts.length + \" RECOVERED\\n\";\n    recoveredAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\n// 4. Construct Final Payload\nmsg.payload = {\n    title: \"GrowBox Monitor\",\n    message: mdMessage,\n    notification_id: \"growbox_persistent\"\n};\n\n// Only send if there is actually a message to show\nreturn mdMessage !== \"\" ? msg : null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17678,7 +17697,7 @@
         "z": "3d93eb6ca3793727",
         "g": "dbcad7b68e9b907f",
         "name": "Verify Light sensor vs Light2",
-        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt2.T === \"1\"; // Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt2.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt2.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light2Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
+        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt2.T === \"1\";\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt2.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt2.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\n// Determine if we are in the scheduled \"Light\" window\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Transition Grace Period (1 Minute Leeway)\n// Check if the current time is exactly at the switch minute or 1 minute after\nconst isTransitioning = (currentTime === onTotal || \n                         currentTime === (onTotal + 1) % 1440 || \n                         currentTime === offTotal || \n                         currentTime === (offTotal + 1) % 1440);\n\n// 4. Determine Error\nlet isError = false;\n\n// If we are in the grace period, we skip the error check entirely\nif (timerEnabled && !isTransitioning) {\n    // Error if: Scheduled for Light but sensor says DARK\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark but sensor says LIGHT\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 5. Map to Alert Processor\nmsg.topic = \"Light2Alert\";\nmsg.unit = \"\";\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else if (isTransitioning) {\n    msg.valueText = \"Transitioning...\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17700,7 +17719,7 @@
         "d": true,
         "g": "f93e02817a994818",
         "name": "Verify Light sensor vs Light1",
-        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt1.T === \"1\"; // Ls1.D: 0 = DAY (Light), 1 = NIGHT (Dark)\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math (Handling Overnight Schedules)\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt1.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt1.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Inverted Logic: Determine Error\nlet isError = false;\nif (timerEnabled) {\n    // Error if: Scheduled for Light (isScheduledTime) but sensor says DARK (sensorState === 1)\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (!isScheduledTime) but sensor says LIGHT (sensorState === 0)\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 4. Map to Alert Processor\nmsg.topic = \"Light1Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
+        "func": "// 1. Extract Inputs\nconst timerEnabled = msg.payload.Lt1.T === \"1\";\nconst sensorState = Number(msg.payload.Ls1.D);\n\n// 2. Time Math\nconst now = new Date();\nconst currentTime = (now.getHours() * 60) + now.getMinutes();\nconst [onH, onM] = msg.payload.Lt1.On.split(':').map(Number);\nconst [offH, offM] = msg.payload.Lt1.Of.split(':').map(Number);\nconst onTotal = (onH * 60) + onM;\nconst offTotal = (offH * 60) + offM;\n\nlet isScheduledTime = (onTotal < offTotal)\n    ? (currentTime >= onTotal && currentTime < offTotal)\n    : (currentTime >= onTotal || currentTime < offTotal);\n\n// 3. Transition Leeway (1 Minute Grace Period)\n// Defines a window that ignores errors for 1 minute after the switch\nconst isTransitioning = (currentTime === onTotal || \n                         currentTime === (onTotal + 1) % 1440 || \n                         currentTime === offTotal || \n                         currentTime === (offTotal + 1) % 1440);\n\n// 4. Determine Error\nlet isError = false;\nif (timerEnabled && !isTransitioning) {\n    // Error if: Scheduled for Light (ON) but sensor says DARK\n    if (isScheduledTime && sensorState === 1) isError = true;\n    // Error if: Scheduled for Dark (OFF) but sensor says LIGHT\n    if (!isScheduledTime && sensorState === 0) isError = true;\n}\n\n// 5. Map to Alert Processor\nmsg.topic = \"Light1Alert\";\nmsg.unit = \"\";\n\n// The \"Virtual Sensor\" Value: 3 triggers alert, 0 or 1 are safe.\nmsg.payload = isError ? 3 : sensorState;\n\nif (isError) {\n    msg.valueText = isScheduledTime ? \"DARK during ON time\" : \"BRIGHT during OFF time\";\n} else if (isTransitioning) {\n    msg.valueText = \"Transitioning...\";\n} else {\n    msg.valueText = isScheduledTime ? \"BRIGHT\" : \"DARK\";\n}\n\n// Fixed limits for the Alert Processor\nmsg.minLimit = 0;\nmsg.maxLimit = 1;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17721,7 +17740,7 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Acknowledge alerts",
-        "func": "var ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\n\n// 1. Remove [NEW] tags\nvar acknowledgedAlerts = ActiveAlerts.map(alert => alert.replace(\"<b>[NEW⚠️] </b>\", \"\"));\n\n// 2. Clear Recovered list completely\nflow.set(\"ActiveAlerts\", acknowledgedAlerts);\nflow.set(\"RecoveredAlerts\", []);\n\n// 3. Prepare data for UI\nmsg.payload = {\n    ActiveAlerts: acknowledgedAlerts,\n    ActiveAlertsSize: acknowledgedAlerts.length,\n    RecoveredAlerts: [],\n    RecoveredAlertsSize: 0\n};\n\n// 4. CRITICAL: If no active alerts left, send empty list to force dashboard to hide\nif (acknowledgedAlerts.length === 0) {\n    msg.payload = \"[]\"; \n}\n\nreturn msg;",
+        "func": "var ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\n\n// 1. Strip the [NEW] tags from the memory strings\nvar acknowledgedAlerts = ActiveAlerts.map(alert => alert.replace(\"<b>[NEW⚠️] </b>\", \"\"));\n\n// 2. Save the cleaned lists back to flow\nflow.set(\"ActiveAlerts\", acknowledgedAlerts);\nflow.set(\"RecoveredAlerts\", []);\n\n// 3. Send a trigger message to the Process node\nmsg.topic = \"INTERNAL_ACK\"; \nmsg.payload = \"RE-PROCESS\";\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17731,7 +17750,9 @@
         "x": 2890,
         "y": 3100,
         "wires": [
-            []
+            [
+                "2df4915d4894d007"
+            ]
         ]
     },
     {
@@ -17833,10 +17854,30 @@
         ]
     },
     {
-        "id": "c03793fd2fc9c1de",
+        "id": "31b8291f81d3c2c9",
+        "type": "smooth",
+        "z": "3d93eb6ca3793727",
+        "g": "f873403030164f2f",
+        "name": "",
+        "property": "payload",
+        "action": "mean",
+        "count": "10",
+        "round": "0",
+        "mult": "single",
+        "reduce": false,
+        "x": 1360,
+        "y": 630,
+        "wires": [
+            [
+                "3b27be9465ca9214"
+            ]
+        ]
+    },
+    {
+        "id": "f4e8583c624e1728",
         "type": "debug",
         "z": "3d93eb6ca3793727",
-        "g": "5958ef736e8c461d",
+        "g": "ad49652088e8a71e",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -17845,12 +17886,12 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3160,
-        "y": 3130,
+        "x": 2480,
+        "y": 4030,
         "wires": []
     },
     {
-        "id": "9ceae32dd208f856",
+        "id": "4c6c2659a2a5e7ba",
         "type": "global-config",
         "env": [],
         "modules": {
@@ -17860,7 +17901,8 @@
             "node-red-contrib-ui-level": "0.1.46",
             "node-red-node-email": "5.1.0",
             "node-red-contrib-tableify": "0.0.2",
-            "node-red-contrib-deglitch": "1.0.2"
+            "node-red-contrib-deglitch": "1.0.2",
+            "node-red-node-smooth": "0.1.2"
         }
     }
 ]

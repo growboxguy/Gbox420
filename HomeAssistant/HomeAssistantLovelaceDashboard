@@ -121,7 +121,7 @@ views:
                   service_data:
                     topic: Gbox420CMD/FanI_L
                     payload: LOW
-              - icon: mdi:fan-speed-3
+              - icon: mdi:fan-speed-2
                 state_color: true
                 tap_action:
                   action: call-service
@@ -150,7 +150,7 @@ views:
                   service_data:
                     topic: Gbox420CMD/FanE_L
                     payload: LOW
-              - icon: mdi:fan-speed-3
+              - icon: mdi:fan-speed-2
                 state_color: true
                 tap_action:
                   action: call-service
@@ -158,6 +158,45 @@ views:
                   service_data:
                     topic: Gbox420CMD/FanE_H
                     payload: HIGH
+        card_mod:
+          style: |
+            ha-card {
+              white-space: nowrap;
+            }
+      - type: entities
+        entities:
+          - type: custom:multiple-entity-row
+            entity: sensor.gbox420_waste_weight
+            name: Reservoir
+            secondary_info: last-updated
+            icon: mdi:cup-water
+            show_state: false
+            entities:
+              - entity: sensor.gbox420_reservoir_weight
+                name: Weight
+              - entity: sensor.gbox420_reservoir_watertemp
+                name: Temp
+              - entity: sensor.gbox420_waste_weight
+                name: Waste
+          - type: custom:multiple-entity-row
+            entity: switch.gbox420_airpump
+            name: false
+            icon: 'no'
+            toggle: true
+            entities:
+              - entity: sensor.gbox420_reservoir_tds
+                name: TDS
+              - entity: sensor.gbox420_reservoir_ph
+                name: pH
+              - entity: switch.gbox420_airpump
+                name: AirPump
+        footer:
+          type: graph
+          entity: sensor.gbox420_reservoir_weight
+          hours_to_show: 48
+          detail: 1
+        state_color: true
+        show_header_toggle: false
         card_mod:
           style: |
             ha-card {
@@ -334,45 +373,6 @@ views:
       - type: entities
         entities:
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_waste_weight
-            name: Reservoir
-            secondary_info: last-updated
-            icon: mdi:cup-water
-            show_state: false
-            entities:
-              - entity: sensor.gbox420_reservoir_weight
-                name: Weight
-              - entity: sensor.gbox420_reservoir_watertemp
-                name: Temp
-              - entity: sensor.gbox420_waste_weight
-                name: Waste
-          - type: custom:multiple-entity-row
-            entity: switch.gbox420_airpump
-            name: false
-            icon: 'no'
-            toggle: true
-            entities:
-              - entity: sensor.gbox420_reservoir_tds
-                name: TDS
-              - entity: sensor.gbox420_reservoir_ph
-                name: pH
-              - entity: switch.gbox420_airpump
-                name: AirPump
-        footer:
-          type: graph
-          entity: sensor.gbox420_reservoir_weight
-          hours_to_show: 48
-          detail: 1
-        state_color: true
-        show_header_toggle: false
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
-      - type: entities
-        entities:
-          - type: custom:multiple-entity-row
             entity: sensor.gbox420_bucket1_weight
             name: Hempy 1
             secondary_info: last-updated
@@ -405,7 +405,6 @@ views:
               - type: button
                 icon: mdi:watering-can
                 name: Start
-                state_color: true
                 tap_action:
                   action: call-service
                   service: mqtt.publish
@@ -414,7 +413,6 @@ views:
               - type: button
                 icon: mdi:watering-can-outline
                 name: Stop
-                state_color: true
                 tap_action:
                   action: call-service
                   service: mqtt.publish
@@ -423,7 +421,6 @@ views:
               - type: button
                 icon: mdi:water-off
                 name: Disable
-                state_color: true
                 tap_action:
                   action: call-service
                   service: mqtt.publish
