@@ -12163,6 +12163,13 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "maxLimit",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -12460,6 +12467,13 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "maxLimit",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -17891,7 +17905,7 @@
         "wires": []
     },
     {
-        "id": "4c6c2659a2a5e7ba",
+        "id": "6f3c056a0bb2ccd6",
         "type": "global-config",
         "env": [],
         "modules": {

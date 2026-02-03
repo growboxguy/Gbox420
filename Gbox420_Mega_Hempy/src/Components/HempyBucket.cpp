@@ -127,13 +127,13 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       BucketPump.startPump(true);
     }
-    if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement && BucketWeightSensor.getWeight() >= WetWeight) ///< Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
     {
       WateringTime += millis() - PumpOnTimer;
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)&& BucketWeightSensor.getWeight() < WetWeight) ///< Watering failed if: Timeout before the waste target was reached, pump failed 
+    if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed 
     {
       updateState(HempyStates::DRY);
       BlockOverWritingState = true;
