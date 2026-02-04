@@ -37,13 +37,15 @@ views:
                 name: Reservoir
               - entity: sensor.gbox420_aero1_modulestate
                 name: Aeroponics
+                styles:
+                  padding-right: 15px
           - type: vertical-stack
             card_mod:
               style: |
                 :host {
                   {# Hide if the attribute is empty OR contains 'No alerts' #}
-                  {# We look for the dot '·' which Node-RED only adds when it maps a real alert #}
-                  display: {% if '·' not in state_attr('sensor.gbox420_alerts', 'alerts') %} none {% else %} block {% endif %};
+                  {# We added '| default('', true)' to prevent errors during HA boot #}
+                  display: {% if '·' not in state_attr('sensor.gbox420_alerts', 'alerts') | default('', true) %} none {% else %} block {% endif %};
                 }
             cards:
               - type: markdown
@@ -271,9 +273,13 @@ views:
                     speed: 250
                 card_mod:
                   style: |
+
                     ha-card {
+
                       box-shadow: none;
+
                       border: none;
+
                     }
               - type: custom:stack-in-card
                 mode: horizontal
@@ -292,9 +298,13 @@ views:
                     speed: 250
                 card_mod:
                   style: |
+
                     ha-card {
+
                       box-shadow: none;
+
                       border: none;
+
                     }
         show_header_toggle: false
         state_color: true
