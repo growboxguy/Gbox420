@@ -11,16 +11,19 @@ views:
             content: >
               {% set last = states.sensor.gbox420_hempy_modulestate.last_updated
               %}  {% set age = (as_timestamp(now()) - as_timestamp(last)) | int
-              %} {% if age < 60 %}
+              %}  {% if age < 60 %}
                 {% set time_ago = age ~ ' sec ago' %}
               {% elif age < 3600 %}
                 {% set time_ago = (age / 60) | int ~ ' min ago' %}
               {% else %}
                 {% set time_ago = (age / 3600) | int ~ ' h ago' %}
-              {% endif %} {% set events = states('text.gbox420_eventlog') %} {%
-              if age > 600 %} <b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events }}
-              {% else %} <b>✅ ONLINE ({{ time_ago }})</b><br> {{ events }} {%
-              endif %}
+              {% endif %}  {% set events = states('text.gbox420_eventlog') %} {%
+              if age > 600 %} 
+                <font color="#ff4d4d"><b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events }}</font>
+              {% else %} 
+                <font color="#2ecc71"><b>✅ ONLINE ({{ time_ago }})</b> </font>
+                {{ events }}
+              {% endif %}
           - type: custom:multiple-entity-row
             entity: sensor.gbox420_hempy_modulestate
             name: Modules
@@ -34,8 +37,6 @@ views:
                 name: Reservoir
               - entity: sensor.gbox420_aero1_modulestate
                 name: Aeroponics
-                styles:
-                  margin-right: 10px
           - type: vertical-stack
             card_mod:
               style: |

@@ -430,13 +430,12 @@
             "f979eed923301349",
             "3820a352364eb5fd",
             "b31c5f873725c83e",
-            "ec87ee66799243d8",
-            "f4e8583c624e1728"
+            "ec87ee66799243d8"
         ],
         "x": 814,
-        "y": 3989,
-        "w": 1772,
-        "h": 782
+        "y": 3999,
+        "w": 1682,
+        "h": 772
     },
     {
         "id": "df717d45f745c6b2",
@@ -818,7 +817,7 @@
             },
             {
                 "property": "icon",
-                "value": "mdi::clock-time-four"
+                "value": "mdi:clock-time-four"
             },
             {
                 "property": "entity_picture",
@@ -8603,8 +8602,7 @@
         "y": 4430,
         "wires": [
             [
-                "b848ede8a9a78d81",
-                "f4e8583c624e1728"
+                "b848ede8a9a78d81"
             ]
         ]
     },
@@ -8734,8 +8732,7 @@
         "y": 3630,
         "wires": [
             [
-                "150a07b73acfe3c1",
-                "f4e8583c624e1728"
+                "150a07b73acfe3c1"
             ]
         ]
     },
@@ -11291,7 +11288,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1150,
         "y": 4890,
         "wires": [
             [
@@ -11834,7 +11831,7 @@
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "Pump state",
+                "to": "Aero pump state",
                 "tot": "str"
             },
             {
@@ -12063,7 +12060,7 @@
         "name": "",
         "events": "all",
         "x": 1540,
-        "y": 200,
+        "y": 160,
         "wires": [
             []
         ]
@@ -12252,14 +12249,14 @@
                 "t": "set",
                 "p": "minLimit",
                 "pt": "msg",
-                "to": "15",
+                "to": "16",
                 "tot": "num"
             },
             {
                 "t": "set",
                 "p": "maxLimit",
                 "pt": "msg",
-                "to": "18",
+                "to": "18.5",
                 "tot": "num"
             },
             {
@@ -12316,7 +12313,7 @@
                 "t": "set",
                 "p": "maxLimit",
                 "pt": "msg",
-                "to": "17",
+                "to": "17.5",
                 "tot": "num"
             },
             {
@@ -15134,8 +15131,7 @@
         "y": 3630,
         "wires": [
             [
-                "c6ab68bfc0143cfb",
-                "f4e8583c624e1728"
+                "c6ab68bfc0143cfb"
             ]
         ]
     },
@@ -16029,8 +16025,7 @@
         "y": 4430,
         "wires": [
             [
-                "285ee4b52de308cf",
-                "f4e8583c624e1728"
+                "285ee4b52de308cf"
             ]
         ]
     },
@@ -17307,7 +17302,7 @@
         "type": "function",
         "z": "3d93eb6ca3793727",
         "name": "Format Alerts",
-        "func": "msg.State=true;\nmsg.Alerts = \"<b><font size='+1'>Alerts</font></b><br>\"\nfor (var alert of flow.get(\"ActiveAlerts\")) {\nmsg.Alerts = msg.Alerts + \"&nbsp;&nbsp;·\" + alert + \"<br>\";\n}\nreturn msg;\n",
+        "func": "// Get the lists from flow memory\nconst active = flow.get(\"ActiveAlerts\") || [];\nconst recovered = flow.get(\"RecoveredAlerts\") || [];\n\n// Set sensor state to true if there is at least one active alert\nmsg.State = active.length > 0;\n\n// Start building the string\nmsg.Alerts = \"\";\n\n// Only show Active section if there are alerts\nif (active.length > 0) {\n    msg.Alerts += `<b><font color='#ff4d4d'>⚠️ Alerts (${active.length})</font></b><br>`;\n    for (var alert of active) {\n        msg.Alerts += \"&nbsp;&nbsp;· \" + alert + \"<br>\";\n    }\n}\n\n// Add a spacer if both sections exist\nif (active.length > 0 && recovered.length > 0) {\n    msg.Alerts += \"<br>\";\n}\n\n// Only show Recovered section if there are recoveries\nif (recovered.length > 0) {\n    msg.Alerts += `<b><font color='#2ecc71'>✅ Recovered (${recovered.length})</font></b><br>`;\n    for (var rec of recovered) {\n        msg.Alerts += \"&nbsp;&nbsp;· \" + rec + \"<br>\";\n    }\n}\n\n// If everything is empty (nominal)\nif (active.length === 0 && recovered.length === 0) {\n    msg.Alerts = \"<b><font color='#2ecc71'>✅ All Systems Nominal</font></b>\";\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -17486,14 +17481,14 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Process alerts",
-        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\n\n// Clean up display for null limits\nvar minDisp = (minLimit !== null) ? minLimit : \"-\";\nvar maxDisp = (maxLimit !== null) ? maxLimit : \"-\";\nvar rangeLabel = \"[\" + minDisp + \" / \" + maxDisp + \"]\";\n\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\n\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>[NEW⚠️] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range,but had alert before\n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + rangeLabel);\n        }\n    }\n}\n\n// 3. Save State\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 2: Dashboard/Persistent\n\nvar htmlList = \"\";\n\n// Add Active Alerts\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;·\" + alert + \"<br>\";\n});\n\n// Add Recovered Alerts\nif (RecoveredAlerts.length > 0) {\n    htmlList += \"---<br>\";\n    RecoveredAlerts.forEach(recovered => {\n        htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n    });\n};\n\n// Ensure the payload has the \"Alerts\" attribute for the HA node to grab\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0, // Main state becomes True if there are active alerts\n        attributes: {\n            Alerts: htmlList // This puts the HTML in the attribute\n        }\n    }\n}\n\n// 5. Output 1: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅ RECOVERED:\\n\" + recoveryList;\n\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"⚠️ GrowBox Alert\" : \"\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                // THIS LINE OPENS THE DASHBOARD when clicking the notification\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\n\nreturn [notificationMsg, dashboardMsg];",
+        "func": "// 1. Data Input\nvar name = msg.topic;   // Name of the sensor\nvar value = msg.payload; //Reading of sensor\nvar valueText = msg.valueText || value; //Reading's friendly output if available\nvar unit = msg.unit || ''; // value's unit (min,sec,kg,%..etc)\nvar minLimit = msg.minLimit || null;\nvar minLimitFriendly = minLimit ?? \"-\";;\nvar maxLimit = msg.maxLimit || null;\nvar maxLimitFriendly = maxLimit ?? \"-\";;\nvar limitRange = \"[\" + minLimitFriendly + \" / \" + maxLimitFriendly + \"]\";\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>[NEW⚠️] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range\n    if (alertIndex !== -1) { //Had alert before\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        }\n    }\n}\n\n// 3. Save State\nActiveAlerts.sort();\nRecoveredAlerts.sort();\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 1: Persistent notification\nvar htmlList = \"\";\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;· \" + alert + \"<br>\";\n});\nRecoveredAlerts.forEach(recovered => {\n    htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n});\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0,\n        attributes: {\n            alerts: htmlList\n        }\n    }\n}\n\n// 5. Output 2: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 \" + ActiveAlerts.length + \" ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅\" + RecoveredAlerts.length + \" RECOVERED:\\n\" + recoveryList;\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"🔴 GrowBox Alert\" : \"🟢 GrowBox Recovered\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\nreturn [notificationMsg, dashboardMsg];",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2830,
+        "x": 2810,
         "y": 3050,
         "wires": [
             [
@@ -17888,24 +17883,7 @@
         ]
     },
     {
-        "id": "f4e8583c624e1728",
-        "type": "debug",
-        "z": "3d93eb6ca3793727",
-        "g": "ad49652088e8a71e",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2480,
-        "y": 4030,
-        "wires": []
-    },
-    {
-        "id": "6f3c056a0bb2ccd6",
+        "id": "47e4c18cc3a16c19",
         "type": "global-config",
         "env": [],
         "modules": {
