@@ -577,13 +577,12 @@
             "58d4d117ccf41906",
             "8bdeafe4329a344e",
             "0682c0d098ba3c6b",
-            "e65336a5145222cc",
-            "560c33d44ffdd0c4"
+            "e65336a5145222cc"
         ],
         "x": 2474,
         "y": 2909,
-        "w": 1082,
-        "h": 342
+        "w": 1142,
+        "h": 292
     },
     {
         "id": "f873403030164f2f",
@@ -11965,11 +11964,15 @@
         "name": "Alerts active",
         "property": "$count($flowContext('ActiveAlerts')) > 0 or $count($flowContext('RecoveredAlerts')) > 0",
         "propertyType": "jsonata",
+        "property": "$count($flowContext('ActiveAlerts')) > 0 or $count($flowContext('RecoveredAlerts')) > 0",
+        "propertyType": "jsonata",
         "rules": [
             {
                 "t": "true"
+                "t": "true"
             },
             {
+                "t": "false"
                 "t": "false"
             }
         ],
@@ -12052,6 +12055,8 @@
         "events": "all",
         "x": 1680,
         "y": 320,
+        "x": 1680,
+        "y": 320,
         "wires": [
             []
         ]
@@ -12062,6 +12067,8 @@
         "z": "3d93eb6ca3793727",
         "name": "",
         "events": "all",
+        "x": 1680,
+        "y": 240,
         "x": 1680,
         "y": 240,
         "wires": [
@@ -12080,6 +12087,7 @@
         "finalize": "",
         "libs": [],
         "x": 1700,
+        "y": 200,
         "y": 200,
         "wires": [
             [
@@ -13313,6 +13321,7 @@
         "templateScope": "local",
         "className": "",
         "x": 1920,
+        "y": 210,
         "y": 210,
         "wires": [
             []
@@ -17314,6 +17323,7 @@
         "libs": [],
         "x": 1700,
         "y": 160,
+        "y": 160,
         "wires": [
             [
                 "48cca671d98af3f1"
@@ -17339,6 +17349,7 @@
         "inputOverride": "allow",
         "outputProperties": [],
         "x": 1920,
+        "y": 160,
         "y": 160,
         "wires": [
             []
@@ -17452,8 +17463,8 @@
         "blockInputOverrides": true,
         "domain": "notify",
         "service": "mobile_app_bitred",
-        "x": 3340,
-        "y": 3000,
+        "x": 3300,
+        "y": 2990,
         "wires": [
             []
         ]
@@ -17470,8 +17481,8 @@
         "syntax": "mustache",
         "template": "{{{payload.message}}}",
         "output": "str",
-        "x": 3070,
-        "y": 3000,
+        "x": 3040,
+        "y": 2990,
         "wires": [
             [
                 "f581ffd66871dd33"
@@ -17491,7 +17502,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2810,
+        "x": 2790,
         "y": 3050,
         "wires": [
             [
@@ -17534,7 +17545,7 @@
         "topic": "Test Sensor",
         "payload": "1.0",
         "payloadType": "json",
-        "x": 2640,
+        "x": 2590,
         "y": 2950,
         "wires": [
             [
@@ -17547,7 +17558,7 @@
         "type": "inject",
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
-        "name": "Test RECOVER",
+        "name": "Test OK",
         "props": [
             {
                 "p": "payload"
@@ -17574,7 +17585,7 @@
         "topic": "Test Sensor",
         "payload": "6.0",
         "payloadType": "json",
-        "x": 2620,
+        "x": 2580,
         "y": 3000,
         "wires": [
             [
@@ -17638,16 +17649,18 @@
         "g": "5958ef736e8c461d",
         "name": "Persistent notification template",
         "func": "// 1. Fetch data\nlet activeAlerts = flow.get(\"ActiveAlerts\") || [];\nlet recoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nlet mdMessage = \"\";\n\n// 2. IMPROVED CHECK: Look for NEW even with emojis/tags\n// This looks for the word NEW anywhere in the string\nlet hasNewAlerts = activeAlerts.some(alert => /\\[NEW.*?\\]/.test(alert));\nlet hasRecovered = recoveredAlerts.length > 0;\n\n// 2. Build the Message String (Standard Markdown)\nif (activeAlerts.length > 0) {\n    mdMessage += \"## 🚨 \" + activeAlerts.length + \" ACTIVE ALERTS\\n\";\n    activeAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\").replace(\"**[NEW⚠️] **\", \"⚠️ **[NEW]** \");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\nif (hasRecovered) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + recoveredAlerts.length + \" RECOVERED\\n\";\n    recoveredAlerts.forEach(alert => {\n        mdMessage += \"* \" + alert.replace(/<\\/?b>/g, \"**\") + \"\\n\";\n    });\n}\n\n// 3. The Logic: Only send if there's a [NEW] alert OR any Recovered alerts\nif (hasNewAlerts || hasRecovered) {\n    msg.topic = \"showNotification\";\n    // Remove the 'data' wrapper. The Call Service node will \n    // treat these top-level keys as the data block.\n    msg.payload = {\n        title: \"GrowBox Monitor\",\n        message: mdMessage,\n        notification_id: \"growbox_persistent\"\n    };\n} else {\n    msg.topic = \"dismissNotification\";\n    msg.payload = {\n        notification_id: \"growbox_persistent\"\n    };\n}\n\nreturn msg;",
+        "func": "// 1. Fetch data\nlet activeAlerts = flow.get(\"ActiveAlerts\") || [];\nlet recoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nlet mdMessage = \"\";\n\n// 2. IMPROVED CHECK: Look for NEW even with emojis/tags\n// This looks for the word NEW anywhere in the string\nlet hasNewAlerts = activeAlerts.some(alert => /\\[NEW.*?\\]/.test(alert));\nlet hasRecovered = recoveredAlerts.length > 0;\n\n// 2. Build the Message String (Standard Markdown)\nif (activeAlerts.length > 0) {\n    mdMessage += \"## 🚨 \" + activeAlerts.length + \" ACTIVE ALERTS\\n\";\n    activeAlerts.forEach(alert => {\n        let cleanAlert = alert.replace(/<\\/?b>/g, \"**\").replace(\"**[NEW⚠️] **\", \"⚠️ **[NEW]** \");\n        mdMessage += \"* \" + cleanAlert + \"\\n\";\n    });\n}\n\nif (hasRecovered) {\n    if (mdMessage !== \"\") mdMessage += \"\\n---\\n\";\n    mdMessage += \"## ✅ \" + recoveredAlerts.length + \" RECOVERED\\n\";\n    recoveredAlerts.forEach(alert => {\n        mdMessage += \"* \" + alert.replace(/<\\/?b>/g, \"**\") + \"\\n\";\n    });\n}\n\n// 3. The Logic: Only send if there's a [NEW] alert OR any Recovered alerts\nif (hasNewAlerts || hasRecovered) {\n    msg.topic = \"showNotification\";\n    // Remove the 'data' wrapper. The Call Service node will \n    // treat these top-level keys as the data block.\n    msg.payload = {\n        title: \"GrowBox Monitor\",\n        message: mdMessage,\n        notification_id: \"growbox_persistent\"\n    };\n} else {\n    msg.topic = \"dismissNotification\";\n    msg.payload = {\n        notification_id: \"growbox_persistent\"\n    };\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 3080,
+        "x": 3050,
         "y": 3050,
         "wires": [
             [
+                "0682c0d098ba3c6b"
                 "0682c0d098ba3c6b"
             ]
         ]
@@ -17676,8 +17689,8 @@
         "blockInputOverrides": true,
         "domain": "persistent_notification",
         "service": "create",
-        "x": 3390,
-        "y": 3090,
+        "x": 3452,
+        "y": 3043,
         "wires": [
             []
         ]
@@ -17908,16 +17921,14 @@
         "checkall": "true",
         "repair": true,
         "outputs": 2,
-        "x": 3160,
-        "y": 3130,
+        "x": 3250,
+        "y": 3050,
         "wires": [
             [
-                "94feaa7db06c7ec9",
-                "560c33d44ffdd0c4"
+                "94feaa7db06c7ec9"
             ],
             [
-                "e65336a5145222cc",
-                "560c33d44ffdd0c4"
+                "e65336a5145222cc"
             ]
         ]
     },
@@ -17945,31 +17956,14 @@
         "blockInputOverrides": true,
         "domain": "persistent_notification",
         "service": "dismiss",
-        "x": 3400,
-        "y": 3140,
+        "x": 3460,
+        "y": 3100,
         "wires": [
             []
         ]
     },
     {
-        "id": "560c33d44ffdd0c4",
-        "type": "debug",
-        "z": "3d93eb6ca3793727",
-        "g": "5958ef736e8c461d",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3170,
-        "y": 3210,
-        "wires": []
-    },
-    {
-        "id": "25497628a4bcb888",
+        "id": "0a32ed9918acf46d",
         "type": "global-config",
         "env": [],
         "modules": {
