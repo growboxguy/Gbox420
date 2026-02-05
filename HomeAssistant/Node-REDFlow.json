@@ -47,21 +47,17 @@
             "201fb88ad505aaea",
             "ab581ddfcdd249d6",
             "6e0a0b399a2acb9c",
-            "1b9be5329784bcae",
-            "af681aaa45cd7f14",
-            "0b9544c40a264a64",
             "b61f792b51c08d33",
             "a2e4ca27de7a0676",
             "699cc4322cfa161b",
             "060b9334a3c0f0ed",
-            "00bf6b4068f372f3",
             "86eeeeaadbf9d29c",
             "2c8652a55f49f6bc"
         ],
         "x": 814,
         "y": 709,
         "w": 1582,
-        "h": 552
+        "h": 552.5
     },
     {
         "id": "dbcad7b68e9b907f",
@@ -103,19 +99,17 @@
             "558665986de05d9a",
             "84e3a47446b8a9a1",
             "af6cdc09ee63cbd9",
-            "497ef711dda994d6",
             "4c3bc21e9aaae191",
             "99aac09ae37b7fcc",
             "36bb40b4ccf61940",
             "e83f5239b25d3958",
-            "b4ee3c9ee3cbc36a",
             "e5a4a8769e65b965",
             "5af9f299d481467e"
         ],
         "x": 814,
         "y": 1289,
         "w": 1542,
-        "h": 545.97727394104
+        "h": 532.5
     },
     {
         "id": "f39d22cc6de33a8e",
@@ -587,8 +581,7 @@
             "a6f3850ed08e4a99",
             "9d5f44229971347f",
             "48cca671d98af3f1",
-            "eed8ce21149ff40a",
-            "82c8051d3655d0e8"
+            "eed8ce21149ff40a"
         ],
         "x": 2504,
         "y": 2899,
@@ -5470,7 +5463,6 @@
                 "f9491931cdc358ef",
                 "cfe1d2349e5007ea",
                 "306d59ebc03995c9",
-                "7f33ee35f90cb4d3",
                 "197f3dfb32fc75ea",
                 "5af9f299d481467e",
                 "2c8652a55f49f6bc"
@@ -5605,9 +5597,9 @@
         "y": 970,
         "wires": [
             [
-                "1b9be5329784bcae",
-                "af681aaa45cd7f14",
-                "1694265e6bd9145a"
+                "1694265e6bd9145a",
+                "ab581ddfcdd249d6",
+                "6e0a0b399a2acb9c"
             ]
         ]
     },
@@ -5631,7 +5623,7 @@
         "className": "",
         "topicType": "msg",
         "x": 1890,
-        "y": 1113,
+        "y": 1120,
         "wires": [
             [
                 "c3e3312c1d066bd0"
@@ -5659,12 +5651,12 @@
         "to": "",
         "reg": false,
         "x": 1180,
-        "y": 1113,
+        "y": 1120,
         "wires": [
             [
                 "d49eb46c57622bed",
-                "0b9544c40a264a64",
-                "00bf6b4068f372f3"
+                "699cc4322cfa161b",
+                "060b9334a3c0f0ed"
             ]
         ]
     },
@@ -5830,8 +5822,8 @@
         "delay": "0",
         "topic": "topic",
         "topicType": "msg",
-        "x": 1868,
-        "y": 1690,
+        "x": 1871,
+        "y": 1680,
         "wires": [
             [
                 "fe7b9d27ddc30c80"
@@ -5887,9 +5879,9 @@
         "y": 1530,
         "wires": [
             [
-                "497ef711dda994d6",
                 "1f153ea51a9be77d",
-                "b4ee3c9ee3cbc36a"
+                "84e3a47446b8a9a1",
+                "af6cdc09ee63cbd9"
             ]
         ]
     },
@@ -5913,8 +5905,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
-        "y": 1690,
+        "x": 1163,
+        "y": 1680,
         "wires": [
             [
                 "7f4a42687e097612",
@@ -9642,8 +9634,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2038,
-        "y": 1690,
+        "x": 2041,
+        "y": 1680,
         "wires": [
             [
                 "92c3d3ac71714bed"
@@ -9665,8 +9657,8 @@
         "correl": "",
         "expiry": "",
         "broker": "69d56562.8f32ac",
-        "x": 2208,
-        "y": 1690,
+        "x": 2211,
+        "y": 1680,
         "wires": []
     },
     {
@@ -9721,7 +9713,7 @@
         "finalize": "",
         "libs": [],
         "x": 2060,
-        "y": 1113,
+        "y": 1120,
         "wires": [
             [
                 "15ece78269769324"
@@ -10034,7 +10026,7 @@
         "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 1210,
-        "y": 370,
+        "y": 330,
         "wires": []
     },
     {
@@ -10051,8 +10043,8 @@
         "correl": "",
         "expiry": "",
         "broker": "69d56562.8f32ac",
-        "x": 1170,
-        "y": 320,
+        "x": 330,
+        "y": 240,
         "wires": []
     },
     {
@@ -10070,33 +10062,9 @@
         "className": "",
         "topic": "",
         "name": "Refersh notification",
-        "x": 1630,
-        "y": 370,
+        "x": 1640,
+        "y": 330,
         "wires": []
-    },
-    {
-        "id": "865d79b268fad680",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "name": "Delay refresh (3 sec)",
-        "pauseType": "delay",
-        "timeout": "3",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 940,
-        "y": 320,
-        "wires": [
-            [
-                "3d1f2532c0bc9db7"
-            ]
-        ]
     },
     {
         "id": "331324e995328584",
@@ -10118,7 +10086,7 @@
         "to": "",
         "reg": false,
         "x": 1430,
-        "y": 370,
+        "y": 330,
         "wires": [
             [
                 "c9999581e666871f"
@@ -10179,7 +10147,7 @@
                 "18287350128dc1a8"
             ],
             [
-                "00399172f9310225"
+                "549148adf5b18a7a"
             ]
         ]
     },
@@ -10668,7 +10636,7 @@
         "topic": "topic",
         "topicType": "msg",
         "x": 920,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "b377efa538c5211a"
@@ -10690,7 +10658,7 @@
         "expiry": "",
         "broker": "69d56562.8f32ac",
         "x": 1200,
-        "y": 420,
+        "y": 380,
         "wires": []
     },
     {
@@ -11081,28 +11049,9 @@
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i></font>",
         "format": "Reservoir",
         "layout": "row-left",
-        "x": 2050,
+        "x": 1880,
         "y": 2780,
         "wires": []
-    },
-    {
-        "id": "00399172f9310225",
-        "type": "function",
-        "z": "3d93eb6ca3793727",
-        "name": "Initialize Alerts",
-        "func": "if(flow.get('ActiveAlerts')==undefined){\n   flow.set(\"ActiveAlerts\",[]);\n}\nif(flow.get('RecoveredAlerts')==undefined){\n   flow.set(\"RecoveredAlerts\",[]);\n}\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 120,
-        "wires": [
-            [
-                "549148adf5b18a7a"
-            ]
-        ]
     },
     {
         "id": "17dd403c6ba7f33a",
@@ -11942,28 +11891,6 @@
             [
                 "67aed00cbc291be5"
             ]
-        ]
-    },
-    {
-        "id": "7f33ee35f90cb4d3",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "3",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 900,
-        "y": 270,
-        "wires": [
-            []
         ]
     },
     {
@@ -13287,8 +13214,8 @@
         "y": 3030,
         "wires": [
             [
-                "9257ca12ec673905",
-                "bd05328d0658027a"
+                "bd05328d0658027a",
+                "9257ca12ec673905"
             ]
         ]
     },
@@ -13412,7 +13339,7 @@
         "inputOverride": "merge",
         "outputProperties": [],
         "x": 1610,
-        "y": 1113,
+        "y": 1120,
         "wires": [
             [
                 "3c979c96b81c64f2"
@@ -13555,8 +13482,8 @@
         ],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1600,
-        "y": 1690,
+        "x": 1603,
+        "y": 1680,
         "wires": [
             [
                 "27f639b2b13f42cf"
@@ -14621,7 +14548,7 @@
         ],
         "inputOverride": "merge",
         "outputProperties": [],
-        "x": 1790,
+        "x": 1620,
         "y": 2780,
         "wires": [
             []
@@ -16651,8 +16578,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1786.75,
-        "y": 1020.75,
+        "x": 1620,
+        "y": 1020,
         "wires": [
             []
         ]
@@ -16686,8 +16613,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1796.75,
-        "y": 1060.75,
+        "x": 1630,
+        "y": 1070,
         "wires": [
             []
         ]
@@ -16705,8 +16632,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1570,
-        "y": 1020,
+        "x": 1403.25,
+        "y": 1019.25,
         "wires": [
             [
                 "784bf0e433c39b2b"
@@ -16726,63 +16653,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1570,
-        "y": 1061.25,
+        "x": 1403.25,
+        "y": 1060.5,
         "wires": [
             [
                 "201fb88ad505aaea"
-            ]
-        ]
-    },
-    {
-        "id": "1b9be5329784bcae",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "f93e02817a994818",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1390,
-        "y": 1020,
-        "wires": [
-            [
-                "ab581ddfcdd249d6"
-            ]
-        ]
-    },
-    {
-        "id": "af681aaa45cd7f14",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "f93e02817a994818",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1390,
-        "y": 1061,
-        "wires": [
-            [
-                "6e0a0b399a2acb9c"
             ]
         ]
     },
@@ -16815,8 +16690,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1966.75,
-        "y": 1580.75,
+        "x": 1612,
+        "y": 1580,
         "wires": [
             []
         ]
@@ -16850,8 +16725,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1980,
-        "y": 1630,
+        "x": 1625.25,
+        "y": 1629.25,
         "wires": [
             []
         ]
@@ -16869,8 +16744,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1744.75,
-        "y": 1580.75,
+        "x": 1390,
+        "y": 1580,
         "wires": [
             [
                 "ac6157ede7429a4d"
@@ -16890,63 +16765,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1748,
-        "y": 1631.25,
+        "x": 1393.25,
+        "y": 1630.5,
         "wires": [
             [
                 "558665986de05d9a"
-            ]
-        ]
-    },
-    {
-        "id": "497ef711dda994d6",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "dbcad7b68e9b907f",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1573.25,
-        "y": 1630.25,
-        "wires": [
-            [
-                "af6cdc09ee63cbd9"
-            ]
-        ]
-    },
-    {
-        "id": "0b9544c40a264a64",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "f93e02817a994818",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1390,
-        "y": 1170,
-        "wires": [
-            [
-                "699cc4322cfa161b"
             ]
         ]
     },
@@ -16979,7 +16802,7 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1786.75,
+        "x": 1616.75,
         "y": 1170.75,
         "wires": [
             []
@@ -17014,8 +16837,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1796.75,
-        "y": 1210.75,
+        "x": 1630,
+        "y": 1220,
         "wires": [
             []
         ]
@@ -17033,7 +16856,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1570,
+        "x": 1400,
         "y": 1170,
         "wires": [
             [
@@ -17054,37 +16877,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1570,
-        "y": 1211.25,
+        "x": 1403.25,
+        "y": 1220.5,
         "wires": [
             [
                 "a2e4ca27de7a0676"
-            ]
-        ]
-    },
-    {
-        "id": "00bf6b4068f372f3",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "f93e02817a994818",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1390,
-        "y": 1211,
-        "wires": [
-            [
-                "060b9334a3c0f0ed"
             ]
         ]
     },
@@ -17117,8 +16914,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1776.74995803833,
-        "y": 1743.47727394104,
+        "x": 1613,
+        "y": 1730,
         "wires": [
             []
         ]
@@ -17152,8 +16949,8 @@
                 "valueType": "previousValue"
             }
         ],
-        "x": 1789.99995803833,
-        "y": 1792.72727394104,
+        "x": 1626.25,
+        "y": 1779.25,
         "wires": [
             []
         ]
@@ -17171,8 +16968,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1554.74995803833,
-        "y": 1743.47727394104,
+        "x": 1391,
+        "y": 1730,
         "wires": [
             [
                 "4c3bc21e9aaae191"
@@ -17192,37 +16989,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1557.99995803833,
-        "y": 1793.97727394104,
+        "x": 1394.25,
+        "y": 1780.5,
         "wires": [
             [
                 "99aac09ae37b7fcc"
-            ]
-        ]
-    },
-    {
-        "id": "b4ee3c9ee3cbc36a",
-        "type": "delay",
-        "z": "3d93eb6ca3793727",
-        "g": "dbcad7b68e9b907f",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "10",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1570,
-        "y": 1580,
-        "wires": [
-            [
-                "84e3a47446b8a9a1"
             ]
         ]
     },
@@ -17308,7 +17079,7 @@
         "topic": "topic",
         "topicType": "msg",
         "x": 920,
-        "y": 370,
+        "y": 330,
         "wires": [
             [
                 "1fb77a1a49c01fc3",
@@ -17368,7 +17139,7 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Format Alerts",
-        "func": "msg.State=false;\nmsg.Alerts = \"<b><font size='+1'>No alerts</font></b>\"\nreturn msg;\n",
+        "func": "msg.State=false;\nmsg.Alerts = \"\"\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -17503,24 +17274,22 @@
         "z": "3d93eb6ca3793727",
         "g": "5958ef736e8c461d",
         "name": "Process alerts",
-        "func": "// 1. Data Input\nvar name = msg.topic;   // Name of the sensor\nvar value = msg.payload; //Reading of sensor\nvar valueText = msg.valueText || value; //Reading's friendly output if available\nvar unit = msg.unit || ''; // value's unit (min,sec,kg,%..etc)\nvar minLimit = msg.minLimit || null;\nvar minLimitFriendly = minLimit ?? \"-\";;\nvar maxLimit = msg.maxLimit || null;\nvar maxLimitFriendly = maxLimit ?? \"-\";;\nvar limitRange = \"[\" + minLimitFriendly + \" / \" + maxLimitFriendly + \"]\";\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>⚠️[NEW] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    }\n} else {  //Within range\n    if (alertIndex !== -1) { //Had alert before\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        }\n    }\n}\n\n// 3. Save State\nActiveAlerts.sort();\nRecoveredAlerts.sort();\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\n// 4. Output 1: Persistent notification\nvar htmlList = \"\";\nActiveAlerts.forEach(alert => {\n    htmlList += \"&nbsp;&nbsp;· \" + alert + \"<br>\";\n});\nRecoveredAlerts.forEach(recovered => {\n    htmlList += \"&nbsp;&nbsp;✅ \" + recovered + \"<br>\";\n});\nvar dashboardMsg = {\n    payload: {\n        state: ActiveAlerts.length > 0,\n        attributes: {\n            alerts: htmlList\n        }\n    }\n}\n\n// 5. Output 2: Mobile Notification\nvar notificationMsg = null;\nif (shouldNotify) {\n    let alertList = ActiveAlerts.map(a => \"• \" + a.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let recoveryList = RecoveredAlerts.map(r => \"• \" + r.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    let fullMessage = ActiveAlerts.length > 0 ? \"🚨 \" + ActiveAlerts.length + \" ACTIVE:\\n\" + alertList : \"\";\n    if (RecoveredAlerts.length > 0) fullMessage += (fullMessage ? \"\\n\\n\" : \"\") + \"✅\" + RecoveredAlerts.length + \" RECOVERED:\\n\" + recoveryList;\n    notificationMsg = {\n        payload: {\n            message: fullMessage,\n            data: {\n                title: ActiveAlerts.length > 0 ? \"🔴 GrowBox Alert\" : \"🟢 GrowBox Recovered\",\n                tag: \"growbox_alerts\",\n                color: ActiveAlerts.length > 0 ? \"#e74c3c\" : \"#2ecc71\",\n                group: \"growbox\",\n                alert_once: true,\n                clickAction: \"/lovelace-gbox420/HomeAssistant\",\n                actions: [\n                    {\n                        action: \"ACKNOWLEDGE_GROWBOX\",\n                        title: \"Acknowledge Alerts\"\n                    }\n                ]\n            }\n        }\n    };\n}\nreturn [notificationMsg, dashboardMsg];",
+        "func": "// 1. Data Input\nvar name = msg.topic;\nvar value = msg.payload;\nvar valueText = msg.valueText || value;\nvar unit = msg.unit || '';\nvar minLimit = msg.minLimit || null;\nvar maxLimit = msg.maxLimit || null;\nvar limitRange = \"[\" + (minLimit ?? \"-\") + \" / \" + (maxLimit ?? \"-\") + \"]\";\n\n// We now store objects: { name: \"Temp\", text: \"...\", isNew: true }\nvar ActiveAlerts = flow.get(\"ActiveAlerts\") || [];\nvar RecoveredAlerts = flow.get(\"RecoveredAlerts\") || [];\nvar shouldNotify = false;\n\n// 2. Alert Logic\nvar isOutsideRange = (minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value);\nvar alertIndex = ActiveAlerts.findIndex(a => a.includes(name));\nvar recoveryIndex = RecoveredAlerts.findIndex(r => r.includes(name));\n\nif (isOutsideRange) {\n    if (alertIndex === -1) {\n        // --- BRAND NEW ALERT ---\n        shouldNotify = true;\n        ActiveAlerts.push(\"<b>⚠️[NEW] </b>\" + name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        RecoveredAlerts = RecoveredAlerts.filter(r => !r.includes(name));\n    } else {\n        // --- UPDATE EXISTING ---\n        // Check if the current alert in memory still has the [NEW] tag\n        var isStillNew = ActiveAlerts[alertIndex].includes(\"[NEW]\");\n        var prefix = isStillNew ? \"<b>⚠️[NEW] </b>\" : \"\"; \n        \n        // Update the reading but respect the Acknowledged (no tag) state\n        ActiveAlerts[alertIndex] = prefix + name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange;\n        // shouldNotify remains false, so no re-triggering\n    }\n} else {  \n    // --- RECOVERY ---\n    if (alertIndex !== -1) {\n        shouldNotify = true;\n        ActiveAlerts.splice(alertIndex, 1);\n        if (recoveryIndex === -1) {\n            RecoveredAlerts.push(name + \" : <b>\" + valueText + unit + \"</b> \" + limitRange);\n        }\n    }\n}\n\n// 3. Save State & Format for Dashboard\nActiveAlerts.sort();\nRecoveredAlerts.sort();\nflow.set(\"ActiveAlerts\", ActiveAlerts);\nflow.set(\"RecoveredAlerts\", RecoveredAlerts);\n\nvar htmlList = ActiveAlerts.map(a => \"&nbsp;&nbsp;· \" + a.text).join(\"<br>\");\nif (RecoveredAlerts.length > 0) {\n    htmlList += (htmlList ? \"<br>\" : \"\") + RecoveredAlerts.map(r => \"&nbsp;&nbsp;✅ \" + r).join(\"<br>\");\n}\n\nvar dashboardMsg = { payload: { state: ActiveAlerts.length > 0, attributes: { alerts: htmlList } } };\n\n// 4. Mobile Notification logic (same as before, using a.text)\nvar notificationMsg = null;\nif (shouldNotify) {\n    let plainAlerts = ActiveAlerts.map(a => \"• \" + a.text.replace(/<\\/?[^>]+(>|$)/g, \"\")).join(\"\\n\");\n    notificationMsg = { /* ... your existing notification object ... */ };\n}\n\nreturn [notificationMsg, dashboardMsg];",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2810,
-        "y": 3040,
+        "x": 2820,
+        "y": 2990,
         "wires": [
             [
-                "6c9dfb524a79b29a",
-                "82c8051d3655d0e8"
+                "6c9dfb524a79b29a"
             ],
             [
                 "2df4915d4894d007",
-                "bd05328d0658027a",
-                "82c8051d3655d0e8"
+                "bd05328d0658027a"
             ]
         ]
     },
@@ -17973,24 +17742,36 @@
         ]
     },
     {
-        "id": "82c8051d3655d0e8",
-        "type": "debug",
+        "id": "a4f9c4af1abce241",
+        "type": "inject",
         "z": "3d93eb6ca3793727",
-        "g": "5958ef736e8c461d",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3210,
-        "y": 3110,
-        "wires": []
+        "name": "Trigger new report",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "3d1f2532c0bc9db7"
+            ]
+        ]
     },
     {
-        "id": "e4eb483d86571139",
+        "id": "7528f0be1ff85d80",
         "type": "global-config",
         "env": [],
         "modules": {

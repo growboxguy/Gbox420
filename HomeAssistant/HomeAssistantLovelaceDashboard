@@ -17,8 +17,8 @@ views:
                 {% set time_ago = (age / 60) | int ~ ' min ago' %}
               {% else %}
                 {% set time_ago = (age / 3600) | int ~ ' h ago' %}
-              {% endif %}  {% set events = states('text.gbox420_eventlog') %} {%
-              if age > 600 %} 
+              {% endif %}  {% set events = states('text.gbox420_eventlog') %} 
+              {% if age > 600 %} 
                 <font color="#ff4d4d"><b>❌ OFFLINE ({{ time_ago }})</b><br> {{ events }}</font>
               {% else %} 
                 <font color="#2ecc71"><b>✅ ONLINE ({{ time_ago }})</b> </font>
@@ -40,13 +40,6 @@ views:
                 styles:
                   padding-right: 15px
           - type: vertical-stack
-            card_mod:
-              style: |
-                :host {
-                  {# Hide if the attribute is empty OR contains 'No alerts' #}
-                  {# We added '| default('', true)' to prevent errors during HA boot #}
-                  display: {% if '·' not in state_attr('sensor.gbox420_alerts', 'alerts') | default('', true) %} none {% else %} block {% endif %};
-                }
             cards:
               - type: markdown
                 content: |
@@ -54,19 +47,52 @@ views:
                 card_mod:
                   style: |
                     ha-card {
-                      margin-bottom: -15px; 
+                      display: {% if states('sensor.gbox420_alerts') == 'False' %} none {% else %} block {% endif %};
+                      margin-bottom: -15px;
+                      border-bottom: none;
+                      background: transparent;
                     }
               - type: entities
                 entities:
-                  - entity: button.gbox_acknowledge
-                    name: Acknowledge Alerts
-                    icon: mdi:check-all
-                    action_name: Clear
+                  - type: custom:multiple-entity-row
+                    entity: sensor.gbox420_alerts
+                    name: ' '
+                    icon: none
+                    show_state: false
+                    entities:
+                      - icon: mdi:check-all
+                        name: Acknowledge
+                        hide_if: 'False'
+                        tap_action:
+                          action: call-service
+                          service: button.press
+                          service_data:
+                            entity_id: button.gbox_acknowledge
+                      - icon: mdi:google-spreadsheet
+                        name: Sheets report
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/SheetsRep
+                            payload: ''
+                      - icon: mdi:refresh
+                        name: Refresh
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Refresh
+                            payload: ''
+                        styles:
+                          padding-right: 15px
                 card_mod:
                   style: |
                     ha-card {
-                      border: none;
-                      background: transparent;
+                      border-top: none;
+                    }
+                    .card-content {
+                      padding: 0px; 
                     }
       - type: entities
         entities:
