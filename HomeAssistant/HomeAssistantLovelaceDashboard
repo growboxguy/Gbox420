@@ -416,6 +416,8 @@ views:
             icon: mdi:bucket
             state_header: Weight
             entities:
+              - entity: sensor.gbox420_bucket1_lastwatered
+                name: Last Watered
               - entity: sensor.gbox420_bucket1_state
                 name: State
               - entity: sensor.gbox420_bucket1_pumpstate
@@ -536,6 +538,8 @@ views:
             icon: mdi:bucket
             state_header: Weight
             entities:
+              - entity: sensor.gbox420_bucket2_lastwatered
+                name: Last watered
               - entity: sensor.gbox420_bucket2_state
                 name: State
               - entity: sensor.gbox420_bucket2_pumpstate
