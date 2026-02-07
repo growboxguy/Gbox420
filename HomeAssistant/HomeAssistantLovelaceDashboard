@@ -712,6 +712,8 @@ views:
                 name: Pressure
               - entity: sensor.gbox420_aero1_lastspray
                 name: Last spray
+              - entity: sensor.gbox420_aero1_lastsraytime
+                name: Spray time
               - entity: sensor.gbox420_aero1_weight
                 name: Weight
           - type: custom:fold-entity-row
