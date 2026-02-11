@@ -94,21 +94,6 @@ views:
                     .card-content {
                       padding: 0px; 
                     }
-      - type: entities
-        entities:
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_power1_current
-            secondary_info: last-updated
-            name: AC Power
-            state_header: Current
-            icon: mdi:lightning-bolt
-            entities:
-              - entity: sensor.gbox420_power1_power
-                name: Power
-              - entity: sensor.gbox420_power1_energy
-                name: Energy
-              - entity: sensor.gbox420_power1_voltage
-                name: Voltage
       - type: vertical-stack
         cards:
           - type: entities
@@ -239,42 +224,89 @@ views:
       - type: entities
         entities:
           - type: custom:multiple-entity-row
-            entity: sensor.gbox420_waste_weight
-            name: Reservoir
+            entity: sensor.gbox420_power1_current
             secondary_info: last-updated
-            icon: mdi:cup-water
-            show_state: false
+            name: AC Power
+            state_header: Current
+            icon: mdi:lightning-bolt
+            entities:
+              - entity: sensor.gbox420_power1_power
+                name: Power
+              - entity: sensor.gbox420_power1_energy
+                name: Energy
+              - entity: sensor.gbox420_power1_voltage
+                name: Voltage
+      - type: vertical-stack
+        cards:
+          - type: entities
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_waste_weight
+                name: Reservoir
+                secondary_info: last-updated
+                icon: mdi:cup-water
+                show_state: false
+                entities:
+                  - entity: sensor.gbox420_reservoir_weight
+                    name: Weight
+                  - entity: sensor.gbox420_reservoir_watertemp
+                    name: Temp
+                  - entity: sensor.gbox420_waste_weight
+                    name: Waste
+              - type: custom:multiple-entity-row
+                entity: switch.gbox420_airpump
+                name: false
+                icon: none
+                toggle: true
+                entities:
+                  - entity: sensor.gbox420_reservoir_tds
+                    name: TDS
+                  - entity: sensor.gbox420_reservoir_ph
+                    name: pH
+                  - entity: switch.gbox420_airpump
+                    name: AirPump
+            card_mod:
+              style: |
+                ha-card {
+                  white-space: nowrap;
+                  border-bottom-left-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                }
+          - type: custom:mini-graph-card
             entities:
               - entity: sensor.gbox420_reservoir_weight
-                name: Weight
-              - entity: sensor.gbox420_reservoir_watertemp
-                name: Temp
+                name: Res Weight
+                color: '#0d47a1'
               - entity: sensor.gbox420_waste_weight
-                name: Waste
-          - type: custom:multiple-entity-row
-            entity: switch.gbox420_airpump
-            name: false
-            icon: 'no'
-            toggle: true
-            entities:
-              - entity: sensor.gbox420_reservoir_tds
-                name: TDS
-              - entity: sensor.gbox420_reservoir_ph
-                name: pH
-              - entity: switch.gbox420_airpump
-                name: AirPump
-        footer:
-          type: graph
-          entity: sensor.gbox420_reservoir_weight
-          hours_to_show: 48
-          detail: 1
-        state_color: true
-        show_header_toggle: false
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
+                name: Waste Weight
+                color: '#ff9800'
+            line_width: 2
+            hours_to_show: 48
+            points_per_hour: 12
+            smoothing: false
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: true
+              fill: true
+            card_mod:
+              style: |
+                ha-card {
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  margin-top: -16px;
+                }
+                .header {
+                  display: none;
+                }
+                .graph__legend {
+                  font-size: 10px;
+                  margin-top: -10px;
+                  padding-bottom: 8px;
+                }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
