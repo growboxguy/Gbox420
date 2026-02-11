@@ -244,7 +244,7 @@ views:
         footer:
           type: graph
           entity: sensor.gbox420_lightsensor1_reading
-          detail: 1
+          detail: 2
           hours_to_show: 48
         state_color: true
         show_header_toggle: false
