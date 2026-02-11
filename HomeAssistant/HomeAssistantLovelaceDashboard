@@ -125,12 +125,12 @@ views:
                   - entity: sensor.gbox420_internal_temp
                     name: Internal
                     unit: °C
-                  - entity: sensor.gbox420_internal_humidity
-                    name: Internal
-                    unit: '%'
                   - entity: sensor.gbox420_external_temp
                     name: External
                     unit: °C
+                  - entity: sensor.gbox420_internal_humidity
+                    name: Internal
+                    unit: '%'
               - type: custom:multiple-entity-row
                 entity: sensor.gbox420_internal_fan
                 name: Internal Fan
@@ -200,19 +200,19 @@ views:
             entities:
               - entity: sensor.gbox420_internal_temp
                 name: Internal Temp
-                color: '#ff5252'
+                color: '#ff9800'
               - entity: sensor.gbox420_external_temp
                 name: Extermal Temp
-                color: '#ffca28'
+                color: '#d4d433'
               - entity: sensor.gbox420_internal_humidity
                 name: Internal Humidity
-                color: '#448aff'
+                color: '#072deb'
                 y_axis: secondary
               - entity: sensor.gbox420_external_humidity
                 name: Extermal Humidity
-                color: '#00bcd4'
+                color: '#03a9f4'
                 y_axis: secondary
-            line_width: 2
+            line_width: 3
             hours_to_show: 48
             smoothing: false
             show:
@@ -229,7 +229,12 @@ views:
                   margin-top: -16px;
                 }
                 .graph__legend {
-                  font-size: 10px;         
+                  font-size: 10px;
+                  line-height: 10px;
+                  margin-top: -10px;
+                }        
+                .header {
+                  display: none;
                 }
       - type: entities
         entities:
@@ -446,253 +451,300 @@ views:
                     }
         show_header_toggle: false
         state_color: true
-      - type: entities
-        entities:
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket1_weight
-            name: Hempy 1
-            secondary_info: last-updated
-            icon: mdi:bucket
-            state_header: Weight
+      - type: vertical-stack
+        cards:
+          - type: entities
+            show_header_toggle: false
+            state_color: true
             entities:
-              - entity: sensor.gbox420_bucket1_lastwatered
-                name: Last Watered
-              - entity: sensor.gbox420_bucket1_state
-                name: State
-              - entity: sensor.gbox420_bucket1_pumpstate
-                name: Pump
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket1_dryweight
-            name: false
-            icon: none
-            show_state: false
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_bucket1_weight
+                name: Hempy 1
+                secondary_info: last-updated
+                icon: mdi:bucket
+                state_header: Weight
+                entities:
+                  - entity: sensor.gbox420_bucket1_lastwatered
+                    name: Last Watered
+                  - entity: sensor.gbox420_bucket1_state
+                    name: State
+                  - entity: sensor.gbox420_bucket1_pumpstate
+                    name: Pump
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_bucket1_dryweight
+                name: false
+                icon: none
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      .info { display: none; }
+                      div.entity { margin-right: auto; }
+                    .: >
+                      div.entities-row { justify-content: flex-start !important;
+                      }
+                entities:
+                  - type: button
+                    icon: mdi:watering-can
+                    name: Start
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B1On
+                  - type: button
+                    icon: mdi:watering-can-outline
+                    name: Stop
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B1Off
+                  - type: button
+                    icon: mdi:water-off
+                    name: Disable
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B1Dis
+                  - entity: sensor.gbox420_bucket1_dryweight
+                    name: Dry
+                  - entity: sensor.gbox420_bucket1_wetweight
+                    name: Wet
+                  - entity: sensor.gbox420_bucket1_nextwatering
+                    name: Next
+              - type: custom:fold-entity-row
+                open: false
+                head:
+                  type: section
+                  label: Settings
+                entities:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_startweight
+                    name: Start watering
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_wateringincrement
+                    name: Watering increment
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_maxweight
+                    name: Max weight
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_evaporationtarget
+                    name: Evaporation target
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_draintime
+                    name: Drain wait
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_draintarget
+                    name: Drain target
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_pumpspeed
+                    name: Pump speed
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket1_pumptimeout
+                    name: Pump timeout
+                    delay: 5000
+                    speed: 250
             card_mod:
-              style:
-                hui-generic-entity-row $: |
-                  .info {
-                    display: none;
-                  }
-                  div.entity {
-                    margin-right: auto;
-                  }
-                .: |
-                  div.entities-row {
-                    justify-content: flex-start !important;
-                  }
+              style: |
+                ha-card {
+                  white-space: nowrap;
+                  border-bottom-left-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                }
+          - type: custom:mini-graph-card
             entities:
-              - type: button
-                icon: mdi:watering-can
-                name: Start
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B1On
-              - type: button
-                icon: mdi:watering-can-outline
-                name: Stop
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B1Off
-              - type: button
-                icon: mdi:water-off
-                name: Disable
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B1Dis
+              - entity: sensor.gbox420_bucket1_weight
+                name: Weight
+                color: '#ff9800'
               - entity: sensor.gbox420_bucket1_dryweight
-                name: Dry
+                name: Dry Limit
+                color: '#ff5252'
               - entity: sensor.gbox420_bucket1_wetweight
-                name: Wet
-              - entity: sensor.gbox420_bucket1_nextwatering
-                name: Next
-          - type: custom:fold-entity-row
-            open: false
-            head:
-              type: section
-              label: Settings
-            entities:
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_startweight
-                name: Start watering
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_wateringincrement
-                name: Watering increment
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_maxweight
-                name: Max weight
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_evaporationtarget
-                name: Evaporation target
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_draintime
-                name: Drain wait
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_draintarget
-                name: Drain target
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_pumpspeed
-                name: Pump speed
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket1_pumptimeout
-                name: Pump timeout
-                delay: 5000
-                speed: 250
-        footer:
-          type: graph
-          entity: sensor.gbox420_bucket1_weight
-          hours_to_show: 48
-          detail: 1
-        show_header_toggle: false
-        state_color: true
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
-      - type: entities
-        entities:
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket2_weight
-            name: Hempy 2
-            secondary_info: last-updated
-            icon: mdi:bucket
-            state_header: Weight
-            entities:
-              - entity: sensor.gbox420_bucket2_lastwatered
-                name: Last watered
-              - entity: sensor.gbox420_bucket2_state
-                name: State
-              - entity: sensor.gbox420_bucket2_pumpstate
-                name: Pump
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_bucket2_dryweight
-            name: false
-            icon: none
-            show_state: false
+                name: Wet Limit
+                color: '#072deb'
+            line_width: 2
+            hours_to_show: 48
+            smoothing: false
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: true
+              fill: false
+              labels: true
             card_mod:
-              style:
-                hui-generic-entity-row $: |
-                  .info {
-                    display: none;
-                  }
-                  div.entity {
-                    margin-right: auto;
-                  }
-                .: |
-                  div.entities-row {
-                    justify-content: flex-start !important;
-                  }
+              style: |
+                ha-card {
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  margin-top: -16px;
+                }
+                .header {
+                  display: none;
+                }
+                .graph__legend {
+                  font-size: 10px;
+                  margin-top: -10px;
+                  padding-bottom: 8px;
+                }
+      - type: vertical-stack
+        cards:
+          - type: entities
+            show_header_toggle: false
+            state_color: true
             entities:
-              - type: button
-                icon: mdi:watering-can
-                name: Start
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B2On
-              - type: button
-                icon: mdi:watering-can-outline
-                name: Stop
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B2Off
-              - type: button
-                icon: mdi:water-off
-                name: Disable
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Hemp1_B2Dis
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_bucket2_weight
+                name: Hempy 2
+                secondary_info: last-updated
+                icon: mdi:bucket
+                state_header: Weight
+                entities:
+                  - entity: sensor.gbox420_bucket2_lastwatered
+                    name: Last watered
+                  - entity: sensor.gbox420_bucket2_state
+                    name: State
+                  - entity: sensor.gbox420_bucket2_pumpstate
+                    name: Pump
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_bucket2_dryweight
+                name: false
+                icon: none
+                show_state: false
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      .info { display: none; }
+                      div.entity { margin-right: auto; }
+                    .: >
+                      div.entities-row { justify-content: flex-start !important;
+                      }
+                entities:
+                  - type: button
+                    icon: mdi:watering-can
+                    name: Start
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B2On
+                  - type: button
+                    icon: mdi:watering-can-outline
+                    name: Stop
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B2Off
+                  - type: button
+                    icon: mdi:water-off
+                    name: Disable
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/Hemp1_B2Dis
+                  - entity: sensor.gbox420_bucket2_dryweight
+                    name: Dry
+                  - entity: sensor.gbox420_bucket2_wetweight
+                    name: Wet
+                  - entity: sensor.gbox420_bucket2_nextwatering
+                    name: Next
+              - type: custom:fold-entity-row
+                open: false
+                head:
+                  type: section
+                  label: Settings
+                entities:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_startweight
+                    name: Start watering
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_wateringincrement
+                    name: Watering increment
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_maxweight
+                    name: Max weight
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_evaporationtarget
+                    name: Evaporation target
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_draintime
+                    name: Drain wait
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_draintarget
+                    name: Drain target
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_pumpspeed
+                    name: Pump speed
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_bucket2_pumptimeout
+                    name: Pump timeout
+            card_mod:
+              style: |
+                ha-card {
+                  white-space: nowrap;
+                  border-bottom-left-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                }
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.gbox420_bucket2_weight
+                name: Weight
+                color: '#ff9800'
               - entity: sensor.gbox420_bucket2_dryweight
-                name: Dry
+                name: Dry Limit
+                color: '#ff5252'
               - entity: sensor.gbox420_bucket2_wetweight
-                name: Wet
-              - entity: sensor.gbox420_bucket2_nextwatering
-                name: Next
-          - type: custom:fold-entity-row
-            open: false
-            head:
-              type: section
-              label: Settings
-            entities:
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_startweight
-                name: Start watering
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_wateringincrement
-                name: Watering increment
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_maxweight
-                name: Max weight
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_evaporationtarget
-                name: Evaporation target
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_draintime
-                name: Drain wait
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_draintarget
-                name: Drain target
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_pumpspeed
-                name: Pump speed
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_bucket2_pumptimeout
-                name: Pump timeout
-                delay: 5000
-                speed: 250
-        footer:
-          type: graph
-          entity: sensor.gbox420_bucket2_weight
-          hours_to_show: 48
-          detail: 1
-        show_header_toggle: false
-        state_color: true
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
+                name: Wet Limit
+                color: '#072deb'
+            line_width: 2
+            hours_to_show: 48
+            smoothing: false
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: true
+              fill: false
+              labels: true
+            card_mod:
+              style: |
+                ha-card {
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  margin-top: -16px;
+                }
+                .header {
+                  display: none;
+                }
+                .graph__legend {
+                  font-size: 10px;
+                  margin-top: -10px;
+                  padding-bottom: 8px;
+                }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
