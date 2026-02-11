@@ -109,89 +109,128 @@ views:
                 name: Energy
               - entity: sensor.gbox420_power1_voltage
                 name: Voltage
-      - type: entities
-        state_color: true
-        show_header_toggle: false
-        entities:
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_external_humidity
-            name: Temp&Humidity
-            secondary_info: last-updated
-            state_header: External
-            unit: '%'
+      - type: vertical-stack
+        cards:
+          - type: entities
+            state_color: true
+            show_header_toggle: false
+            entities:
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_external_humidity
+                name: Temp&Humidity
+                secondary_info: last-updated
+                state_header: External
+                unit: '%'
+                entities:
+                  - entity: sensor.gbox420_internal_temp
+                    name: Internal
+                    unit: °C
+                  - entity: sensor.gbox420_internal_humidity
+                    name: Internal
+                    unit: '%'
+                  - entity: sensor.gbox420_external_temp
+                    name: External
+                    unit: °C
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_internal_fan
+                name: Internal Fan
+                state_header: State
+                entities:
+                  - icon: mdi:fan-off
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanI_O
+                        payload: 'OFF'
+                  - icon: mdi:fan-speed-1
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanI_L
+                        payload: LOW
+                  - icon: mdi:fan-speed-2
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanI_H
+                        payload: HIGH
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_exhaust_fan
+                name: Exhaust Fan
+                state_header: State
+                entities:
+                  - icon: mdi:fan-off
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanE_O
+                        payload: 'OFF'
+                  - icon: mdi:fan-speed-1
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanE_L
+                        payload: LOW
+                  - icon: mdi:fan-speed-2
+                    state_color: true
+                    tap_action:
+                      action: call-service
+                      service: mqtt.publish
+                      service_data:
+                        topic: Gbox420CMD/FanE_H
+                        payload: HIGH
+            card_mod:
+              style: |
+                ha-card {
+                  white-space: nowrap;
+                  border-bottom-left-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                }
+          - type: custom:mini-graph-card
             entities:
               - entity: sensor.gbox420_internal_temp
-                name: Internal
-                unit: °C
-              - entity: sensor.gbox420_internal_humidity
-                name: Internal
-                unit: '%'
+                name: Internal Temp
+                color: '#ff5252'
               - entity: sensor.gbox420_external_temp
-                name: External
-                unit: °C
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_internal_fan
-            name: Internal Fan
-            state_header: State
-            entities:
-              - icon: mdi:fan-off
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanI_O
-                    payload: 'OFF'
-              - icon: mdi:fan-speed-1
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanI_L
-                    payload: LOW
-              - icon: mdi:fan-speed-2
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanI_H
-                    payload: HIGH
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_exhaust_fan
-            name: Exhaust Fan
-            state_header: State
-            entities:
-              - icon: mdi:fan-off
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanE_O
-                    payload: 'OFF'
-              - icon: mdi:fan-speed-1
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanE_L
-                    payload: LOW
-              - icon: mdi:fan-speed-2
-                state_color: true
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/FanE_H
-                    payload: HIGH
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
+                name: Extermal Temp
+                color: '#ffca28'
+              - entity: sensor.gbox420_internal_humidity
+                name: Internal Humidity
+                color: '#448aff'
+                y_axis: secondary
+              - entity: sensor.gbox420_external_humidity
+                name: Extermal Humidity
+                color: '#00bcd4'
+                y_axis: secondary
+            line_width: 2
+            hours_to_show: 48
+            smoothing: false
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: true
+              fill: false
+            card_mod:
+              style: |
+                ha-card {
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  margin-top: -16px;
+                }
+                .graph__legend {
+                  font-size: 10px;         
+                }
       - type: entities
         entities:
           - type: custom:multiple-entity-row
