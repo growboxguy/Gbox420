@@ -7710,7 +7710,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$exists(payload.AS) ? $number(payload.AS) : 0",
+                "to": "$exists(payload.Mi) ? $number(payload.Mi) : 0",
                 "tot": "jsonata"
             }
         ],
