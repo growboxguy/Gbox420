@@ -1,0 +1,8 @@
+// LOG - Contains all sensor reading
+{"topic":"Gbox420/","payload":{"Log":{"FanI":{"S":"1"},"FanE":{"S":"0"},"Ap1":{"S":"1"},"Lt1":{"S":"0","CB":"0","B":"98","T":"0","On":"11:20","Of":"16:20"},"Lt2":{"S":"1","CB":"60","B":"60","T":"1","On":"04:05","Of":"01:20"},"Ls1":{"R":"848","D":"0"},"DHT1":{"T":"19.90","H":"81.70"},"Pow1":{"P":"106.60","E":"1743.27","V":"231.10","C":"0.51","F":"50.00","PF":"0.90"},"Hemp1":{"S":"1","H1":"3","P1":"1","PS1":"35","PT1":"60","D1":"600","WB1":"16.01","DW1":"15.90","WW1":"16.17","WI1":"0.10","SW1":"15.90","MW1":"18.00","ET1":"0.30","OT1":"0.10","H2":"1","P2":"1","PS2":"35","PT2":"60","D2":"600","WB2":"16.86","DW2":"16.82","WW2":"17.12","WI2":"0.10","SW2":"16.80","MW2":"18.50","ET2":"0.30","OT2":"0.10"},"Aero1":{"S":"1","P":"-0.26","W":"0.86","Ma":"6.00","Mi":"4.00","AS":"0","LS":"-0.26","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"0","D":"2.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"-4.96","T":"-311.05","W":"43.06","WR":"11.80","WT":"18.56","AT":"20.30","H":"64.00"},"Main1":{"M":"1","D":"1"}}},"qos":0,"retain":false,"_msgid":"20cc1390964616da"}
+
+// EventLog - Last few events (adjustable by LogDepth)
+{"topic":"Gbox420/","payload":{"EventLog":["Lt1 ON time updated","Pressure limits updated","B1 pump speed set","Lt1 ON time updated"]},"qos":0,"retain":false,"_msgid":"73be529400135524"}
+
+//Settings - Main module settings
+{"topic":"Gbox420/","payload":{"Settings":{"Debug":"1","Metric":"1","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"10","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/","MST":"Gbox420CMD/#","MLT":"Gbox420LWT/","MLM":"Gbox420 Offline"}},"qos":0,"retain":false,"_msgid":"b5dc53b9561a6d95"}
