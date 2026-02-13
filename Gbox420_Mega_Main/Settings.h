@@ -73,7 +73,7 @@ typedef struct
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = true, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct ACMotorModuleSettings ///< AeroModule default settings
   {
