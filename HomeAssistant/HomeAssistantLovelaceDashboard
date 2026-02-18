@@ -511,9 +511,14 @@ views:
                   style:
                     hui-generic-entity-row $: |
                       .info { display: none; }
-                      div.entity { margin-right: auto; }
-                    .: >
-                      div.entities-row { justify-content: flex-start !important;
+                    .: |
+                      div.entities-row { 
+                        justify-content: flex-start !important;
+                        width: 100%;
+                      } div.entities-row div.entity:nth-child(4) {
+                        margin-left: auto;
+                      } div.entities-row div.entity {
+                        margin-right: 15px;
                       }
                 entities:
                   - type: button
@@ -666,9 +671,14 @@ views:
                   style:
                     hui-generic-entity-row $: |
                       .info { display: none; }
-                      div.entity { margin-right: auto; }
-                    .: >
-                      div.entities-row { justify-content: flex-start !important;
+                    .: |
+                      div.entities-row { 
+                        justify-content: flex-start !important;
+                        width: 100%;
+                      } div.entities-row div.entity:nth-child(4) {
+                        margin-left: auto;
+                      } div.entities-row div.entity {
+                        margin-right: 15px;
                       }
                 entities:
                   - type: button
@@ -777,180 +787,209 @@ views:
                   margin-top: -10px;
                   padding-bottom: 8px;
                 }
-      - type: entities
-        entities:
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_aero1_pumpstate
-            name: Aeroponics
-            secondary_info: last-updated
-            icon: mdi:sprinkler-variant
-            state_header: Pump
+      - type: vertical-stack
+        cards:
+          - type: entities
+            show_header_toggle: false
+            state_color: true
             entities:
-              - entity: sensor.gbox420_aero1_state
-                name: State
-          - type: custom:multiple-entity-row
-            entity: sensor.gbox420_aero1_pressure
-            name: false
-            show_state: false
-            icon: none
-            card_mod:
-              style:
-                hui-generic-entity-row $: |
-                  .info {
-                    display: none;
-                  }
-                  div.entity {
-                    margin-right: auto;
-                  }
-                .: |
-                  div.entities-row {
-                    justify-content: flex-start !important;
-                  }
-            entities:
-              - type: button
-                icon: mdi:water
-                name: Spray
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Aero1_SprayNow
-              - type: button
-                icon: mdi:water-outline
-                name: Stop
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Aero1_SprayOff
-              - type: button
-                icon: mdi:water-off
-                name: Disable
-                tap_action:
-                  action: call-service
-                  service: mqtt.publish
-                  service_data:
-                    topic: Gbox420CMD/Aero1_SprayDis
-              - entity: sensor.gbox420_aero1_pressure
-                name: Pressure
-              - entity: sensor.gbox420_aero1_lastspray
-                name: Last spray
-              - entity: sensor.gbox420_aero1_lastsraytime
-                name: Spray time
-              - entity: sensor.gbox420_aero1_weight
-                name: Weight
-          - type: custom:fold-entity-row
-            open: false
-            head:
-              type: section
-              label: Settings
-            entities:
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_minpressure
-                name: Minimum pressure
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_maxpressure
-                name: Maximum pressure
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_dayinterval
-                name: Spray interval day
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_nightinterval
-                name: Spray interval night
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_sprayduration
-                name: Spray duration
-                delay: 5000
-                speed: 250
+              - type: custom:multiple-entity-row
+                entity: sensor.gbox420_aero1_weight
+                name: Aeroponics
+                secondary_info: last-updated
+                icon: mdi:sprinkler-variant
+                state_header: Weight
+                entities:
+                  - entity: sensor.gbox420_aero1_state
+                    name: State
+                  - entity: sensor.gbox420_aero1_pumpstate
+                    name: Pump
               - type: custom:multiple-entity-row
                 entity: sensor.gbox420_aero1_pressure
-                name: Pump
+                name: false
                 show_state: false
-                icon: mdi:water-pump
+                icon: none
+                card_mod:
+                  style:
+                    hui-generic-entity-row $: |
+                      .info { display: none; }
+                    .: |
+                      div.entities-row { 
+                        justify-content: flex-start !important;
+                        width: 100%;
+                      } div.entities-row div.entity:nth-child(4) {
+                        margin-left: auto;
+                      } div.entities-row div.entity {
+                        margin-right: 15px;
+                      }
                 entities:
                   - type: button
-                    icon: mdi:water-plus
-                    name: Refill
+                    icon: mdi:water
+                    name: Spray
                     tap_action:
                       action: call-service
                       service: mqtt.publish
                       service_data:
-                        topic: Gbox420CMD/Aero1_Refill
+                        topic: Gbox420CMD/Aero1_SprayNow
                   - type: button
-                    icon: mdi:water-minus
-                    name: Drain
+                    icon: mdi:water-outline
+                    name: Stop
                     tap_action:
                       action: call-service
                       service: mqtt.publish
                       service_data:
-                        topic: Gbox420CMD/Aero1_Drain
+                        topic: Gbox420CMD/Aero1_SprayOff
                   - type: button
-                    icon: mdi:water-sync
-                    name: Mix
-                    tap_action:
-                      action: call-service
-                      service: mqtt.publish
-                      service_data:
-                        topic: Gbox420CMD/Aero1_PumpDis
-                  - type: button
-                    icon: mdi:power
-                    name: 'On'
-                    tap_action:
-                      action: call-service
-                      service: mqtt.publish
-                      service_data:
-                        topic: Gbox420CMD/Aero1_PumpOn
-                  - type: button
-                    icon: mdi:power-off
-                    name: 'Off'
-                    tap_action:
-                      action: call-service
-                      service: mqtt.publish
-                      service_data:
-                        topic: Gbox420CMD/Aero1_PumpOff
-                  - type: button
-                    icon: mdi:cancel
+                    icon: mdi:water-off
                     name: Disable
                     tap_action:
                       action: call-service
                       service: mqtt.publish
                       service_data:
-                        topic: Gbox420CMD/Aero1_PumpDis
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_pumpspeed
-                name: Speed
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_pumpprimingtime
-                name: Priming time
-                delay: 5000
-                speed: 250
-              - type: custom:numberbox-card
-                entity: number.gbox420_aero1_pumptimeout
-                name: Timeout
-                delay: 5000
-                speed: 250
-        footer:
-          type: graph
-          entity: sensor.gbox420_aero1_weight
-          hours_to_show: 48
-          detail: 1
-        show_header_toggle: false
-        state_color: true
-        card_mod:
-          style: |
-            ha-card {
-              white-space: nowrap;
-            }
+                        topic: Gbox420CMD/Aero1_SprayDis
+                  - entity: sensor.gbox420_aero1_pressure
+                    name: Pressure
+                  - entity: sensor.gbox420_aero1_lastspray
+                    name: Last spray
+                  - entity: sensor.gbox420_aero1_lastsraytime
+                    name: Spray time
+              - type: custom:fold-entity-row
+                open: false
+                head:
+                  type: section
+                  label: Settings
+                entities:
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_minpressure
+                    name: Minimum pressure
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_maxpressure
+                    name: Maximum pressure
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_dayinterval
+                    name: Spray interval day
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_nightinterval
+                    name: Spray interval night
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_sprayduration
+                    name: Spray duration
+                  - type: custom:multiple-entity-row
+                    entity: sensor.gbox420_aero1_pressure
+                    name: Pump
+                    show_state: false
+                    icon: mdi:water-pump
+                    entities:
+                      - type: button
+                        icon: mdi:water-plus
+                        name: Refill
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_Refill
+                      - type: button
+                        icon: mdi:water-minus
+                        name: Drain
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_Drain
+                      - type: button
+                        icon: mdi:water-sync
+                        name: Mix
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_PumpDis
+                      - type: button
+                        icon: mdi:power
+                        name: 'On'
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_PumpOn
+                      - type: button
+                        icon: mdi:power-off
+                        name: 'Off'
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_PumpOff
+                      - type: button
+                        icon: mdi:cancel
+                        name: Disable
+                        tap_action:
+                          action: call-service
+                          service: mqtt.publish
+                          service_data:
+                            topic: Gbox420CMD/Aero1_PumpDis
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_pumpspeed
+                    name: Speed
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_pumpprimingtime
+                    name: Priming time
+                    delay: 5000
+                    speed: 250
+                  - type: custom:numberbox-card
+                    entity: number.gbox420_aero1_pumptimeout
+                    name: Timeout
+                    delay: 5000
+                    speed: 250
+            card_mod:
+              style: |
+                ha-card {
+                  white-space: nowrap;
+                  border-bottom-left-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                }
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.gbox420_aero1_pressure
+                name: Pressure
+                color: '#ff9800'
+              - entity: number.gbox420_aero1_minpressure
+                name: Min
+                color: '#ff5252'
+              - entity: number.gbox420_aero1_maxpressure
+                name: Max
+                color: '#448aff'
+              - entity: sensor.gbox420_aero1_weight
+                name: Weight
+                color: '#4caf50'
+                y_axis: secondary
+            line_width: 2
+            hours_to_show: 48
+            points_per_hour: 20
+            smoothing: false
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: true
+              fill: false
+            card_mod:
+              style: |
+                ha-card {
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  margin-top: -16px;
+                }
+                .header {
+                  display: none;
+                }
+                .graph__legend {
+                  font-size: 10px;
+                  margin-top: -10px;
+                  padding-bottom: 8px;
+                }
   - title: Node-RED
     path: NodeRED
     panel: true
