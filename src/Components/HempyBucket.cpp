@@ -116,7 +116,7 @@ void HempyBucket::updateState(HempyStates NewState)
     if (State != NewState)
     {
       StateWeight = BucketWeightSensor.getWeight();                     // Store the bucket weight before starting the pump
-      if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRIAINING cycles
+      if (State == HempyStates::IDLE || State == HempyStates::DISABLED || State == HempyStates::DRY) // First time entering the WATERING-DRIAINING cycles
       {
         PumpOnTimer = millis(); /// Start measuring the pump ON time for this cycle
         WateringTime = 0;       /// Reset the counter that tracks the total pump ON time during the watering process (multiple WATERING-DRAINING cycles)
