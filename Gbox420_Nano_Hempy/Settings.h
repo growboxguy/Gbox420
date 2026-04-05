@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 16; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 17; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -53,6 +53,7 @@ typedef struct
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
+    bool DisabledState;        ///< Store if the watering logic is disabled
     float EvaporationTarget;  //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float MaxWeight;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     float StartWeight;   ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
@@ -60,8 +61,8 @@ typedef struct
     float DrainTargetWeight;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     uint16_t DrainWaitTime;   ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.DisabledState = false, .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.DisabledState = false, .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {

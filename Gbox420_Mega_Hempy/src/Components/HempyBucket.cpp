@@ -5,6 +5,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
       Parent(Parent),
       BucketWeightSensor(BucketWeightSensor),
       BucketPump(BucketPump),
+      DisabledState(DefaultSettings.DisabledState),
       EvaporationTarget(DefaultSettings.EvaporationTarget),
       DrainTargetWeight(DefaultSettings.DrainTargetWeight),
       WateringIncrement(DefaultSettings.WateringIncrement),
@@ -14,6 +15,14 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
 {  
   DryWeight = DefaultSettings.StartWeight; // Until first watering use StartWeight. After watering DryWeight is calculated from WetWeight - EvaporationTarget
   WetWeight = DryWeight + DefaultSettings.EvaporationTarget;
+  if(DisabledState)
+  {
+    State = HempyStates::DISABLED;
+  }
+  else
+  {
+    State = HempyStates::IDLE;
+  }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -87,6 +96,15 @@ void HempyBucket::updateState(HempyStates NewState)
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_hempyState(NewState));
     logToSerials(&LongMessage, true, 3);
+
+    if(NewState == HempyStates::DISABLED)
+    {
+      DisabledState = true;
+    }
+    else
+    {
+      DisabledState = false;
+    }
   }
 
   BucketWeightSensor.readWeight(); ///< Force Bucket weight update

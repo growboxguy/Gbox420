@@ -48,6 +48,7 @@ private:
   bool DisableRequested = false;       ///< Signals to disable the watering logic
   bool StartWateringRequested = false; ///< Signals to start watering
   bool StopWateringRequested = false;  ///< Signals to stop watering
+  bool &DisabledState;                 ///< Reference to the disabled state
   float &EvaporationTarget;            ///< Reference to the evaporation target
   float &DrainTargetWeight;            ///< Reference to the overflow target
   float &WateringIncrement;            ///< Reference to the overflow target
