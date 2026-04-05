@@ -47,12 +47,13 @@ var NAVTREEINDEX3 =
 "structSettings_1_1FanSettings.html#ae3579c0670e2048e1a6b9d09777adc7f":[3,0,11,6,0],
 "structSettings_1_1FanSettings.html#aed0fd8d859caa9ca8fc6ea1ef3153d78":[3,0,11,6,2],
 "structSettings_1_1HempyBucketSettings.html":[3,0,11,7],
-"structSettings_1_1HempyBucketSettings.html#a16fb72d3848ad7bf25c7c1070b2ff47e":[3,0,11,7,5],
-"structSettings_1_1HempyBucketSettings.html#a73c18906bc8e2de938d1563c2a620015":[3,0,11,7,0],
-"structSettings_1_1HempyBucketSettings.html#a8d885f583a2d6a3ff41bade5251fd3db":[3,0,11,7,3],
-"structSettings_1_1HempyBucketSettings.html#a95a241a884a0b4640103bf54f2cb39d8":[3,0,11,7,2],
-"structSettings_1_1HempyBucketSettings.html#ac77954a7d38a936a6e0fc6bfbb87ac6f":[3,0,11,7,1],
-"structSettings_1_1HempyBucketSettings.html#af51553e824366f636c1e9c57e7c00e85":[3,0,11,7,4],
+"structSettings_1_1HempyBucketSettings.html#a16fb72d3848ad7bf25c7c1070b2ff47e":[3,0,11,7,6],
+"structSettings_1_1HempyBucketSettings.html#a73c18906bc8e2de938d1563c2a620015":[3,0,11,7,1],
+"structSettings_1_1HempyBucketSettings.html#a819730dc63286d3e695a57cdeb5a995b":[3,0,11,7,0],
+"structSettings_1_1HempyBucketSettings.html#a8d885f583a2d6a3ff41bade5251fd3db":[3,0,11,7,4],
+"structSettings_1_1HempyBucketSettings.html#a95a241a884a0b4640103bf54f2cb39d8":[3,0,11,7,3],
+"structSettings_1_1HempyBucketSettings.html#ac77954a7d38a936a6e0fc6bfbb87ac6f":[3,0,11,7,2],
+"structSettings_1_1HempyBucketSettings.html#af51553e824366f636c1e9c57e7c00e85":[3,0,11,7,5],
 "structSettings_1_1HempyModuleSettings.html":[3,0,11,8],
 "structSettings_1_1HempyModuleSettings.html#a025a7781413bf841fd68292d25130db1":[3,0,11,8,2],
 "structSettings_1_1HempyModuleSettings.html#a08083b55392215d8ba40e9e8ad86fae6":[3,0,11,8,18],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "webserver__controls_8ino_source.html":[4,0,1,0,0,9,4],
 "webserver__led_8ino.html":[4,0,1,0,0,10,0],
 "webserver__led_8ino.html#a409e9275b3cd0dbca69da6e06f8967e6":[4,0,1,0,0,10,0,2],
-"webserver__led_8ino.html#a4fc01d736fe50cf5b977f755b675f11d":[4,0,1,0,0,10,0,5],
-"webserver__led_8ino.html#aaaa01b0b0174f89ea79b24255e93d501":[4,0,1,0,0,10,0,1]
+"webserver__led_8ino.html#a4fc01d736fe50cf5b977f755b675f11d":[4,0,1,0,0,10,0,5]
 };

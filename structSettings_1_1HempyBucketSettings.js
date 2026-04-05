@@ -1,5 +1,6 @@
 var structSettings_1_1HempyBucketSettings =
 [
+    [ "DisabledState", "structSettings_1_1HempyBucketSettings.html#a819730dc63286d3e695a57cdeb5a995b", null ],
     [ "DrainTargetWeight", "structSettings_1_1HempyBucketSettings.html#a73c18906bc8e2de938d1563c2a620015", null ],
     [ "DrainWaitTime", "structSettings_1_1HempyBucketSettings.html#ac77954a7d38a936a6e0fc6bfbb87ac6f", null ],
     [ "EvaporationTarget", "structSettings_1_1HempyBucketSettings.html#a95a241a884a0b4640103bf54f2cb39d8", null ],
