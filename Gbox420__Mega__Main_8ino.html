@@ -263,11 +263,11 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a29e392d833e97bf88f780e9fdf22373f" id="r_a29e392d833e97bf88f780e9fdf22373f"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#a29e392d833e97bf88f780e9fdf22373f">LongMessage</a> [MaxLongTextLength] = &quot;&quot;</td></tr>
-<tr class="memdesc:a29e392d833e97bf88f780e9fdf22373f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp storage for assembling long messages (REST API, MQTT reporting)  <br /></td></tr>
+<tr class="memdesc:a29e392d833e97bf88f780e9fdf22373f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp storage for assembling long messages (REST API, MQTT reporting, Serial reporting,..etc)  <br /></td></tr>
 <tr class="separator:a29e392d833e97bf88f780e9fdf22373f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6084d34751a3c3b5585d06dc1c0dd9f6" id="r_a6084d34751a3c3b5585d06dc1c0dd9f6"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#a6084d34751a3c3b5585d06dc1c0dd9f6">ShortMessage</a> [MaxShotTextLength] = &quot;&quot;</td></tr>
-<tr class="memdesc:a6084d34751a3c3b5585d06dc1c0dd9f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp storage for assembling short text messages (Log entries, Error messages,etc)  <br /></td></tr>
-<tr class="separator:a6084d34751a3c3b5585d06dc1c0dd9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed40cb8f72fd080a1b5cbbd22bb2ab1d" id="r_aed40cb8f72fd080a1b5cbbd22bb2ab1d"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#aed40cb8f72fd080a1b5cbbd22bb2ab1d">ShortMessage</a> [MaxShortTextLength] = &quot;&quot;</td></tr>
+<tr class="memdesc:aed40cb8f72fd080a1b5cbbd22bb2ab1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp storage for assembling short text messages (Log entries, Error messages,..etc)  <br /></td></tr>
+<tr class="separator:aed40cb8f72fd080a1b5cbbd22bb2ab1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a292e29d40fbb346a1fa51dfc5ba879c1" id="r_a292e29d40fbb346a1fa51dfc5ba879c1"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1">CurrentTime</a> [MaxWordLength] = &quot;&quot;</td></tr>
 <tr class="memdesc:a292e29d40fbb346a1fa51dfc5ba879c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for storing current time in text format.  <br /></td></tr>
 <tr class="separator:a292e29d40fbb346a1fa51dfc5ba879c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -296,6 +296,7 @@ Variables</h2></td></tr>
 <tr class="memdesc:a986f5751f967fdb64a3563042cedbbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)  <br /></td></tr>
 <tr class="separator:a986f5751f967fdb64a3563042cedbbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34e7440d5e4b719d02f1539526ed3249" id="r_a34e7440d5e4b719d02f1539526ed3249"><td class="memItemLeft" align="right" valign="top">Thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#a34e7440d5e4b719d02f1539526ed3249">OneSecThread</a> = Thread()</td></tr>
+<tr class="memdesc:a34e7440d5e4b719d02f1539526ed3249"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread that triggers every second to run the <a class="el" href="Gbox420__Mega__Main_8ino.html#ad9eace513773bac642ba8ed639be71fe">run1sec()</a> function.  <br /></td></tr>
 <tr class="separator:a34e7440d5e4b719d02f1539526ed3249"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53a9d8bb350581bc4ffb215418731b79" id="r_a53a9d8bb350581bc4ffb215418731b79"><td class="memItemLeft" align="right" valign="top">Thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Gbox420__Mega__Main_8ino.html#a53a9d8bb350581bc4ffb215418731b79">FiveSecThread</a> = Thread()</td></tr>
 <tr class="separator:a53a9d8bb350581bc4ffb215418731b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,7 +334,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00321">321</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00322">322</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -393,7 +394,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <p>&lt; Called when any field on the website is updated.</p>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00339">339</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00340">340</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -480,7 +481,7 @@ Here is the caller graph for this function:</div>
 
 <p>Prints the nRF24L01+ wireless transceiver's status to the Serial log. </p>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00402">402</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00403">403</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -559,7 +560,7 @@ Here is the caller graph for this function:</div>
 
 <p>Ignores the incoming load/refresh event. Used when embedding another module's web interface that already handles the event. </p>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00415">415</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00416">416</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -599,7 +600,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00303">303</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00304">304</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -832,7 +833,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00312">312</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00313">313</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1080,7 +1081,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00366">366</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00367">367</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1139,7 +1140,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00388">388</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00389">389</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1185,7 +1186,7 @@ Here is the caller graph for this function:</div>
 
 <p>Called when the /Settings.html website is loading on the ESP-link webserver. </p>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00349">349</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00350">350</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1219,7 +1220,7 @@ Here is the caller graph for this function:</div>
 
 <p>Called when the /Settings.html website is refreshing on the ESP-link webserver. </p>
 
-<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00357">357</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00358">358</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1249,13 +1250,13 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; put your setup code here, to run once:</p>
+<p>&lt; Setup code, runs once:</p>
 <p>&lt; 2560mega console output</p>
 <p>&lt; ESP WiFi console output</p>
-<p>&lt; onboard LED - Heartbeat every second to confirm code is running</p>
+<p>&lt; Onboard LED - Heartbeat every second to confirm code is running</p>
 <p>&lt; Needed to print wireless status to Serial</p>
 <p>&lt; New line</p>
-<p>&lt; logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""): <a href="https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3">https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3</a></p>
+<p>&lt; Logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""): <a href="https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3">https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3</a></p>
 <p>&lt; Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch</p>
 <p>&lt; fix watchdog not loading sketch after a reset error on Mega2560</p>
 <p>&lt; Callback subscription: What to do when WiFi reconnects</p>
@@ -1588,7 +1589,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Temp storage for assembling long messages (REST API, MQTT reporting) </p>
+<p>Temp storage for assembling long messages (REST API, MQTT reporting, Serial reporting,..etc) </p>
 
 <p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00028">28</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 
@@ -1694,23 +1695,26 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
+<p>Thread that triggers every second to run the <a class="el" href="Gbox420__Mega__Main_8ino.html#ad9eace513773bac642ba8ed639be71fe">run1sec()</a> function. </p>
+<p>Controller for managing the three threads above. </p>
+
 <p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00050">50</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 
 </div>
 </div>
-<a id="a6084d34751a3c3b5585d06dc1c0dd9f6" name="a6084d34751a3c3b5585d06dc1c0dd9f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6084d34751a3c3b5585d06dc1c0dd9f6">&#9670;&#160;</a></span>ShortMessage</h2>
+<a id="aed40cb8f72fd080a1b5cbbd22bb2ab1d" name="aed40cb8f72fd080a1b5cbbd22bb2ab1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed40cb8f72fd080a1b5cbbd22bb2ab1d">&#9670;&#160;</a></span>ShortMessage</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char ShortMessage[MaxShotTextLength] = &quot;&quot;</td>
+          <td class="memname">char ShortMessage[MaxShortTextLength] = &quot;&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Temp storage for assembling short text messages (Log entries, Error messages,etc) </p>
+<p>Temp storage for assembling short text messages (Log entries, Error messages,..etc) </p>
 
 <p class="definition">Definition at line <a class="el" href="Gbox420__Mega__Main_8ino_source.html#l00029">29</a> of file <a class="el" href="Gbox420__Mega__Main_8ino_source.html">Gbox420_Mega_Main.ino</a>.</p>
 

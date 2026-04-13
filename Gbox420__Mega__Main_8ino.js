@@ -38,5 +38,5 @@ var Gbox420__Mega__Main_8ino =
     [ "ModuleSettings", "Gbox420__Mega__Main_8ino.html#aa5d20d2c57bfa8a66c233eb21b7cdf6e", null ],
     [ "MqttConnected", "Gbox420__Mega__Main_8ino.html#a622f9bf1e5dbf81994313bfd9730b9d3", null ],
     [ "OneSecThread", "Gbox420__Mega__Main_8ino.html#a34e7440d5e4b719d02f1539526ed3249", null ],
-    [ "ShortMessage", "Gbox420__Mega__Main_8ino.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ]
+    [ "ShortMessage", "Gbox420__Mega__Main_8ino.html#aed40cb8f72fd080a1b5cbbd22bb2ab1d", null ]
 ];

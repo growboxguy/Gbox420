@@ -22,5 +22,5 @@ var Gbox420__Mega__Main_2Settings_8h =
     [ "saveSettings", "Gbox420__Mega__Main_2Settings_8h.html#ac0ce9cbac65602e667e78fe16e0d51fe", null ],
     [ "CurrentTime", "Gbox420__Mega__Main_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1", null ],
     [ "LongMessage", "Gbox420__Mega__Main_2Settings_8h.html#a29e392d833e97bf88f780e9fdf22373f", null ],
-    [ "ShortMessage", "Gbox420__Mega__Main_2Settings_8h.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ]
+    [ "ShortMessage", "Gbox420__Mega__Main_2Settings_8h.html#aed40cb8f72fd080a1b5cbbd22bb2ab1d", null ]
 ];

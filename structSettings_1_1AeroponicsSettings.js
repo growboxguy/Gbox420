@@ -1,6 +1,5 @@
 var structSettings_1_1AeroponicsSettings =
 [
-    [ "AeroponicsSettings", "structSettings_1_1AeroponicsSettings.html#a92b19c5e37864c9522ab117bb17836b0", null ],
     [ "DayInterval", "structSettings_1_1AeroponicsSettings.html#a205c5f366140135934347560db75bcb9", null ],
     [ "DayInterval", "structSettings_1_1AeroponicsSettings.html#a0f1acfffb1f7177325e2c70fb702b455", null ],
     [ "Duration", "structSettings_1_1AeroponicsSettings.html#a9f01759beecac62b9be228648cac8e26", null ],

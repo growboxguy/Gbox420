@@ -24,6 +24,6 @@ var Gbox420__Nano__Aero__NoTank_8ino =
     [ "OneSecThread", "Gbox420__Nano__Aero__NoTank_8ino.html#a86373ccecbdf8e67d4284b9cec46ff80", null ],
     [ "ReceivedMessage", "Gbox420__Nano__Aero__NoTank_8ino.html#ac88414a5652d3c6eba2243c334ceeb1b", null ],
     [ "ReceivedMessageTimestamp", "Gbox420__Nano__Aero__NoTank_8ino.html#a3e5a5cf2070efebd3d4cbab076748f1a", null ],
-    [ "ShortMessage", "Gbox420__Nano__Aero__NoTank_8ino.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ],
+    [ "ShortMessage", "Gbox420__Nano__Aero__NoTank_8ino.html#aed40cb8f72fd080a1b5cbbd22bb2ab1d", null ],
     [ "TimeCriticalThread", "Gbox420__Nano__Aero__NoTank_8ino.html#a1c3cf0110ffb61dc54baa49c74e4daf1", null ]
 ];
