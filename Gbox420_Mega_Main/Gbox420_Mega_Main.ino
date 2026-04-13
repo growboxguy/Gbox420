@@ -25,9 +25,9 @@
 #include <RF24.h>                           // nRF24L01 wireless radio driver - https://github.com/maniacbug/RF24
 
 // Global variable initialization
-char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting, Serial reporting,..etc)
+char LongMessage[MaxLongTextLength] = "";   ///< Temp storage for assembling long messages (REST API, MQTT reporting, Serial reporting,..etc)
 char ShortMessage[MaxShortTextLength] = ""; ///< Temp storage for assembling short text messages (Log entries, Error messages,..etc)
-char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
+char CurrentTime[MaxWordLength] = "";       ///< Buffer for storing current time in text format
 
 // Component initialization
 HardwareSerial &ArduinoSerial = Serial;      ///< Reference to the Arduino Serial output : Mega 2560 Rev3	Serial:0(RX) 1(TX) also showed on USB, Serial1:19(RX1) 18(TX1), Serial2:17(RX2), 16(TX2), Serial4:15(RX3) 14(TX3)
@@ -47,9 +47,9 @@ MainModule *Main1;                           ///< Represents a Grow Box with all
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 
 // Thread initialization
-Thread OneSecThread = Thread();  ///< Thread that triggers every second to run the run1sec() function
-Thread FiveSecThread = Thread(); //< Thread that triggers every 5 seconds to run the run5sec() function
-Thread MinuteThread = Thread(); //< Thread that triggers every minute to run the run1min() function
+Thread OneSecThread = Thread();                                                        ///< Thread that triggers every second to run the run1sec() function
+Thread FiveSecThread = Thread();                                                       //< Thread that triggers every 5 seconds to run the run5sec() function
+Thread MinuteThread = Thread();                                                        //< Thread that triggers every minute to run the run1min() function
 StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread); ///< Controller for managing the three threads above
 
 void setup()
@@ -65,14 +65,14 @@ void setup()
 
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
-  ModuleSettings = loadSettings();
-  Debug = ModuleSettings->Debug;
-  Metric = &ModuleSettings->Metric;
+  ModuleSettings = loadSettings();  ///< Load settings from EEPROM. If the EEPROM is empty it will be initialized with default settings defined in Settings.h and then loaded to the ModuleSettings object. The settings are stored in a struct format and include all the default values for the different modules (MainModule, AeroModule, HempyModule,..etc) as well as the pin layout for the different components (DHT sensors, Relays,..etc)
+  Debug = ModuleSettings->Debug;    ///< Set the global Debug variable to the value loaded from the EEPROM, turns on/off debug messages on the Serial output
+  Metric = &ModuleSettings->Metric; ///< Set the global Metric variable to the value loaded from the EEPROM, switches between Metric/Imperial units across the sketch
 
   logToSerials(F("Setting up ESP-link connection"), true, 0);
   ESPLink.resetCb = &resetWebServer; ///< Callback subscription: What to do when WiFi reconnects
-  resetWebServer();                  ///< reset the WebServer
-  setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
+  resetWebServer();                  ///< Reset the WebServer
+  setSyncProvider(getNtpTime);       ///< Set the function for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
   if ((ModuleSettings->Main1).ReportToMqtt)
   {
@@ -266,35 +266,38 @@ static bool SyncInProgress = false; ///< True if an time sync is in progress
 */
 time_t getNtpTime()
 {
+  if (SyncInProgress)
+  {
+    return now(); // keep current time, do NOT reset to epoch
+  }
+
   time_t NTPResponse = 0;
-  if (!SyncInProgress)
-  { // block calling the sync again inside an interrupt while already waiting for a sync to finish
-    SyncInProgress = true;
-    uint32_t LastRefresh = millis();
-    logToSerials(F("Waiting for NTP time"), false, 0);
-    while (NTPResponse == 0 && millis() - LastRefresh < 15000)
-    {
-      NTPResponse = ESPCmd.GetTime();
-      if (NTPResponse == 0)
-      {
-        delay(1000);
-        logToSerials(F("."), false, 0);
-        wdt_reset(); /// reset watchdog timeout
-      }
-    }
-    SyncInProgress = false;
+  SyncInProgress = true;
+  uint32_t LastRefresh = millis();
+  logToSerials(F("Waiting for NTP time"), false, 0);
+  while (NTPResponse == 0 && (millis() - LastRefresh) < (uint32_t)NTPTimeout * 1000UL)
+  {
+    NTPResponse = ESPCmd.GetTime();
     if (NTPResponse == 0)
     {
-      logToSerials(F("sync failed"), true, 3); // FORCE the library to try again in 60 seconds instead of 1 day
-      setSyncInterval(60);
-    }
-    else
-    {
-      logToSerials(F("synchronized"), true, 3); // SUCCESS: Set the interval back to 1 day
-      setSyncInterval(86400);
+      delay(1000);
+      logToSerials(F("."), false, 0);
+      wdt_reset(); /// reset watchdog timeout
     }
   }
-  return NTPResponse;
+  SyncInProgress = false;
+  if (NTPResponse == 0)
+  {
+    logToSerials(F("sync failed"), true, 3); // FORCE the library to try again in 60 seconds instead of 1 day
+    setSyncInterval(60);
+    return now(); // keep current time, do NOT reset to epoch
+  }
+  else
+  {
+    logToSerials(F("synchronized"), true, 3); // SUCCESS: Set the interval back to 1 day
+    setSyncInterval(86400);
+    return NTPResponse;
+  }
 }
 
 /**
