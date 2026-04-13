@@ -114,6 +114,7 @@ var NAVTREEINDEX2 =
 "dir_f6267870250c8a3553b309657788e563.html":[4,0,0,0,0],
 "dir_f773c2083506093383b3257c650b6670.html":[4,0,1,0,0,6],
 "dir_f86b1506388ce02871f6a01e05186aea.html":[4,0,1,0,0,9],
+"examples.html":[5],
 "files.html":[4,0],
 "functions.html":[3,3,0,0],
 "functions.html":[3,3,0],
@@ -139,8 +140,8 @@ var NAVTREEINDEX2 =
 "functions_v.html":[3,3,0,19],
 "functions_vars.html":[3,3,2],
 "functions_w.html":[3,3,0,20],
-"globals.html":[4,1,0,0],
 "globals.html":[4,1,0],
+"globals.html":[4,1,0,0],
 "globals_b.html":[4,1,0,1],
 "globals_c.html":[4,1,0,2],
 "globals_d.html":[4,1,0,3],
@@ -179,6 +180,7 @@ var NAVTREEINDEX2 =
 "hierarchy.html":[3,2],
 "index.html":[0],
 "index.html":[],
+"logToSerials-example.html":[5,0],
 "md_ESPHome_2Readme.html":[1],
 "mqtt_8ino.html":[4,0,1,0,0,1,0],
 "mqtt_8ino.html#a01bcd10c2afc9c7b39c5da283353945b":[4,0,1,0,0,1,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "structSettings.html#ab97c074d1d101e3ebad215e5050a369b":[3,0,11,37],
 "structSettings.html#ace005f695de72f1325e24b600163b4fa":[3,0,11,38],
 "structSettings.html#acf1b55c13b029f141c830fc43b6f795e":[3,0,11,42],
-"structSettings.html#ae85fc15d5c9994d5249d43ff3009fbd5":[3,0,11,31],
-"structSettings.html#aec1acd152ecb3b5e311b0c00d2d250ed":[3,0,11,32],
-"structSettings.html#af94394a1ff5745c7c83b5a45279496fe":[3,0,11,21]
+"structSettings.html#ae85fc15d5c9994d5249d43ff3009fbd5":[3,0,11,31]
 };

@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"structSettings.html#aec1acd152ecb3b5e311b0c00d2d250ed":[3,0,11,32],
+"structSettings.html#af94394a1ff5745c7c83b5a45279496fe":[3,0,11,21],
 "structSettings.html#afa4a8fc0205dc74f3ecd7be1e105efd4":[3,0,11,54],
 "structSettings_1_1ACMotorModuleSettings.html":[3,0,11,0],
 "structSettings_1_1ACMotorModuleSettings.html#adf0a668adf1b6b8657f6aaf513a1422b":[3,0,11,0,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "webserver__controls_8ino_source.html":[4,0,1,0,0,9,4],
 "webserver__led_8ino.html":[4,0,1,0,0,10,0],
 "webserver__led_8ino.html#a409e9275b3cd0dbca69da6e06f8967e6":[4,0,1,0,0,10,0,2],
-"webserver__led_8ino.html#a4fc01d736fe50cf5b977f755b675f11d":[4,0,1,0,0,10,0,5],
-"webserver__led_8ino.html#aaaa01b0b0174f89ea79b24255e93d501":[4,0,1,0,0,10,0,1],
-"webserver__led_8ino.html#ab4553be4db9860d940f81d7447173b2f":[4,0,1,0,0,10,0,0]
+"webserver__led_8ino.html#a4fc01d736fe50cf5b977f755b675f11d":[4,0,1,0,0,10,0,5]
 };

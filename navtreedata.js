@@ -54,7 +54,8 @@ var NAVTREE =
         [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
-    ] ]
+    ] ],
+    [ "Examples", "examples.html", "examples" ]
   ] ]
 ];
 
@@ -63,8 +64,8 @@ var NAVTREEINDEX =
 "ELClientCmd_8cpp.html",
 "Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01",
 "classELClientResponse.html#a509b2624fee22e83914fbc79094ec761",
-"structSettings.html#afa4a8fc0205dc74f3ecd7be1e105efd4",
-"webserver__led_8ino.html#ac4055f7706b660bc11faab4b3dabce9f"
+"structSettings.html#aec1acd152ecb3b5e311b0c00d2d250ed",
+"webserver__led_8ino.html#aaaa01b0b0174f89ea79b24255e93d501"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
