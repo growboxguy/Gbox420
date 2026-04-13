@@ -11,7 +11,7 @@
 
 ///< forward declaration
 extern char LongMessage[MaxLongTextLength];
-extern char ShortMessage[MaxShotTextLength];
+extern char ShortMessage[MaxShortTextLength];
 extern char CurrentTime[MaxWordLength];
 extern Settings *ModuleSettings;
 extern bool &Debug;

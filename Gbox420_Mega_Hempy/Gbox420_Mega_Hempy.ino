@@ -25,7 +25,7 @@
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShortTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
@@ -202,7 +202,7 @@ void setupMqtt()
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
 
-  memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
+  memset(&ShortMessage[0], 0, MaxShortTextLength); //reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
@@ -242,16 +242,16 @@ void mqttPublished(__attribute__((unused)) void *response)
 void mqttReceived(void *response)
 {
   static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
-  static char command[MaxShotTextLength];
-  static char data[MaxShotTextLength];
+  static char command[MaxShortTextLength];
+  static char data[MaxShortTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
   logToSerials(F("MQTT"), false, 0);
   logToSerials(&mqttTopic, false, 1);
   mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
-  mqttTopic.toCharArray(command, MaxShotTextLength);
-  mqttData.toCharArray(data, MaxShotTextLength);
+  mqttTopic.toCharArray(command, MaxShortTextLength);
+  mqttData.toCharArray(data, MaxShortTextLength);
   Hempy_Standalone1->commandEventTrigger(command, data);
   Hempy_Standalone1->reportToMqttTrigger(true); //send out a fresh report
 }

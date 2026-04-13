@@ -15,7 +15,7 @@
 #include "ELClientWebServer.h"              // ESP-link - WebServer API
 #include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
 #include "ELClientRest.h"                   // ESP-link - REST API
-#include "ELClientMqtt.h"                          // ESP-link MQTT protocol for IoT messaging
+#include "ELClientMqtt.h"                   // ESP-link MQTT protocol for IoT messaging
 #include <Thread.h>                         // Logic threading for function timing
 #include <StaticThreadController.h>         // Grouping multiple threads
 #include "SerialLog.h"                      // Logging to Serial and ESP-link console
@@ -25,8 +25,8 @@
 #include <RF24.h>                           // nRF24L01 wireless radio driver - https://github.com/maniacbug/RF24
 
 // Global variable initialization
-char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short text messages (Log entries, Error messages,etc)
+char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting, Serial reporting,..etc)
+char ShortMessage[MaxShortTextLength] = ""; ///< Temp storage for assembling short text messages (Log entries, Error messages,..etc)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
@@ -47,19 +47,19 @@ MainModule *Main1;                           ///< Represents a Grow Box with all
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 
 // Thread initialization
-Thread OneSecThread = Thread();
-Thread FiveSecThread = Thread();
-Thread MinuteThread = Thread();
-StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
+Thread OneSecThread = Thread();  ///< Thread that triggers every second to run the run1sec() function
+Thread FiveSecThread = Thread(); //< Thread that triggers every 5 seconds to run the run5sec() function
+Thread MinuteThread = Thread(); //< Thread that triggers every minute to run the run1min() function
+StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread); ///< Controller for managing the three threads above
 
 void setup()
-{                                                       ///<  put your setup code here, to run once:
+{                                                       ///< Setup code, runs once:
   ArduinoSerial.begin(115200);                          ///< 2560mega console output
   ESPSerial.begin(115200);                              ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT);                         ///< onboard LED - Heartbeat every second to confirm code is running
+  pinMode(LED_BUILTIN, OUTPUT);                         ///< Onboard LED - Heartbeat every second to confirm code is running
   printf_begin();                                       ///< Needed to print wireless status to Serial
   logToSerials(F(""), true, 0);                         ///< New line
-  logToSerials(F("Main module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Main module initializing"), true, 0); ///< Logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                  ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                    ///< fix watchdog not loading sketch after a reset error on Mega2560
 
@@ -218,7 +218,7 @@ void setupMqtt()
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
 
-  memset(&ShortMessage[0], 0, MaxShotTextLength); // reset variable to store the Publish to path
+  memset(&ShortMessage[0], 0, MaxShortTextLength); // reset variable to store the Publish to path
   strcat(ShortMessage, MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
@@ -245,16 +245,16 @@ void mqttPublished(__attribute__((unused)) void *response)
 void mqttReceived(void *response)
 {
   static uint8_t MqttSubTopicLength = strlen(MqttSubTopic) - 1; // Get length of the command topic
-  static char command[MaxShotTextLength];
-  static char data[MaxShotTextLength];
+  static char command[MaxShortTextLength];
+  static char data[MaxShortTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
   logToSerials(F("MQTT"), false, 0);
   logToSerials(&mqttTopic, false, 1);
   mqttTopic.remove(0, MqttSubTopicLength); // Cut the known command topic from the arrived topic
-  mqttTopic.toCharArray(command, MaxShotTextLength);
-  mqttData.toCharArray(data, MaxShotTextLength);
+  mqttTopic.toCharArray(command, MaxShortTextLength);
+  mqttData.toCharArray(data, MaxShortTextLength);
   Main1->commandEventTrigger(command, data);
   Main1->reportToMqttTrigger(true); // send out a fresh report
 }
@@ -275,22 +275,23 @@ time_t getNtpTime()
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
-      if (NTPResponse == 0) {
-          delay(1000);
-          logToSerials(F("."), false, 0);
-          wdt_reset(); /// reset watchdog timeout
+      if (NTPResponse == 0)
+      {
+        delay(1000);
+        logToSerials(F("."), false, 0);
+        wdt_reset(); /// reset watchdog timeout
       }
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
       logToSerials(F("sync failed"), true, 3); // FORCE the library to try again in 60 seconds instead of 1 day
-      setSyncInterval(60); 
+      setSyncInterval(60);
     }
     else
     {
       logToSerials(F("synchronized"), true, 3); // SUCCESS: Set the interval back to 1 day
-      setSyncInterval(86400); 
+      setSyncInterval(86400);
     }
   }
   return NTPResponse;

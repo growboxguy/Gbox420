@@ -116,7 +116,7 @@ void Common::appendName(bool ClearBuffer)
 {
   if (ClearBuffer)
   {
-    memset(&ShortMessage[0], 0, MaxShotTextLength); // blank out the ShortMessage global buffer
+    memset(&ShortMessage[0], 0, MaxShortTextLength); // blank out the ShortMessage global buffer
   }
   strcpy(ShortMessage, Name);
   strcat(ShortMessage, " ");

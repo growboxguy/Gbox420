@@ -23,7 +23,7 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 #define DNS_TIMEOUT 30                      ///< In seconds. DNS lookup timeout
 
 const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+const uint8_t MaxShortTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
 const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
 // const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
@@ -31,7 +31,7 @@ const uint8_t MovingAverageDepth = 10; ///< Number of previous readings to keep 
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable

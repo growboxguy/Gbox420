@@ -1,9 +1,9 @@
 #pragma once
 
-/*! 
+/*!
  *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
- *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.  
- *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
+ *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.
+ *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory!
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
@@ -15,14 +15,14 @@ static const uint8_t Version = 9; ///< Increment this after changing the stuctur
 
 ///< Global constants
 static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+static const uint8_t MaxShortTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
 static const uint8_t MovingAverageDepth = 10;  ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
@@ -44,18 +44,16 @@ typedef struct
   //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsModuleSettings
   {
-    AeroponicsModuleSettings(bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
-    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
+    bool SerialReportDate;         ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;       ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON;         ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;     ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
   struct AeroponicsModuleSettings Aero1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
   struct AeroponicsSettings ///< Aeroponics_Tank default settings
   {
-    AeroponicsSettings(uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0, bool SprayEnabled = true, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, float MinPressure = 0.0, float MaxPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay), TankDrainingTimeout(TankDrainingTimeout), SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MinPressure(MinPressure), MaxPressure(MaxPressure) {}
     uint8_t SpraySolenoidPin;           ///< Relay controlling DC power to the solenoid
     bool SpraySolenoidNegativeLogic;    ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint16_t SpraySolenoidClosingDelay; ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
@@ -79,7 +77,7 @@ typedef struct
 
   struct SoundSettings ///< Sound default settings
   {
-    uint8_t Pin;         ///< Piezo Buzzer red(+) cable
+    uint8_t Pin;  ///< Piezo Buzzer red(+) cable
     bool Enabled; ///< Enable/Disable sound
   };
   struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
@@ -95,7 +93,7 @@ typedef struct
     bool PumpEnabled;                    ///< Enable/disable pump. false= Block running the pump
     uint8_t Speed;                       ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLimitLow;               ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-    uint8_t SpeedLimitHigh;    ///< Maximum allowed speed to prevent over-revving
+    uint8_t SpeedLimitHigh;              ///< Maximum allowed speed to prevent over-revving
     uint16_t PumpTimeOut;                ///< (Sec) Max pump run time
     uint16_t PrimingTime;                ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
     uint16_t BlowOffTime;                ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
@@ -116,7 +114,7 @@ typedef struct
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 void saveSettings(Settings *ToSave);
 /**

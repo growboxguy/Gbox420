@@ -15,7 +15,7 @@ static const uint8_t Version = 16; ///< Increment this after changing the stuctu
 
 ///< Global constants
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+static const uint8_t MaxShortTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1280; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
 static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
@@ -23,7 +23,7 @@ static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver

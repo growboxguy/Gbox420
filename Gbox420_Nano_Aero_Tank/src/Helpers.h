@@ -93,7 +93,7 @@ enum class LightStates
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 extern char CurrentTime[MaxWordLength];
-extern char ShortMessage[MaxShotTextLength];
+extern char ShortMessage[MaxShortTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *ModuleSettings;
 extern bool &Debug;

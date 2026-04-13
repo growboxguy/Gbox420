@@ -223,7 +223,7 @@ void MqttClient::mqttUnsubscribe_Callback(void *Arg, err_t Result)
 void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len)
 {
     // printf("MQTT incoming topic: %s\n", Topic);
-    if (strlen(Topic) <= MaxShotTextLength)
+    if (strlen(Topic) <= MaxShortTextLength)
     {
         strcpy(((MqttClient *)Arg)->ReceivedTopicLong, Topic);
     }
@@ -244,7 +244,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
     {
         if (DataLength < MaxLongTextLength) // The whole payload fits receive buffer
         {
-            memset(((MqttClient *)Arg)->ReceivedTopicShort, '\0', MaxShotTextLength);    // Initialize null terminated Topic storage
+            memset(((MqttClient *)Arg)->ReceivedTopicShort, '\0', MaxShortTextLength);    // Initialize null terminated Topic storage
             size_t SubTopicLength = strlen(((MqttClient *)Arg)->SubTopic) - 1;           // Get length of the subscribed topic, minus the # sign (# is wildcard for any subtopic)
             size_t ReceivedTopicLength = strlen(((MqttClient *)Arg)->ReceivedTopicLong); // Get length of the received topic
             if (SubTopicLength < ReceivedTopicLength)

@@ -15,7 +15,7 @@ static const uint8_t Version = 9; ///< Increment this after changing the stuctur
 
 ///< Global constants
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+static const uint8_t MaxShortTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
 static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
@@ -23,7 +23,7 @@ static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
@@ -44,9 +44,9 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttPubTopic[MaxShortTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShortTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShortTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings

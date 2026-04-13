@@ -15,7 +15,7 @@ char *getCurrentTime(bool PrintToSerial)
 {
   datetime_t CurrentDateTime;
   rtc_get_datetime(&CurrentDateTime);
-  datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
+  datetime_to_str(ShortMessage, MaxShortTextLength, &CurrentDateTime);
   if (PrintToSerial)
   {
     printf("%s\n", ShortMessage);

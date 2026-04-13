@@ -10,7 +10,7 @@
 
 ///< forward declaration
 extern char LongMessage[MaxLongTextLength];
-extern char ShortMessage[MaxShotTextLength];
+extern char ShortMessage[MaxShortTextLength];
 extern Settings *GboxSettings;
 extern bool &Debug = *new bool;   
 extern bool &Metric = *new bool;

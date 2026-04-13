@@ -211,7 +211,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 {
     if (Flags == 1 && DataLength < MaxLongTextLength) // Last fragment of payload received (or the whole payload fits receive buffer)
     {
-        char TopicReceived[MaxShotTextLength] = {};                                  // Initialize null terminated Topic storage
+        char TopicReceived[MaxShortTextLength] = {};                                  // Initialize null terminated Topic storage
         size_t SubTopicLength = strlen(((MqttClient *)Arg)->SubTopic) - 1;           // Get length of the subscribed topic, minus the # sign (# is wildcard for any subtopic)
         size_t ReceivedTopicLength = strlen(((MqttClient *)Arg)->LastReceivedTopic); // Get length of the received topic
         if (SubTopicLength < ReceivedTopicLength)

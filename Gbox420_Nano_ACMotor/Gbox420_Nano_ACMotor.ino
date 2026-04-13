@@ -24,7 +24,7 @@
 bool &Debug = *new bool;   
 bool &Metric = *new bool;
 char LongMessage[MaxLongTextLength] = "";  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-char ShortMessage[MaxShotTextLength] = ""; // Temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShortTextLength] = ""; // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";      // Buffer for storing current time in text format
 //WIRELESS DISBLED// void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 //WIRELESS DISBLED// uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received

@@ -95,7 +95,7 @@
 #define MEMP_NUM_SYS_TIMEOUT (LWIP_NUM_SYS_TIMEOUT_INTERNAL + 1) ///< Number of system timeouts, plus one for MQTT
 //Redefining MQTT Options from https://www.nongnu.org/lwip/2_1_x/group__mqtt__opts.html
 #undef MQTT_OUTPUT_RINGBUF_SIZE
-#define MQTT_OUTPUT_RINGBUF_SIZE 4096   ///< Output ring-buffer size for MQTT. must fit outgoing publish message topic (MaxShotTextLength) + payloads (MaxLongTextLength) */
+#define MQTT_OUTPUT_RINGBUF_SIZE 4096   ///< Output ring-buffer size for MQTT. must fit outgoing publish message topic (MaxShortTextLength) + payloads (MaxLongTextLength) */
 #undef MQTT_VAR_HEADER_BUFFER_LEN
 #define MQTT_VAR_HEADER_BUFFER_LEN 1160 ///< Receive buffer size for MQTT
 #undef MQTT_REQ_MAX_IN_FLIGHT

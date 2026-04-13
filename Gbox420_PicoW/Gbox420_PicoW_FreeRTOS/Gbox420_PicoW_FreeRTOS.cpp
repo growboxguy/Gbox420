@@ -96,10 +96,10 @@ void run30Min(TimerHandle_t xTimer)
 /// @brief Process incoming command sent from the Serial Monitor Expected text command format: NAME_COMMAND , where NAME is the objects's name from Settings.h example: Sound1_EE   Line ending: LF
 void serialReadTask(void *pvParameters)
 {
-  char Message[MaxShotTextLength];
+  char Message[MaxShortTextLength];
   while (1)
   {
-    fgets(Message, MaxShotTextLength, stdin); // Blocking code! Waits until Serial input is received. Only triggers if the incoming data ends with LF (Line feed \n), make sure the Serial monitor's line ending is set to LF
+    fgets(Message, MaxShortTextLength, stdin); // Blocking code! Waits until Serial input is received. Only triggers if the incoming data ends with LF (Line feed \n), make sure the Serial monitor's line ending is set to LF
     Message[strcspn(Message, "\n")] = '\0';   // Remove the newline character from the end of Message
     printf("Serial input: %s\n", Message);
     mqttDataReceived(Message, NULL); // Fake an incoming MQTT command. TODO: Add support for passing data along the command
@@ -267,7 +267,7 @@ char *rtcGetCurrentTime(bool PrintToSerial)
 {
   datetime_t CurrentDateTime;
   rtc_get_datetime(&CurrentDateTime);
-  datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
+  datetime_to_str(ShortMessage, MaxShortTextLength, &CurrentDateTime);
   if (PrintToSerial)
   {
     printf("%s\n", ShortMessage);
@@ -306,7 +306,7 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
   uint8_t mode = pbuf_get_at(p, 0) & 0x7;
   uint8_t stratum = pbuf_get_at(p, 1);
   datetime_t timeTemp;
-  char CurrentTimeText[MaxShotTextLength]; ///< Store current time in text format
+  char CurrentTimeText[MaxShortTextLength]; ///< Store current time in text format
   // Check the result
   if (ip_addr_cmp(addr, &NtpServerIP) && port == GboxSettings->NtpServer1.NtpServerPort && p->tot_len == 48 && mode == 0x4 && stratum != 0)
   {

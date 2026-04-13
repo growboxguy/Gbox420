@@ -97,7 +97,7 @@ void WeightSensor::triggerCalibration(float KnownWeight)
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
-  char LogEntry[MaxShotTextLength] = "";
+  char LogEntry[MaxShortTextLength] = "";
   Scale = Sensor->get_value() / KnownWeight;
   Sensor->set_scale(Scale);
   strcpy(LogEntry, getName(F("scale ")));

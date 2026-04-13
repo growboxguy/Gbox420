@@ -52,7 +52,7 @@ protected:
     ip_addr_t MqttServerAddress;
     uint16_t *MqttServerPort;
     uint8_t *QoS = NULL;
-    char LastReceivedTopic[MaxShotTextLength];
+    char LastReceivedTopic[MaxShortTextLength];
     CallbackType_mqtt DataCallback;                                                    ///< Pointer to the callback function (CallbackType_mqtt)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg); ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                         ///< Callback with the publish result

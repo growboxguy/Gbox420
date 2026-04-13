@@ -7,7 +7,7 @@
  *  \version   4.20
  */
 
-#pragma GCC diagnostic ignored "-Wstringop-truncation" // Surpress build warning of potential truncation of a string NULL terminator. During string operations the size is pre-defined in Settings.h: MaxWordLength/MaxShotTextLength/MaxLongTextLength
+#pragma GCC diagnostic ignored "-Wstringop-truncation" // Surpress build warning of potential truncation of a string NULL terminator. During string operations the size is pre-defined in Settings.h: MaxWordLength/MaxShortTextLength/MaxLongTextLength
 #include "hardware/rtc.h"                              // Real Time Clock for storing current time (Updated over NTP)
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
@@ -19,7 +19,7 @@
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShortTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool &Debug = *new bool;                                  ///< True - Turns on extra debug messages on the Serial Output
 bool &Metric = *new bool;                              ///< True - Use metric units, False - Use imperial units
 

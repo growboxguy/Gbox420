@@ -98,7 +98,7 @@ enum class LightStates
 };
 
 extern char CurrentTime[MaxWordLength];
-extern char ShortMessage[MaxShotTextLength];
+extern char ShortMessage[MaxShortTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *GboxSettings;
 extern bool &Debug = *new bool;   

@@ -15,13 +15,13 @@ constexpr uint8_t Version = 17; ///< Increment this after changing the stucture 
 
 ///< Global constants
 constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-constexpr uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+constexpr uint8_t MaxShortTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 constexpr uint16_t MaxLongTextLength = 168; ///< Default char * buffer length for storing a long text. Memory intense!
 constexpr uint8_t QueueDepth = 6;           ///< Limits the maximum number of active modules. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver

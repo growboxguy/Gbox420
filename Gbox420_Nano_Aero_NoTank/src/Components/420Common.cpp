@@ -109,7 +109,7 @@ void Common::appendName(bool ClearBuffer)
 {
   if (ClearBuffer)
   {
-    memset(&ShortMessage[0], 0, MaxShotTextLength); // blank out the ShortMessage global buffer
+    memset(&ShortMessage[0], 0, MaxShortTextLength); // blank out the ShortMessage global buffer
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
   strcat_P(ShortMessage, (PGM_P)F(" "));
