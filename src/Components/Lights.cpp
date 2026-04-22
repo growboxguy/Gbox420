@@ -148,14 +148,14 @@ void Lights::checkTimer()
       { // True: Light should be on
         if (!Status)
         {
-          setLightOnOff(true, true); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
+          setLightOnOff(true, false); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
         }
       }
       else // False: Light should be off
       {
         if (Status)
         {                             // If status is ON
-          setLightOnOff(false, true); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
+          setLightOnOff(false, false); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
         }
       }
     }
@@ -165,12 +165,12 @@ void Lights::checkTimer()
       {
         if (!Status)
         {
-          setLightOnOff(true, true);
+          setLightOnOff(true, false);
         }
       }
       else if (Status)
       {
-        setLightOnOff(false, true);
+        setLightOnOff(false, false);
       }
     }
   }
