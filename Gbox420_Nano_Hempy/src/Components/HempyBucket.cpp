@@ -91,8 +91,8 @@ void HempyBucket::updateState(HempyStates NewState)
 
   while (ProcessUpdate)
   {
-    ProcessUpdate = false;           ///< Ensure the update is processed only once, even if the state changes multiple times during the function execution
-    BucketWeightSensor.readWeight(); ///< Force Bucket weight update
+    ProcessUpdate = false;                        ///< Ensure the update is processed only once, even if the state changes multiple times during the function execution
+    BucketWeightSensor.readWeight();              ///< Force Bucket weight update
     bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
 
     if (ChangeDetected)
@@ -143,20 +143,20 @@ void HempyBucket::updateState(HempyStates NewState)
         }
         BucketPump.startPump(true);
       }
-      if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
+      if (BucketWeightSensor.getWeight() > MaxWeight) // the maximum weight was reached without reaching drain target
+      {
+        TargetState = HempyStates::IDLE;
+        ProcessUpdate = true;
+      }
+      else if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
       {
         WateringTime += millis() - PumpOnTimer;
         TargetState = HempyStates::DRAINING;
         ProcessUpdate = true;
       }
-      if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed
+      else if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed
       {
         TargetState = HempyStates::DRY;
-        ProcessUpdate = true;
-      }
-      else if (BucketWeightSensor.getWeight() > MaxWeight) // the maximum weight was reached without reaching drain target
-      {
-        TargetState = HempyStates::IDLE;
         ProcessUpdate = true;
       }
       break;
