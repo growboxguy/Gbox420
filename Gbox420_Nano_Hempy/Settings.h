@@ -76,13 +76,13 @@ typedef struct
     uint8_t PumpPin;           ///< Pump relay pin
     bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
-    uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
+    uint16_t PumpTimeOut;      ///< (Sec) Max pump run time (one watering cycle)
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLimitLow;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
     uint8_t SpeedLimitHigh;    ///< Duty cycle limit, does not allow raising the speed too high
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 20, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 20, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
