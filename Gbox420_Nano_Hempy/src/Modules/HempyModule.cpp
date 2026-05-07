@@ -131,13 +131,11 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand1 *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
-    if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket1Response1ToSend.ConfirmDisable)
+    if (((HempyBucketCommand1 *)ReceivedCommand)->Disable)
     {
-      Bucket1->disable();
-      HempyBucket1Response1ToSend.ConfirmDisable = true;
+      Bucket1->disable();      
     }
-    else
-      HempyBucket1Response1ToSend.ConfirmDisable = false;
+    HempyBucket1Response1ToSend.ConfirmDisable = Bucket1->getState() == HempyStates::DISABLED;
     if (((HempyBucketCommand1 *)ReceivedCommand)->StartWatering && !HempyBucket1Response1ToSend.ConfirmStartWatering)
     {
       Bucket1->startWatering();

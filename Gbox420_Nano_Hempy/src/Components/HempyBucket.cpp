@@ -97,7 +97,7 @@ void HempyBucket::updateState(HempyStates NewState)
 
     if (ChangeDetected)
     {
-      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable,  then print exaple Bucket1 state: DRAINING -> IDLE
       strcat(LongMessage, getName(F("state: ")));
       strcat(LongMessage, toText_hempyState(State));
       strcat_P(LongMessage, (PGM_P)F(" -> "));
