@@ -15,7 +15,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
 {
   DryWeight = DefaultSettings.StartWeight; // Until first watering use StartWeight. After watering DryWeight is calculated from WetWeight - EvaporationTarget
   WetWeight = DryWeight + DefaultSettings.EvaporationTarget;
-  if(DisabledState)
+  if (DisabledState)
   {
     State = HempyStates::DISABLED;
   }
@@ -91,8 +91,8 @@ void HempyBucket::updateState(HempyStates NewState)
 
   while (ProcessUpdate)
   {
-    ProcessUpdate = false;           ///< Ensure the update is processed only once, even if the state changes multiple times during the function execution
-    BucketWeightSensor.readWeight(); ///< Force Bucket weight update
+    ProcessUpdate = false;                        ///< Ensure the update is processed only once, even if the state changes multiple times during the function execution
+    BucketWeightSensor.readWeight();              ///< Force Bucket weight update
     bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
 
     if (ChangeDetected)
@@ -137,19 +137,17 @@ void HempyBucket::updateState(HempyStates NewState)
       if (ChangeDetected)
       {
         StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before starting the pump
-        if (WateringTime == 0)                        // First time entering the WATERING-DRIAINING cycles
-        {
-          PumpOnTimer = millis(); /// Start measuring the pump ON time for this cycle
-        }
+        PumpOnTimer = millis();                       /// Start measuring the pump ON time for this cycle
         BucketPump.startPump(true);
       }
+      uint32_t TotaltWateringTime = WateringTime + (millis() - PumpOnTimer);
       if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
       {
-        WateringTime += millis() - PumpOnTimer;
+        WateringTime = TotaltWateringTime;
         TargetState = HempyStates::DRAINING;
         ProcessUpdate = true;
       }
-      if ((WateringTime > ((uint32_t)BucketPump.getTimeOut() * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed
+      if ((TotaltWateringTime > ((uint32_t)WateringTimeLimit * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed
       {
         TargetState = HempyStates::DRY;
         ProcessUpdate = true;
