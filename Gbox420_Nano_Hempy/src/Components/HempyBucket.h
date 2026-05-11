@@ -54,6 +54,7 @@ private:
   float &MaxWeight;                    ///< Reference to the maximum weight -> Disable watering logic above it
   uint16_t &DrainWaitTime;             ///< Reference to the drain wait time
   float DrainStartWeight = 0.0;        ///< Store the bucket weight at the start of the draining cycle, used to detect when the water has been drained
+  float WateringStartWeight = 0.0;     ///< Store the bucket weight at the start of the watering cycle, used to track the watering progress
   float DryWeight = 0.0;               ///< Bucket dry weight
   float WetWeight = 0.0;               ///< Bucket wet weight
 
