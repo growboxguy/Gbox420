@@ -6437,6 +6437,27 @@
                 "pt": "msg",
                 "to": "$number(msg.payload.FanI.S)",
                 "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Internal fan",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "minLimit",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "maxLimit",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -6558,6 +6579,7 @@
         "payload": "",
         "topic": "topic",
         "topicType": "msg",
+        "className": "",
         "x": 1794.000244140625,
         "y": 2460,
         "wires": [
@@ -6572,7 +6594,7 @@
         "z": "3d93eb6ca3793727",
         "g": "f80a84b6caf99376",
         "name": "Speed color/text",
-        "func": "switch(msg.payload) {\n  case 0:\n    msg.color = \"red\";\n    msg.speed = \"OFF\";\n    break;\n  case 1:\n     msg.color = \"lime\";\n     msg.speed = \"LOW\";\n    break;\n  case 2:\n     msg.color = \"orange\";\n     msg.speed = \"HIGH\";\n    break;\n  default:\n     msg.color = \"black\";\n     msg.speed = \"UNKNOWN\";\n    break;\n}\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.color = \"red\";\n    msg.valueText = \"OFF\";\n    break;\n  case 1:\n     msg.color = \"lime\";\n    msg.valueText = \"LOW\";\n    break;\n  case 2:\n     msg.color = \"orange\";\n    msg.valueText = \"HIGH\";\n    break;\n  default:\n     msg.color = \"black\";\n    msg.valueText = \"UNKNOWN\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6593,7 +6615,7 @@
         "z": "3d93eb6ca3793727",
         "g": "f80a84b6caf99376",
         "name": "Speed color/text",
-        "func": "switch(msg.payload) {\n  case 0:\n    msg.color = \"red\";\n    msg.speed = \"OFF\";\n    break;\n  case 1:\n     msg.color = \"lime\";\n     msg.speed = \"LOW\";\n    break;\n  case 2:\n     msg.color = \"orange\";\n     msg.speed = \"HIGH\";\n    break;\n  default:\n     msg.color = \"black\";\n     msg.speed = \"UNKNOWN\";\n    break;\n}\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.color = \"red\";\n    msg.valueText = \"OFF\";\n    break;\n  case 1:\n     msg.color = \"lime\";\n     msg.valueText = \"LOW\";\n    break;\n  case 2:\n     msg.color = \"orange\";\n    msg.valueText = \"HIGH\";\n    break;\n  default:\n     msg.color = \"black\";\n    msg.valueText = \"UNKNOWN\";\n    break;\n}\nreturn msg;\n\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12276,7 +12298,8 @@
         "y": 2250,
         "wires": [
             [
-                "b9c6223c0943c49c"
+                "b9c6223c0943c49c",
+                "428d9da958e13b88"
             ]
         ]
     },
@@ -13162,7 +13185,7 @@
         "name": "Gbox420 Internal Fan",
         "entityConfig": "43c2ac6a.388304",
         "version": 0,
-        "state": "speed",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -13194,7 +13217,7 @@
         "name": "Gbox420 Exhaust Fan",
         "entityConfig": "f45a40b8.2507b",
         "version": 0,
-        "state": "speed",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -18194,7 +18217,7 @@
         ]
     },
     {
-        "id": "ce233905903a4e05",
+        "id": "aa22f9c2e8c6d344",
         "type": "global-config",
         "env": [],
         "modules": {
