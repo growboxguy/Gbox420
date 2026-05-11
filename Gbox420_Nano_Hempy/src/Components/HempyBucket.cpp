@@ -93,6 +93,7 @@ void HempyBucket::updateState(HempyStates NewState)
   {
     ProcessUpdate = false;                        ///< Do not loop again unless the state changes during the update
     BucketWeightSensor.readWeight();              ///< Force Bucket weight update
+    StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before
     bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
 
     if (ChangeDetected)
@@ -118,7 +119,7 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::DRY:
       if (ChangeDetected)
         BucketPump.stopPump(true);
-      if (BucketWeightSensor.getWeight() >= WetWeight) ///< If the bucket has been refilled manually, go back to IDLE
+      if (StateWeight >= WetWeight) ///< If the bucket has been refilled manually, go back to IDLE
       {
         TargetState = HempyStates::IDLE;
         ProcessUpdate = true;
@@ -127,7 +128,7 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::IDLE:
       if (ChangeDetected)
         BucketPump.stopPump(true);
-      if (BucketPump.getState() != WaterPumpStates::DISABLED && BucketWeightSensor.getWeight() <= DryWeight)
+      if (BucketPump.getState() != WaterPumpStates::DISABLED && StateWeight <= DryWeight)
       {
         TargetState = HempyStates::WATERING;
         ProcessUpdate = true;
@@ -136,15 +137,15 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::WATERING:
       if (ChangeDetected)
       {
-        StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before starting the pump
+       
         BucketPump.startPump(true);
       }
-      if (BucketWeightSensor.getWeight() > MaxWeight) // the maximum weight was reached without reaching drain target
+      if (StateWeight >= MaxWeight) // the maximum weight was reached without reaching drain target
       {
         TargetState = HempyStates::IDLE;
         ProcessUpdate = true;
       }
-      else if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
+      else if (StateWeight >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
       {
         TargetState = HempyStates::DRAINING;
         ProcessUpdate = true;
@@ -159,11 +160,13 @@ void HempyBucket::updateState(HempyStates NewState)
       if (ChangeDetected)
       {
         BucketPump.stopPump();
-        StateWeight = BucketWeightSensor.getWeight();
+        if (DrainStartWeight == 0.0)
+        {
+          DrainStartWeight = StateWeight; // Store the bucket weight at the start of the draining cycle, used to detect when the water has been drained
+        }
       }
       if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
       {
-        DrainProgress += StateWeight - BucketWeightSensor.getWeight(); ///<  Calculate how much water has drained
         /*if(Debug)
         {
           logToSerials(F("Drained:"), false, 3);
@@ -172,13 +175,12 @@ void HempyBucket::updateState(HempyStates NewState)
           logToSerials(DrainTargetWeight,true, 0);
         }
         */
-        if (DrainProgress >= DrainTargetWeight) // Check if target overflow weight is reached -> Watering completed
+        if (DrainStartWeight - StateWeight >= DrainTargetWeight) // Check if target overflow weight is reached -> Watering completed
         {
           WetWeight = BucketWeightSensor.getWeight(); ///< Measure the current weight of the bucket (wet weight)
           DryWeight = WetWeight - EvaporationTarget;  ///< Calculate the next watering weight
           if (DryWeight < StartWeight)                ///< Ensure the calculated DryWeight is not less than the user-configured StartWeight
-            DryWeight = StartWeight;                  ///< Use the StartWeight from the UI as the minimum threshold
-          DrainProgress = 0;                          ///< Reset the drain progress tracker
+            DryWeight = StartWeight;                  ///< Use the StartWeight from the UI as the minimum threshold          
           TargetState = HempyStates::IDLE;
         }
         else
