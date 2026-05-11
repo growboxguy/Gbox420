@@ -91,13 +91,14 @@ void HempyBucket::updateState(HempyStates NewState)
 
   while (ProcessUpdate)
   {
-    ProcessUpdate = false;                        ///< Ensure the update is processed only once, even if the state changes multiple times during the function execution
+    ProcessUpdate = false;                        ///< Do not loop again unless the state changes during the update
     BucketWeightSensor.readWeight();              ///< Force Bucket weight update
+    StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before
     bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
 
     if (ChangeDetected)
     {
-      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable,  then print exaple Bucket1 state: DRAINING -> IDLE
       strcat(LongMessage, getName(F("state: ")));
       strcat(LongMessage, toText_hempyState(State));
       strcat_P(LongMessage, (PGM_P)F(" -> "));
@@ -118,7 +119,7 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::DRY:
       if (ChangeDetected)
         BucketPump.stopPump(true);
-      if (BucketWeightSensor.getWeight() >= WetWeight) ///< If the bucket has been refilled manually, go back to IDLE
+      if (StateWeight >= WetWeight) ///< If the bucket has been refilled manually, go back to IDLE
       {
         TargetState = HempyStates::IDLE;
         ProcessUpdate = true;
@@ -127,7 +128,7 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::IDLE:
       if (ChangeDetected)
         BucketPump.stopPump(true);
-      if (BucketPump.getState() != WaterPumpStates::DISABLED && BucketWeightSensor.getWeight() <= DryWeight)
+      if (BucketPump.getState() != WaterPumpStates::DISABLED && StateWeight <= DryWeight)
       {
         TargetState = HempyStates::WATERING;
         ProcessUpdate = true;
@@ -136,25 +137,22 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::WATERING:
       if (ChangeDetected)
       {
-        StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before starting the pump
-        PumpOnTimer = millis();                       /// Start measuring the pump ON time for this cycle
+        WateringStartWeight = StateWeight; // Store the weight at the start of the watering cycle, used to track how much water is being added
         BucketPump.startPump(true);
       }
-      uint32_t TotaltWateringTime = WateringTime + (millis() - PumpOnTimer);
-      if (BucketWeightSensor.getWeight() >= StateWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
+      if (StateWeight >= MaxWeight) // the maximum weight was reached without reaching drain target
       {
-        WateringTime = TotaltWateringTime;
+        TargetState = HempyStates::IDLE;
+        ProcessUpdate = true;
+      }
+      else if (StateWeight >= WateringStartWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
+      {
         TargetState = HempyStates::DRAINING;
         ProcessUpdate = true;
       }
-      if ((TotaltWateringTime > ((uint32_t)WateringTimeLimit * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout before the waste target was reached, pump failed
+      else if (BucketPump.getState() == WaterPumpStates::DISABLED) ///< Pump failed
       {
         TargetState = HempyStates::DRY;
-        ProcessUpdate = true;
-      }
-      else if (BucketWeightSensor.getWeight() > MaxWeight) // the maximum weight was reached without reaching drain target
-      {
-        TargetState = HempyStates::IDLE;
         ProcessUpdate = true;
       }
       break;
@@ -162,11 +160,10 @@ void HempyBucket::updateState(HempyStates NewState)
       if (ChangeDetected)
       {
         BucketPump.stopPump();
-        StateWeight = BucketWeightSensor.getWeight();
+        DrainStartWeight = StateWeight; // Store the bucket weight at the start of the draining cycle, used to detect when the water has been drained
       }
       if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
       {
-        DrainProgress += StateWeight - BucketWeightSensor.getWeight(); ///<  Calculate how much water has drained
         /*if(Debug)
         {
           logToSerials(F("Drained:"), false, 3);
@@ -175,14 +172,12 @@ void HempyBucket::updateState(HempyStates NewState)
           logToSerials(DrainTargetWeight,true, 0);
         }
         */
-        if (DrainProgress >= DrainTargetWeight) // Check if target overflow weight is reached -> Watering completed
+        if (DrainStartWeight - StateWeight >= DrainTargetWeight) // Check if target overflow weight is reached -> Watering completed
         {
           WetWeight = BucketWeightSensor.getWeight(); ///< Measure the current weight of the bucket (wet weight)
           DryWeight = WetWeight - EvaporationTarget;  ///< Calculate the next watering weight
           if (DryWeight < StartWeight)                ///< Ensure the calculated DryWeight is not less than the user-configured StartWeight
             DryWeight = StartWeight;                  ///< Use the StartWeight from the UI as the minimum threshold
-          DrainProgress = 0;                          ///< Reset the drain progress tracker
-          WateringTime = 0;                           ///< Reset the watering time tracker for the next watering cycle
           TargetState = HempyStates::IDLE;
         }
         else
