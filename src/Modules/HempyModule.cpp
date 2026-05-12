@@ -201,12 +201,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand1 *)ReceivedCommand)->Disable && !HempyBucket2Response1ToSend.ConfirmDisable)
     {
       Bucket2->disable();
-      HempyBucket2Response1ToSend.ConfirmDisable = true;
     }
-    else
-    {
-      HempyBucket2Response1ToSend.ConfirmDisable = false;
-    }
+    HempyBucket2Response1ToSend.ConfirmDisable = Bucket2->getState() == HempyStates::DISABLED;
     if (((HempyBucketCommand1 *)ReceivedCommand)->StartWatering && !HempyBucket2Response1ToSend.ConfirmStartWatering)
     {
       Bucket2->startWatering();

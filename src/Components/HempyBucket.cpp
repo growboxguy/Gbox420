@@ -91,8 +91,7 @@ void HempyBucket::updateState(HempyStates NewState)
 
   while (ProcessUpdate)
   {
-    ProcessUpdate = false;                        ///< Do not loop again unless the state changes during the update
-    BucketWeightSensor.readWeight();              ///< Force Bucket weight update
+    ProcessUpdate = false;                        ///< Ensure the update is processed only once, even if the state changes multiple times during the function executionBucketWeightSensor.readWeight();              ///< Force Bucket weight update
     StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before
     bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
 
