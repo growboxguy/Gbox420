@@ -74,7 +74,7 @@ __attribute__((unused)) static const __FlashStringHelper *toText_hempySequenceID
    }
 }
 
-struct __attribute__((packed)) HempyCommonTemplate ///< Hempy wireless template - Shared between Command and Respone packages
+struct HempyCommonTemplate ///< Hempy wireless template - Shared between Command and Respone packages
 {
    HempyMessages SequenceID; ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
    HempyCommonTemplate(HempyMessages SequenceID)
@@ -83,7 +83,7 @@ struct __attribute__((packed)) HempyCommonTemplate ///< Hempy wireless template 
    }
 };
 
-struct __attribute__((packed)) HempyModuleCommand : HempyCommonTemplate ///< Hempy module wireless command
+struct HempyModuleCommand : HempyCommonTemplate ///< Hempy module wireless command
 {
    HempyModuleCommand(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    time_t Time = 0;
@@ -96,7 +96,7 @@ struct __attribute__((packed)) HempyModuleCommand : HempyCommonTemplate ///< Hem
    bool SerialReportWireless = true;
 };
 
-struct __attribute__((packed)) HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless response
+struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless response
 {
    HempyModuleResponse(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    bool Status = false;
@@ -115,7 +115,7 @@ struct HempyBucketCommand1 : HempyCommonTemplate ///< Hempy bucket wireless comm
    bool TareWeightDW = false; ///< Flag to signal a request to Tare dry/wet weight
 };
 
-struct __attribute__((packed))HempyBucketResponse1 : HempyCommonTemplate ///< Hempy bucket wireless response
+struct HempyBucketResponse1 : HempyCommonTemplate ///< Hempy bucket wireless response
 {
    HempyBucketResponse1(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
@@ -130,7 +130,7 @@ struct __attribute__((packed))HempyBucketResponse1 : HempyCommonTemplate ///< He
    float WetWeight = 0.0;
 };
 
-struct __attribute__((packed)) HempyBucketCommand2 : HempyCommonTemplate ///< Hempy bucket wireless command - Part2 since did not fit within HempyBucketCommand1 (max 32byte)
+struct HempyBucketCommand2 : HempyCommonTemplate ///< Hempy bucket wireless command - Part2 since did not fit within HempyBucketCommand1 (max 32byte)
 {
    HempyBucketCommand2(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    float StartWeight = 0.0;
@@ -140,7 +140,7 @@ struct __attribute__((packed)) HempyBucketCommand2 : HempyCommonTemplate ///< He
    float MaxWeight = 0.0;
 };
 
-struct __attribute__((packed)) HempyBucketResponse2 : HempyCommonTemplate ///< Hempy bucket wireless response
+struct HempyBucketResponse2 : HempyCommonTemplate ///< Hempy bucket wireless response
 {
    HempyBucketResponse2(HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    // Nothing to report back since everything fit to HempyBucketResponse1
