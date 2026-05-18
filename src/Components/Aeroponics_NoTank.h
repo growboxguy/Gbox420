@@ -60,8 +60,8 @@ private:
   
   bool &SprayEnabled;   ///< Enable/disable misting
   float &Duration;      ///< Spray time in seconds
-  int &DayInterval;     ///< Spray every X minutes - With lights ON
-  int &NightInterval;   ///< Spray every X minutes - With lights OFF
+  uint16_t &DayInterval;     ///< Spray every X minutes - With lights ON
+  uint16_t &NightInterval;   ///< Spray every X minutes - With lights OFF
   float &MinPressure;   ///< Minimum acceptable spray pressure
   float &MaxPressure;   ///< Maximum allowed pressure
   float LastSprayPressure = 0; ///< Tracks the last pressure reading during a spray cycle

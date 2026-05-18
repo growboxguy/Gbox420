@@ -203,8 +203,8 @@ void setupMqtt()
   MqttAPI.dataCb.attach(mqttReceived);
 
   memset(&ShortMessage[0], 0, MaxShortTextLength); //reset variable to store the Publish to path
-  strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
-  MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
+  strcat(ShortMessage, MqttLwtTopic);
+  MqttAPI.lwt(ShortMessage, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
@@ -213,7 +213,7 @@ void setupMqtt()
 */
 void mqttConnected(__attribute__((unused)) void *response)
 {
-  MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
+  MqttAPI.subscribe(MqttSubTopic);
   MqttConnected = true;
   //if(Debug) logToSerials(F("MQTT connected"), true);
 }
@@ -241,7 +241,7 @@ void mqttPublished(__attribute__((unused)) void *response)
 */
 void mqttReceived(void *response)
 {
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
+  static uint8_t MqttSubTopicLength = strlen(MqttSubTopic) - 1; //Get length of the command topic
   static char command[MaxShortTextLength];
   static char data[MaxShortTextLength];
   ELClientResponse *res = (ELClientResponse *)response;

@@ -38,7 +38,7 @@ static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a modul
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
 
-typedef struct
+struct Settings
 {
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
@@ -46,7 +46,7 @@ typedef struct
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
   char MqttPubTopic[MaxShortTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
   char MqttSubTopic[MaxShortTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShortTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttLwtTopic[MaxShortTextLength] = {"Gbox420LWT/"};           ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
@@ -81,7 +81,7 @@ typedef struct
   struct SoundSettings Sound1 = {.Pin = 2};
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
-} Settings;
+};
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

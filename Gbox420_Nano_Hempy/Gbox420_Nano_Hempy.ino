@@ -29,6 +29,12 @@ char CurrentTime[MaxWordLength] = "";         // Buffer for storing current time
 uint8_t ReceivedMessage[WirelessPayloadSize]; // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 uint32_t ReceivedMessageTimestamp = millis(); // Stores the timestamp when the last wireless package was received
 
+char MqttPubTopic[MaxShortTextLength] = "Gbox420/Hempy/";
+char MqttSubTopic[MaxShortTextLength] = "Gbox420CMD/Hempy/#";
+char MqttLwtTopic[MaxShortTextLength] = "Gbox420LWT/Hempy/";
+char PushingBoxLogRelayID[MaxWordLength] = "v755877CF53383E1";
+char MqttLwtMessage[MaxWordLength] = "Hempy Offline";
+
 ///< Component initialization
 HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
 Settings *ModuleSettings;                     // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h

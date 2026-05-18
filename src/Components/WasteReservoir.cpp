@@ -32,7 +32,7 @@ void WasteReservoir::refresh_FiveSec()
 
 void WasteReservoir::checkFull()
 {
-  if (WasteWeightSensor->getWeight() > *WasteLimit)
+  if (WasteWeightSensor->getWeight() > WasteLimit)
     updateState(WasteReservoirStates::FULL);
   else if (State != WasteReservoirStates::RESERVED)
     updateState(WasteReservoirStates::IDLE);
@@ -104,9 +104,9 @@ char *WasteReservoir::getStateText(bool FriendlyFormat)
 
 void WasteReservoir::setWasteLimit(float Weight)
 {
-  if (*WasteLimit != Weight)
+  if (WasteLimit != Weight)
   {
-    *WasteLimit = Weight;
+    WasteLimit = Weight;
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -115,11 +115,11 @@ char *WasteReservoir::getWasteLimitText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_weight(*WasteLimit);
+    return toText_weight(WasteLimit);
   }
   else
   {
-    return toText(*WasteLimit);
+    return toText(WasteLimit);
   }
 }
 
