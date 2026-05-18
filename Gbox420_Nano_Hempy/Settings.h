@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 17; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 18; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -35,34 +35,57 @@ constexpr uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
 
-typedef struct
-{
-  bool Debug = true;  ///< Logs debug messages to serial and web outputs
-  bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+///< SAVED TO EEPROM - Settings struct
+///< If you change things here, increase the Version variable in line 12
 
-  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
-  struct HempyModuleSettings
+typedef struct __attribute__((packed))
+{
+  // ====================================================================================
+  // 1. LARGEST DATA TYPES FIRST (4-BYTE SIGNED LONGS / FLOATS)
+  // ====================================================================================
+
+  struct WeightSensorSettings ///< WeightSensor default settings
   {
-    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
+    long Offset;    ///< Reading at 0 weight on the scale
+    float Scale;    ///< Scale factor
+    uint8_t DTPin;  ///< Weight sensor DT pin
+    uint8_t SCKPin; ///< Weight sensor SCK pin
   };
-  struct HempyModuleSettings Hemp1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
+  ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB1 = {.Offset = -176962, .Scale = -22654.00, .DTPin = 4, .SCKPin = 6};  
+  ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.Offset = 377473, .Scale = -21506.86, .DTPin = 7, .SCKPin = 8};   
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
-    bool DisabledState;        ///< Store if the watering logic is disabled
     float EvaporationTarget;  //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float MaxWeight;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     float StartWeight;   ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
     float WateringIncrement; ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     float DrainTargetWeight;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     uint16_t DrainWaitTime;   ///< (sec) How long to wait after watering for the water to drain
+    bool DisabledState;        ///< Store if the watering logic is disabled
   };
-  struct HempyBucketSettings Bucket1 = {.DisabledState = false, .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.DisabledState = false, .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .DisabledState = false};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .DisabledState = false};
+
+  // ====================================================================================
+  // 2. MID-SIZE DATA TYPES (2-BYTE INT / 1-BYTE INT MIXED CLEANLY)
+  // ====================================================================================
+
+  struct WaterPumpSettings ///< WaterPump default settings
+  {
+    uint16_t PumpTimeOut;       ///< (Sec) Max pump run time (one watering cycle)
+    uint16_t WateringTimeLimit;  ///< (Sec) Limit for maximum Pump ON time during watering, cumulative during a watering cycle (multiple WATERING/DRAINING cycles)
+    uint8_t PumpPin;           ///< Pump relay pin
+    uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
+    uint8_t SpeedLimitLow;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitHigh;    ///< Duty cycle limit, does not allow raising the speed too high
+    bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
+  };
+  struct WaterPumpSettings HempyPump1 = {.PumpTimeOut = 20, .WateringTimeLimit = 120, .PumpPin = 3, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
+  struct WaterPumpSettings HempyPump2 = {.PumpTimeOut = 20, .WateringTimeLimit = 120, .PumpPin = 5, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
 
   struct SoundSettings ///< Sound default settings
   {
@@ -71,28 +94,24 @@ typedef struct
   };
   struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
-  struct WaterPumpSettings ///< WaterPump default settings
-  {
-    uint8_t PumpPin;           ///< Pump relay pin
-    bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
-    uint16_t PumpTimeOut;      ///< (Sec) Max pump run time (one watering cycle)
-    uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLimitLow;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-    uint8_t SpeedLimitHigh;    ///< Duty cycle limit, does not allow raising the speed too high
-  };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 20, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 20, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  // ====================================================================================
+  // 3. PACKED SINGLE-BYTE FLAGS AND GLOBALS
+  // ====================================================================================
 
-  struct WeightSensorSettings ///< WeightSensor default settings
+  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  // Packed into 1 single byte total to save 4 bytes of precious Nano RAM
+  struct HempyModuleSettings
   {
-    uint8_t DTPin;  ///< Weight sensor DT pin
-    uint8_t SCKPin; ///< Weight sensor SCK pin
-    long Offset;    ///< Reading at 0 weight on the scale
-    float Scale;    ///< Scale factor
+    uint8_t SerialReportDate : 1;          ///< Enable/disable reporting the current time to the Serial output
+    uint8_t SerialReportMemory : 1;        ///< Enable/disable reporting the remaining free memory to the Serial output
+    uint8_t SerialReportJSONFriendly : 1;  ///< Enable/disable sending Text formatted reports to the Serial output
+    uint8_t SerialReportJSON : 1;          ///< Enable/disable sending JSON formatted reports to the Serial output
+    uint8_t SerialReportWireless : 1;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -176962, .Scale = -22654.00};  ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 377473, .Scale = -21506.86};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct HempyModuleSettings Hemp1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
+
+  bool Debug = true;  ///< Logs debug messages to serial and web outputs
+  bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
