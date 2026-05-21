@@ -9,28 +9,28 @@
  *  \version   4.20
  */
 
-constexpr uint8_t Version = 19;  ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
+constexpr uint8_t Version = 20; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
 ///< Global constants
-constexpr uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-constexpr uint8_t MaxShortTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
-constexpr uint16_t MaxLongTextLength = 168;  ///< Default char * buffer length for storing a long text. Memory intense!
-constexpr uint8_t QueueDepth = 6;            ///< Limits the maximum number of active modules. Memory intense!
+constexpr uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+constexpr uint8_t MaxShortTextLength = 64;  ///< Default char * buffer length for storing mutiple words. Memory intense!
+constexpr uint16_t MaxLongTextLength = 168; ///< Default char * buffer length for storing a long text. Memory intense!
+constexpr uint8_t QueueDepth = 6;           ///< Limits the maximum number of active modules. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];    // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShortTextLength];  // Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];        // Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];   // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShortTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];       // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-constexpr uint8_t WirelessCSNPin = 9;                ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-constexpr uint8_t WirelessCEPin = 10;                ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-constexpr uint8_t WirelessChannel[6] = { "Hemp1" };  ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
-constexpr uint8_t WirelessPayloadSize = 32;          ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-constexpr uint16_t WirelessMessageTimeout = 500;     ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-constexpr uint16_t WirelessReceiveTimeout = 60000;   ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
+constexpr uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+constexpr uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+constexpr uint8_t WirelessChannel[6] = {"Hemp1"};  ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
+constexpr uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+constexpr uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+constexpr uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -38,79 +38,81 @@ constexpr uint16_t WirelessReceiveTimeout = 60000;   ///< (ms) If no packages ar
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
 
-typedef struct __attribute__((packed)) {
+typedef struct __attribute__((packed))
+{
   // ====================================================================================
   // 1. LARGEST DATA TYPES FIRST (4-BYTE SIGNED LONGS / FLOATS)
   // ====================================================================================
 
-  struct WeightSensorSettings  ///< WeightSensor default settings
+  struct WeightSensorSettings ///< WeightSensor default settings
   {
-    long Offset;     ///< Reading at 0 weight on the scale
-    float Scale;     ///< Scale factor
-    uint8_t DTPin;   ///< Weight sensor DT pin
-    uint8_t SCKPin;  ///< Weight sensor SCK pin
+    long Offset;    ///< Reading at 0 weight on the scale
+    float Scale;    ///< Scale factor
+    uint8_t DTPin;  ///< Weight sensor DT pin
+    uint8_t SCKPin; ///< Weight sensor SCK pin
   };
   ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB1 = { .Offset = -176962, .Scale = -22654.00, .DTPin = 4, .SCKPin = 6 };
+  struct WeightSensorSettings WeightB1 = {.Offset = -176962, .Scale = -22654.00, .DTPin = 4, .SCKPin = 6};
   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = { .Offset = 377473, .Scale = -21506.86, .DTPin = 7, .SCKPin = 8 };
+  struct WeightSensorSettings WeightB2 = {.Offset = 377473, .Scale = -21506.86, .DTPin = 7, .SCKPin = 8};
 
-  struct HempyBucketSettings  ///< HempyBucket default settings
+  struct HempyBucketSettings ///< HempyBucket default settings
   {
-    float EvaporationTarget;  //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float MaxWeight;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    float StartWeight;        ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
-    float WateringIncrement;  ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
-    float DrainTargetWeight;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    uint16_t DrainWaitTime;   ///< (sec) How long to wait after watering for the water to drain
-    bool DisabledState;       ///< Store if the watering logic is disabled
+    float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float MaxWeight;         ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float StartWeight;       ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until DrainTargetWeight is reached.
+    float WateringIncrement; ///< How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    float DrainTargetWeight; ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    uint16_t DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
+    uint16_t WateringTimeLimit; ///< (Sec) Limit for maximum Pump ON time during watering, cumulative during a watering cycle (multiple WATERING/DRAINING cycles)   
+    bool DisabledState;      ///< Store if the watering logic is disabled
   };
-  struct HempyBucketSettings Bucket1 = { .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .DisabledState = false };
-  struct HempyBucketSettings Bucket2 = { .EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .DisabledState = false };
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 120, .DisabledState = false};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 120, .DisabledState = false};
 
   // ====================================================================================
   // 2. MID-SIZE DATA TYPES (2-BYTE INT / 1-BYTE INT MIXED CLEANLY)
   // ====================================================================================
 
-  struct WaterPumpSettings  ///< WaterPump default settings
+  struct WaterPumpSettings ///< WaterPump default settings
   {
-    uint16_t PumpTimeOut;        ///< (Sec) Max pump run time (one watering cycle)
-    uint16_t WateringTimeLimit;  ///< (Sec) Limit for maximum Pump ON time during watering, cumulative during a watering cycle (multiple WATERING/DRAINING cycles)
-    uint8_t PumpPin;             ///< Pump relay pin
-    uint8_t Speed;               ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLimitLow;       ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-    uint8_t SpeedLimitHigh;      ///< Duty cycle limit, does not allow raising the speed too high
-    bool PumpPinNegativeLogic;   ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    bool PumpEnabled;            ///< Enable/disable pump. false= Block running the pump
+    uint16_t PumpTimeOut;       ///< (Sec) Max pump ON time (one WATERING cycle)
+    uint8_t PumpPin;            ///< Pump relay pin
+    uint8_t Speed;              ///< Duty cycle of the PWM Motor speed
+    uint8_t SpeedLimitLow;      ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitHigh;     ///< Duty cycle limit, does not allow raising the speed too high
+    bool PumpPinNegativeLogic;  ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    bool PumpEnabled;           ///< Enable/disable pump. false= Block running the pump
   };
-  struct WaterPumpSettings HempyPump1 = { .PumpTimeOut = 20, .WateringTimeLimit = 120, .PumpPin = 3, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true };
-  struct WaterPumpSettings HempyPump2 = { .PumpTimeOut = 20, .WateringTimeLimit = 120, .PumpPin = 5, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true };
+  struct WaterPumpSettings HempyPump1 = {.PumpTimeOut = 20,  .PumpPin = 3, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
+  struct WaterPumpSettings HempyPump2 = {.PumpTimeOut = 20,  .PumpPin = 5, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
 
-  struct SoundSettings  ///< Sound default settings
+  struct SoundSettings ///< Sound default settings
   {
-    uint8_t Pin;   ///< Piezo Buzzer red(+) cable
-    bool Enabled;  ///< Enable/Disable sound
+    uint8_t Pin;  ///< Piezo Buzzer red(+) cable
+    bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = { .Pin = 2, .Enabled = true };
+  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
   // ====================================================================================
   // 3. PACKED DATA FLAGS AND GLOBALS
   // ====================================================================================
 
   // Reverted to regular bool so the constructor can take their memory addresses via &
-  struct HempyModuleSettings {
-    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
+  struct HempyModuleSettings
+  {
+    bool SerialReportDate;         ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;       ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON;         ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;     ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct HempyModuleSettings Hemp1 = { .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true };
+  struct HempyModuleSettings Hemp1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
-  bool Debug = true;   ///< Logs debug messages to serial and web outputs
-  bool Metric = true;  ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+  bool Debug = true;  ///< Logs debug messages to serial and web outputs
+  bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  uint8_t CompatibilityVersion = Version;  ///< Should always be the last value stored.
+  uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
 
 /**

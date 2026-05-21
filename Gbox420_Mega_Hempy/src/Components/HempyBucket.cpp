@@ -11,6 +11,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
       WateringIncrement(DefaultSettings.WateringIncrement),
       StartWeight(DefaultSettings.StartWeight),
       MaxWeight(DefaultSettings.MaxWeight),
+      WateringTimeLimit(DefaultSettings.WateringTimeLimit),
       DrainWaitTime(DefaultSettings.DrainWaitTime)
 {
   DryWeight = DefaultSettings.StartWeight; // Until first watering use StartWeight. After watering DryWeight is calculated from WetWeight - EvaporationTarget
@@ -91,9 +92,9 @@ void HempyBucket::updateState(HempyStates NewState)
 
   while (ProcessUpdate)
   {
-    ProcessUpdate = false;                        ///< Ensure the update is processed only once, even if the state changes multiple times during the function executionBucketWeightSensor.readWeight();              ///< Force Bucket weight update
-    StateWeight = BucketWeightSensor.getWeight(); // Store the bucket weight before
-    bool ChangeDetected = (State != TargetState); ///< Detect if the state is changing
+    ProcessUpdate = false;                         ///< Ensure update is processed once, unless the state changes again during the function execution
+    bool ChangeDetected = (State != TargetState);  ///< Detect if the state is changing
+    StateWeight = BucketWeightSensor.readWeight(); // Store the bucket weight before processing the state logic, used for state transitions and reporting
 
     if (ChangeDetected)
     {
@@ -136,31 +137,31 @@ void HempyBucket::updateState(HempyStates NewState)
     case HempyStates::WATERING:
       if (ChangeDetected)
       {
-        WateringStartWeight = StateWeight; // Store the weight at the start of the watering cycle
-        PumpOnTimer = millis();            /// Start measuring the pump ON time for this cycle
+        WateringTargetWeight = StateWeight + WateringIncrement; // Store the weight at the start of the watering cycle
+        logToSerials(getName(F("Target:")), false, 3);
+        logToSerials(toText_weight(WateringTargetWeight), true, 1);
         BucketPump.startPump(true);
       }
 
-      // Calculate cumulative time pump has been running
-      uint32_t TotaltWateringTime = WateringTime + (millis() - PumpOnTimer);
-
       // 1. Check for Target Weight Increment Reached
-      if (StateWeight >= WateringStartWeight + WateringIncrement) ///< Target overflow's worth of water was added, wait for it to drain
+      if (StateWeight >= WateringTargetWeight) ///< Target overflow's worth of water was added, wait for it to drain
       {
-        WateringTime = TotaltWateringTime;
+        WateringTimer = WateringTimer + (millis() - StateTimer);
         TargetState = HempyStates::DRAINING;
         ProcessUpdate = true;
       }
       // 2. Check for Timeout or Pump Failure
-      else if ((TotaltWateringTime > ((uint32_t)WateringTimeLimit * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout or pump failed
+      else if ((WateringTimer + (millis() - StateTimer) > ((uint32_t)WateringTimeLimit * 1000) || BucketPump.getState() == WaterPumpStates::DISABLED)) ///< Watering failed if: Timeout or pump failed
       {
         TargetState = HempyStates::DRY;
+        WateringTimer = 0; // Reset watering timer
         ProcessUpdate = true;
       }
       // 3. Check for Max Weight safety limit
       else if (StateWeight >= MaxWeight) // the maximum weight was reached without reaching drain target
       {
         TargetState = HempyStates::IDLE;
+        WateringTimer = 0; // Reset watering time
         ProcessUpdate = true;
       }
       break;
@@ -190,7 +191,7 @@ void HempyBucket::updateState(HempyStates NewState)
           if (DryWeight < StartWeight)                ///< Ensure the calculated DryWeight is not less than the user-configured StartWeight
             DryWeight = StartWeight;                  ///< Use the StartWeight from the UI as the minimum threshold
           DrainStartWeight = 0.0;                     ///< Reset the drain start weight for the next cycle
-          WateringTime = 0;                           ///< Reset the watering time for the next cycle
+          WateringTimer = 0;                          ///< Reset the watering time for the next cycle
           TargetState = HempyStates::IDLE;
         }
         else

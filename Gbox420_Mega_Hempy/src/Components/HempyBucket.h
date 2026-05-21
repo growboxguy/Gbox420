@@ -41,9 +41,7 @@ public:
   void tareDryWetWeight();
 
 private:
-  uint32_t PumpOnTimer = millis();     ///< Used to measure pump's ON time in a cycle
-  uint32_t WateringTime = 0;           ///< Measures total time the pump was ON during a watering (sum of multiple cycles)
-  uint16_t WateringTimeLimit  = 120;   ///< (Sec) Limit for maximum Pump ON time during watering, cumulative during a watering cycle (multiple WATERING/DRAINING cycles) - Safety feature to prevent overwatering in case of a failure
+  uint16_t WateringTimer = 0;          ///< Tracks total watering time (From Dry to Wet)
   uint32_t StateTimer = millis();      ///< Measures how much time is spent in a state
   float StateWeight = 0.0;             ///< Store the bucket start weight at each watering cycle
   bool DisableRequested = false;       ///< Signals to disable the watering logic
@@ -56,8 +54,9 @@ private:
   float &StartWeight;                  ///< Reference to the initial dry weight
   float &MaxWeight;                    ///< Reference to the maximum weight -> Disable watering logic above it
   uint16_t &DrainWaitTime;             ///< Reference to the drain wait time
+  uint16_t &WateringTimeLimit;         ///< Reference to the watering time limit
   float DrainStartWeight = 0.0;        ///< Store the bucket weight at the start of the draining cycle, used to detect when the water has been drained
-  float WateringStartWeight = 0.0;     ///< Store the weight at the start of the watering cycle, used to track how much water is being added
+  float WateringTargetWeight = 0.0;    ///< Store the weight at the start of the watering cycle, used to track how much water is being added
   float DryWeight = 0.0;               ///< Bucket dry weight
   float WetWeight = 0.0;               ///< Bucket wet weight
 
