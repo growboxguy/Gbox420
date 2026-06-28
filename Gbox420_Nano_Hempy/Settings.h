@@ -67,8 +67,8 @@ typedef struct __attribute__((packed))
     uint16_t WateringTimeLimit; ///< (Sec) Limit for maximum Pump ON time during watering, cumulative during a watering cycle (multiple WATERING/DRAINING cycles)   
     bool DisabledState;      ///< Store if the watering logic is disabled
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 120, .DisabledState = false};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.3, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 120, .DisabledState = false};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 0.4, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.1, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 60, .DisabledState = false};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 0.4, .MaxWeight = 20.0, .StartWeight = 18.0, .WateringIncrement = 0.1, .DrainTargetWeight = 0.1, .DrainWaitTime = 180, .WateringTimeLimit = 60, .DisabledState = false};
 
   // ====================================================================================
   // 2. MID-SIZE DATA TYPES (2-BYTE INT / 1-BYTE INT MIXED CLEANLY)
@@ -84,8 +84,8 @@ typedef struct __attribute__((packed))
     bool PumpPinNegativeLogic;  ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     bool PumpEnabled;           ///< Enable/disable pump. false= Block running the pump
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpTimeOut = 20,  .PumpPin = 3, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
-  struct WaterPumpSettings HempyPump2 = {.PumpTimeOut = 20,  .PumpPin = 5, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
+  struct WaterPumpSettings HempyPump1 = {.PumpTimeOut = 30,  .PumpPin = 3, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
+  struct WaterPumpSettings HempyPump2 = {.PumpTimeOut = 30,  .PumpPin = 5, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .PumpPinNegativeLogic = false, .PumpEnabled = true};
 
   struct SoundSettings ///< Sound default settings
   {
