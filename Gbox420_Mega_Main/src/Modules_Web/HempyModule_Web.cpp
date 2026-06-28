@@ -143,13 +143,11 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     // Bucket1
     if (strcmp_P(ShortMessage, (PGM_P)F("B1On")) == 0)
     {
-      HempyBucket1Command1ToSend.Disable = false;
       HempyBucket1Command1ToSend.StartWatering = true;
       Parent->addToLog(F("B1 watering"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
     {
-      HempyBucket1Command1ToSend.Disable = false;
       HempyBucket1Command1ToSend.StopWatering = true;
       Parent->addToLog(F("B1 stop watering"), false);
     }
@@ -209,13 +207,11 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     // Bucket2
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
     {
-      HempyBucket1Command1ToSend.Disable = false;
       HempyBucket2Command1ToSend.StartWatering = true;
       Parent->addToLog(F("B2 watering"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
     {
-      HempyBucket1Command1ToSend.Disable = false;
       HempyBucket2Command1ToSend.StopWatering = true;
       Parent->addToLog(F("B2 stop watering"), false);
     }
@@ -373,8 +369,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
         }
-        // if (HempyBucket1Response1Received.ConfirmDisable)
-        //   HempyBucket1Command1ToSend.Disable = false; // Turn off the Flag once the Receiver confirms processing it
+        if (HempyBucket1Response1Received.ConfirmDisable)
+          HempyBucket1Command1ToSend.Disable = false; // Turn off the Flag once the Receiver confirms processing it
         if (HempyBucket1Response1Received.ConfirmStartWatering)
           HempyBucket1Command1ToSend.StartWatering = false;
         if (HempyBucket1Response1Received.ConfirmStopWatering)
@@ -410,8 +406,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
-       // if (HempyBucket2Response1Received.ConfirmDisable)
-       //   HempyBucket2Command1ToSend.Disable = false; // Turn off the Flag once the Receiver confirms processing it
+        if (HempyBucket2Response1Received.ConfirmDisable)
+          HempyBucket2Command1ToSend.Disable = false; // Turn off the Flag once the Receiver confirms processing it
         if (HempyBucket2Response1Received.ConfirmStartWatering)
           HempyBucket2Command1ToSend.StartWatering = false;
         if (HempyBucket2Response1Received.ConfirmStopWatering)
