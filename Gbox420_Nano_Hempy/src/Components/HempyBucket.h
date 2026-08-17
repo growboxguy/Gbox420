@@ -44,6 +44,7 @@ private:
   uint16_t WateringTimer = 0;          ///< Tracks total watering time (From Dry to Wet)
   uint32_t StateTimer = millis();      ///< Measures how much time is spent in a state
   float StateWeight = 0.0;             ///< Store the bucket start weight at each watering cycle
+  float DrainTracker = 0.0;            ///< Store how much water has drained during watering (multiple watering cycles)
   bool DisableRequested = false;       ///< Signals to disable the watering logic
   bool StartWateringRequested = false; ///< Signals to start watering
   bool StopWateringRequested = false;  ///< Signals to stop watering
